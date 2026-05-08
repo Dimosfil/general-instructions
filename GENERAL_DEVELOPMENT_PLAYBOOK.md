@@ -58,7 +58,7 @@ It should print:
 - working agreements
 - latest summary
 - `git status --short`
-- useful diff/stat information
+- useful `git diff --stat` information
 - next recommended commands
 
 The goal is that a new chat can become useful in minutes.
@@ -66,6 +66,19 @@ The goal is that a new chat can become useful in minutes.
 On startup or after context loss, the agent should continue from recorded state,
 not from memory alone. It should read the latest summary, inspect relevant diffs,
 and only then edit files.
+
+Do not dump full `git diff` output into chat or startup context by default. Use
+`git diff --stat` for the overview and targeted `Select-String` commands for
+specific files, symbols, errors, or patterns.
+
+Do not read `index.html` in large chunks unless necessary. Prefer targeted
+searches and small excerpts around the relevant UI, script, or markup.
+
+For verification, count or query HTML elements programmatically instead of
+printing the whole HTML document.
+
+Do not build zip archives or run every available check unless the user
+explicitly asks for that scope.
 
 ## 4. Write Working Agreements
 
@@ -183,6 +196,14 @@ Write the policy clearly:
 - Whether generated files are committed.
 - What must never be committed.
 - How to handle unrelated dirty files.
+- Do not print full `git diff` output by default; use `git diff --stat` and
+  targeted `Select-String` instead.
+- Do not read `index.html` in large chunks unless necessary; use targeted
+  searches and small excerpts.
+- For verification, count or query HTML elements programmatically instead of
+  printing the whole HTML document.
+- Do not build zip archives or run every available check unless the user
+  explicitly asks for that scope.
 
 Default safe rule: the agent edits and verifies; the user reviews and commits.
 
@@ -245,21 +266,28 @@ Startup context should include only:
 - latest handoff summary
 - relevant memory notes found by search
 - current git status
+- `git diff --stat`, not full `git diff`
 - exact files needed for the task
 
 Prefer retrieval over dumping context.
 Prefer short summaries over raw logs.
 Prefer file excerpts over full files.
+Prefer targeted `Select-String` queries over full diff dumps.
+Avoid reading `index.html` in large chunks unless the task truly requires it.
+For HTML verification, count or query elements programmatically instead of
+printing the whole document.
+Do not build zip archives or run every available check unless the user
+explicitly asks for that scope.
 
 ## Codex Usage Awareness
 
 The agent must monitor current Codex usage limits.
 
 When 5-hour usage exceeds:
-- 60% → warn lightly
-- 75% → recommend switching to scoped/local workflows
-- 85% → strongly warn before expensive operations
-- 95% → avoid large agent loops, full-repo analysis, or heavy tool usage unless explicitly approved
+- 60% -> warn lightly
+- 75% -> recommend switching to scoped/local workflows
+- 85% -> strongly warn before expensive operations
+- 95% -> avoid large agent loops, full-repo analysis, or heavy tool usage unless explicitly approved
 
 Expensive operations include:
 - full repository scans
