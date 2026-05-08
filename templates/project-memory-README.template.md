@@ -13,9 +13,32 @@ Use it for verified findings that should survive chat resets:
 
 Do not store secrets or credentials here.
 
+## Agent Memory SQLite
+
+If the project benefits from searchable agent memory, use a local SQLite
+database as an agent index/experience store, not as the application database.
+
+Recommended path:
+
+```text
+tools/project-memory/project_memory.sqlite
+```
+
+The SQLite file is usually local/generated and ignored by git when it is large
+or rebuildable. Commit the indexing script, schema notes, and Markdown exports
+instead.
+
+Use the database for verified facts, searchable file/symbol indexes, debugging
+findings, useful commands, recurring failures, and durable notes with evidence
+paths. Do not store secrets, credentials, private user data, or production data.
+
+Do not dump the database into chat. Query it by symbol, path, topic, error, or
+feature name with small limits.
+
 ## Suggested Files
 
 - `STUDY_PLAN.md`: roadmap for understanding the project.
+- `NOTES.md`: reviewable export of durable notes from local agent memory.
 - `architecture.md`: verified architecture notes.
 - `decisions.md`: durable decisions and rationale.
 - `known-issues.md`: recurring bugs, caveats, and workarounds.

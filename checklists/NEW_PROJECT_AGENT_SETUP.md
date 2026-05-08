@@ -10,6 +10,9 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Add `tools/CODEX_RUNBOOK.md`.
 - [ ] Add `tools/project-memory/README.md`.
 - [ ] Add `tools/project-memory/STUDY_PLAN.md`.
+- [ ] Decide whether the project needs local agent memory SQLite/index.
+- [ ] If SQLite memory is used, ignore the generated database and commit only
+  scripts/schema/docs/Markdown exports.
 - [ ] Add `tools/summary/`.
 - [ ] Add a startup command such as `tools/codex-start.ps1`.
 - [ ] Define run, test, build, smoke-check, and log-inspection commands.

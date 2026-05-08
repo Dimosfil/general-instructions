@@ -7,6 +7,11 @@ Reusable instructions in this repository are grouped by job.
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline process for starting and
   maintaining a software project with an AI coding agent.
 
+## Patterns
+
+- `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
+  AI-agent experience, with Markdown export for review.
+
 ## Templates
 
 - `templates/AGENTS.template.md`: starter root `AGENTS.md` for a project.

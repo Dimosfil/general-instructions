@@ -45,6 +45,13 @@ memory folder.
 - Do not print large logs. Prefer tails and targeted error searches.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
+- Treat the first user message in a new chat as the chat title when it looks like
+  a short title or project name. In that case, run only the documented startup
+  context restore, then stop and ask what the user wants to do next. Do not
+  execute the title text as a task.
+- For web applications, assume the user will inspect the UI manually. Do not
+  open, browse, screenshot, or visually inspect the UI automatically unless the
+  user explicitly asks for that.
 
 ## Verification
 

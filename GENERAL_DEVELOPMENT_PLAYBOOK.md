@@ -36,11 +36,22 @@ Minimum contents:
 
 - `README.md`: what memory exists and how to use it.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
-- Local database or index, ignored by git when large/generated.
+- Local agent memory database or index, ignored by git when large/generated.
 - A command to rebuild the index from source files.
 - A command to save durable investigation notes.
 
 Rule: important findings must be written locally, not only said in chat.
+
+Recommended pattern: use `tools/project-memory/project_memory.sqlite` as a local
+SQLite memory/index for the agent, not as the product database and not as part
+of the application runtime. Commit only reviewable docs, schema/scripts, and
+Markdown exports when useful. Keep the SQLite file ignored when it is large or
+rebuildable.
+
+SQLite agent memory should support targeted queries, for example search by
+symbol, path, topic, error, or feature name. Do not dump the database or load it
+whole into context. Use small SQL queries with `LIMIT`, and keep durable notes
+exportable to Markdown such as `tools/project-memory/NOTES.md`.
 
 ## 3. Add A Startup Script
 
@@ -94,6 +105,15 @@ do not restate the full investigation context.
 
 Launch applications in the background so focus does not jump away from the
 user's current window.
+
+Treat the first user message in a new chat as the chat title when it looks like
+a short title or project name. In that case, run only the documented startup
+context restore, then stop and ask what the user wants to do next. Do not
+execute the title text as a task.
+
+For web applications, assume the user will inspect the UI manually. Do not open,
+browse, screenshot, or visually inspect the UI automatically unless the user
+explicitly asks for that.
 
 ## 4. Write Working Agreements
 
@@ -229,6 +249,13 @@ Write the policy clearly:
   do not restate the full investigation context.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
+- Treat the first user message in a new chat as the chat title when it looks
+  like a short title or project name. In that case, run only the documented
+  startup context restore, then stop and ask what the user wants to do next. Do
+  not execute the title text as a task.
+- For web applications, assume the user will inspect the UI manually. Do not
+  open, browse, screenshot, or visually inspect the UI automatically unless the
+  user explicitly asks for that.
 
 Default safe rule: the agent edits and verifies; the user reviews and commits.
 
@@ -277,6 +304,8 @@ The next chat should never have to reconstruct the previous session from vibes.
 - [ ] `tools/summary/`
 - [ ] `tools/project-memory/README.md`
 - [ ] `tools/project-memory/STUDY_PLAN.md`
+- [ ] Optional local agent memory SQLite/index script
+- [ ] Optional Markdown export for durable agent notes
 - [ ] Startup script
 - [ ] Test/build/run commands
 - [ ] Secret/config policy
@@ -314,6 +343,13 @@ Final responses should summarize only the changes, checks, and current status;
 do not restate the full investigation context.
 Launch applications in the background so focus does not jump away from the
 user's current window.
+Treat the first user message in a new chat as the chat title when it looks like
+a short title or project name. In that case, run only the documented startup
+context restore, then stop and ask what the user wants to do next. Do not
+execute the title text as a task.
+For web applications, assume the user will inspect the UI manually. Do not open,
+browse, screenshot, or visually inspect the UI automatically unless the user
+explicitly asks for that.
 
 ## Codex Usage Awareness
 
