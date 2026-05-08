@@ -81,11 +81,21 @@ Inspect logs:
 - Do not commit secrets, credentials, local databases, logs, or generated caches.
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted `Select-String` queries for relevant files or patterns.
-- Do not read large chunks of `index.html` unless necessary. Prefer targeted
-  searches and small excerpts around the relevant UI, script, or markup.
+- Do not read large files in full by default, including large `index.html`,
+  bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
+  targeted searches, heads, tails, or small line ranges.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.
 - Do not build zip archives or run every available check unless the user
   explicitly asks for that scope.
+- Do not read large files in full by default. Start with targeted searches,
+  `Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
+- Final responses should summarize only the changes, checks, and current status;
+  do not restate the full investigation context.
+- Search for specific symbols, paths, errors, or patterns before doing broad
+  repository scans.
+- Do not print large logs. Prefer tails and targeted error searches.
+- Launch applications in the background so focus does not jump away from the
+  user's current window.
 - Default git policy: agent edits and verifies; user reviews and commits unless
   the project says otherwise.

@@ -71,14 +71,29 @@ Do not dump full `git diff` output into chat or startup context by default. Use
 `git diff --stat` for the overview and targeted `Select-String` commands for
 specific files, symbols, errors, or patterns.
 
-Do not read `index.html` in large chunks unless necessary. Prefer targeted
-searches and small excerpts around the relevant UI, script, or markup.
+Do not read large files in full by default, including large `index.html`,
+bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
+targeted searches, heads, tails, or small line ranges.
 
 For verification, count or query HTML elements programmatically instead of
 printing the whole HTML document.
 
 Do not build zip archives or run every available check unless the user
 explicitly asks for that scope.
+
+Do not read large files in full by default. Start with targeted searches,
+`Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
+
+Search for specific symbols, paths, errors, or patterns before doing broad
+repository scans.
+
+Do not print large logs. Prefer tails and targeted error searches.
+
+Final responses should summarize only the changes, checks, and current status;
+do not restate the full investigation context.
+
+Launch applications in the background so focus does not jump away from the
+user's current window.
 
 ## 4. Write Working Agreements
 
@@ -198,12 +213,22 @@ Write the policy clearly:
 - How to handle unrelated dirty files.
 - Do not print full `git diff` output by default; use `git diff --stat` and
   targeted `Select-String` instead.
-- Do not read `index.html` in large chunks unless necessary; use targeted
-  searches and small excerpts.
+- Do not read large files in full by default, including large `index.html`,
+  bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
+  targeted searches, heads, tails, or small line ranges.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.
 - Do not build zip archives or run every available check unless the user
   explicitly asks for that scope.
+- Do not read large files in full by default. Start with targeted searches,
+  `Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
+- Search for specific symbols, paths, errors, or patterns before doing broad
+  repository scans.
+- Do not print large logs. Prefer tails and targeted error searches.
+- Final responses should summarize only the changes, checks, and current status;
+  do not restate the full investigation context.
+- Launch applications in the background so focus does not jump away from the
+  user's current window.
 
 Default safe rule: the agent edits and verifies; the user reviews and commits.
 
@@ -273,11 +298,22 @@ Prefer retrieval over dumping context.
 Prefer short summaries over raw logs.
 Prefer file excerpts over full files.
 Prefer targeted `Select-String` queries over full diff dumps.
-Avoid reading `index.html` in large chunks unless the task truly requires it.
+Avoid reading large files in full unless the task truly requires it, including
+large `index.html`, bundled JS/CSS, logs, lockfiles, generated files, and build
+artifacts.
 For HTML verification, count or query elements programmatically instead of
 printing the whole document.
 Do not build zip archives or run every available check unless the user
 explicitly asks for that scope.
+Do not read large files in full by default. Start with targeted searches,
+`Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
+Search for specific symbols, paths, errors, or patterns before doing broad
+repository scans.
+Do not print large logs. Prefer tails and targeted error searches.
+Final responses should summarize only the changes, checks, and current status;
+do not restate the full investigation context.
+Launch applications in the background so focus does not jump away from the
+user's current window.
 
 ## Codex Usage Awareness
 
