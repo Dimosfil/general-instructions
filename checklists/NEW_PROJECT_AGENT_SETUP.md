@@ -14,7 +14,13 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.
 - [ ] Add `tools/summary/`.
-- [ ] Add a startup command such as `tools/codex-start.ps1`.
+- [ ] Copy or adapt `templates/codex-start.template.ps1` into
+  `tools/codex-start.ps1`.
+- [ ] Add agent-memory ignore rules from
+  `templates/gitignore-agent-memory.template` to `.gitignore`.
+- [ ] Decide whether the project uses SQLite memory, Markdown-only memory, or
+  both.
+- [ ] Confirm startup retrieval loads only task-relevant context.
 - [ ] Define run, test, build, smoke-check, and log-inspection commands.
 - [ ] Review `.gitignore` for logs, caches, local databases, build outputs, and
   secrets.

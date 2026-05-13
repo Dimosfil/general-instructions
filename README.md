@@ -15,3 +15,5 @@ Start with:
   software project with an AI coding agent.
 - `templates/`: starter files to copy into project repositories.
 - `checklists/`: short operational checklists.
+- `updates/`: dated recommendations from real projects, used as an intake queue
+  for future instruction improvements.

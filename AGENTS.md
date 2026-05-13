@@ -52,6 +52,10 @@ memory folder.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
+- `updates/` is the dated intake queue for recommendations coming from different
+  projects. Review update files newest-first when maintaining this library, but
+  do not load all updates by default. Remember accepted updates by moving the
+  reusable rule into the main library and committing it.
 
 ## Verification
 

@@ -21,6 +21,9 @@ If the startup script is unavailable, read:
 - `tools/CODEX_RUNBOOK.md`
 - relevant notes in `tools/project-memory/`
 
+Use the RAG startup flow: retrieve only task-relevant context, search memory by
+specific terms, and query SQLite memory only with small `LIMIT`s.
+
 ## Durable Memory
 
 Durable project knowledge lives in:
@@ -95,6 +98,8 @@ Inspect logs:
 - Search for specific symbols, paths, errors, or patterns before doing broad
   repository scans.
 - Do not print large logs. Prefer tails and targeted error searches.
+- Startup restore must be compact; do not dump large files, full runbooks, full
+  SQLite contents, full logs, generated outputs, or full diffs.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
 - Treat the first user message in a new chat as the chat title when it looks like

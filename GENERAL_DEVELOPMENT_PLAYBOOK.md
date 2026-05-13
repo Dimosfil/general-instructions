@@ -74,6 +74,11 @@ It should print:
 
 The goal is that a new chat can become useful in minutes.
 
+Startup scripts must stay compact. Do not dump large files, full runbooks, full
+logs, full SQLite contents, generated files, or full diffs. Use line guards,
+`Get-Content -TotalCount`, `Get-Content -Tail`, `Select-String`, and
+`git diff --stat`.
+
 On startup or after context loss, the agent should continue from recorded state,
 not from memory alone. It should read the latest summary, inspect relevant diffs,
 and only then edit files.
@@ -350,6 +355,28 @@ execute the title text as a task.
 For web applications, assume the user will inspect the UI manually. Do not open,
 browse, screenshot, or visually inspect the UI automatically unless the user
 explicitly asks for that.
+
+## Instruction Update Intake
+
+This repository may receive dated recommendation files from different projects
+under:
+
+```text
+updates/
+```
+
+Treat those files as an intake queue, not as automatically accepted rules. When
+maintaining this library:
+
+- Review update files by date, newest first.
+- Read only the specific update being evaluated, not the whole folder by
+  default.
+- Extract reusable rules, patterns, templates, or checklist items into the main
+  library.
+- Keep project-specific details out of shared instructions.
+- Preserve token economy: avoid recommendations that encourage dumping large
+  files, full diffs, logs, SQLite contents, generated outputs, or all memory.
+- Remember accepted updates by committing the resulting instruction changes.
 
 ## Codex Usage Awareness
 

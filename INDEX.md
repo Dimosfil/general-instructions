@@ -16,6 +16,8 @@ Reusable instructions in this repository are grouped by job.
 
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
   AI-agent experience, with Markdown export for review.
+- `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
+  restoring only task-relevant context.
 
 ## Templates
 
@@ -24,6 +26,16 @@ Reusable instructions in this repository are grouped by job.
 - `templates/CODEX_WORKING_AGREEMENTS.template.md`: starter working agreements.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
+- `templates/codex-start.template.ps1`: compact startup script template with
+  line guards and `git diff --stat`.
+- `templates/gitignore-agent-memory.template`: ignore snippet for local agent
+  memory and runtime noise.
+- `templates/SUMMARY.template.md`: handoff summary template.
+
+## Update Intake
+
+- `updates/`: dated recommendations from real projects. Review newest-first and
+  promote reusable accepted updates into the main library.
 
 ## Checklists
 
