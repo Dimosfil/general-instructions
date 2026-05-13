@@ -2,6 +2,11 @@
 
 Reusable instructions in this repository are grouped by job.
 
+## User Documents
+
+- `USER_GUIDE.md`: short user-facing overview of the main instructions and
+  rules.
+
 ## Core Playbooks
 
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline process for starting and
