@@ -10,6 +10,8 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Add `tools/CODEX_RUNBOOK.md`.
 - [ ] Add `tools/project-memory/README.md`.
 - [ ] Add `tools/project-memory/STUDY_PLAN.md`.
+- [ ] Copy or adapt `templates/pending-tasks.template.md` into
+  `tools/project-memory/pending-tasks.md`.
 - [ ] Decide whether the project needs local agent memory SQLite/index.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.
@@ -21,6 +23,7 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Decide whether the project uses SQLite memory, Markdown-only memory, or
   both.
 - [ ] Confirm startup retrieval loads only task-relevant context.
+- [ ] Confirm multi-step tasks have a concise durable checklist before editing.
 - [ ] Define run, test, build, smoke-check, and log-inspection commands.
 - [ ] Review `.gitignore` for logs, caches, local databases, build outputs, and
   secrets.

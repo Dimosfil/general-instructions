@@ -65,6 +65,13 @@ memory folder.
   bootstrap. Review update files newest-first only when maintaining this
   library, and remember accepted updates by moving reusable rules into the main
   library and committing them.
+- When another project reveals a reusable improvement to shared instructions,
+  write a dated recommendation to this repository's `updates/` folder if it is
+  available. Treat those files as intake only. If this repository is unavailable,
+  use a project-local intake folder such as `tools/instruction-updates/` or
+  `tools/project-memory/instruction-updates/` with the same dated filename
+  pattern. Do not add this repository as a dependency, package, submodule,
+  symlink, or runtime reference unless the user explicitly asks for that.
 
 ## Verification
 

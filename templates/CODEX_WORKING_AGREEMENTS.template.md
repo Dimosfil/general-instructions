@@ -57,6 +57,30 @@
 - Avoid unrelated formatting churn.
 - Add comments only when they clarify non-obvious behavior.
 
+## Task Planning
+
+- For analysis, refactoring, migration, or multi-step implementation tasks,
+  create or update a concise checklist in `tools/project-memory/pending-tasks.md`
+  or a dedicated task plan in `tools/project-memory/` before editing code.
+- Include the goal, planned changes, execution order, risks or dependencies, and
+  verification steps.
+- Update progress as meaningful steps complete.
+- Keep plans concise. Do not store full diffs, large logs, generated outputs,
+  secrets, credentials, or private production data.
+
+## Shared Instruction Updates
+
+- When this project reveals a reusable improvement to agent instructions,
+  workflows, templates, or checklists, write a dated recommendation to the shared
+  instruction library's `updates/` folder if it is available.
+- If no shared instruction library is available, use a local intake folder such
+  as `tools/instruction-updates/` or
+  `tools/project-memory/instruction-updates/`.
+- Treat recommendations as intake, not accepted rules.
+- Do not add a shared instruction library as a project dependency, package,
+  submodule, symlink, or runtime reference unless the user explicitly asks for
+  that.
+
 ## Verification
 
 - Reread edited files after changes.

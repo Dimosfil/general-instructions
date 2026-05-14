@@ -35,6 +35,18 @@ tools/project-memory/
 Important findings should be written there or in a handoff summary, not only
 left in chat.
 
+For analysis, refactoring, migration, or multi-step implementation tasks, create
+or update a concise checklist in `tools/project-memory/pending-tasks.md` or a
+dedicated task plan in `tools/project-memory/` before editing code. Keep plans
+task-relevant and update progress as meaningful steps complete.
+
+When this project reveals a reusable improvement to agent instructions,
+workflows, templates, or checklists, write a dated recommendation to the shared
+instruction library's `updates/` folder if it is available. If it is not
+available, use a local intake folder such as `tools/instruction-updates/` or
+`tools/project-memory/instruction-updates/`. Treat recommendations as intake,
+not accepted rules.
+
 ## Common Commands
 
 Install dependencies:

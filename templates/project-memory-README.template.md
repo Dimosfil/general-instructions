@@ -48,11 +48,29 @@ Markdown as the concise reviewable export.
 
 ## Suggested Files
 
+- `pending-tasks.md`: active project-wide plans and multi-step work.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
 - `NOTES.md`: reviewable export of durable notes from local agent memory.
 - `architecture.md`: verified architecture notes.
 - `decisions.md`: durable decisions and rationale.
 - `known-issues.md`: recurring bugs, caveats, and workarounds.
+
+## Task Planning
+
+For analysis, refactoring, migration, or multi-step implementation tasks, keep a
+concise checklist in `pending-tasks.md` or a dedicated task plan in this folder.
+
+Include:
+
+- goal
+- planned changes
+- execution order
+- risks or dependencies
+- verification steps
+
+Update progress as meaningful steps complete. Keep plans task-relevant and avoid
+full diffs, large logs, generated outputs, secrets, credentials, or private
+production data.
 
 ## Rule
 

@@ -9,6 +9,8 @@ Reusable instructions in this repository are grouped by job.
 
 ## Core Playbooks
 
+- `DEVELOPMENT_PLAN.md`: planned improvements for this shared instruction
+  library.
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline process for starting and
   maintaining a software project with an AI coding agent.
 
@@ -27,6 +29,7 @@ Reusable instructions in this repository are grouped by job.
 - `templates/CODEX_RUNBOOK.template.md`: starter project runbook.
 - `templates/CODEX_WORKING_AGREEMENTS.template.md`: starter working agreements.
 - `templates/project-memory-README.template.md`: starter memory folder README.
+- `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
 - `templates/codex-start.template.ps1`: compact startup script template with
   line guards and `git diff --stat`.

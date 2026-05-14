@@ -42,6 +42,35 @@ Minimum contents:
 
 Rule: important findings must be written locally, not only said in chat.
 
+When a project reveals a reusable improvement to agent instructions, workflows,
+templates, or checklists, write a dated recommendation to the shared instruction
+library's `updates/` folder if that library exists. Treat those files as intake
+recommendations, not automatically accepted rules.
+
+If no shared instruction library is available, create a local project intake
+folder such as:
+
+```text
+tools/instruction-updates/
+```
+
+or, when the project already has agent memory:
+
+```text
+tools/project-memory/instruction-updates/
+```
+
+Use this filename pattern:
+
+```text
+YYYY-MM-DD_HH-mm-ss_CODEX_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
+```
+
+Keep project-specific details out of reusable instruction recommendations unless
+they are clearly marked as examples. Do not add the shared instruction library
+as a dependency, package, submodule, symlink, or runtime reference unless the
+user explicitly asks for that.
+
 Recommended pattern: use `tools/project-memory/project_memory.sqlite` as a local
 SQLite memory/index for the agent, not as the product database and not as part
 of the application runtime. Commit only reviewable docs, schema/scripts, and
@@ -63,6 +92,17 @@ Use two project-memory layers:
 Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
 too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
 Markdown as the concise reviewable export.
+
+For analysis, refactoring, migration, or multi-step implementation tasks, create
+or update a concise checklist in the project's durable planning location before
+editing code. For project-wide or ongoing work, use a shared task file such as
+`tools/project-memory/pending-tasks.md`. For a large focused task, create a
+dedicated Markdown plan in `tools/project-memory/` with a clear task name.
+
+Task plans should include the goal, planned changes, execution order, risks or
+dependencies, and verification steps. Track progress while working and keep the
+file concise; do not store full diffs, large logs, generated outputs, secrets,
+credentials, or private production data.
 
 ## 3. Add A Startup Script
 
