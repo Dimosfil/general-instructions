@@ -53,6 +53,17 @@ symbol, path, topic, error, or feature name. Do not dump the database or load it
 whole into context. Use small SQL queries with `LIMIT`, and keep durable notes
 exportable to Markdown such as `tools/project-memory/NOTES.md`.
 
+Use two project-memory layers:
+
+- Markdown is the human-reviewable layer for concise handoff summaries,
+  decisions, architecture notes, and curated exports.
+- SQLite is the searchable agent-memory layer for detailed findings,
+  file/symbol indexes, references, commands, failures, and evidence-backed notes.
+
+Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
+too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
+Markdown as the concise reviewable export.
+
 ## 3. Add A Startup Script
 
 Create one command that restores project context.
@@ -118,9 +129,11 @@ execute the title text as a task.
 
 If the first user message is a path to a shared instruction library, or a
 request to connect shared instructions, treat it as an instruction bootstrap.
-Read the shared rules and apply them to the current project. Do not add the
-shared folder as a project dependency, package, submodule, symlink, or runtime
-reference unless the user explicitly asks for that.
+Read the shared rules and deploy a local instruction kit into the current
+project from the templates/checklist. Do not create only a thin `AGENTS.md` that
+points back to the shared folder. Do not add the shared folder as a project
+dependency, package, submodule, symlink, or runtime reference unless the user
+explicitly asks for that.
 
 For web applications, assume the user will inspect the UI manually. Do not open,
 browse, screenshot, or visually inspect the UI automatically unless the user
@@ -266,9 +279,11 @@ Write the policy clearly:
   not execute the title text as a task.
 - If the first user message is a path to a shared instruction library, or a
   request to connect shared instructions, treat it as an instruction bootstrap.
-  Read the shared rules and apply them to the current project. Do not add the
-  shared folder as a project dependency, package, submodule, symlink, or runtime
-  reference unless the user explicitly asks for that.
+  Read the shared rules and deploy a local instruction kit into the current
+  project from the templates/checklist. Do not create only a thin `AGENTS.md`
+  that points back to the shared folder. Do not add the shared folder as a
+  project dependency, package, submodule, symlink, or runtime reference unless
+  the user explicitly asks for that.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
@@ -322,6 +337,8 @@ The next chat should never have to reconstruct the previous session from vibes.
 - [ ] `tools/project-memory/STUDY_PLAN.md`
 - [ ] Optional local agent memory SQLite/index script
 - [ ] Optional Markdown export for durable agent notes
+- [ ] Two-layer memory policy: concise Markdown for review, SQLite for
+  searchable detailed agent memory when Markdown becomes too large
 - [ ] Startup script
 - [ ] Test/build/run commands
 - [ ] Secret/config policy
@@ -365,28 +382,33 @@ context restore, then stop and ask what the user wants to do next. Do not
 execute the title text as a task.
 If the first user message is a path to a shared instruction library, or a
 request to connect shared instructions, treat it as an instruction bootstrap.
-Read the shared rules and apply them to the current project. Do not add the
-shared folder as a project dependency, package, submodule, symlink, or runtime
-reference unless the user explicitly asks for that.
+Read the shared rules and deploy a local instruction kit into the current
+project from the templates/checklist. Do not create only a thin `AGENTS.md` that
+points back to the shared folder. Do not add the shared folder as a project
+dependency, package, submodule, symlink, or runtime reference unless the user
+explicitly asks for that.
 For web applications, assume the user will inspect the UI manually. Do not open,
 browse, screenshot, or visually inspect the UI automatically unless the user
 explicitly asks for that.
 
 ## Instruction Update Intake
 
-This repository may receive dated recommendation files from different projects
-under:
+The `general-instructions` repository may receive dated recommendation files
+from different projects under:
 
 ```text
 updates/
 ```
 
-Treat those files as an intake queue, not as automatically accepted rules. When
-maintaining this library:
+Treat those files as an intake queue for maintaining `general-instructions`, not
+as automatically accepted rules and not as startup context for external
+projects. When maintaining this library:
 
 - Review update files by date, newest first.
 - Read only the specific update being evaluated, not the whole folder by
   default.
+- External projects that consume these shared instructions must not read
+  `updates/` during startup or bootstrap.
 - Extract reusable rules, patterns, templates, or checklist items into the main
   library.
 - Keep project-specific details out of shared instructions.

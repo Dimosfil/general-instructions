@@ -108,9 +108,11 @@ Inspect logs:
   execute the title text as a task.
 - If the first user message is a path to a shared instruction library, or a
   request to connect shared instructions, treat it as an instruction bootstrap.
-  Read the shared rules and apply them to the current project. Do not add the
-  shared folder as a project dependency, package, submodule, symlink, or runtime
-  reference unless the user explicitly asks for that.
+  Read the shared rules and deploy a local instruction kit into the current
+  project from the templates/checklist. Do not create only a thin `AGENTS.md`
+  that points back to the shared folder. Do not add the shared folder as a
+  project dependency, package, submodule, symlink, or runtime reference unless
+  the user explicitly asks for that.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.

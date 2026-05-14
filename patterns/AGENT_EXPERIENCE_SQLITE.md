@@ -82,6 +82,18 @@ python .\tools\project-memory\index_project.py import-notes
 
 SQLite is efficient for search, but Markdown is better for review.
 
+Use two memory layers:
+
+- Markdown is the human-reviewable layer. Keep it concise: handoff summaries,
+  decisions, architecture notes, and curated exports.
+- SQLite is the searchable agent-memory layer. Use it for detailed findings,
+  file/symbol indexes, references, commands, failures, and evidence-backed
+  notes.
+
+Do not blindly migrate all Markdown into SQLite. When Markdown notes, summaries,
+or architecture files become too large to read cheaply, introduce or rebuild the
+SQLite memory/index and keep Markdown as the concise reviewable export.
+
 Export durable notes to:
 
 ```text

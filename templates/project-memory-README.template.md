@@ -35,6 +35,17 @@ paths. Do not store secrets, credentials, private user data, or production data.
 Do not dump the database into chat. Query it by symbol, path, topic, error, or
 feature name with small limits.
 
+## Two Memory Layers
+
+- Markdown is the human-reviewable layer. Keep summaries, decisions,
+  architecture notes, and curated exports concise.
+- SQLite is the searchable agent-memory layer for detailed findings,
+  file/symbol indexes, references, commands, failures, and evidence-backed notes.
+
+Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
+too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
+Markdown as the concise reviewable export.
+
 ## Suggested Files
 
 - `STUDY_PLAN.md`: roadmap for understanding the project.

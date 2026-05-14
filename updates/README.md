@@ -1,6 +1,7 @@
 # Instruction Updates
 
-This folder stores dated recommendations from real projects.
+This folder stores dated recommendations from real projects for maintaining this
+`general-instructions` repository.
 
 Use it as an intake queue for improvements to the reusable instruction library.
 Files should be named with a date/time prefix, for example:
@@ -13,6 +14,9 @@ YYYY-MM-DD_HH-mm-ss_CODEX_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
 
 - Treat update files as incoming recommendations, not automatically accepted
   instructions.
+- This folder is maintenance-only for `general-instructions`. External projects
+  that consume the shared instructions must not read it during startup or
+  bootstrap.
 - Review updates by date, newest first, when maintaining this repository.
 - Extract reusable rules, patterns, templates, or checklist items into the main
   library.

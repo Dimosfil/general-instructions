@@ -51,16 +51,20 @@ memory folder.
   execute the title text as a task.
 - If the first user message is a path to this shared instruction library, or a
   request to connect shared instructions, treat it as an instruction bootstrap.
-  Read the shared rules and apply them to the current project. Do not add the
-  shared folder as a project dependency, package, submodule, symlink, or runtime
-  reference unless the user explicitly asks for that.
+  Read the shared rules and deploy a local instruction kit into the current
+  project from the templates/checklist. Do not create only a thin `AGENTS.md`
+  that points back to this folder. Do not add the shared folder as a project
+  dependency, package, submodule, symlink, or runtime reference unless the user
+  explicitly asks for that.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
-- `updates/` is the dated intake queue for recommendations coming from different
-  projects. Review update files newest-first when maintaining this library, but
-  do not load all updates by default. Remember accepted updates by moving the
-  reusable rule into the main library and committing it.
+- `updates/` is the dated intake queue for recommendations used only while
+  maintaining this `general-instructions` repository. External projects that
+  consume these shared instructions must not read `updates/` during startup or
+  bootstrap. Review update files newest-first only when maintaining this
+  library, and remember accepted updates by moving reusable rules into the main
+  library and committing them.
 
 ## Verification
 

@@ -18,6 +18,8 @@ Reusable instructions in this repository are grouped by job.
   AI-agent experience, with Markdown export for review.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
+- `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
+  instruction files from this shared library when the user provides its path.
 
 ## Templates
 
@@ -34,8 +36,9 @@ Reusable instructions in this repository are grouped by job.
 
 ## Update Intake
 
-- `updates/`: dated recommendations from real projects. Review newest-first and
-  promote reusable accepted updates into the main library.
+- `updates/`: maintenance-only dated recommendations for this
+  `general-instructions` repository. External projects must not read this folder
+  during startup or bootstrap.
 
 ## Checklists
 
