@@ -116,6 +116,12 @@ a short title or project name. In that case, run only the documented startup
 context restore, then stop and ask what the user wants to do next. Do not
 execute the title text as a task.
 
+If the first user message is a path to a shared instruction library, or a
+request to connect shared instructions, treat it as an instruction bootstrap.
+Read the shared rules and apply them to the current project. Do not add the
+shared folder as a project dependency, package, submodule, symlink, or runtime
+reference unless the user explicitly asks for that.
+
 For web applications, assume the user will inspect the UI manually. Do not open,
 browse, screenshot, or visually inspect the UI automatically unless the user
 explicitly asks for that.
@@ -258,6 +264,11 @@ Write the policy clearly:
   like a short title or project name. In that case, run only the documented
   startup context restore, then stop and ask what the user wants to do next. Do
   not execute the title text as a task.
+- If the first user message is a path to a shared instruction library, or a
+  request to connect shared instructions, treat it as an instruction bootstrap.
+  Read the shared rules and apply them to the current project. Do not add the
+  shared folder as a project dependency, package, submodule, symlink, or runtime
+  reference unless the user explicitly asks for that.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
@@ -352,6 +363,11 @@ Treat the first user message in a new chat as the chat title when it looks like
 a short title or project name. In that case, run only the documented startup
 context restore, then stop and ask what the user wants to do next. Do not
 execute the title text as a task.
+If the first user message is a path to a shared instruction library, or a
+request to connect shared instructions, treat it as an instruction bootstrap.
+Read the shared rules and apply them to the current project. Do not add the
+shared folder as a project dependency, package, submodule, symlink, or runtime
+reference unless the user explicitly asks for that.
 For web applications, assume the user will inspect the UI manually. Do not open,
 browse, screenshot, or visually inspect the UI automatically unless the user
 explicitly asks for that.
