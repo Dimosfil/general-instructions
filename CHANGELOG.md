@@ -4,6 +4,8 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Clarified that ambiguous commit-message language selection prompts should use
+  a concise Markdown checklist with current selections, not a prose-only list.
 - Added the short `gi` chat-command prefix for shared instruction-kit commands,
   such as `gi обновись`, `gi init D:\AI\general-instructions\`, and
   `gi язык коммита: Russian`.

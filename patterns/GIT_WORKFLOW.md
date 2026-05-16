@@ -73,6 +73,23 @@ message language. If the user says only "choose/select commit language" without
 naming languages, ask which additional languages to enable, or offer the
 supported list.
 
+For ambiguous commit-language selection, present a concise Markdown checklist
+instead of a prose-only list. Show `English` as always selected and mark current
+additional languages as checked. Ask the user to reply with language names or
+numbers.
+
+Example:
+
+```markdown
+Which additional commit-message languages should be enabled?
+
+- [x] English (primary, always on)
+- [x] Russian
+- [ ] Spanish
+- [ ] German
+- [ ] French
+```
+
 When reporting the change, mention the plain path
 `tools/project-memory/git-preferences.json`. Do not emit malformed markdown
 links or placeholder links.

@@ -27,6 +27,9 @@
 - Do not infer additional commit-message languages from the user's UI language
   or message language. If the requested languages are ambiguous, ask which
   additional languages to enable.
+- For ambiguous commit-language selection, ask with a concise Markdown checklist
+  showing `English` as always selected and current additional languages as
+  checked. Ask the user to reply with language names or numbers.
 - When reporting this change, mention the plain
   `tools/project-memory/git-preferences.json` path instead of malformed or
   placeholder markdown links.
