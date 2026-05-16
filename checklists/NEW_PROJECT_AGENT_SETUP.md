@@ -12,12 +12,17 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Add `tools/project-memory/STUDY_PLAN.md`.
 - [ ] Copy or adapt `templates/pending-tasks.template.md` into
   `tools/project-memory/pending-tasks.md`.
+- [ ] Copy or adapt `templates/instruction-kit.template.json` into
+  `tools/project-memory/instruction-kit.json`.
 - [ ] Decide whether the project needs local agent memory SQLite/index.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.
 - [ ] Add `tools/summary/`.
 - [ ] Copy or adapt `templates/codex-start.template.ps1` into
   `tools/codex-start.ps1`.
+- [ ] Confirm the startup script reports instruction-kit updates only from
+  accepted release artifacts such as `VERSION.md` and `CHANGELOG.md`, not from
+  `updates/`.
 - [ ] Add agent-memory ignore rules from
   `templates/gitignore-agent-memory.template` to `.gitignore`.
 - [ ] Decide whether the project uses SQLite memory, Markdown-only memory, or

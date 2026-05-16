@@ -5,6 +5,81 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Get-InstructionKitVersion {
+    param(
+        [Parameter(Mandatory = $true)][string]$VersionFile
+    )
+
+    if (-not (Test-Path -LiteralPath $VersionFile)) {
+        return $null
+    }
+
+    $match = Select-String -Path $VersionFile -Pattern '`([0-9]{4}\.[0-9]{2}\.[0-9]{2})`' | Select-Object -First 1
+    if ($match -and $match.Matches.Count -gt 0) {
+        return $match.Matches[0].Groups[1].Value
+    }
+
+    return $null
+}
+
+function Write-InstructionKitUpdateNotice {
+    $provenancePath = "tools/project-memory/instruction-kit.json"
+    if (-not (Test-Path -LiteralPath $provenancePath)) {
+        return
+    }
+
+    try {
+        $kit = Get-Content -LiteralPath $provenancePath -Raw | ConvertFrom-Json
+    }
+    catch {
+        Write-Host ""
+        Write-Host "== Instruction Kit =="
+        Write-Host "Could not read $provenancePath; skipping update check."
+        return
+    }
+
+    if ($kit.update_check -and $kit.update_check.PSObject.Properties.Name -contains "enabled" -and -not $kit.update_check.enabled) {
+        return
+    }
+
+    $sharedPath = $null
+    if ($kit.update_check -and $kit.update_check.shared_library_path) {
+        $sharedPath = [string]$kit.update_check.shared_library_path
+    }
+    elseif ($env:GENERAL_INSTRUCTIONS_HOME) {
+        $sharedPath = $env:GENERAL_INSTRUCTIONS_HOME
+    }
+
+    if (-not $sharedPath) {
+        return
+    }
+
+    $sharedVersionFile = Join-Path $sharedPath "VERSION.md"
+    $latestVersion = Get-InstructionKitVersion -VersionFile $sharedVersionFile
+    if (-not $latestVersion) {
+        return
+    }
+
+    $installedVersion = [string]$kit.instruction_kit_version
+    $updateAvailable = $false
+    if ($installedVersion) {
+        try {
+            $updateAvailable = ([version]$installedVersion) -lt ([version]$latestVersion)
+        }
+        catch {
+            $updateAvailable = $installedVersion -ne $latestVersion
+        }
+    }
+
+    if ($updateAvailable) {
+        Write-Host ""
+        Write-Host "== Instruction Kit Update =="
+        Write-Host "Installed: $installedVersion"
+        Write-Host "Available: $latestVersion"
+        Write-Host "Review $sharedPath\CHANGELOG.md and refresh copied instruction files if needed."
+    }
+}
+
 function Write-SmallFile {
     param(
         [Parameter(Mandatory = $true)][string]$Path,
@@ -28,6 +103,8 @@ function Write-SmallFile {
     Write-Host "$Path has $lineCount lines; showing first $Limit lines only."
     Get-Content -LiteralPath $Path -TotalCount $Limit
 }
+
+Write-InstructionKitUpdateNotice
 
 Write-SmallFile -Path "AGENTS.md" -Title "AGENTS.md"
 Write-SmallFile -Path "tools/CODEX_WORKING_AGREEMENTS.md" -Title "Working Agreements"

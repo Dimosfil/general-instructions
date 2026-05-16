@@ -92,19 +92,20 @@ Inspect logs:
 - Do not revert user changes unless explicitly requested.
 - Treat dirty worktrees as normal.
 - Keep changes scoped to the current task.
-- Ask before destructive operations or broad refactors.
+- Ask before destructive operations, broad refactors, or unrelated scope
+  expansion.
 - Do not commit secrets, credentials, local databases, logs, or generated caches.
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
-  targeted `Select-String` queries for relevant files or patterns.
+  targeted queries for relevant files or patterns.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
-  targeted searches, heads, tails, or small line ranges.
+  targeted searches, heads, tails, or small line ranges such as
+  `Get-Content -TotalCount`, `Get-Content -Tail`, and `Select-String` on
+  PowerShell.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.
-- Do not build zip archives or run every available check unless the user
-  explicitly asks for that scope.
-- Do not read large files in full by default. Start with targeted searches,
-  `Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
+- Do not produce broad artifacts, such as zip archives, or run full check
+  matrices unless the user explicitly asks for that scope.
 - Final responses should summarize only the changes, checks, and current status;
   do not restate the full investigation context.
 - Search for specific symbols, paths, errors, or patterns before doing broad
@@ -114,17 +115,10 @@ Inspect logs:
   SQLite contents, full logs, generated outputs, or full diffs.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
-- Treat the first user message in a new chat as the chat title when it looks like
-  a short title or project name. In that case, run only the documented startup
-  context restore, then stop and ask what the user wants to do next. Do not
-  execute the title text as a task.
-- If the first user message is a path to a shared instruction library, or a
-  request to connect shared instructions, treat it as an instruction bootstrap.
-  Read the shared rules and deploy a local instruction kit into the current
-  project from the templates/checklist. Do not create only a thin `AGENTS.md`
-  that points back to the shared folder. Do not add the shared folder as a
-  project dependency, package, submodule, symlink, or runtime reference unless
-  the user explicitly asks for that.
+- Treat a short first message as a possible chat title: restore context, then
+  ask what to do next instead of executing the title as a task.
+- Treat a first message that points to a shared instruction library as an
+  instruction bootstrap, not as a request to add that library as a dependency.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.

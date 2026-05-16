@@ -10,7 +10,7 @@ patterns.
 
 ### Instruction Kit Versioning And Update Notices
 
-Status: planned
+Status: implemented 2026-05-15
 
 Goal: let projects that already copied this instruction kit know when accepted
 shared-instruction updates are available, without making projects depend on this

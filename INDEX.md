@@ -4,8 +4,10 @@ Reusable instructions in this repository are grouped by job.
 
 ## User Documents
 
+- `CHANGELOG.md`: accepted instruction-kit changes by version.
 - `USER_GUIDE.md`: short user-facing overview of the main instructions and
   rules.
+- `VERSION.md`: current accepted instruction-kit version.
 
 ## Core Playbooks
 
@@ -18,6 +20,8 @@ Reusable instructions in this repository are grouped by job.
 
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
   AI-agent experience, with Markdown export for review.
+- `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
+  instruction bootstrap behavior.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
 - `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
@@ -35,6 +39,8 @@ Reusable instructions in this repository are grouped by job.
   line guards and `git diff --stat`.
 - `templates/gitignore-agent-memory.template`: ignore snippet for local agent
   memory and runtime noise.
+- `templates/instruction-kit.template.json`: copied provenance and local update
+  check configuration for project instruction kits.
 - `templates/SUMMARY.template.md`: handoff summary template.
 
 ## Update Intake

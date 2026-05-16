@@ -18,60 +18,83 @@ memory folder.
 - `templates/`: copyable starter files for project repositories.
 - `checklists/`: short operational checklists.
 
-## Editing Rules
+## Rule Precedence
+
+- Treat safety, secrets, and destructive-action constraints as highest priority.
+- Follow explicit user requests unless they conflict with safety or repository
+  rules.
+- Let project-local `AGENTS.md`, runbooks, and working agreements override these
+  shared reusable rules when they are more specific.
+- Use these shared rules when project-local guidance is absent or ambiguous.
+- Prefer token economy and optimization after the correct scope is clear.
+
+## Content And Authoring
 
 - Keep instructions reusable across projects.
 - Do not add secrets, credentials, private project data, or local machine paths
   unless the file is explicitly a local example.
+- If a rule applies only to one specific project, do not put it here.
 - Prefer small, focused documents over one giant policy file.
 - When adding a new instruction file, also add it to `INDEX.md`.
-- If a rule applies only to one specific project, do not put it here.
+- Write instruction documents in imperative voice, with one rule per bullet when
+  practical.
+- Avoid long nested conditionals, filler, narration, and non-actionable prose.
 - Use clear Markdown headings and copy-pasteable examples.
+
+## Tool Usage And Token Economy
+
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
-  targeted `Select-String` queries for relevant files or patterns.
+  targeted queries for relevant files or patterns.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
-  targeted searches, heads, tails, or small line ranges.
-- For verification, count or query HTML elements programmatically instead of
-  printing the whole HTML document.
-- Do not build zip archives or run every available check unless the user
-  explicitly asks for that scope.
-- Do not read large files in full by default. Start with targeted searches,
-  `Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
-- Final responses should summarize only the changes, checks, and current status;
-  do not restate the full investigation context.
+  targeted searches, heads, tails, or small line ranges, such as
+  `Get-Content -TotalCount`, `Get-Content -Tail`, and `Select-String`.
+- Command examples use PowerShell on Windows. Use equivalent head, tail,
+  line-range, and targeted-search commands on other shells.
 - Search for specific symbols, paths, errors, or patterns before doing broad
   repository scans.
 - Do not print large logs. Prefer tails and targeted error searches.
+- For verification, count or query HTML elements programmatically instead of
+  printing the whole HTML document.
+- Do not produce broad artifacts, such as zip archives, or run full check
+  matrices unless the user explicitly asks for that scope.
+- Broader scans, longer logs, or larger check suites are acceptable for incident
+  debugging, explicit user requests, release checks, or unclear failures after
+  targeted searches.
+- Final responses should summarize only the changes, checks, and current status;
+  do not restate the full investigation context.
+
+## Scope And Startup Behavior
+
+- Ask before expanding into unrelated scope. Proceed without asking only when
+  the expansion is required for the stated goal and remains low-risk.
+- Follow `patterns/FIRST_MESSAGE_HANDLING.md` for first-message title handling
+  and shared-instruction bootstrap requests.
+
+## UI And Focus
+
 - Launch applications in the background so focus does not jump away from the
   user's current window.
-- Treat the first user message in a new chat as the chat title when it looks like
-  a short title or project name. In that case, run only the documented startup
-  context restore, then stop and ask what the user wants to do next. Do not
-  execute the title text as a task.
-- If the first user message is a path to this shared instruction library, or a
-  request to connect shared instructions, treat it as an instruction bootstrap.
-  Read the shared rules and deploy a local instruction kit into the current
-  project from the templates/checklist. Do not create only a thin `AGENTS.md`
-  that points back to this folder. Do not add the shared folder as a project
-  dependency, package, submodule, symlink, or runtime reference unless the user
-  explicitly asks for that.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
-- `updates/` is the dated intake queue for recommendations used only while
-  maintaining this `general-instructions` repository. External projects that
-  consume these shared instructions must not read `updates/` during startup or
-  bootstrap. Review update files newest-first only when maintaining this
-  library, and remember accepted updates by moving reusable rules into the main
-  library and committing them.
+
+## Update Intake
+
+- When maintaining this `general-instructions` repository, treat `updates/` as a
+  dated intake queue. Review update files newest-first, move accepted reusable
+  rules into the main library, and remember accepted updates by committing them.
+- External projects that consume these shared instructions must not read
+  `updates/` during startup or bootstrap.
 - When another project reveals a reusable improvement to shared instructions,
   write a dated recommendation to this repository's `updates/` folder if it is
-  available. Treat those files as intake only. If this repository is unavailable,
-  use a project-local intake folder such as `tools/instruction-updates/` or
-  `tools/project-memory/instruction-updates/` with the same dated filename
-  pattern. Do not add this repository as a dependency, package, submodule,
-  symlink, or runtime reference unless the user explicitly asks for that.
+  available.
+- If this repository is unavailable, use a project-local intake folder such as
+  `tools/instruction-updates/` or `tools/project-memory/instruction-updates/`
+  with the same dated filename pattern.
+- Treat recommendations as intake only. Do not add this repository as a
+  dependency, package, submodule, symlink, or runtime reference unless the user
+  explicitly asks for that.
 
 ## Verification
 
@@ -83,6 +106,9 @@ git diff --check
 
 For larger changes, reread the edited files and confirm links, paths, and
 checklists still match the repository layout.
+
+If adding a file under `templates/`, `patterns/`, or `checklists/`, update
+`INDEX.md` in the same change.
 
 ## Git Policy
 

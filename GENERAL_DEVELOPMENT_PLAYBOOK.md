@@ -36,6 +36,8 @@ Minimum contents:
 
 - `README.md`: what memory exists and how to use it.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
+- `instruction-kit.json`: copied instruction-kit provenance and local update
+  check configuration when the project uses a shared instruction library.
 - Local agent memory database or index, ignored by git when large/generated.
 - A command to rebuild the index from source files.
 - A command to save durable investigation notes.
@@ -126,58 +128,22 @@ It should print:
 The goal is that a new chat can become useful in minutes.
 
 Startup scripts must stay compact. Do not dump large files, full runbooks, full
-logs, full SQLite contents, generated files, or full diffs. Use line guards,
-`Get-Content -TotalCount`, `Get-Content -Tail`, `Select-String`, and
-`git diff --stat`.
+logs, full SQLite contents, generated files, or full diffs. Use line guards and
+targeted queries, such as `Get-Content -TotalCount`, `Get-Content -Tail`,
+`Select-String`, and `git diff --stat` on PowerShell.
+
+If the project has `tools/project-memory/instruction-kit.json`, the startup
+script may compare its installed version with a configured local shared
+instruction library's `VERSION.md` and print a compact update notice. It should
+point to accepted release artifacts such as `CHANGELOG.md`, not to `updates/`.
 
 On startup or after context loss, the agent should continue from recorded state,
 not from memory alone. It should read the latest summary, inspect relevant diffs,
 and only then edit files.
 
-Do not dump full `git diff` output into chat or startup context by default. Use
-`git diff --stat` for the overview and targeted `Select-String` commands for
-specific files, symbols, errors, or patterns.
-
-Do not read large files in full by default, including large `index.html`,
-bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
-targeted searches, heads, tails, or small line ranges.
-
-For verification, count or query HTML elements programmatically instead of
-printing the whole HTML document.
-
-Do not build zip archives or run every available check unless the user
-explicitly asks for that scope.
-
-Do not read large files in full by default. Start with targeted searches,
-`Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
-
-Search for specific symbols, paths, errors, or patterns before doing broad
-repository scans.
-
-Do not print large logs. Prefer tails and targeted error searches.
-
-Final responses should summarize only the changes, checks, and current status;
-do not restate the full investigation context.
-
-Launch applications in the background so focus does not jump away from the
-user's current window.
-
-Treat the first user message in a new chat as the chat title when it looks like
-a short title or project name. In that case, run only the documented startup
-context restore, then stop and ask what the user wants to do next. Do not
-execute the title text as a task.
-
-If the first user message is a path to a shared instruction library, or a
-request to connect shared instructions, treat it as an instruction bootstrap.
-Read the shared rules and deploy a local instruction kit into the current
-project from the templates/checklist. Do not create only a thin `AGENTS.md` that
-points back to the shared folder. Do not add the shared folder as a project
-dependency, package, submodule, symlink, or runtime reference unless the user
-explicitly asks for that.
-
-For web applications, assume the user will inspect the UI manually. Do not open,
-browse, screenshot, or visually inspect the UI automatically unless the user
-explicitly asks for that.
+Use `patterns/RAG_STARTUP_FLOW.md` for token-conscious context restoration and
+`patterns/FIRST_MESSAGE_HANDLING.md` for first-message title or bootstrap
+behavior.
 
 ## 4. Write Working Agreements
 
@@ -295,38 +261,9 @@ Write the policy clearly:
 - Whether generated files are committed.
 - What must never be committed.
 - How to handle unrelated dirty files.
-- Do not print full `git diff` output by default; use `git diff --stat` and
-  targeted `Select-String` instead.
-- Do not read large files in full by default, including large `index.html`,
-  bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
-  targeted searches, heads, tails, or small line ranges.
-- For verification, count or query HTML elements programmatically instead of
-  printing the whole HTML document.
-- Do not build zip archives or run every available check unless the user
-  explicitly asks for that scope.
-- Do not read large files in full by default. Start with targeted searches,
-  `Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
-- Search for specific symbols, paths, errors, or patterns before doing broad
-  repository scans.
-- Do not print large logs. Prefer tails and targeted error searches.
-- Final responses should summarize only the changes, checks, and current status;
-  do not restate the full investigation context.
-- Launch applications in the background so focus does not jump away from the
-  user's current window.
-- Treat the first user message in a new chat as the chat title when it looks
-  like a short title or project name. In that case, run only the documented
-  startup context restore, then stop and ask what the user wants to do next. Do
-  not execute the title text as a task.
-- If the first user message is a path to a shared instruction library, or a
-  request to connect shared instructions, treat it as an instruction bootstrap.
-  Read the shared rules and deploy a local instruction kit into the current
-  project from the templates/checklist. Do not create only a thin `AGENTS.md`
-  that points back to the shared folder. Do not add the shared folder as a
-  project dependency, package, submodule, symlink, or runtime reference unless
-  the user explicitly asks for that.
-- For web applications, assume the user will inspect the UI manually. Do not
-  open, browse, screenshot, or visually inspect the UI automatically unless the
-  user explicitly asks for that.
+- Default diff review command, such as `git diff --stat`.
+- Whether full diffs are allowed in chat. Default: avoid full diff dumps unless
+  the user explicitly asks.
 
 Default safe rule: the agent edits and verifies; the user reviews and commits.
 
@@ -375,6 +312,7 @@ The next chat should never have to reconstruct the previous session from vibes.
 - [ ] `tools/summary/`
 - [ ] `tools/project-memory/README.md`
 - [ ] `tools/project-memory/STUDY_PLAN.md`
+- [ ] `tools/project-memory/instruction-kit.json`
 - [ ] Optional local agent memory SQLite/index script
 - [ ] Optional Markdown export for durable agent notes
 - [ ] Two-layer memory policy: concise Markdown for review, SQLite for
@@ -399,37 +337,10 @@ Startup context should include only:
 Prefer retrieval over dumping context.
 Prefer short summaries over raw logs.
 Prefer file excerpts over full files.
-Prefer targeted `Select-String` queries over full diff dumps.
-Avoid reading large files in full unless the task truly requires it, including
-large `index.html`, bundled JS/CSS, logs, lockfiles, generated files, and build
-artifacts.
-For HTML verification, count or query elements programmatically instead of
-printing the whole document.
-Do not build zip archives or run every available check unless the user
-explicitly asks for that scope.
-Do not read large files in full by default. Start with targeted searches,
-`Get-Content -TotalCount`, `Get-Content -Tail`, or small line ranges.
-Search for specific symbols, paths, errors, or patterns before doing broad
-repository scans.
-Do not print large logs. Prefer tails and targeted error searches.
-Final responses should summarize only the changes, checks, and current status;
-do not restate the full investigation context.
-Launch applications in the background so focus does not jump away from the
-user's current window.
-Treat the first user message in a new chat as the chat title when it looks like
-a short title or project name. In that case, run only the documented startup
-context restore, then stop and ask what the user wants to do next. Do not
-execute the title text as a task.
-If the first user message is a path to a shared instruction library, or a
-request to connect shared instructions, treat it as an instruction bootstrap.
-Read the shared rules and deploy a local instruction kit into the current
-project from the templates/checklist. Do not create only a thin `AGENTS.md` that
-points back to the shared folder. Do not add the shared folder as a project
-dependency, package, submodule, symlink, or runtime reference unless the user
-explicitly asks for that.
-For web applications, assume the user will inspect the UI manually. Do not open,
-browse, screenshot, or visually inspect the UI automatically unless the user
-explicitly asks for that.
+Prefer targeted searches over full diff dumps.
+Avoid broad artifacts, full check matrices, large logs, and whole-file reads
+unless the user asks for that scope or targeted investigation cannot isolate the
+failure.
 
 ## Instruction Update Intake
 
@@ -441,14 +352,21 @@ updates/
 ```
 
 Treat those files as an intake queue for maintaining `general-instructions`, not
-as automatically accepted rules and not as startup context for external
-projects. When maintaining this library:
+as automatically accepted rules.
+
+External projects:
+
+- May write dated recommendations to `updates/` when the shared library is
+  available.
+- Must not read `updates/` during startup or bootstrap.
+- Must not add the shared library as a dependency, package, submodule, symlink,
+  or runtime reference unless the user explicitly asks.
+
+When maintaining this library:
 
 - Review update files by date, newest first.
 - Read only the specific update being evaluated, not the whole folder by
   default.
-- External projects that consume these shared instructions must not read
-  `updates/` during startup or bootstrap.
 - Extract reusable rules, patterns, templates, or checklist items into the main
   library.
 - Keep project-specific details out of shared instructions.
@@ -456,26 +374,12 @@ projects. When maintaining this library:
   files, full diffs, logs, SQLite contents, generated outputs, or all memory.
 - Remember accepted updates by committing the resulting instruction changes.
 
-## Codex Usage Awareness
+## Usage Awareness
 
-The agent must monitor current Codex usage limits.
+Prefer retrieval, concise summaries, targeted checks, and scoped edits
+throughout the session. Do not wait until usage is nearly exhausted to become
+token-conscious.
 
-When 5-hour usage exceeds:
-- 60% -> warn lightly
-- 75% -> recommend switching to scoped/local workflows
-- 85% -> strongly warn before expensive operations
-- 95% -> avoid large agent loops, full-repo analysis, or heavy tool usage unless explicitly approved
-
-Expensive operations include:
-- full repository scans
-- long reasoning chains
-- repeated retries
-- large multi-file edits
-- sandbox-heavy workflows
-- huge context restores
-
-When nearing limits:
-- prefer retrieval over full context
-- prefer summaries over raw logs
-- prefer local models for preprocessing
-- reduce token usage aggressively
+Before expensive operations such as full repository scans, repeated retries,
+large multi-file edits, or huge context restores, confirm that the scope is
+needed for the user's goal.
