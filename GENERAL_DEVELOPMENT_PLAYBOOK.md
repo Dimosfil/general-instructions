@@ -65,7 +65,7 @@ tools/project-memory/instruction-updates/
 Use this filename pattern:
 
 ```text
-YYYY-MM-DD_HH-mm-ss_CODEX_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
+YYYY-MM-DD_HH-mm-ss_AGENT_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
 ```
 
 Keep project-specific details out of reusable instruction recommendations unless
@@ -113,7 +113,7 @@ Create one command that restores project context.
 Example:
 
 ```powershell
-.\tools\codex-start.ps1
+.\tools\agent-start.ps1
 ```
 
 It should print:
@@ -150,7 +150,7 @@ behavior.
 Create:
 
 ```text
-tools/CODEX_WORKING_AGREEMENTS.md
+tools/AGENT_WORKING_AGREEMENTS.md
 ```
 
 Include:
@@ -173,7 +173,7 @@ Include:
 Create:
 
 ```text
-tools/CODEX_RUNBOOK.md
+tools/AGENT_RUNBOOK.md
 ```
 
 It should answer:
@@ -199,7 +199,7 @@ tools/summary/
 After meaningful work, write a concise summary named:
 
 ```text
-YYYY-MM-DD_HH-mm-ss_CODEX_WORK_SUMMARY.md
+YYYY-MM-DD_HH-mm-ss_AGENT_WORK_SUMMARY.md
 ```
 
 Include:
@@ -307,8 +307,8 @@ The next chat should never have to reconstruct the previous session from vibes.
 - [ ] Root `AGENTS.md`
 - [ ] Root `README.md` with human setup and AI redirect
 - [ ] `.gitignore`
-- [ ] `tools/CODEX_WORKING_AGREEMENTS.md`
-- [ ] `tools/CODEX_RUNBOOK.md`
+- [ ] `tools/AGENT_WORKING_AGREEMENTS.md`
+- [ ] `tools/AGENT_RUNBOOK.md`
 - [ ] `tools/summary/`
 - [ ] `tools/project-memory/README.md`
 - [ ] `tools/project-memory/STUDY_PLAN.md`

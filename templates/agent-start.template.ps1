@@ -107,11 +107,11 @@ function Write-SmallFile {
 Write-InstructionKitUpdateNotice
 
 Write-SmallFile -Path "AGENTS.md" -Title "AGENTS.md"
-Write-SmallFile -Path "tools/CODEX_WORKING_AGREEMENTS.md" -Title "Working Agreements"
+Write-SmallFile -Path "tools/AGENT_WORKING_AGREEMENTS.md" -Title "Working Agreements"
 
 $summaryDir = "tools/summary"
 if (Test-Path -LiteralPath $summaryDir) {
-    $latestSummary = Get-ChildItem -LiteralPath $summaryDir -Filter "*_CODEX_WORK_SUMMARY.md" |
+    $latestSummary = Get-ChildItem -LiteralPath $summaryDir -Filter "*_AGENT_WORK_SUMMARY.md" |
         Sort-Object LastWriteTime -Descending |
         Select-Object -First 1
     if ($latestSummary) {
@@ -127,10 +127,10 @@ Write-Host ""
 Write-Host "== Git Diff Stat =="
 git diff --stat
 
-if (Test-Path -LiteralPath "tools/CODEX_RUNBOOK.md") {
+if (Test-Path -LiteralPath "tools/AGENT_RUNBOOK.md") {
     Write-Host ""
     Write-Host "== Runbook Command Hints =="
-    Select-String -Path "tools/CODEX_RUNBOOK.md" -Pattern "```|Install|Run|Test|Build|Smoke|Logs|powershell|npm|pnpm|yarn|dotnet|pytest|cargo|go test" -CaseSensitive:$false |
+    Select-String -Path "tools/AGENT_RUNBOOK.md" -Pattern "```|Install|Run|Test|Build|Smoke|Logs|powershell|npm|pnpm|yarn|dotnet|pytest|cargo|go test" -CaseSensitive:$false |
         Select-Object -First 80 |
         ForEach-Object { $_.Line }
 }

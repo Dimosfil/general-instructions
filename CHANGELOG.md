@@ -2,6 +2,14 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.16
+
+- Renamed active project templates and copied project paths from tool-specific
+  names to generic agent names.
+- Updated startup, runbook, working-agreement, summary, checklist, bootstrap,
+  and index guidance to use agent-neutral wording.
+- Bumped copied instruction-kit provenance to `2026.05.16`.
+
 ## 2026.05.15
 
 - Refactored `AGENTS.md` into focused sections for rule precedence, authoring,

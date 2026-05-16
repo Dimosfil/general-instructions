@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.15",
+  "instruction_kit_version": "2026.05.16",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -8,9 +8,9 @@
   },
   "copied_files": [
     "AGENTS.md",
-    "tools/CODEX_WORKING_AGREEMENTS.md",
-    "tools/CODEX_RUNBOOK.md",
-    "tools/codex-start.ps1",
+    "tools/AGENT_WORKING_AGREEMENTS.md",
+    "tools/AGENT_RUNBOOK.md",
+    "tools/agent-start.ps1",
     "tools/project-memory/README.md",
     "tools/project-memory/STUDY_PLAN.md",
     "tools/project-memory/pending-tasks.md",

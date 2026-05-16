@@ -1,8 +1,8 @@
-﻿# Codex Recommended General Instructions Updates
+# Agent Recommended General Instructions Updates
 
 Date: 2026-05-13
 Target repository: `D:\AI\general-instructions`
-Audience: future Codex agents maintaining the reusable instruction library
+Audience: future AI agents maintaining the reusable instruction library
 
 ## Summary
 
@@ -48,17 +48,17 @@ Rules to include:
 Create:
 
 ```text
-templates/codex-start.template.ps1
+templates/agent-start.template.ps1
 ```
 
 Suggested behavior from project root:
 
 - Print `AGENTS.md` if present.
-- Print `tools/CODEX_WORKING_AGREEMENTS.md` if present.
+- Print `tools/AGENT_WORKING_AGREEMENTS.md` if present.
 - Print the latest file in `tools/summary/` if present.
 - Show `git status --short`.
 - Show `git diff --stat` instead of full diff.
-- Show available run/test/build commands from `tools/CODEX_RUNBOOK.md` or remind that they are TODO.
+- Show available run/test/build commands from `tools/AGENT_RUNBOOK.md` or remind that they are TODO.
 - Optionally show how to run project-memory search if an index script exists.
 
 The script should avoid dumping large logs, full diffs, full SQLite contents, or full generated files.
@@ -96,7 +96,7 @@ templates/SUMMARY.template.md
 Suggested sections:
 
 ```markdown
-# Codex Work Summary
+# Agent Work Summary
 
 Date: TODO
 
@@ -131,7 +131,7 @@ TODO
 
 ### 5. Reduce duplicated guidance in the playbook and templates
 
-Several rules currently appear multiple times in `GENERAL_DEVELOPMENT_PLAYBOOK.md`, `AGENTS.md`, and `templates/CODEX_WORKING_AGREEMENTS.template.md`:
+Several rules currently appear multiple times in `GENERAL_DEVELOPMENT_PLAYBOOK.md`, `AGENTS.md`, and `templates/AGENT_WORKING_AGREEMENTS.template.md`:
 
 - Do not read large files in full by default.
 - Prefer targeted searches, heads, tails, and small line ranges.
@@ -158,13 +158,13 @@ checklists/NEW_PROJECT_AGENT_SETUP.md
 Add references to:
 
 - `patterns/RAG_STARTUP_FLOW.md`
-- `templates/codex-start.template.ps1`
+- `templates/agent-start.template.ps1`
 - `templates/gitignore-agent-memory.template`
 - `templates/SUMMARY.template.md`
 
 Checklist additions:
 
-- [ ] Copy or adapt `templates/codex-start.template.ps1` into `tools/codex-start.ps1`.
+- [ ] Copy or adapt `templates/agent-start.template.ps1` into `tools/agent-start.ps1`.
 - [ ] Add agent-memory ignore rules to `.gitignore`.
 - [ ] Decide whether the project uses SQLite memory, Markdown-only memory, or both.
 - [ ] Confirm startup retrieval loads only task-relevant context.
@@ -179,4 +179,4 @@ Checklist additions:
 
 ## Bottom Line
 
-The library is correct as-is, but these additions would make the RAG/project-memory setup more turnkey for new projects and easier for future Codex sessions to follow consistently.
+The library is correct as-is, but these additions would make the RAG/project-memory setup more turnkey for new projects and easier for future agent sessions to follow consistently.

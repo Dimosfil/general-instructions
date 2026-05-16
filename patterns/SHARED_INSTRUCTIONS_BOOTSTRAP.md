@@ -4,7 +4,7 @@ Use this when a user starts a new project by giving a path to the shared
 instruction library, for example:
 
 ```text
-Подключи общие инструкции: D:\AI\general-instructions
+Connect shared instructions: D:\AI\general-instructions
 ```
 
 ## Meaning
@@ -27,12 +27,12 @@ It does not mean:
    relevant templates.
 2. Create or adapt local project files from templates:
    - root `AGENTS.md`
-   - `tools/CODEX_WORKING_AGREEMENTS.md`
-   - `tools/CODEX_RUNBOOK.md`
+   - `tools/AGENT_WORKING_AGREEMENTS.md`
+   - `tools/AGENT_RUNBOOK.md`
    - `tools/project-memory/README.md`
    - `tools/project-memory/STUDY_PLAN.md`
    - `tools/summary/`
-   - `tools/codex-start.ps1`
+   - `tools/agent-start.ps1`
 3. Add agent-memory ignore rules to the local `.gitignore` when appropriate.
 4. Keep the local files project-owned and editable.
 5. Mention the shared library only as the source used for bootstrapping, not as a

@@ -7,7 +7,7 @@ Use it as an intake queue for improvements to the reusable instruction library.
 Files should be named with a date/time prefix, for example:
 
 ```text
-YYYY-MM-DD_HH-mm-ss_CODEX_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
+YYYY-MM-DD_HH-mm-ss_AGENT_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
 ```
 
 ## Rules

@@ -6,8 +6,8 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Add `README.md` note: `For AI agents: read AGENTS.md first.`
 - [ ] Add `.github/copilot-instructions.md`, `CLAUDE.md`, or `GEMINI.md` only
   as small redirects when needed.
-- [ ] Add `tools/CODEX_WORKING_AGREEMENTS.md`.
-- [ ] Add `tools/CODEX_RUNBOOK.md`.
+- [ ] Add `tools/AGENT_WORKING_AGREEMENTS.md`.
+- [ ] Add `tools/AGENT_RUNBOOK.md`.
 - [ ] Add `tools/project-memory/README.md`.
 - [ ] Add `tools/project-memory/STUDY_PLAN.md`.
 - [ ] Copy or adapt `templates/pending-tasks.template.md` into
@@ -18,8 +18,8 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.
 - [ ] Add `tools/summary/`.
-- [ ] Copy or adapt `templates/codex-start.template.ps1` into
-  `tools/codex-start.ps1`.
+- [ ] Copy or adapt `templates/agent-start.template.ps1` into
+  `tools/agent-start.ps1`.
 - [ ] Confirm the startup script reports instruction-kit updates only from
   accepted release artifacts such as `VERSION.md` and `CHANGELOG.md`, not from
   `updates/`.

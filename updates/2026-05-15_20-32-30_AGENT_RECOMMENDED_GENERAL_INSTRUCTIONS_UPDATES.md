@@ -1,8 +1,8 @@
-# Codex Recommended General Instructions Updates
+# Agent Recommended General Instructions Updates
 
 Date: 2026-05-15
 Target repository: `D:\AI\general-instructions`
-Audience: future Codex agents maintaining the reusable instruction library
+Audience: future AI agents maintaining the reusable instruction library
 
 ## Summary
 
@@ -95,7 +95,7 @@ Suggested precedence:
 Check these files for duplicate or overly long shared rules:
 
 - `templates/AGENTS.template.md`
-- `templates/CODEX_WORKING_AGREEMENTS.template.md`
+- `templates/AGENT_WORKING_AGREEMENTS.template.md`
 
 Keep project-local templates concise while preserving the core behavior.
 

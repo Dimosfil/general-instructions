@@ -89,8 +89,8 @@
 ## Шаблоны
 
 - `templates/AGENTS.template.md`: стартовый `AGENTS.md` для проекта.
-- `templates/CODEX_RUNBOOK.template.md`: runbook проекта.
-- `templates/CODEX_WORKING_AGREEMENTS.template.md`: рабочие соглашения.
+- `templates/AGENT_RUNBOOK.template.md`: runbook проекта.
+- `templates/AGENT_WORKING_AGREEMENTS.template.md`: рабочие соглашения.
 - `templates/project-memory-README.template.md`: описание project memory.
 - `templates/STUDY_PLAN.template.md`: план изучения проекта.
 

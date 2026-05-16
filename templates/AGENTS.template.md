@@ -10,15 +10,15 @@ surface.
 Start here:
 
 ```powershell
-.\tools\codex-start.ps1
+.\tools\agent-start.ps1
 ```
 
 If the startup script is unavailable, read:
 
 - `AGENTS.md`
 - latest file in `tools/summary/`
-- `tools/CODEX_WORKING_AGREEMENTS.md`
-- `tools/CODEX_RUNBOOK.md`
+- `tools/AGENT_WORKING_AGREEMENTS.md`
+- `tools/AGENT_RUNBOOK.md`
 - relevant notes in `tools/project-memory/`
 
 Use the RAG startup flow: retrieve only task-relevant context, search memory by

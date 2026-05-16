@@ -1,4 +1,4 @@
-# Codex Runbook
+# Agent Runbook
 
 Every command should be copy-pasteable from the project root.
 

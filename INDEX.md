@@ -30,12 +30,12 @@ Reusable instructions in this repository are grouped by job.
 ## Templates
 
 - `templates/AGENTS.template.md`: starter root `AGENTS.md` for a project.
-- `templates/CODEX_RUNBOOK.template.md`: starter project runbook.
-- `templates/CODEX_WORKING_AGREEMENTS.template.md`: starter working agreements.
+- `templates/AGENT_RUNBOOK.template.md`: starter project runbook.
+- `templates/AGENT_WORKING_AGREEMENTS.template.md`: starter working agreements.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
-- `templates/codex-start.template.ps1`: compact startup script template with
+- `templates/agent-start.template.ps1`: compact startup script template with
   line guards and `git diff --stat`.
 - `templates/gitignore-agent-memory.template`: ignore snippet for local agent
   memory and runtime noise.

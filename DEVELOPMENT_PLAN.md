@@ -30,7 +30,7 @@ Proposed approach:
 - Add a copied provenance template, such as
   `templates/instruction-kit.template.json`, so bootstrapped projects can record
   the installed instruction-kit version, source, install date, and copied files.
-- Update `templates/codex-start.template.ps1` so local projects can compare the
+- Update `templates/agent-start.template.ps1` so local projects can compare the
   installed version with a nearby shared instruction library and print a compact
   notice when updates are available.
 - Keep startup checks local-first. For remote/shared repositories, support a

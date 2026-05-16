@@ -1,8 +1,8 @@
-# Codex Recommended General Instructions Updates
+# Agent Recommended General Instructions Updates
 
 Date: 2026-05-14
 Target repository: `D:\AI\general-instructions`
-Audience: future Codex agents maintaining the reusable instruction library
+Audience: future AI agents maintaining the reusable instruction library
 
 ## Summary
 
@@ -20,7 +20,7 @@ Suggested target files after review:
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`
 - `AGENTS.md`
 - `templates/AGENTS.template.md`
-- `templates/CODEX_WORKING_AGREEMENTS.template.md`
+- `templates/AGENT_WORKING_AGREEMENTS.template.md`
 
 Suggested rule:
 
@@ -41,7 +41,7 @@ templates, or checklists:
 - Name the file:
 
   ```text
-  YYYY-MM-DD_HH-mm-ss_CODEX_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
+  YYYY-MM-DD_HH-mm-ss_AGENT_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
   ```
 
 - Treat files in `updates/` as intake recommendations, not automatically
@@ -74,7 +74,7 @@ templates, or checklists:
 Suggested target files after review:
 
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`
-- `templates/CODEX_WORKING_AGREEMENTS.template.md`
+- `templates/AGENT_WORKING_AGREEMENTS.template.md`
 
 Suggested rule:
 
