@@ -21,7 +21,10 @@
 - Follow `tools/project-memory/git-preferences.json` for commit-message
   languages. English is primary; selected additional languages are included when
   the user explicitly asks the agent to commit.
-- To change commit-message languages, run:
+- When the user asks in chat to change commit-message languages, update
+  `tools/project-memory/git-preferences.json` directly and summarize the new
+  setting.
+- If the user explicitly wants to configure languages manually, they can run:
 
 ```powershell
 .\tools\select-git-commit-languages.ps1

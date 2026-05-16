@@ -60,8 +60,14 @@ English should be selected by default and treated as the primary language.
 During project bootstrap, copy the default preferences file and do not pause to
 ask about commit-message languages.
 
-Only run or offer the selector when the user explicitly asks to configure commit
-message languages:
+When the user asks in chat to configure commit-message languages, update
+`tools/project-memory/git-preferences.json` directly and briefly summarize the
+new setting. Ask a short clarification only if the requested languages are
+ambiguous.
+
+Do not answer a chat request only by telling the user to run a PowerShell
+command. The selector is a helper for users who explicitly want to run the
+configuration themselves:
 
 ```powershell
 .\tools\select-git-commit-languages.ps1

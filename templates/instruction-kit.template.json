@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.16.3",
+  "instruction_kit_version": "2026.05.16.4",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -9,7 +9,8 @@
   "applied_migrations": [
     "2026.05.16.1__add_skill_modules",
     "2026.05.16.2__add_git_commit_preferences",
-    "2026.05.16.3__add_instruction_kit_migrations"
+    "2026.05.16.3__add_instruction_kit_migrations",
+    "2026.05.16.4__clarify_agent_update_commands"
   ],
   "copied_files": [
     "AGENTS.md",

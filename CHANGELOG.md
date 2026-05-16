@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Added short user-facing agent prompts for bootstrapping, updating, restoring
+  context, configuring commit-message languages, and requesting commits.
+- Clarified that `Обновись из D:\AI\general-instructions\` is idempotent:
+  bootstrap/init first when no local instruction kit exists, otherwise apply
+  only pending migrations.
+- Clarified that chat requests to configure commit-message languages should
+  update `tools/project-memory/git-preferences.json` directly instead of only
+  telling the user to run a PowerShell helper.
 - Added instruction-kit migrations with `patterns/INSTRUCTION_KIT_MIGRATIONS.md`
   and accepted migration files under `migrations/`.
 - Added `templates/check-instruction-kit-updates.template.ps1` for project-level
