@@ -18,6 +18,20 @@
 - Branch naming: `TODO`.
 - Generated files policy: `TODO`.
 - Never commit secrets, credentials, local databases, logs, or caches.
+- Follow `tools/project-memory/git-preferences.json` for commit-message
+  languages. English is primary; selected additional languages are included when
+  the user explicitly asks the agent to commit.
+- To change commit-message languages, run:
+
+```powershell
+.\tools\select-git-commit-languages.ps1
+```
+
+or:
+
+```powershell
+.\tools\agent-start.ps1 -ConfigureGitCommitLanguages
+```
 
 ## Context Hygiene
 

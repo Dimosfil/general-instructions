@@ -4,6 +4,22 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Added instruction-kit migrations with `patterns/INSTRUCTION_KIT_MIGRATIONS.md`
+  and accepted migration files under `migrations/`.
+- Added `templates/check-instruction-kit-updates.template.ps1` for project-level
+  update checks.
+- Added `patterns/GIT_WORKFLOW.md` with explicit commit-request policy, dirty
+  worktree handling, and commit-message language rules.
+- Added project-local commit-message language preferences with English as the
+  primary language and optional Russian, Spanish, German, or French additions.
+- Added `templates/git-preferences.template.json` and
+  `templates/select-git-commit-languages.template.ps1`.
+- Updated startup restore to show the current commit-message language
+  preferences and how to change them.
+- Added the skill module concept, including `patterns/SKILL_MODULES.md` and
+  `templates/SKILL.template.md`.
+- Updated instruction-kit version parsing to support multiple releases on the
+  same date.
 - Renamed active project templates and copied project paths from tool-specific
   names to generic agent names.
 - Updated startup, runbook, working-agreement, summary, checklist, bootstrap,

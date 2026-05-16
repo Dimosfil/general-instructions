@@ -1,5 +1,6 @@
 param(
-    [int]$MaxLines = 160
+    [int]$MaxLines = 160,
+    [switch]$ConfigureGitCommitLanguages
 )
 
 Set-StrictMode -Version Latest
@@ -14,7 +15,7 @@ function Get-InstructionKitVersion {
         return $null
     }
 
-    $match = Select-String -Path $VersionFile -Pattern '`([0-9]{4}\.[0-9]{2}\.[0-9]{2})`' | Select-Object -First 1
+    $match = Select-String -Path $VersionFile -Pattern '`([0-9]{4}\.[0-9]{2}\.[0-9]{2}(?:\.[0-9]+)?)`' | Select-Object -First 1
     if ($match -and $match.Matches.Count -gt 0) {
         return $match.Matches[0].Groups[1].Value
     }
@@ -104,10 +105,63 @@ function Write-SmallFile {
     Get-Content -LiteralPath $Path -TotalCount $Limit
 }
 
+function Write-GitCommitPreferenceNotice {
+    $gitPreferencesPath = "tools/project-memory/git-preferences.json"
+    Write-Host ""
+    Write-Host "== Git Commit Preferences =="
+
+    if ($ConfigureGitCommitLanguages) {
+        $selectorPath = "tools/select-git-commit-languages.ps1"
+        if (Test-Path -LiteralPath $selectorPath) {
+            & $selectorPath
+            return
+        }
+
+        Write-Host "Could not find $selectorPath."
+        Write-Host "Copy it from templates/select-git-commit-languages.template.ps1."
+        return
+    }
+
+    if (-not (Test-Path -LiteralPath $gitPreferencesPath)) {
+        Write-Host "No git commit language preferences found."
+        Write-Host "[x] 1. English"
+        Write-Host "[ ] 2. Russian"
+        Write-Host "[ ] 3. Spanish"
+        Write-Host "[ ] 4. German"
+        Write-Host "[ ] 5. French"
+        Write-Host "Configure them with: .\tools\select-git-commit-languages.ps1"
+        Write-Host "Or run startup with: .\tools\agent-start.ps1 -ConfigureGitCommitLanguages"
+        return
+    }
+
+    try {
+        $preferences = Get-Content -LiteralPath $gitPreferencesPath -Raw | ConvertFrom-Json
+        $primary = [string]$preferences.commit_message_languages.primary
+        $additional = @($preferences.commit_message_languages.additional | ForEach-Object { [string]$_ })
+        if (-not $primary) {
+            $primary = "English"
+        }
+        Write-Host "Primary: $primary"
+        if ($additional.Count -gt 0) {
+            Write-Host ("Additional: {0}" -f ($additional -join ", "))
+        }
+        else {
+            Write-Host "Additional: none"
+        }
+        Write-Host "Change with: .\tools\select-git-commit-languages.ps1"
+        Write-Host "Or run startup with: .\tools\agent-start.ps1 -ConfigureGitCommitLanguages"
+    }
+    catch {
+        Write-Host "Could not read $gitPreferencesPath."
+        Write-Host "Reconfigure with: .\tools\select-git-commit-languages.ps1"
+    }
+}
+
 Write-InstructionKitUpdateNotice
 
 Write-SmallFile -Path "AGENTS.md" -Title "AGENTS.md"
 Write-SmallFile -Path "tools/AGENT_WORKING_AGREEMENTS.md" -Title "Working Agreements"
+Write-GitCommitPreferenceNotice
 
 $summaryDir = "tools/summary"
 if (Test-Path -LiteralPath $summaryDir) {

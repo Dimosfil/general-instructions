@@ -14,6 +14,18 @@ Use this when preparing a repository for AI-agent collaboration.
   `tools/project-memory/pending-tasks.md`.
 - [ ] Copy or adapt `templates/instruction-kit.template.json` into
   `tools/project-memory/instruction-kit.json`.
+- [ ] Copy or adapt `templates/git-preferences.template.json` into
+  `tools/project-memory/git-preferences.json`.
+- [ ] Copy or adapt `templates/select-git-commit-languages.template.ps1` into
+  `tools/select-git-commit-languages.ps1`.
+- [ ] Run `tools/select-git-commit-languages.ps1` at setup so the project stores
+  commit-message language preferences.
+- [ ] Copy or adapt `templates/check-instruction-kit-updates.template.ps1` into
+  `tools/check-instruction-kit-updates.ps1`.
+- [ ] Confirm instruction updates use accepted `migrations/`, `VERSION.md`, and
+  `CHANGELOG.md`, not `updates/`.
+- [ ] Decide whether the project needs reusable skills. If yes, use
+  `patterns/SKILL_MODULES.md` and `templates/SKILL.template.md`.
 - [ ] Decide whether the project needs local agent memory SQLite/index.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.

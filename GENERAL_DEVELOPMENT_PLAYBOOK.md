@@ -37,7 +37,9 @@ Minimum contents:
 - `README.md`: what memory exists and how to use it.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
 - `instruction-kit.json`: copied instruction-kit provenance and local update
-  check configuration when the project uses a shared instruction library.
+  check configuration, including applied migrations, when the project uses a
+  shared instruction library.
+- `git-preferences.json`: project-local commit message language preferences.
 - Local agent memory database or index, ignored by git when large/generated.
 - A command to rebuild the index from source files.
 - A command to save durable investigation notes.
@@ -120,6 +122,8 @@ It should print:
 
 - `AGENTS.md`
 - working agreements
+- git commit language preferences
+- instruction-kit update notices
 - latest summary
 - `git status --short`
 - useful `git diff --stat` information
@@ -137,6 +141,10 @@ script may compare its installed version with a configured local shared
 instruction library's `VERSION.md` and print a compact update notice. It should
 point to accepted release artifacts such as `CHANGELOG.md`, not to `updates/`.
 
+For applying updates, use `patterns/INSTRUCTION_KIT_MIGRATIONS.md` and a
+project-local command copied from
+`templates/check-instruction-kit-updates.template.ps1`.
+
 On startup or after context loss, the agent should continue from recorded state,
 not from memory alone. It should read the latest summary, inspect relevant diffs,
 and only then edit files.
@@ -145,7 +153,24 @@ Use `patterns/RAG_STARTUP_FLOW.md` for token-conscious context restoration and
 `patterns/FIRST_MESSAGE_HANDLING.md` for first-message title or bootstrap
 behavior.
 
-## 4. Write Working Agreements
+## 4. Define Optional Skills
+
+Use `patterns/SKILL_MODULES.md` to decide whether a reusable capability should
+be a rule, pattern, template, or skill.
+
+Create a skill only when the capability has a clear trigger and is too large or
+too situational for always-loaded project instructions. A typical project-local
+skill lives under:
+
+```text
+skills/TODO-skill-name/SKILL.md
+```
+
+Use `templates/SKILL.template.md` as a starter. Keep skills self-contained,
+small, and free of secrets or project-specific data unless the project owns that
+skill locally.
+
+## 5. Write Working Agreements
 
 Create:
 
@@ -168,7 +193,7 @@ Include:
 - If a change needs files outside the agreed working area, say so before
   expanding scope.
 
-## 5. Write A Runbook
+## 6. Write A Runbook
 
 Create:
 
@@ -188,7 +213,7 @@ It should answer:
 
 Every command should be copy-pasteable.
 
-## 6. Keep Handoff Summaries
+## 7. Keep Handoff Summaries
 
 Create:
 
@@ -213,7 +238,7 @@ Include:
 
 Summaries are for handoff. Durable knowledge belongs in project memory notes.
 
-## 7. Map The Architecture Early
+## 8. Map The Architecture Early
 
 Before large changes, build a first map:
 
@@ -229,7 +254,7 @@ Before large changes, build a first map:
 
 Do not try to understand everything in one pass. Build a searchable index and record small verified findings.
 
-## 8. Establish Quality Gates
+## 9. Establish Quality Gates
 
 Every project should define minimum checks:
 
@@ -252,7 +277,7 @@ Every project should define minimum checks:
 
 If a check cannot run locally, document why.
 
-## 9. Decide Git Rules
+## 10. Decide Git Rules
 
 Write the policy clearly:
 
@@ -264,10 +289,17 @@ Write the policy clearly:
 - Default diff review command, such as `git diff --stat`.
 - Whether full diffs are allowed in chat. Default: avoid full diff dumps unless
   the user explicitly asks.
+- Commit message language preferences. Default: English primary, with optional
+  additional languages stored in `tools/project-memory/git-preferences.json`.
 
 Default safe rule: the agent edits and verifies; the user reviews and commits.
+The agent commits only when the user explicitly asks. Use
+`patterns/GIT_WORKFLOW.md` for the reusable policy and
+`templates/select-git-commit-languages.template.ps1` to configure project-local
+commit-message languages. The startup script may also expose the same selector
+through `tools/agent-start.ps1 -ConfigureGitCommitLanguages`.
 
-## 10. Protect Secrets And Generated Noise
+## 11. Protect Secrets And Generated Noise
 
 Before real work starts:
 
@@ -276,7 +308,7 @@ Before real work starts:
 - Never store credentials in summaries or notes.
 - Document where secret/config examples live.
 
-## 11. Make The First Useful Vertical Slice
+## 12. Make The First Useful Vertical Slice
 
 For a new product, avoid spending the first phase only on structure.
 
@@ -290,7 +322,7 @@ Build one thin but real workflow:
 
 Then expand around a working spine.
 
-## 12. End Every Session Cleanly
+## 13. End Every Session Cleanly
 
 Before stopping:
 
@@ -313,6 +345,10 @@ The next chat should never have to reconstruct the previous session from vibes.
 - [ ] `tools/project-memory/README.md`
 - [ ] `tools/project-memory/STUDY_PLAN.md`
 - [ ] `tools/project-memory/instruction-kit.json`
+- [ ] `tools/project-memory/git-preferences.json`
+- [ ] `tools/select-git-commit-languages.ps1`
+- [ ] `tools/check-instruction-kit-updates.ps1`
+- [ ] Optional project-local skills under `skills/`
 - [ ] Optional local agent memory SQLite/index script
 - [ ] Optional Markdown export for durable agent notes
 - [ ] Two-layer memory policy: concise Markdown for review, SQLite for

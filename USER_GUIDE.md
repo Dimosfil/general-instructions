@@ -91,6 +91,14 @@
 - `templates/AGENTS.template.md`: стартовый `AGENTS.md` для проекта.
 - `templates/AGENT_RUNBOOK.template.md`: runbook проекта.
 - `templates/AGENT_WORKING_AGREEMENTS.template.md`: рабочие соглашения.
+- `patterns/GIT_WORKFLOW.md`, `templates/git-preferences.template.json` и
+  `templates/select-git-commit-languages.template.ps1`: политика Git и выбор
+  языков для commit messages.
+- `patterns/INSTRUCTION_KIT_MIGRATIONS.md`,
+  `templates/check-instruction-kit-updates.template.ps1` и `migrations/`:
+  обновление скопированных инструкций по принципу миграций.
+- `patterns/SKILL_MODULES.md` и `templates/SKILL.template.md`: когда отдельную
+  возможность лучше оформить как reusable skill.
 - `templates/project-memory-README.template.md`: описание project memory.
 - `templates/STUDY_PLAN.template.md`: план изучения проекта.
 

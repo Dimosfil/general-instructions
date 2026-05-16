@@ -5,6 +5,9 @@ Reusable instructions in this repository are grouped by job.
 ## User Documents
 
 - `CHANGELOG.md`: accepted instruction-kit changes by version.
+- `COMMANDS.md`: common commands for bootstrapping projects, restoring context,
+  configuring Git commit languages, checking instruction updates, and
+  maintaining this library.
 - `USER_GUIDE.md`: short user-facing overview of the main instructions and
   rules.
 - `VERSION.md`: current accepted instruction-kit version.
@@ -22,25 +25,39 @@ Reusable instructions in this repository are grouped by job.
   AI-agent experience, with Markdown export for review.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
+- `patterns/GIT_WORKFLOW.md`: git policy, explicit commit requests, dirty
+  worktrees, and commit-message language preferences.
+- `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for
+  copied project instruction kits.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
 - `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
   instruction files from this shared library when the user provides its path.
+- `patterns/SKILL_MODULES.md`: when to use rules, patterns, templates, or
+  self-contained skill modules.
 
 ## Templates
 
 - `templates/AGENTS.template.md`: starter root `AGENTS.md` for a project.
 - `templates/AGENT_RUNBOOK.template.md`: starter project runbook.
 - `templates/AGENT_WORKING_AGREEMENTS.template.md`: starter working agreements.
+- `templates/check-instruction-kit-updates.template.ps1`: project command for
+  checking accepted instruction-kit migrations.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
 - `templates/agent-start.template.ps1`: compact startup script template with
   line guards and `git diff --stat`.
+- `templates/git-preferences.template.json`: project-local commit-message
+  language preference defaults.
 - `templates/gitignore-agent-memory.template`: ignore snippet for local agent
   memory and runtime noise.
 - `templates/instruction-kit.template.json`: copied provenance and local update
   check configuration for project instruction kits.
+- `templates/select-git-commit-languages.template.ps1`: interactive project
+  setup command for commit-message language preferences.
+- `templates/SKILL.template.md`: starter `SKILL.md` for a self-contained agent
+  skill module.
 - `templates/SUMMARY.template.md`: handoff summary template.
 
 ## Update Intake
@@ -48,6 +65,12 @@ Reusable instructions in this repository are grouped by job.
 - `updates/`: maintenance-only dated recommendations for this
   `general-instructions` repository. External projects must not read this folder
   during startup or bootstrap.
+
+## Migrations
+
+- `migrations/`: accepted ordered instruction-kit migrations for consuming
+  projects. External projects may read this folder only when checking or applying
+  instruction updates.
 
 ## Checklists
 

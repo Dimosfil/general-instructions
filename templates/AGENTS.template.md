@@ -119,8 +119,13 @@ Inspect logs:
   ask what to do next instead of executing the title as a task.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
+- When the user asks to check instruction updates, use accepted release
+  artifacts and `migrations/`; do not read the shared library's `updates/`.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
 - Default git policy: agent edits and verifies; user reviews and commits unless
   the project says otherwise.
+- Commit only after an explicit user request. Use
+  `tools/project-memory/git-preferences.json` for commit-message language
+  preferences.
