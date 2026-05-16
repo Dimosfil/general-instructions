@@ -57,7 +57,11 @@ English should be selected by default and treated as the primary language.
 
 ## Selection Workflow
 
-At project setup, run or offer:
+During project bootstrap, copy the default preferences file and do not pause to
+ask about commit-message languages.
+
+Only run or offer the selector when the user explicitly asks to configure commit
+message languages:
 
 ```powershell
 .\tools\select-git-commit-languages.ps1

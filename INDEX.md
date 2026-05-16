@@ -5,9 +5,9 @@ Reusable instructions in this repository are grouped by job.
 ## User Documents
 
 - `CHANGELOG.md`: accepted instruction-kit changes by version.
-- `COMMANDS.md`: common commands for bootstrapping projects, restoring context,
-  configuring Git commit languages, checking instruction updates, and
-  maintaining this library.
+- `COMMANDS.md`: user-facing agent prompts and helper commands for
+  bootstrapping projects, restoring context, configuring Git commit languages,
+  checking instruction updates, and maintaining this library.
 - `USER_GUIDE.md`: short user-facing overview of the main instructions and
   rules.
 - `VERSION.md`: current accepted instruction-kit version.

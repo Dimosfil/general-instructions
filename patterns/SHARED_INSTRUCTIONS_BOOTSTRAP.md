@@ -7,6 +7,14 @@ instruction library, for example:
 Connect shared instructions: D:\AI\general-instructions
 ```
 
+Also use this when the user asks to update from a shared instruction library but
+the current project does not yet have `tools/project-memory/instruction-kit.json`,
+for example:
+
+```text
+Обновись из D:\AI\general-instructions\
+```
+
 ## Meaning
 
 This command means: read the shared instruction library and deploy a local
@@ -37,7 +45,9 @@ It does not mean:
 4. Keep the local files project-owned and editable.
 5. Mention the shared library only as the source used for bootstrapping, not as a
    live dependency.
-6. Stop after setup and ask what the user wants to do next.
+6. Record the copied baseline in `tools/project-memory/instruction-kit.json`
+   with included migrations marked as already applied.
+7. Stop after setup and ask what the user wants to do next.
 
 ## Token Rules
 

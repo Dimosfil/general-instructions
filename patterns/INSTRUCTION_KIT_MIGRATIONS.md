@@ -29,23 +29,40 @@ check instruction updates
 or:
 
 ```text
+Обновись из general-instructions
+```
+
+or:
+
+```text
+Обновись из D:\AI\general-instructions\
+```
+
+or:
+
+```text
 проверь обновления инструкций
 ```
 
 the agent should:
 
-1. Read `tools/project-memory/instruction-kit.json`.
-2. Resolve the shared library path from `update_check.shared_library_path` or
+1. Check whether `tools/project-memory/instruction-kit.json` exists.
+2. If it does not exist, treat the command as a first-time instruction kit
+   bootstrap/init from the requested shared library path, then record the copied
+   kit baseline with included migrations marked as applied.
+3. If it exists, read it.
+4. Resolve the shared library path from the user's command,
+   `update_check.shared_library_path`, or
    `GENERAL_INSTRUCTIONS_HOME`.
-3. Read only accepted release artifacts: `VERSION.md`, `CHANGELOG.md`,
+5. Read only accepted release artifacts: `VERSION.md`, `CHANGELOG.md`,
    `INDEX.md`, and relevant files under `migrations/`.
-4. Do not read `updates/`.
-5. Identify migrations that are not listed in `applied_migrations`.
-6. Apply pending migrations in filename order.
-7. Merge project-owned files carefully; do not overwrite project-specific
+6. Do not read `updates/`.
+7. Identify migrations that are not listed in `applied_migrations`.
+8. Apply pending migrations in filename order.
+9. Merge project-owned files carefully; do not overwrite project-specific
    content without review.
-8. Update `instruction-kit.json` only after successful application.
-9. Summarize changed files, skipped files, conflicts, and checks.
+10. Update `instruction-kit.json` only after successful application.
+11. Summarize changed files, skipped files, conflicts, and checks.
 
 ## Migration File Format
 

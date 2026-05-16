@@ -57,6 +57,9 @@ or:
   ask what to do next instead of executing the title as a task.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
+- If the user asks to update from a shared instruction library and this project
+  has no `tools/project-memory/instruction-kit.json`, treat that as first-time
+  instruction bootstrap/init.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.

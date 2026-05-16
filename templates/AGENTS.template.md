@@ -121,6 +121,9 @@ Inspect logs:
   instruction bootstrap, not as a request to add that library as a dependency.
 - When the user asks to check instruction updates, use accepted release
   artifacts and `migrations/`; do not read the shared library's `updates/`.
+- If the user asks to update from a shared instruction library but this project
+  has no `tools/project-memory/instruction-kit.json`, treat it as a first-time
+  instruction bootstrap/init from that library.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
