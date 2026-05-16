@@ -65,6 +65,18 @@ When the user asks in chat to configure commit-message languages, update
 new setting. Ask a short clarification only if the requested languages are
 ambiguous.
 
+Treat `gi язык коммита: ...` as the short shared-instruction command form for
+this workflow.
+
+Do not infer additional commit-message languages from the user's UI language or
+message language. If the user says only "choose/select commit language" without
+naming languages, ask which additional languages to enable, or offer the
+supported list.
+
+When reporting the change, mention the plain path
+`tools/project-memory/git-preferences.json`. Do not emit malformed markdown
+links or placeholder links.
+
 Do not answer a chat request only by telling the user to run a PowerShell
 command. The selector is a helper for users who explicitly want to run the
 configuration themselves:

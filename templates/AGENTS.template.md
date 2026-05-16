@@ -117,6 +117,10 @@ Inspect logs:
   user's current window.
 - Treat a short first message as a possible chat title: restore context, then
   ask what to do next instead of executing the title as a task.
+- Treat short chat commands that start with `gi` as shared instruction-kit
+  commands for `general-instructions`, not as product work for this project.
+  If a `gi` command is missing a needed parameter, ask one short clarification
+  question instead of guessing.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - When the user asks to check instruction updates, use accepted release

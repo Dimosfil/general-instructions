@@ -32,3 +32,21 @@ In that case:
   runtime reference unless the user explicitly asks for that.
 - Do not read the shared library's `updates/` folder while bootstrapping a
   consuming project.
+
+## GI Command Prefix
+
+Treat short chat commands that start with `gi` as shared instruction-kit
+commands for `general-instructions`, not as product work for the current
+project.
+
+Examples:
+
+- `gi обновись`: check or apply accepted instruction-kit updates.
+- `gi init D:\AI\general-instructions\`: bootstrap/init from that shared
+  library path.
+- `gi язык коммита: Russian`: update commit-message language preferences.
+- `gi язык коммита: English only`: keep English as the only commit-message
+  language.
+
+If a `gi` command is missing a needed parameter, ask one short clarification
+question instead of guessing.

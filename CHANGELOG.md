@@ -4,6 +4,15 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Added the short `gi` chat-command prefix for shared instruction-kit commands,
+  such as `gi обновись`, `gi init D:\AI\general-instructions\`, and
+  `gi язык коммита: Russian`.
+- Clarified that agents must not infer additional commit-message languages from
+  the user's UI or message language; ambiguous requests should get a short
+  clarification question.
+- Clarified that reports about commit-language preference updates should mention
+  `tools/project-memory/git-preferences.json` as a plain path, not a malformed
+  placeholder markdown link.
 - Added short user-facing agent prompts for bootstrapping, updating, restoring
   context, configuring commit-message languages, and requesting commits.
 - Clarified that `Обновись из D:\AI\general-instructions\` is idempotent:

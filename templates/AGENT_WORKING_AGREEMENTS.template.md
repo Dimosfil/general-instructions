@@ -24,6 +24,12 @@
 - When the user asks in chat to change commit-message languages, update
   `tools/project-memory/git-preferences.json` directly and summarize the new
   setting.
+- Do not infer additional commit-message languages from the user's UI language
+  or message language. If the requested languages are ambiguous, ask which
+  additional languages to enable.
+- When reporting this change, mention the plain
+  `tools/project-memory/git-preferences.json` path instead of malformed or
+  placeholder markdown links.
 - If the user explicitly wants to configure languages manually, they can run:
 
 ```powershell
@@ -58,6 +64,10 @@ or:
   user's current window.
 - Treat a short first message as a possible chat title: restore context, then
   ask what to do next instead of executing the title as a task.
+- Treat short chat commands that start with `gi` as shared instruction-kit
+  commands for `general-instructions`, not as product work for this project.
+  If a `gi` command is missing a needed parameter, ask one short clarification
+  question instead of guessing.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - If the user asks to update from a shared instruction library and this project
