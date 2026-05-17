@@ -23,6 +23,9 @@ Reusable instructions in this repository are grouped by job.
 
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
   AI-agent experience, with Markdown export for review.
+- `patterns/AGENT_HARNESS_RUNTIME.md`: runtime pattern for building or auditing
+  model-tool-observation loops, tool permissions, compaction, connectors, evals,
+  and production agent harnesses.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
 - `patterns/GIT_WORKFLOW.md`: git policy, explicit commit requests, dirty

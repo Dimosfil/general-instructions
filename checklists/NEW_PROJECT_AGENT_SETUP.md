@@ -29,6 +29,9 @@ Use this when preparing a repository for AI-agent collaboration.
   apply only pending migrations.
 - [ ] Decide whether the project needs reusable skills. If yes, use
   `patterns/SKILL_MODULES.md` and `templates/SKILL.template.md`.
+- [ ] If the project builds an agentic runtime or model-driven tool loop, use
+  `patterns/AGENT_HARNESS_RUNTIME.md` for harness boundaries, permissions,
+  compaction, connectors, observability, and evals.
 - [ ] Decide whether the project needs local agent memory SQLite/index.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.
