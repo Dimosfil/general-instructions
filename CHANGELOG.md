@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Made instruction-kit update checks tolerant of unavailable saved shared
+  library paths, such as `D:\AI\general-instructions` in environments without a
+  `D:` drive; agents should use `GENERAL_INSTRUCTIONS_HOME`, an explicit command
+  path, or ask for the shared library path instead of failing hard.
+- Added `gi саммари` / `gi summary` as a short shared-instruction command that
+  writes a handoff summary file under `tools/summary/` instead of only replying
+  in chat.
 - Clarified that ambiguous commit-message language selection prompts should use
   a concise Markdown checklist with current selections, not a prose-only list.
 - Added the short `gi` chat-command prefix for shared instruction-kit commands,

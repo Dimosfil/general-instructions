@@ -52,7 +52,10 @@ the agent should:
    kit baseline with included migrations marked as applied.
 3. If it exists, read it.
 4. Resolve the shared library path from the user's command,
-   `update_check.shared_library_path`, or
+   `GENERAL_INSTRUCTIONS_HOME`, or `update_check.shared_library_path`.
+   Prefer a path that exists in the current environment.
+   If the recorded path is unavailable, for example a missing Windows drive,
+   do not fail hard; ask the user for the shared library path or tell them to set
    `GENERAL_INSTRUCTIONS_HOME`.
 5. Read only accepted release artifacts: `VERSION.md`, `CHANGELOG.md`,
    `INDEX.md`, and relevant files under `migrations/`.

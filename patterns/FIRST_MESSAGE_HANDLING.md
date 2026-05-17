@@ -47,6 +47,8 @@ Examples:
 - `gi язык коммита: Russian`: update commit-message language preferences.
 - `gi язык коммита: English only`: keep English as the only commit-message
   language.
+- `gi саммари` or `gi summary`: write a handoff summary file under
+  `tools/summary/`.
 
 If a `gi` command is missing a needed parameter, ask one short clarification
 question instead of guessing.

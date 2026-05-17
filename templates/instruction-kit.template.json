@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.16.6",
+  "instruction_kit_version": "2026.05.16.8",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -12,7 +12,9 @@
     "2026.05.16.3__add_instruction_kit_migrations",
     "2026.05.16.4__clarify_agent_update_commands",
     "2026.05.16.5__clarify_commit_language_selection",
-    "2026.05.16.6__use_checklist_for_commit_language_selection"
+    "2026.05.16.6__use_checklist_for_commit_language_selection",
+    "2026.05.16.7__add_gi_summary_command",
+    "2026.05.16.8__handle_missing_shared_instruction_path"
   ],
   "copied_files": [
     "AGENTS.md",

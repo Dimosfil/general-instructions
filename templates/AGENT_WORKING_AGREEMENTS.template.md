@@ -71,6 +71,8 @@ or:
   commands for `general-instructions`, not as product work for this project.
   If a `gi` command is missing a needed parameter, ask one short clarification
   question instead of guessing.
+- Treat `gi саммари` and `gi summary` as requests to write a handoff summary
+  file under `tools/summary/`, not only as requests to summarize in chat.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - If the user asks to update from a shared instruction library and this project
