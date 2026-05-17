@@ -52,3 +52,7 @@ Examples:
 
 If a `gi` command is missing a needed parameter, ask one short clarification
 question instead of guessing.
+
+Keep the response scoped to the `gi` command. After completing it, summarize only
+that command's result and stop. Do not resume an older product task or previous
+conversation thread unless the user explicitly asks.

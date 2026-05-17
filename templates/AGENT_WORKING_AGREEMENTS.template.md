@@ -71,6 +71,9 @@ or:
   commands for `general-instructions`, not as product work for this project.
   If a `gi` command is missing a needed parameter, ask one short clarification
   question instead of guessing.
+- Keep `gi` command responses scoped to the shared instruction-kit command. Do
+  not resume an older product task after a `gi` command unless the user
+  explicitly asks.
 - Treat `gi саммари` and `gi summary` as requests to write a handoff summary
   file under `tools/summary/`, not only as requests to summarize in chat.
 - Treat a first message that points to a shared instruction library as an

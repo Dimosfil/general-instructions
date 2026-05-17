@@ -4,6 +4,9 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Clarified that `gi` command responses must stay scoped to the shared
+  instruction-kit command and must not resume an older product task unless the
+  user explicitly asks.
 - Made instruction-kit update checks tolerant of unavailable saved shared
   library paths, such as `D:\AI\general-instructions` in environments without a
   `D:` drive; agents should use `GENERAL_INSTRUCTIONS_HOME`, an explicit command
