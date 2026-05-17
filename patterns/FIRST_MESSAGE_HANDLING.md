@@ -56,3 +56,8 @@ question instead of guessing.
 Keep the response scoped to the `gi` command. After completing it, summarize only
 that command's result and stop. Do not resume an older product task or previous
 conversation thread unless the user explicitly asks.
+
+Run `gi` commands against the current project root. Do not switch to another
+repository, the shared instruction library, or a path from an older task unless
+the user explicitly asks. The shared library is only a source of accepted
+instruction-kit artifacts.

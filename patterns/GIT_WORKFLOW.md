@@ -9,6 +9,13 @@ language preferences.
 - The user reviews and commits unless they explicitly ask the agent to commit.
 - Do not run `git commit`, `git push`, branch changes, destructive git commands,
   or history rewrites without an explicit user request.
+- Exception: a successful `gi обновить` / `gi обновись` is an explicit request to
+  commit and push the resulting instruction-kit update changes, if the current
+  project is a git repository with a configured remote and the changes are
+  limited to instruction-kit files.
+- If the current project is not a git repository, still apply successful GI
+  instruction-kit updates when possible, then skip commit/push and report that
+  git is unavailable for this project.
 - Treat dirty worktrees as normal.
 - Do not revert user changes unless the user explicitly asks.
 - Keep changes scoped to the current task.

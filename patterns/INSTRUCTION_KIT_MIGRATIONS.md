@@ -66,6 +66,22 @@ the agent should:
    content without review.
 10. Update `instruction-kit.json` only after successful application.
 11. Summarize changed files, skipped files, conflicts, and checks.
+12. If migrations were applied successfully and the current project is a git
+    repository with a configured remote, commit and push only the instruction-kit
+    update changes.
+13. If unrelated/user changes are present, no git repository or remote exists,
+    push fails, or a conflict remains, do not force it; stop and explain the
+    blocker.
+
+`gi` means `general-instructions`, not `git`. A missing `.git` directory blocks
+only the automatic commit/push step; it does not block checking or applying
+instruction-kit file updates. If there is no git repository, apply the GI update
+when possible, then report that commit/push was skipped because the current
+project is not a git repository.
+
+Run these steps against the current project root. Do not change into another
+project or the shared instruction library to apply consuming-project updates
+unless the user explicitly asks.
 
 ## Migration File Format
 

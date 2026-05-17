@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.16.9",
+  "instruction_kit_version": "2026.05.16.12",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -15,7 +15,10 @@
     "2026.05.16.6__use_checklist_for_commit_language_selection",
     "2026.05.16.7__add_gi_summary_command",
     "2026.05.16.8__handle_missing_shared_instruction_path",
-    "2026.05.16.9__scope_gi_command_responses"
+    "2026.05.16.9__scope_gi_command_responses",
+    "2026.05.16.10__keep_gi_commands_in_current_project",
+    "2026.05.16.11__commit_push_successful_gi_updates",
+    "2026.05.16.12__do_not_require_git_for_gi_updates"
   ],
   "copied_files": [
     "AGENTS.md",

@@ -124,6 +124,12 @@ Inspect logs:
 - Keep `gi` command responses scoped to the shared instruction-kit command. Do
   not resume an older product task after a `gi` command unless the user
   explicitly asks.
+- Run `gi` commands against this project root. Do not switch to another
+  repository, the shared instruction library, or a path from an older task unless
+  the user explicitly asks.
+- `gi` means `general-instructions`, not `git`. Missing `.git` blocks only the
+  automatic commit/push step after a successful GI update; it does not block
+  checking or applying instruction-kit file updates.
 - Treat `gi саммари` and `gi summary` as requests to write a handoff summary
   file under `tools/summary/`, not only as requests to summarize in chat.
 - Treat a first message that points to a shared instruction library as an
@@ -141,3 +147,7 @@ Inspect logs:
 - Commit only after an explicit user request. Use
   `tools/project-memory/git-preferences.json` for commit-message language
   preferences.
+- Exception: after a successful `gi обновить` / `gi обновись`, commit and push
+  only the resulting instruction-kit update changes when this project is a git
+  repository with a configured remote. If unrelated/user changes, no remote,
+  push failure, or conflicts are present, stop and explain the blocker.

@@ -4,6 +4,15 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.16
 
+- Clarified that `gi` means `general-instructions`, not `git`; missing `.git`
+  must not stop instruction-kit updates and only disables the automatic
+  commit/push step.
+- Clarified that after a successful `gi обновить` / `gi обновись`, agents should
+  commit and push the instruction-kit update changes when the current project is
+  a git repository with a configured remote.
+- Clarified that `gi` commands operate on the current project root and must not
+  switch into another repository or the shared instruction library unless the
+  user explicitly asks.
 - Clarified that `gi` command responses must stay scoped to the shared
   instruction-kit command and must not resume an older product task unless the
   user explicitly asks.
