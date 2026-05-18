@@ -151,6 +151,15 @@ or:
   submodule, symlink, or runtime reference unless the user explicitly asks for
   that.
 
+## Task Managers
+
+- Treat task-manager configuration as project-local state.
+- Store the manager API endpoint in `base_url`; do not use a UI URL unless the
+  adapter explicitly says the same URL serves both UI and API.
+- Do not leave enabled manager endpoints empty, guessed, or set to `TODO`.
+- Before posting plans or starting sprint work, verify the workflow-specific
+  manager capabilities, not only generic health.
+
 ## Verification
 
 - Reread edited files after changes.

@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.18.12",
+  "instruction_kit_version": "2026.05.18.13",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -30,7 +30,8 @@
     "2026.05.18.9__add_gi_restore_context_aliases",
     "2026.05.18.10__add_gi_start_sprint_command",
     "2026.05.18.11__clarify_gi_prefix_and_token_economy",
-    "2026.05.18.12__collect_reusable_project_experience_for_gi"
+    "2026.05.18.12__collect_reusable_project_experience_for_gi",
+    "2026.05.18.13__require_project_local_task_manager_api_endpoints"
   ],
   "copied_files": [
     "AGENTS.md",

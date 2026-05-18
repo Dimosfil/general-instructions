@@ -9,7 +9,8 @@ Store non-secret WorkNest settings in `tools/project-memory/task-managers.json`:
 
 - `id`: `worknest`
 - `enabled`: `true` or `false`
-- `base_url`: WorkNest API URL from the project config
+- `base_url`: WorkNest API URL from the project config, not the UI URL unless
+  the same origin explicitly serves both UI and API
 - `workspace`: WorkNest workspace slug or name, if known
 - `project`: WorkNest project slug, board, or list, if known
 - `intake_mode`: `raw` for the current HTTP intake MVP
@@ -21,6 +22,8 @@ shared instruction files or committed project memory.
 `base_url` is required when enabling WorkNest. During setup, get it from the
 project instructions, environment/config, or the user, then write it to
 `tools/project-memory/task-managers.json`. Do not leave `base_url` as `TODO`.
+Treat `base_url` as project-local state; do not copy it from another project
+without user confirmation.
 
 ## Current Intake MVP
 
@@ -37,9 +40,19 @@ npm run dev:api
 Known endpoints:
 
 - `GET /health`
+- `GET /agent-intake/contract`
 - `POST /agent-intake/raw`
 - `GET /agent-intake/raw`
 - `GET /agent-intake/raw/:id`
+- `GET /agent-intake/next-task`
+- `POST /agent-intake/task-completed`
+
+Use `/health` only as a basic liveness check. Before posting a plan, verify the
+raw intake contract or raw intake endpoint. Before running `gi start sprint`,
+verify active/next task and completion endpoints required by the current
+workflow. If `/health` succeeds but required workflow endpoints return missing
+or incompatible responses, report a stale or misconfigured WorkNest API endpoint
+and stop before sending work.
 
 Raw intake payloads are stored under `storage/agent-intake/raw/` in the WorkNest
 project and may contain user-supplied data. Do not commit, print, or log full

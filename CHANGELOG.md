@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.18
 
+- Clarified that task-manager configuration is project-local state and that
+  `base_url` must be the manager API endpoint used for operations, not a UI URL
+  unless an adapter explicitly documents that the same URL serves both UI and
+  API.
+- Added workflow-specific capability checks for task-manager operations so
+  agents do not rely on generic health checks before posting plans or starting
+  sprint work.
 - Added guidance for projects to act as experience sources for `gi` by
   collecting reusable workflows, failure patterns, token-saving tactics, startup
   retrieval improvements, and instruction improvements as reviewable

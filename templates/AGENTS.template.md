@@ -159,6 +159,10 @@ Inspect logs:
   Inspect status, keep unrelated/user changes out, follow commit-message
   preferences, and stop on ambiguous scope, missing remote, conflicts, secrets,
   or push failures.
+- Treat task-manager configuration as project-local state. Store the manager API
+  endpoint in `base_url`; do not use a UI URL unless the adapter explicitly says
+  the same URL serves both UI and API. Verify workflow-specific manager
+  capabilities before posting plans or starting sprint work.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - When the user asks to check instruction updates, use accepted release

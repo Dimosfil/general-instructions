@@ -8,7 +8,7 @@
       "workspace": "TODO",
       "project": "TODO",
       "intake_mode": "raw",
-      "notes": "Store only non-secret task-manager preferences here. Fill base_url when enabling WorkNest."
+      "notes": "Store project-local non-secret task-manager preferences here. base_url is the manager API endpoint, not a UI URL unless the adapter explicitly says the same origin serves both UI and API."
     }
   ]
 }
