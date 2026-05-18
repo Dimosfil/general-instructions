@@ -8,7 +8,7 @@
       "workspace": "TODO",
       "project": "TODO",
       "intake_mode": "raw",
-      "notes": "Store only non-secret task-manager preferences here."
+      "notes": "Store only non-secret task-manager preferences here. Fill base_url when enabling WorkNest."
     }
   ]
 }

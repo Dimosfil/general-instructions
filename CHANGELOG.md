@@ -11,6 +11,10 @@ Accepted changes for the shared instruction library.
 - Clarified that `gi обновить` should immediately offer task-manager selection
   with numbered checkbox options when task-manager sync is newly available but
   not configured.
+- Added `gi план` / `gi post plan` for sending the current work plan to a
+  configured task manager.
+- Clarified that WorkNest setup must fill `base_url` immediately and must not
+  complete with `base_url: "TODO"`.
 - Added short GI git finish commands: `gi пуш` for commit+push, `gi коммит` for
   commit only, `gi только пуш` for push only, and `gi коммит пуш` as an alias
   for commit+push.

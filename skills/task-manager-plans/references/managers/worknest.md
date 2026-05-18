@@ -18,6 +18,10 @@ Store non-secret WorkNest settings in `tools/project-memory/task-managers.json`:
 Do not store API tokens, cookies, passwords, or private workspace data in the
 shared instruction files or committed project memory.
 
+`base_url` is required when enabling WorkNest. During setup, get it from the
+project instructions, environment/config, or the user, then write it to
+`tools/project-memory/task-managers.json`. Do not leave `base_url` as `TODO`.
+
 ## Current Intake MVP
 
 The current WorkNest working version exposes a minimal raw HTTP intake for
@@ -81,17 +85,19 @@ When reading from WorkNest:
 
 When writing to the current WorkNest intake:
 
-1. Prefer `POST /agent-intake/raw` with a compact payload containing:
+1. Require `base_url` in `tools/project-memory/task-managers.json`; ask for it
+   before sending if missing or still `TODO`.
+2. Prefer `POST /agent-intake/raw` with a compact payload containing:
    - `agent`
    - `type`
    - `title` or `body`
    - optional `source`
    - optional `metadata` or `tags`
-2. Use `type: "task"` for task candidates unless the plan item is clearly an
+3. Use `type: "task"` for task candidates unless the plan item is clearly an
    idea, note, report, project candidate, decision, or unknown.
-3. Treat the raw intake response as a receipt, not as proof that a WorkNest card
+4. Treat the raw intake response as a receipt, not as proof that a WorkNest card
    exists.
-4. Do not auto-edit WorkNest project files. The parser/router and later
+5. Do not auto-edit WorkNest project files. The parser/router and later
    accept/reject flow decide what becomes a real card.
 
 When writing to a future concrete WorkNest task API:
