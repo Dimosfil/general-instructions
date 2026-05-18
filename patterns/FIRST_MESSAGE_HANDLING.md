@@ -49,6 +49,14 @@ Examples:
   language.
 - `gi саммари` or `gi summary`: write a handoff summary file under
   `tools/summary/`.
+- `gi гит-обзор` or `gi git summary`: summarize the latest git commit in the
+  current project without printing a full diff.
+- `gi тест-план` or `gi test plan`: build a project-aware test plan for a new
+  feature, bug fix, or release check.
+- `gi коммит`: commit scoped current changes without pushing.
+- `gi пуш` or `gi коммит пуш`: commit scoped current changes, then push the
+  current branch.
+- `gi только пуш`: push existing local commits without creating a new commit.
 
 If a `gi` command is missing a needed parameter, ask one short clarification
 question instead of guessing.

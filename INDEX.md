@@ -32,6 +32,8 @@ Reusable instructions in this repository are grouped by job.
   worktrees, and commit-message language preferences.
 - `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for
   copied project instruction kits.
+- `patterns/PROJECT_TESTING_STRATEGY.md`: project-aware testing strategy for
+  new features, bug fixes, smoke checks, and release confidence.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
 - `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
@@ -51,6 +53,8 @@ Reusable instructions in this repository are grouped by job.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
 - `templates/agent-start.template.ps1`: compact startup script template with
   line guards and `git diff --stat`.
+- `templates/FEATURE_TEST_PLAN.template.md`: copyable plan for verifying a new
+  feature or risky change.
 - `templates/git-preferences.template.json`: project-local commit-message
   language preference defaults.
 - `templates/gitignore-agent-memory.template`: ignore snippet for local agent

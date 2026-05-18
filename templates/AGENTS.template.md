@@ -132,6 +132,21 @@ Inspect logs:
   checking or applying instruction-kit file updates.
 - Treat `gi саммари` and `gi summary` as requests to write a handoff summary
   file under `tools/summary/`, not only as requests to summarize in chat.
+- Treat `gi гит-обзор` and `gi git summary` as requests to summarize the latest
+  git commit in the current project in chat. Include commit metadata, changed
+  files, compact stats, inferred purpose, and notable risks or checks. Do not
+  print a full diff, create a summary file, commit, or push for this command.
+- Treat `gi тест-план` and `gi test plan` as requests to inspect local project
+  test commands and produce a compact verification plan for the current feature,
+  bug fix, or release check. Plan first; run checks only when the user asks or
+  when the current task already requires verification.
+- Treat `gi коммит`, `gi пуш`, `gi коммит пуш`, and `gi только пуш` as explicit
+  git finish requests. `gi коммит` commits scoped current changes only; `gi пуш`
+  and `gi коммит пуш` commit scoped current changes and push the current branch;
+  `gi только пуш` pushes existing local commits without creating a new commit.
+  Inspect status, keep unrelated/user changes out, follow commit-message
+  preferences, and stop on ambiguous scope, missing remote, conflicts, secrets,
+  or push failures.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - When the user asks to check instruction updates, use accepted release
@@ -144,7 +159,7 @@ Inspect logs:
   user explicitly asks for that.
 - Default git policy: agent edits and verifies; user reviews and commits unless
   the project says otherwise.
-- Commit only after an explicit user request. Use
+- Commit or push only after an explicit user request. Use
   `tools/project-memory/git-preferences.json` for commit-message language
   preferences.
 - Exception: after a successful `gi обновить` / `gi обновись`, commit and push

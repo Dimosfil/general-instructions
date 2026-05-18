@@ -2,6 +2,22 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.18
+
+- Added short GI git finish commands: `gi пуш` for commit+push, `gi коммит` for
+  commit only, `gi только пуш` for push only, and `gi коммит пуш` as an alias
+  for commit+push.
+- Clarified that ambiguous commit-language selection prompts should show
+  numbered checklist options and explain that English is the required primary
+  commit-message language.
+- Added `gi тест-план` / `gi test plan` for project-aware test planning and
+  feature verification.
+- Added `patterns/PROJECT_TESTING_STRATEGY.md` and
+  `templates/FEATURE_TEST_PLAN.template.md` for reusable project testing
+  strategy.
+- Added `gi гит-обзор` / `gi git summary` for summarizing the latest git commit
+  in the current project without printing a full diff.
+
 ## 2026.05.16
 
 - Clarified that `gi` means `general-instructions`, not `git`; missing `.git`
