@@ -159,6 +159,10 @@ or:
 - Do not leave enabled manager endpoints empty, guessed, or set to `TODO`.
 - Before posting plans or starting sprint work, verify the workflow-specific
   manager capabilities, not only generic health.
+- For single-task intake, require executable lifecycle identifiers, a clear
+  rejection, or explicit intake-only documentation. Do not create replacement
+  one-task plans to work around raw task receipts that cannot be advanced
+  through lifecycle endpoints.
 
 ## Verification
 

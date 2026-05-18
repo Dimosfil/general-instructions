@@ -22,13 +22,17 @@ configured task managers.
    requested workflow, not only generic health.
 7. For each configured manager, read only its adapter reference from
    `references/managers/`.
-8. Normalize plans through the common plan model before writing to a manager or
+8. If the requested workflow uses single-task intake, confirm the manager either
+   converts accepted task payloads into executable records with lifecycle
+   identifiers, rejects unsupported payloads with a clear contract error, or
+   documents them as intake-only.
+9. Normalize plans through the common plan model before writing to a manager or
    project memory.
-9. Preserve manager-specific IDs, URLs, statuses, labels, and assignees when
+10. Preserve manager-specific IDs, URLs, statuses, labels, and assignees when
    updating existing tasks.
-10. Treat task-manager data as an external system: preview destructive changes
+11. Treat task-manager data as an external system: preview destructive changes
    and ask before deleting, closing, or bulk-changing remote tasks.
-11. Record sync results in the project memory file or user-facing response,
+12. Record sync results in the project memory file or user-facing response,
    including what changed and what still needs manual follow-up.
 
 ## Common Plan Model
@@ -117,11 +121,14 @@ When the user runs `gi план`, `gi post plan`, or an equivalent send-plan com
 4. Verify the manager can accept the planned operation before sending. For raw
    intake adapters, check the intake contract or raw intake endpoint instead of
    relying on `/health` alone.
-5. Use the plan in the user's message when provided. Otherwise use the current
+5. For single-task payloads, verify that accepted receipts can be executed
+   through the manager's lifecycle endpoints, or that the adapter explicitly
+   treats them as intake-only.
+6. Use the plan in the user's message when provided. Otherwise use the current
    active plan from the conversation or project memory. If no plan is available,
    ask the user for the plan.
-6. Send the normalized plan to each enabled manager using its adapter reference.
-7. Report the manager response as a receipt and mention any items that were not
+7. Send the normalized plan to each enabled manager using its adapter reference.
+8. Report the manager response as a receipt and mention any items that were not
    sent.
 
 ## `gi старт спринт`
@@ -136,13 +143,28 @@ start-active-sprint command:
 4. Verify the manager supports active sprint lookup and task completion for the
    requested workflow. If those capabilities are missing, report the endpoint
    mismatch and stop.
-5. If exactly one active sprint exists, start it. If none or many exist, ask the
+5. If an intake receipt lacks the identifiers required for next-task,
+   task-completed, archive, or close flows, report the task-manager contract gap
+   and stop instead of inventing a replacement plan.
+6. If exactly one active sprint exists, start it. If none or many exist, ask the
    user to choose.
-6. Execute sprint tasks in manager-defined order until no `todo` or `ready`
+7. Execute sprint tasks in manager-defined order until no `todo` or `ready`
    tasks remain or a blocker requires user input.
-7. Update task status and completion notes according to the manager adapter.
-8. Keep normal safety rules: ask before destructive actions, credential changes,
+8. Update task status and completion notes according to the manager adapter.
+9. Keep normal safety rules: ask before destructive actions, credential changes,
    broad rewrites, or irreversible external changes.
+
+## Single-Task Intake Contract
+
+When a manager accepts a single-task payload, it must either create an executable
+task or sprint record and return lifecycle identifiers, reject the payload with
+a clear contract error, or document the payload as intake-only.
+
+Agents must not create a separate one-task plan to work around a raw task
+receipt that lacks execution identifiers. If the requested workflow needs
+`next-task`, `task-completed`, archive, or close operations and the receipt does
+not identify executable work, report the contract gap and stop or ask for the
+correct endpoint behavior.
 
 ## Manager References
 

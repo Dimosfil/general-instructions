@@ -54,6 +54,13 @@ workflow. If `/health` succeeds but required workflow endpoints return missing
 or incompatible responses, report a stale or misconfigured WorkNest API endpoint
 and stop before sending work.
 
+If WorkNest accepts `type: "task"` or another single-task intake payload, verify
+that the response either creates an executable sprint/task and returns the IDs
+needed by `/agent-intake/next-task` and `/agent-intake/task-completed`, rejects
+the payload with a clear contract error, or documents it as raw intake only. Do
+not create a replacement one-task plan to complete a raw task receipt that lacks
+execution identifiers.
+
 Raw intake payloads are stored under `storage/agent-intake/raw/` in the WorkNest
 project and may contain user-supplied data. Do not commit, print, or log full
 raw payloads by default.
@@ -198,8 +205,10 @@ When writing to the current WorkNest intake:
 3. Use `type: "task"` for task candidates unless the plan item is clearly an
    idea, note, report, project candidate, decision, or unknown.
 4. Treat the raw intake response as a receipt, not as proof that a WorkNest card
-   exists.
-5. Do not auto-edit WorkNest project files. The parser/router and later
+   or executable task exists.
+5. If the caller needs executable sprint work, require a response with lifecycle
+   identifiers or send a supported executable payload such as a plan.
+6. Do not auto-edit WorkNest project files. The parser/router and later
    accept/reject flow decide what becomes a real card.
 
 When the user explicitly asks to turn a plan into a WorkNest Markdown sprint,

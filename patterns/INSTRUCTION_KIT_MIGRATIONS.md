@@ -83,6 +83,23 @@ Run these steps against the current project root. Do not change into another
 project or the shared instruction library to apply consuming-project updates
 unless the user explicitly asks.
 
+## Metadata Recording Safety
+
+Project helper scripts may list pending migrations, but they must not mark
+migrations as applied before file changes are actually made.
+
+- Default or planning mode should list pending migrations only.
+- `-Apply` must not be a metadata-only shortcut. If an older script still uses
+  `-Apply` to record metadata before file changes, stop and update the script or
+  apply the files first and then correct metadata.
+- Use an explicit metadata command such as `-RecordApplied` only after the agent
+  has applied the migration instructions, reread the changed files, and run the
+  relevant checks.
+- If metadata was advanced too early, compare local instruction files against
+  the migration requirements, apply missing changes, and correct
+  `tools/project-memory/instruction-kit.json` before reporting the project up to
+  date.
+
 ## Migration File Format
 
 Name migrations with an ordered version prefix:

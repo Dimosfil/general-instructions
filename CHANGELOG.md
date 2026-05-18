@@ -4,6 +4,17 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.18
 
+- Required task-manager adapters that accept single-task intake to either
+  create executable lifecycle records, reject the payload with a clear contract
+  error, or document it as intake-only.
+- Clarified that agents must not create replacement one-task plans to work
+  around raw task receipts that lack execution identifiers.
+- Made instruction-kit update metadata recording explicit: project helper
+  scripts should list pending migrations by default and use `-RecordApplied`
+  only after file changes are applied and verified.
+- Disabled metadata-only `-Apply` behavior in the update-check template to
+  prevent projects from marking migrations applied before migrated file content
+  exists.
 - Clarified that task-manager configuration is project-local state and that
   `base_url` must be the manager API endpoint used for operations, not a UI URL
   unless an adapter explicitly documents that the same URL serves both UI and

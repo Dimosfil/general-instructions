@@ -524,8 +524,11 @@ When ready to record applied migrations after an agent has applied the file
 changes:
 
 ```powershell
-.\tools\check-instruction-kit-updates.ps1 -Apply
+.\tools\check-instruction-kit-updates.ps1 -RecordApplied
 ```
+
+`-Apply` must not be used as a metadata-only shortcut. The agent must apply and
+verify migration file changes before recording migrations as applied.
 
 The update workflow uses accepted release artifacts and `migrations/`. It must
 not read `updates/`.

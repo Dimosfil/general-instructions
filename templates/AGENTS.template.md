@@ -163,6 +163,10 @@ Inspect logs:
   endpoint in `base_url`; do not use a UI URL unless the adapter explicitly says
   the same URL serves both UI and API. Verify workflow-specific manager
   capabilities before posting plans or starting sprint work.
+- For task-manager single-task intake, require executable lifecycle identifiers,
+  a clear rejection, or explicit intake-only documentation. Do not create a
+  replacement one-task plan to work around a raw task receipt that cannot be
+  advanced through the advertised lifecycle endpoints.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - When the user asks to check instruction updates, use accepted release

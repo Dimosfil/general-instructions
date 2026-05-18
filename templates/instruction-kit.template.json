@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.18.13",
+  "instruction_kit_version": "2026.05.18.15",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -31,7 +31,9 @@
     "2026.05.18.10__add_gi_start_sprint_command",
     "2026.05.18.11__clarify_gi_prefix_and_token_economy",
     "2026.05.18.12__collect_reusable_project_experience_for_gi",
-    "2026.05.18.13__require_project_local_task_manager_api_endpoints"
+    "2026.05.18.13__require_project_local_task_manager_api_endpoints",
+    "2026.05.18.14__make_instruction_kit_metadata_recording_explicit",
+    "2026.05.18.15__require_executable_single_task_intake_contract"
   ],
   "copied_files": [
     "AGENTS.md",

@@ -14,6 +14,19 @@ generated outputs, secrets, credentials, or private production data.
 
 ## Tasks
 
+### Task-Manager Single-Task Intake Contract
+
+Goal: accept the reusable WorkNest observation that single-task intake must be
+executable through lifecycle endpoints or explicitly rejected/documented as
+intake-only.
+
+Planned changes:
+
+- [x] Add accepted migration guidance.
+- [x] Update task-manager skill and WorkNest adapter docs.
+- [x] Update copied templates and instruction-kit metadata.
+- [x] Run documentation checks.
+
 ### Shared Instruction Bootstrap Sources
 
 Goal: make a new project bootstrap from either a local shared-instruction folder
