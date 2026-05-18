@@ -29,6 +29,11 @@ Use this when preparing a repository for AI-agent collaboration.
   apply only pending migrations.
 - [ ] Decide whether the project needs reusable skills. If yes, use
   `patterns/SKILL_MODULES.md` and `templates/SKILL.template.md`.
+- [ ] Ask whether to connect task-manager plan sync. Offer available adapters
+  from `skills/task-manager-plans/references/managers/` plus `none`.
+- [ ] If task-manager sync is enabled, copy `skills/task-manager-plans/` and
+  create `tools/project-memory/task-managers.json` from
+  `templates/task-managers.template.json`.
 - [ ] If the project builds an agentic runtime or model-driven tool loop, use
   `patterns/AGENT_HARNESS_RUNTIME.md` for harness boundaries, permissions,
   compaction, connectors, observability, and evals.

@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.18
 
+- Added optional `task-manager-plans` skill for reading and writing plans through
+  configured task managers, with WorkNest as the first adapter.
+- Added `gi tm` for checking connected task managers, updating local
+  task-manager instructions, or choosing managers when none are configured.
+- Clarified that `gi обновить` should immediately offer task-manager selection
+  with numbered checkbox options when task-manager sync is newly available but
+  not configured.
 - Added short GI git finish commands: `gi пуш` for commit+push, `gi коммит` for
   commit only, `gi только пуш` for push only, and `gi коммит пуш` as an alias
   for commit+push.

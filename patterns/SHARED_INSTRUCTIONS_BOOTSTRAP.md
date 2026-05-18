@@ -41,13 +41,18 @@ It does not mean:
    - `tools/project-memory/STUDY_PLAN.md`
    - `tools/summary/`
    - `tools/agent-start.ps1`
-3. Add agent-memory ignore rules to the local `.gitignore` when appropriate.
-4. Keep the local files project-owned and editable.
-5. Mention the shared library only as the source used for bootstrapping, not as a
+3. Ask whether the project should connect task-manager plan sync. Offer the
+   available adapters from `skills/task-manager-plans/references/managers/` plus
+   a `none` option. If the user chooses a manager, copy the
+   `task-manager-plans` skill and create
+   `tools/project-memory/task-managers.json` from the template.
+4. Add agent-memory ignore rules to the local `.gitignore` when appropriate.
+5. Keep the local files project-owned and editable.
+6. Mention the shared library only as the source used for bootstrapping, not as a
    live dependency.
-6. Record the copied baseline in `tools/project-memory/instruction-kit.json`
+7. Record the copied baseline in `tools/project-memory/instruction-kit.json`
    with included migrations marked as already applied.
-7. Stop after setup and ask what the user wants to do next.
+8. Stop after setup and ask what the user wants to do next.
 
 ## Token Rules
 

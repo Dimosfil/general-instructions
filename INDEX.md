@@ -41,6 +41,12 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/SKILL_MODULES.md`: when to use rules, patterns, templates, or
   self-contained skill modules.
 
+## Skills
+
+- `skills/task-manager-plans/SKILL.md`: optional skill for reading, writing, and
+  syncing plans through configured task managers, with a WorkNest adapter under
+  `skills/task-manager-plans/references/managers/worknest.md`.
+
 ## Templates
 
 - `templates/AGENTS.template.md`: starter root `AGENTS.md` for a project.
@@ -66,6 +72,8 @@ Reusable instructions in this repository are grouped by job.
 - `templates/SKILL.template.md`: starter `SKILL.md` for a self-contained agent
   skill module.
 - `templates/SUMMARY.template.md`: handoff summary template.
+- `templates/task-managers.template.json`: starter project-local task-manager
+  configuration for optional plan sync skills.
 
 ## Update Intake
 

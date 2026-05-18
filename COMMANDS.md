@@ -49,6 +49,10 @@ gi test plan
 ```
 
 ```text
+gi tm
+```
+
+```text
 gi пуш
 ```
 
@@ -84,6 +88,22 @@ instruction files; пропускается только финальный comm
 настроенным remote. Коммит должен включать только изменения instruction kit. Если
 есть unrelated/user changes, нет git или remote, push невозможен или есть
 конфликт, агент должен остановиться и кратко объяснить, что нужно сделать.
+
+Если после `gi обновить` / `gi обновись` впервые стала доступна task-manager
+plan sync миграция, но `tools/project-memory/task-managers.json` отсутствует или
+не содержит включенных менеджеров, агент должен сразу предложить выбрать
+менеджеры. Для выбора нужно показать numbered Markdown checklist с checkbox'ами
+по образцу выбора языков:
+
+```markdown
+Выбери task-manager adapters для plan sync:
+
+1. [ ] WorkNest — отправлять планы в WorkNest raw intake.
+2. [ ] none — ничего не подключать сейчас.
+```
+
+Пользователь может ответить номерами или названиями. Агент не должен
+автоматически подключать WorkNest без ответа пользователя.
 
 ### Новый Проект
 
@@ -271,6 +291,36 @@ checklist вместо самостоятельных screenshot/browser checks.
 Если пользователь просит сохранить план, создать файл на основе
 `templates/FEATURE_TEST_PLAN.template.md` в project-local месте, например
 `tools/project-memory/feature-test-plan.md` или в task-specific memory file.
+
+### Настроить Или Обновить Task-Manager Plan Sync
+
+```text
+gi tm
+```
+
+Допустимые варианты:
+
+- `gi task manager`
+- `gi task managers`
+- `gi менеджер задач`
+- `gi таск-менеджер`
+
+Ожидаемое поведение агента: остаться в текущем project root и проверить
+`tools/project-memory/task-managers.json`.
+
+Если подключенные менеджеры уже есть, агент должен проверить доступные
+обновления task-manager skill/config из shared instruction kit, применить только
+нужные безопасные обновления и кратко назвать подключенные менеджеры.
+
+Если подключенных менеджеров нет, агент должен показать короткий numbered
+Markdown checklist с checkbox'ами для доступных адаптеров из
+`skills/task-manager-plans/references/managers/` и варианта `none`, затем
+спросить, какие менеджеры подключить. После выбора создать или обновить
+`tools/project-memory/task-managers.json` из
+`templates/task-managers.template.json`.
+
+Секреты, токены, cookies, пароли и private workspace data нельзя записывать в
+task-manager config или shared instruction files.
 
 ## PowerShell Commands
 

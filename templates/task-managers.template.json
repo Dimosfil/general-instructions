@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "managers": [
+    {
+      "id": "worknest",
+      "enabled": false,
+      "base_url": "TODO",
+      "workspace": "TODO",
+      "project": "TODO",
+      "intake_mode": "raw",
+      "notes": "Store only non-secret task-manager preferences here."
+    }
+  ]
+}
