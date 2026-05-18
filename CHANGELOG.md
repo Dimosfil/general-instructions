@@ -2,6 +2,20 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.19
+
+- Added a strict project filesystem boundary: agents work inside the current
+  project root and must not inspect or modify other project folders unless the
+  user gives an explicit concrete path and action.
+- Clarified that cross-project communication should use APIs, connectors, or
+  task-manager endpoints, and that task-manager paths or metadata are not
+  filesystem permission.
+- Clarified task-manager role language: the agent takes and executes tasks
+  through the manager, while the manager records, orders, assigns, and tracks
+  task lifecycle metadata.
+- Required sprint-work reports to avoid implying that the task manager performs
+  implementation work.
+
 ## 2026.05.18
 
 - Required task-manager adapters that accept single-task intake to either

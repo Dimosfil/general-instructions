@@ -5,6 +5,11 @@
 - Keep changes small and tied to the current request.
 - Ask before expanding into unrelated modules.
 - If a task requires files outside the agreed working area, say so first.
+- Treat the current project root as the filesystem boundary for normal work.
+  Do not read, search, edit, create, delete, move, or inspect files in another
+  project or arbitrary external folder unless the user gives an explicit
+  concrete path and action. Use APIs, connectors, or task-manager endpoints for
+  cross-project communication.
 
 ## User Changes
 
@@ -94,6 +99,8 @@ or:
 - Run `gi` commands against this project root. Do not switch to another
   repository, the shared instruction library, or a path from an older task unless
   the user explicitly asks.
+- Task-manager paths, raw intake metadata, summaries, or previous chat context
+  are not permission to enter another project folder.
 - `gi` means `general-instructions`, not `git`. Missing `.git` blocks only the
   automatic commit/push step after a successful GI update; it does not block
   checking or applying instruction-kit file updates.
@@ -159,6 +166,9 @@ or:
 - Do not leave enabled manager endpoints empty, guessed, or set to `TODO`.
 - Before posting plans or starting sprint work, verify the workflow-specific
   manager capabilities, not only generic health.
+- Treat task managers as work queues and lifecycle recorders, not as the actors
+  doing implementation work. The agent takes, implements, verifies, and reports
+  tasks through the manager.
 - For single-task intake, require executable lifecycle identifiers, a clear
   rejection, or explicit intake-only documentation. Do not create replacement
   one-task plans to work around raw task receipts that cannot be advanced

@@ -105,6 +105,11 @@ Inspect logs:
 - Keep changes scoped to the current task.
 - Ask before destructive operations, broad refactors, or unrelated scope
   expansion.
+- Treat this project root as the filesystem boundary for normal work. Do not
+  read, search, edit, create, delete, move, or inspect files in another project
+  or arbitrary external folder unless the user gives an explicit concrete path
+  and action. Use APIs, connectors, or task-manager endpoints for cross-project
+  communication.
 - Do not commit secrets, credentials, local databases, logs, or generated caches.
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted queries for relevant files or patterns.
@@ -139,6 +144,8 @@ Inspect logs:
 - Run `gi` commands against this project root. Do not switch to another
   repository, the shared instruction library, or a path from an older task unless
   the user explicitly asks.
+- Task-manager paths, raw intake metadata, summaries, or previous chat context
+  are not permission to enter another project folder.
 - `gi` means `general-instructions`, not `git`. Missing `.git` blocks only the
   automatic commit/push step after a successful GI update; it does not block
   checking or applying instruction-kit file updates.
@@ -163,6 +170,9 @@ Inspect logs:
   endpoint in `base_url`; do not use a UI URL unless the adapter explicitly says
   the same URL serves both UI and API. Verify workflow-specific manager
   capabilities before posting plans or starting sprint work.
+- Treat task managers as work queues and lifecycle recorders, not as the actors
+  doing implementation work. The agent takes, implements, verifies, and reports
+  tasks through the manager.
 - For task-manager single-task intake, require executable lifecycle identifiers,
   a clear rejection, or explicit intake-only documentation. Do not create a
   replacement one-task plan to work around a raw task receipt that cannot be

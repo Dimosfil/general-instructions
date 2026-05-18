@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "managers": [
+    {
+      "id": "worknest",
+      "enabled": true,
+      "base_url": "http://127.0.0.1:5175/",
+      "workspace": "",
+      "project": "general-instructions",
+      "intake_mode": "raw",
+      "notes": "Project-local WorkNest API endpoint. UI URLs are documented separately if needed."
+    }
+  ]
+}

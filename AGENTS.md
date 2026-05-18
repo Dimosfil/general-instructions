@@ -79,6 +79,11 @@ so this library can turn it into accepted guidance after maintenance review.
 
 - Ask before expanding into unrelated scope. Proceed without asking only when
   the expansion is required for the stated goal and remains low-risk.
+- Treat this repository root as the filesystem boundary for normal work. Do not
+  read, search, edit, create, delete, move, or inspect files in another project
+  or arbitrary external folder unless the user gives an explicit concrete path
+  and action. Communicate with other projects through documented APIs,
+  connectors, or task-manager endpoints.
 - Follow `patterns/FIRST_MESSAGE_HANDLING.md` for first-message title handling
   and shared-instruction bootstrap requests.
 

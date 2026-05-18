@@ -34,6 +34,12 @@ configured task managers.
    and ask before deleting, closing, or bulk-changing remote tasks.
 12. Record sync results in the project memory file or user-facing response,
    including what changed and what still needs manual follow-up.
+13. Describe roles precisely: the agent takes and executes tasks through the
+   manager; the manager stores the queue, assignment, ordering, and lifecycle
+   metadata.
+14. Do not enter another project folder because a manager response includes a
+   path. Use the manager API or connector unless the user gives an explicit
+   concrete filesystem path and action.
 
 ## Common Plan Model
 
@@ -146,13 +152,25 @@ start-active-sprint command:
 5. If an intake receipt lacks the identifiers required for next-task,
    task-completed, archive, or close flows, report the task-manager contract gap
    and stop instead of inventing a replacement plan.
-6. If exactly one active sprint exists, start it. If none or many exist, ask the
-   user to choose.
+6. If exactly one active sprint exists, the agent takes it in work through the
+   manager. If none or many exist, ask the user to choose.
 7. Execute sprint tasks in manager-defined order until no `todo` or `ready`
    tasks remain or a blocker requires user input.
 8. Update task status and completion notes according to the manager adapter.
 9. Keep normal safety rules: ask before destructive actions, credential changes,
    broad rewrites, or irreversible external changes.
+
+## Task-Manager Role
+
+Use task-manager APIs to request work, record progress, submit completion notes,
+and preserve the work queue. Do not describe the manager as the actor doing the
+project work. The agent implements and verifies the task; the manager records
+assignment, ordering, status, and lifecycle metadata.
+
+Task-manager paths are metadata, not filesystem permission. Agents working in
+one project must not inspect or edit another project's files through those paths
+unless the user explicitly instructs them to perform a concrete action at that
+path.
 
 ## Single-Task Intake Contract
 

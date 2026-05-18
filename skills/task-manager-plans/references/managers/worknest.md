@@ -138,27 +138,38 @@ full testing model.
 Use this workflow for `gi старт спринт`, `gi start sprint`, or equivalent
 commands.
 
-Find active sprints by scanning WorkNest project folders for `sprint.md` files
-whose status is `active`, `in_progress`, or equivalent project vocabulary. If
-the project has a configured current project id, search that project first.
+WorkNest manages sprint records, task ordering, assignment metadata, and status
+transitions. The external agent is the worker: it requests the next task,
+implements it in the target project, verifies the result, and submits completion
+notes back to WorkNest.
 
-If exactly one active sprint exists, take it in work. If there are no active
-sprints or several active sprints, show the concise list and ask the user to
-choose.
+WorkNest `sprintPath`, task `path`, and raw intake `file` fields are manager
+metadata. They are not permission to browse or edit WorkNest storage or another
+project folder from the current repository. Use the WorkNest API for task
+state, and access external filesystem paths only when the user gives a concrete
+path and action.
+
+Find active sprints through WorkNest API or connector surfaces when available.
+Do not scan WorkNest project folders from another repository. Filesystem scans
+are allowed only inside the current project root, or when the user gives an
+explicit concrete path and action.
+
+If exactly one active sprint exists, the agent takes it in work through WorkNest.
+If there are no active sprints or several active sprints, show the concise list
+and ask the user to choose.
 
 For the selected sprint:
 
-1. Read `sprint.md`.
-2. List task files matching the numbered task pattern, such as
-   `001_short-task-title.md`.
-3. Sort tasks by `Order` or numeric filename prefix.
-4. Find tasks whose `Status` is `todo` or `ready`.
-5. Before starting a task, update its `Status` to `in_progress` unless the
-   project uses another active-work status.
-6. Execute the task according to its file instructions and the project rules.
-7. On success, update `Status` to `done` and append a concise completion/result
-   section with changed files, checks, and important caveats.
-8. Continue to the next `todo` or `ready` task in order.
+1. Request the next task through the WorkNest API or connector.
+2. Use returned task identifiers, title, order, and instructions as the work
+   contract.
+3. Treat status changes such as `in_progress` and `done` as WorkNest lifecycle
+   records.
+4. Execute the task in the current project according to its instructions and
+   project rules.
+5. On success, submit concise completion notes with changed files, checks, and
+   important caveats.
+6. Continue to the next `todo` or `ready` task in order through the manager.
 
 Stop the sprint run and report the blocker when a task needs user input, has
 missing access, conflicts with project instructions, requires a destructive

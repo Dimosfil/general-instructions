@@ -77,3 +77,15 @@ Run `gi` commands against the current project root. Do not switch to another
 repository, the shared instruction library, or a path from an older task unless
 the user explicitly asks. The shared library is only a source of accepted
 instruction-kit artifacts.
+
+## Project Filesystem Boundary
+
+Treat the current project root as the filesystem boundary for `gi` work. Do not
+read, search, edit, create, delete, move, or inspect files in another project or
+arbitrary external folder just because a task manager, summary, migration, or
+previous chat mentions it.
+
+Communicate with external project systems through documented APIs, connectors,
+or task-manager endpoints. Use filesystem access outside the current project
+only when the user gives an explicit, concrete instruction naming the target
+path and action, such as writing a specific file to a specific folder.
