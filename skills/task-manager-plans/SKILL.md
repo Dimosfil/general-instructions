@@ -1,6 +1,6 @@
 ---
 name: task-manager-plans
-description: Read, write, import, export, and reconcile project plans with configured task managers. Use when the user asks to save a plan to a task manager, load tasks from a task manager, sync a planning checklist, configure task-manager integrations, run `gi tm`, run `gi план`, or run `gi post plan`. Supports a generic project-owned contract plus optional manager-specific adapters such as WorkNest.
+description: Read, write, import, export, and reconcile project plans with configured task managers. Use when the user asks to save a plan to a task manager, load tasks from a task manager, sync a planning checklist, configure task-manager integrations, run `gi tm`, run `gi план`, run `gi post plan`, or run `gi старт спринт`. Supports a generic project-owned contract plus optional manager-specific adapters such as WorkNest.
 ---
 
 # Task Manager Plans
@@ -108,6 +108,23 @@ When the user runs `gi план`, `gi post plan`, or an equivalent send-plan com
 5. Send the normalized plan to each enabled manager using its adapter reference.
 6. Report the manager response as a receipt and mention any items that were not
    sent.
+
+## `gi старт спринт`
+
+When the user runs `gi старт спринт`, `gi start sprint`, or an equivalent
+start-active-sprint command:
+
+1. Restore project context as for `gi старт`.
+2. Read configured task managers from
+   `tools/project-memory/task-managers.json`.
+3. Use the enabled manager's sprint workflow to find the active sprint.
+4. If exactly one active sprint exists, start it. If none or many exist, ask the
+   user to choose.
+5. Execute sprint tasks in manager-defined order until no `todo` or `ready`
+   tasks remain or a blocker requires user input.
+6. Update task status and completion notes according to the manager adapter.
+7. Keep normal safety rules: ask before destructive actions, credential changes,
+   broad rewrites, or irreversible external changes.
 
 ## Manager References
 

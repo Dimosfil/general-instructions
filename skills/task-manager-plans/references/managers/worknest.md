@@ -55,6 +55,95 @@ The intake API is intentionally neutral. Do not bind an intake item directly to
 a project or folder unless the user explicitly asks. Parser/router stages should
 later convert raw envelopes into normalized events and routed candidates.
 
+## Sprint Workflow For Markdown Projects
+
+When a WorkNest-style Markdown project receives an accepted plan, treat the plan
+as a sprint. The sprint folder is the execution unit, and numbered task files
+define the order in which agents should work.
+
+Create a unique dated sprint folder directly inside the target project:
+
+```text
+projects/<project-id>/YYYY-MM-DD_<sprint-slug>/
+```
+
+Do not create a shared `sprints/` container by default. Each active sprint is
+its own project-level folder. Completed sprint folders can later be moved to the
+project archive.
+
+Add `sprint.md` inside the sprint folder with:
+
+- sprint title;
+- status;
+- project id;
+- start date;
+- source plan or source request;
+- sprint goal;
+- ordered task list.
+
+Split the plan into numbered task files:
+
+```text
+001_short-task-title.md
+002_short-task-title.md
+003_short-task-title.md
+```
+
+Each task file should include at minimum:
+
+```text
+# Human-readable task title
+
+Status: todo
+Sprint: YYYY-MM-DD_<sprint-slug>
+Order: 001
+Project: <project-id>
+Agent: <agent-or-unassigned>
+SourcePlanId: <source-plan-id>
+DependsOn: none
+Tags: [...]
+```
+
+Agents should execute sprint task files in ascending `Order`. To get the next
+task, find the first task file in order whose `Status` is `todo` or `ready`.
+
+When a task is completed, update the task file status to `done` and append a
+concise result or completion section.
+
+Testing tasks can be added later. Do not block the initial sprint workflow on a
+full testing model.
+
+## Active Sprint Execution
+
+Use this workflow for `gi старт спринт`, `gi start sprint`, or equivalent
+commands.
+
+Find active sprints by scanning WorkNest project folders for `sprint.md` files
+whose status is `active`, `in_progress`, or equivalent project vocabulary. If
+the project has a configured current project id, search that project first.
+
+If exactly one active sprint exists, take it in work. If there are no active
+sprints or several active sprints, show the concise list and ask the user to
+choose.
+
+For the selected sprint:
+
+1. Read `sprint.md`.
+2. List task files matching the numbered task pattern, such as
+   `001_short-task-title.md`.
+3. Sort tasks by `Order` or numeric filename prefix.
+4. Find tasks whose `Status` is `todo` or `ready`.
+5. Before starting a task, update its `Status` to `in_progress` unless the
+   project uses another active-work status.
+6. Execute the task according to its file instructions and the project rules.
+7. On success, update `Status` to `done` and append a concise completion/result
+   section with changed files, checks, and important caveats.
+8. Continue to the next `todo` or `ready` task in order.
+
+Stop the sprint run and report the blocker when a task needs user input, has
+missing access, conflicts with project instructions, requires a destructive
+action, or fails verification in a way that should not be papered over.
+
 ## Mapping
 
 Map the common plan model to WorkNest concepts using the project-owned names:
@@ -99,6 +188,10 @@ When writing to the current WorkNest intake:
    exists.
 5. Do not auto-edit WorkNest project files. The parser/router and later
    accept/reject flow decide what becomes a real card.
+
+When the user explicitly asks to turn a plan into a WorkNest Markdown sprint,
+use the sprint workflow above instead of treating the plan as only a raw intake
+receipt.
 
 When writing to a future concrete WorkNest task API:
 

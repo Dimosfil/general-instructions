@@ -49,6 +49,9 @@ Examples:
   language.
 - `gi саммари` or `gi summary`: write a handoff summary file under
   `tools/summary/`.
+- `gi старт` or `gi restore`: restore project context from `AGENTS.md`, the
+  latest handoff summary, and `tools/agent-start.ps1`, then stop and ask what
+  to do next.
 - `gi гит-обзор` or `gi git summary`: summarize the latest git commit in the
   current project without printing a full diff.
 - `gi тест-план` or `gi test plan`: build a project-aware test plan for a new

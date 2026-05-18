@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.18.7",
+  "instruction_kit_version": "2026.05.18.10",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -25,7 +25,10 @@
     "2026.05.18.4__add_gi_git_finish_commands",
     "2026.05.18.5__add_task_manager_plans_skill",
     "2026.05.18.6__prompt_for_task_manager_after_update",
-    "2026.05.18.7__add_task_manager_post_plan_command"
+    "2026.05.18.7__add_task_manager_post_plan_command",
+    "2026.05.18.8__add_worknest_sprint_workflow",
+    "2026.05.18.9__add_gi_restore_context_aliases",
+    "2026.05.18.10__add_gi_start_sprint_command"
   ],
   "copied_files": [
     "AGENTS.md",

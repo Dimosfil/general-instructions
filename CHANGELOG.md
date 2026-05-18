@@ -15,6 +15,12 @@ Accepted changes for the shared instruction library.
   configured task manager.
 - Clarified that WorkNest setup must fill `base_url` immediately and must not
   complete with `base_url: "TODO"`.
+- Added WorkNest sprint workflow guidance for turning accepted plans into dated
+  Markdown sprint folders with ordered task files.
+- Added `gi старт` / `gi restore` as short commands for restoring project
+  context after opening a new chat.
+- Added `gi старт спринт` for restoring context, finding the active
+  task-manager sprint, and executing ordered sprint tasks.
 - Added short GI git finish commands: `gi пуш` for commit+push, `gi коммит` for
   commit only, `gi только пуш` for push only, and `gi коммит пуш` as an alias
   for commit+push.
