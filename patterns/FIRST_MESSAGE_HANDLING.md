@@ -35,9 +35,14 @@ In that case:
 
 ## GI Command Prefix
 
-Treat short chat commands that start with `gi` as shared instruction-kit
-commands for `general-instructions`, not as product work for the current
-project.
+Treat short chat commands that start with `gi` as the local command surface for
+the copied `general-instructions` instruction kit in the current project. `gi`
+is the only short prefix; do not rename it to `GAI` or another alias.
+
+The main purpose of `gi` commands is token economy and reliable context
+restoration: use local instructions, accepted migrations, handoff summaries,
+targeted searches, and project memory so the agent does not read the whole
+repository or print broad outputs by default.
 
 Examples:
 

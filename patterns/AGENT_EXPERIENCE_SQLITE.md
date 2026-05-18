@@ -15,6 +15,7 @@ sessions avoid rediscovery:
 - recurring failures and fixes
 - useful commands and their observed results
 - durable notes with evidence paths
+- reusable agent experience that may improve the shared `gi` instruction kit
 
 ## Location
 
@@ -48,6 +49,10 @@ Commit reviewable assets instead:
   SQL queries with `LIMIT`.
 - On startup, query only what is relevant to the task; do not load the whole
   database into context.
+- When a finding is reusable beyond the current project, export a concise
+  recommendation to the shared instruction update intake or to a local
+  `tools/project-memory/instruction-updates/` fallback. Do not treat SQLite
+  memory itself as accepted shared guidance.
 
 ## Suggested Tables
 
@@ -60,6 +65,8 @@ Generated index tables depend on the project. Common options:
 - `commands`: command, purpose, last_result, updated time.
 - `failures`: symptom, cause, fix, evidence paths.
 - `notes`: created time, topic, title, body, evidence paths.
+- `instruction_updates`: created time, topic, problem, recommendation,
+  evidence paths, privacy review, exported target, status.
 
 Use FTS5 search tables when available, but keep a fallback query path for local
 SQLite builds without FTS5.
@@ -102,6 +109,13 @@ tools/project-memory/NOTES.md
 
 The export should say that SQLite is the local generated index and Markdown is
 the reviewable long-lived memory.
+
+Export reusable instruction recommendations as small Markdown files, not as raw
+database dumps. Use the dated filename pattern:
+
+```text
+YYYY-MM-DD_HH-mm-ss_AGENT_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
+```
 
 ## Startup Use
 

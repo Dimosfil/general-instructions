@@ -9,8 +9,19 @@ library and projects that copy its instruction kit.
 
 ### Короткий Префикс
 
-Команды с префиксом `gi` относятся к shared instruction kit
-`general-instructions`, а не к продуктовой задаче проекта.
+Команды с префиксом `gi` относятся к локально скопированному instruction kit
+`general-instructions` в текущем проекте. Используй только короткий префикс
+`gi`; не переименовывай его в `GAI` или другой alias.
+
+Главный смысл `gi` команд - экономия токенов и восстановление контекста через
+локальные инструкции, handoff summaries, targeted search, accepted migrations и
+project memory, а не широкое чтение репозитория или большие выводы в чат.
+
+Второй смысл `gi` - собирать опыт из проектов обратно в reusable instruction
+kit: повторяющиеся сбои, удачные workflows, token-saving tactics, правила
+startup retrieval и улучшения инструкций нужно оформлять как короткие
+recommendations с evidence и privacy review, чтобы потом принять их в
+`general-instructions`.
 
 ```text
 gi обновись

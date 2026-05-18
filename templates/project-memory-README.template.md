@@ -10,8 +10,38 @@ Use it for verified findings that should survive chat resets:
 - known pitfalls
 - local workflows
 - dependency maps
+- reusable agent experience that may improve `gi`
 
 Do not store secrets or credentials here.
+
+## Reusable Experience For GI
+
+When this project reveals a reusable workflow, failure pattern, token-saving
+tactic, or agent-instruction improvement, write a concise recommendation for the
+shared instruction kit.
+
+Prefer the shared intake folder when available:
+
+```text
+D:\AI\general-instructions\updates\
+```
+
+If the shared library is unavailable, use a local intake folder:
+
+```text
+tools/project-memory/instruction-updates/
+```
+
+Recommendations should include:
+
+- observed problem or repeated friction
+- reusable rule, pattern, template, checklist, or migration idea
+- evidence paths or commands
+- expected benefit for token economy, startup retrieval, safety, or workflow
+- privacy review notes
+
+Do not include secrets, credentials, private user data, production data, or
+unnecessary project-specific details.
 
 ## Agent Memory SQLite
 

@@ -4,6 +4,19 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.18
 
+- Added guidance for projects to act as experience sources for `gi` by
+  collecting reusable workflows, failure patterns, token-saving tactics, startup
+  retrieval improvements, and instruction improvements as reviewable
+  recommendations.
+- Clarified that reusable project experience must include evidence and privacy
+  review, and must not include secrets, private user data, production data, or
+  unnecessary project-specific details.
+- Clarified that the shared instruction-kit command prefix is always `gi`, not
+  `GAI` or another alias, and that copied kits use `gi` as the local command
+  surface in each project.
+- Clarified that the main purpose of the copied instruction kit is token economy
+  and RAG-style context restoration through local instructions, handoff
+  summaries, targeted searches, accepted migrations, and project memory.
 - Added optional `task-manager-plans` skill for reading and writing plans through
   configured task managers, with WorkNest as the first adapter.
 - Added `gi tm` for checking connected task managers, updating local

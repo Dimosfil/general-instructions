@@ -2,6 +2,12 @@
 
 This is a reusable must-have plan for starting and maintaining a software project with an AI coding agent. Keep it short, explicit, and local to the repository.
 
+The copied `general-instructions` kit is primarily a token-economy and
+RAG-startup layer for each project. Its short command prefix is always `gi`,
+not `GAI` or another alias. Use it to restore only task-relevant context from
+local instructions, summaries, targeted searches, accepted migrations, and
+project memory instead of broad repository reads or large outputs.
+
 ## 1. Create The Agent Entry Point
 
 Add `AGENTS.md` in the repository root.
@@ -50,6 +56,12 @@ When a project reveals a reusable improvement to agent instructions, workflows,
 templates, or checklists, write a dated recommendation to the shared instruction
 library's `updates/` folder if that library exists. Treat those files as intake
 recommendations, not automatically accepted rules.
+
+Use projects as experience sources for `gi`: collect reusable workflows,
+failure patterns, token-saving tactics, startup retrieval improvements, and
+agent-instruction improvements. Include the observed problem, recommended shared
+rule or artifact, evidence paths or commands, expected benefit, risks, and
+privacy review.
 
 If no shared instruction library is available, create a local project intake
 folder such as:

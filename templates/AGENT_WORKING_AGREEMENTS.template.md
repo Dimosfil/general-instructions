@@ -81,9 +81,13 @@ or:
 - Treat a short first message as a possible chat title: restore context, then
   ask what to do next instead of executing the title as a task.
 - Treat short chat commands that start with `gi` as shared instruction-kit
-  commands for `general-instructions`, not as product work for this project.
+  commands for the copied `general-instructions` kit in this project. `gi` is
+  the only short prefix; do not rename it to `GAI` or another alias.
   If a `gi` command is missing a needed parameter, ask one short clarification
   question instead of guessing.
+- Use the instruction kit as a token-economy and RAG-startup layer: restore only
+  task-relevant context from local instructions, summaries, targeted searches,
+  and project memory instead of broad repository reads or large outputs.
 - Keep `gi` command responses scoped to the shared instruction-kit command. Do
   not resume an older product task after a `gi` command unless the user
   explicitly asks.
@@ -138,6 +142,11 @@ or:
   as `tools/instruction-updates/` or
   `tools/project-memory/instruction-updates/`.
 - Treat recommendations as intake, not accepted rules.
+- Recommendations should explain the observed problem, reusable rule or
+  workflow, evidence paths, affected files or commands, risks, and privacy
+  review.
+- Capture reusable workflows, failure patterns, token-saving tactics, and
+  agent-instruction improvements that could improve `gi` for other projects.
 - Do not add a shared instruction library as a project dependency, package,
   submodule, symlink, or runtime reference unless the user explicitly asks for
   that.

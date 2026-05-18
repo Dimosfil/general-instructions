@@ -9,6 +9,17 @@ Keep durable, project-agnostic rules, playbooks, templates, and checklists here.
 Project-specific details belong in each project's own `AGENTS.md`, runbook, or
 memory folder.
 
+Treat this library as a token-economy and RAG-startup layer for projects that
+copy it. Its short command prefix is always `gi`, not `GAI` or another alias.
+Use it to restore only task-relevant context through local instructions, handoff
+summaries, targeted searches, accepted migrations, and project memory instead of
+broad repository reads or large chat outputs.
+
+Treat connected projects as experience sources for `gi`. When a project reveals
+a reusable workflow, failure pattern, token-saving tactic, or agent instruction
+improvement, capture a concise recommendation with evidence and privacy review
+so this library can turn it into accepted guidance after maintenance review.
+
 ## Repository Map
 
 - `README.md`: short human-facing overview.
@@ -92,6 +103,10 @@ memory folder.
 - If this repository is unavailable, use a project-local intake folder such as
   `tools/instruction-updates/` or `tools/project-memory/instruction-updates/`
   with the same dated filename pattern.
+- Project recommendations should explain the observed problem, reusable rule or
+  workflow, evidence paths, affected files or commands, and any risks. Remove
+  secrets, credentials, private user data, production data, and project-specific
+  details that are not needed as examples.
 - Treat recommendations as intake only. Do not add this repository as a
   dependency, package, submodule, symlink, or runtime reference unless the user
   explicitly asks for that.

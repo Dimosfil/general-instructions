@@ -24,6 +24,11 @@ If the startup script is unavailable, read:
 Use the RAG startup flow: retrieve only task-relevant context, search memory by
 specific terms, and query SQLite memory only with small `LIMIT`s.
 
+The copied instruction kit is a token-economy and RAG-startup layer for this
+project. Use it to restore only the needed context from local instructions,
+handoff summaries, targeted searches, and project memory instead of reading the
+whole repository or printing broad outputs.
+
 ## Durable Memory
 
 Durable project knowledge lives in:
@@ -46,6 +51,12 @@ instruction library's `updates/` folder if it is available. If it is not
 available, use a local intake folder such as `tools/instruction-updates/` or
 `tools/project-memory/instruction-updates/`. Treat recommendations as intake,
 not accepted rules.
+
+Use this project as an experience source for `gi`: capture reusable workflows,
+failure patterns, token-saving tactics, and agent-instruction improvements that
+could help other projects. Keep recommendations concise, evidence-backed, and
+free of secrets, private user data, production data, and unnecessary
+project-specific details.
 
 ## Common Commands
 
@@ -117,8 +128,9 @@ Inspect logs:
   user's current window.
 - Treat a short first message as a possible chat title: restore context, then
   ask what to do next instead of executing the title as a task.
-- Treat short chat commands that start with `gi` as shared instruction-kit
-  commands for `general-instructions`, not as product work for this project.
+- Treat short chat commands that start with `gi` as the local command surface
+  for the copied `general-instructions` instruction kit in this project.
+  `gi` is the only short prefix; do not rename it to `GAI` or another alias.
   If a `gi` command is missing a needed parameter, ask one short clarification
   question instead of guessing.
 - Keep `gi` command responses scoped to the shared instruction-kit command. Do
