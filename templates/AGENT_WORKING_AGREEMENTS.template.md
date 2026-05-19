@@ -10,6 +10,12 @@
   project or arbitrary external folder unless the user gives an explicit
   concrete path and action. Use APIs, connectors, or task-manager endpoints for
   cross-project communication.
+- If a required file, skill, config, script, endpoint, task, or other entity is
+  missing or not found, first reread the relevant local instructions, runbook,
+  project memory, and accepted instruction-kit artifacts for the current scope.
+  If the entity is still missing, ask the user a short clarification question.
+  Do not use another project folder or the shared instruction library as a
+  runtime fallback unless the user explicitly gives that path and action.
 
 ## User Changes
 

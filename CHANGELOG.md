@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.19
 
+- Added a missing-entity fallback rule: when a required file, skill, config,
+  script, endpoint, task, or other entity is absent, agents must reread relevant
+  local instructions and accepted artifacts first, then ask the user if still
+  unresolved, instead of using another project or shared library as a runtime
+  fallback.
 - Made `gi обновить` quiet by default: agents should avoid progress narration,
   broad command transcripts, and large reads during normal instruction-kit
   updates, then report only a compact result.

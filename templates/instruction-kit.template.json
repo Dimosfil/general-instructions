@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.19.3",
+  "instruction_kit_version": "2026.05.19.4",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -36,7 +36,8 @@
     "2026.05.18.15__require_executable_single_task_intake_contract",
     "2026.05.19.1__clarify_task_manager_is_not_worker",
     "2026.05.19.2__forbid_cross_project_filesystem_access",
-    "2026.05.19.3__make_gi_update_quiet_by_default"
+    "2026.05.19.3__make_gi_update_quiet_by_default",
+    "2026.05.19.4__reread_instructions_before_missing_entity_questions"
   ],
   "copied_files": [
     "AGENTS.md",

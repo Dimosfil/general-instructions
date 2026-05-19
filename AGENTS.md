@@ -84,6 +84,12 @@ so this library can turn it into accepted guidance after maintenance review.
   or arbitrary external folder unless the user gives an explicit concrete path
   and action. Communicate with other projects through documented APIs,
   connectors, or task-manager endpoints.
+- If a required file, skill, config, script, endpoint, task, or other entity is
+  missing or not found, first reread the relevant local instructions, runbook,
+  project memory, and accepted instruction-kit artifacts for the current scope.
+  If the entity is still missing, ask the user a short clarification question.
+  Do not use another project folder or the shared instruction library as a
+  runtime fallback unless the user explicitly gives that path and action.
 - Follow `patterns/FIRST_MESSAGE_HANDLING.md` for first-message title handling
   and shared-instruction bootstrap requests.
 

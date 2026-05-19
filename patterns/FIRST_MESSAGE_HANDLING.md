@@ -78,6 +78,14 @@ repository, the shared instruction library, or a path from an older task unless
 the user explicitly asks. The shared library is only a source of accepted
 instruction-kit artifacts.
 
+If a `gi` command needs a file, skill, config, script, endpoint, task, or other
+entity that is missing or not found, first reread the relevant local
+instructions, runbook, project memory, and accepted instruction-kit artifacts
+for that command. If the entity is still missing, ask the user one short
+clarification question. Do not use another project folder or the shared
+instruction library as a runtime fallback unless the user explicitly gives that
+path and action.
+
 ## Project Filesystem Boundary
 
 Treat the current project root as the filesystem boundary for `gi` work. Do not
