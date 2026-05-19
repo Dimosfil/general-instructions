@@ -10,6 +10,17 @@
   project or arbitrary external folder unless the user gives an explicit
   concrete path and action. Use APIs, connectors, or task-manager endpoints for
   cross-project communication.
+- Treat nested checkouts, vendored repositories, cloned examples, and
+  third-party source trees as separate scope. Do not inspect them as part of the
+  main project unless the user explicitly asks, the task is about that nested
+  tree, or local instructions identify it as an active workspace component.
+- Treat user-home application data and personal telemetry as private external
+  sources. Do not read `.codex`, `.cursor`, IDE logs, browser profiles, shell
+  history, application SQLite databases, or local app logs outside the project
+  root unless the user gives an explicit path and action. For analyzer tasks,
+  prefer mock or sample data, or ask for permission to inspect a specific file.
+- Treat product plans, `apps.txt`, summaries, and task-manager notes as intent
+  signals only. They are not permission to read private local data sources.
 - If a required file, skill, config, script, endpoint, task, or other entity is
   missing or not found, first reread the relevant local instructions, runbook,
   project memory, and accepted instruction-kit artifacts for the current scope.
@@ -73,6 +84,10 @@ or:
 
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted queries for relevant files or patterns.
+- For first-pass project study, read local instructions, README, manifests, and
+  config entry points before building a file map. Use recursive scans only after
+  a targeted search fails or the task clearly requires repository-wide
+  inventory.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
   targeted searches, heads, tails, or small line ranges such as
@@ -87,6 +102,13 @@ or:
 - Search for specific symbols, paths, errors, or patterns before doing broad
   repository scans.
 - Do not print large logs. Prefer tails and targeted error searches.
+- Keep progress updates phase-level, not command-level. Do not narrate after
+  every command batch, report counters such as "ran 4 commands", or live-blog
+  each intermediate hypothesis. Update when the phase changes, a meaningful
+  finding changes the next step, a blocker appears, or work has been quiet long
+  enough that the user needs reassurance.
+- Do not duplicate tool-run counters that the chat UI may show automatically;
+  system UI counters are not agent progress updates.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
 - Treat a short first message as a possible chat title: restore context, then

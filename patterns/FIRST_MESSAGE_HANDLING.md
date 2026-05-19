@@ -93,6 +93,17 @@ read, search, edit, create, delete, move, or inspect files in another project or
 arbitrary external folder just because a task manager, summary, migration, or
 previous chat mentions it.
 
+Treat nested checkouts, vendored repositories, cloned examples, and third-party
+source trees as separate scope. Do not inspect them as part of the main project
+unless the user explicitly asks, the task is about that nested tree, or local
+instructions identify it as an active workspace component.
+
+Treat user-home application data and personal telemetry as private external
+sources. Do not read `.codex`, `.cursor`, IDE logs, browser profiles, shell
+history, application SQLite databases, or local app logs outside the project root
+unless the user gives an explicit path and action. Product plans, `apps.txt`,
+summaries, and task-manager notes are not filesystem-access permission.
+
 Communicate with external project systems through documented APIs, connectors,
 or task-manager endpoints. Use filesystem access outside the current project
 only when the user gives an explicit, concrete instruction naming the target

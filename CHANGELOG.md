@@ -4,6 +4,22 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.19
 
+- Added private local data guidance: agents must not read user-home app data,
+  personal telemetry, `.codex`, `.cursor`, IDE logs, browser profiles, shell
+  history, application SQLite databases, or app logs outside the project root
+  without an explicit path and action from the user.
+- Clarified that `apps.txt`, product plans, summaries, and task-manager notes
+  are intent signals, not permission to inspect private local data sources.
+- Clarified first-pass project study: agents should start from local
+  instructions, README, manifests, and config entry points before recursive file
+  mapping, and should treat nested checkouts or vendored trees as separate
+  scope.
+- Clarified that automatic chat UI tool counters are not agent progress updates,
+  and agents should not duplicate them in prose.
+- Added phase-level progress guidance: agents should not narrate after every
+  command batch, report command counters, or live-blog intermediate hypotheses;
+  updates should happen on phase changes, meaningful findings, blockers, or
+  long quiet periods.
 - Added a missing-entity fallback rule: when a required file, skill, config,
   script, endpoint, task, or other entity is absent, agents must reread relevant
   local instructions and accepted artifacts first, then ask the user if still

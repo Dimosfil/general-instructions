@@ -56,6 +56,10 @@ so this library can turn it into accepted guidance after maintenance review.
 
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted queries for relevant files or patterns.
+- For first-pass project study, read local instructions, README, manifests, and
+  config entry points before building a file map. Use recursive scans only after
+  a targeted search fails or the task clearly requires repository-wide
+  inventory.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
   targeted searches, heads, tails, or small line ranges, such as
@@ -84,6 +88,17 @@ so this library can turn it into accepted guidance after maintenance review.
   or arbitrary external folder unless the user gives an explicit concrete path
   and action. Communicate with other projects through documented APIs,
   connectors, or task-manager endpoints.
+- Treat nested checkouts, vendored repositories, cloned examples, and
+  third-party source trees as separate scope. Do not inspect them as part of the
+  main project unless the user explicitly asks, the task is about that nested
+  tree, or local instructions identify it as an active workspace component.
+- Treat user-home application data and personal telemetry as private external
+  sources. Do not read `.codex`, `.cursor`, IDE logs, browser profiles, shell
+  history, application SQLite databases, or local app logs outside the project
+  root unless the user gives an explicit path and action. For analyzer tasks,
+  prefer mock or sample data, or ask for permission to inspect a specific file.
+- Treat product plans, `apps.txt`, summaries, and task-manager notes as intent
+  signals only. They are not permission to read private local data sources.
 - If a required file, skill, config, script, endpoint, task, or other entity is
   missing or not found, first reread the relevant local instructions, runbook,
   project memory, and accepted instruction-kit artifacts for the current scope.
@@ -100,6 +115,20 @@ so this library can turn it into accepted guidance after maintenance review.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
+
+## Progress Updates
+
+- Keep progress updates phase-level, not command-level. Do not narrate after
+  every command batch, report counters such as "ran 4 commands", or live-blog
+  each intermediate hypothesis.
+- Do not duplicate tool-run counters that the chat UI may show automatically;
+  system UI counters are not agent progress updates.
+- Send an update when the phase changes, a meaningful finding changes the next
+  step, a blocker appears, or work has been quiet for long enough that the user
+  needs reassurance.
+- Batch routine observations internally and summarize only the current
+  conclusion, next action, and blockers. Keep command names and detailed logs
+  for final summaries or failure diagnosis.
 
 ## Update Intake
 

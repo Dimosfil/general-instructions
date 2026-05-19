@@ -14,6 +14,10 @@ context needed for the current task, not to dump project memory into chat.
 6. After meaningful work, write verified durable findings to project memory or
    the handoff summary.
 
+For first-pass project study, read local instructions, README, manifests, and
+config entry points before building a file map. Use recursive scans only when a
+targeted search fails or the task clearly requires repository-wide inventory.
+
 ## Token Rules
 
 - Do not load the whole repository by default.
@@ -22,6 +26,15 @@ context needed for the current task, not to dump project memory into chat.
 - Do not print large files. Use heads, tails, line ranges, or search snippets.
 - Do not print large SQLite query results. Always use `LIMIT`.
 - Prefer evidence paths and short snippets over raw file dumps.
+- Treat nested checkouts, vendored repositories, cloned examples, and
+  third-party source trees as separate scope. Do not inspect them during startup
+  unless the user explicitly asks, the task is about that nested tree, or local
+  instructions identify it as an active workspace component.
+- Treat user-home application data and personal telemetry as private external
+  sources. Do not read `.codex`, `.cursor`, IDE logs, browser profiles, shell
+  history, application SQLite databases, or local app logs outside the project
+  root unless the user gives an explicit path and action. For analyzer tasks,
+  use mock or sample data by default.
 
 ## When To Query Memory
 
