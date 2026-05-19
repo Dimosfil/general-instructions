@@ -20,6 +20,12 @@ targeted search fails or the task clearly requires repository-wide inventory.
 
 ## Token Rules
 
+- Treat `cached input` as a symptom, not the main optimization target. Reduce
+  total live context: current input plus cached context.
+- Start a new session for unrelated new tasks when old context is no longer
+  useful.
+- Prefer compact handoff summaries over carrying long investigation history
+  forward.
 - Do not load the whole repository by default.
 - Do not read all summaries, all notes, all logs, or the full SQLite database.
 - Do not print full `git diff`; use `git diff --stat` and targeted searches.
@@ -35,6 +41,8 @@ targeted search fails or the task clearly requires repository-wide inventory.
   history, application SQLite databases, or local app logs outside the project
   root unless the user gives an explicit path and action. For analyzer tasks,
   use mock or sample data by default.
+- Split multi-step R&D into separate tasks when later steps do not need the
+  full previous reasoning trace.
 
 ## When To Query Memory
 

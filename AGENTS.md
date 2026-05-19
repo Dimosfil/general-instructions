@@ -54,6 +54,11 @@ so this library can turn it into accepted guidance after maintenance review.
 
 ## Tool Usage And Token Economy
 
+- Treat `cached input` as a symptom, not the main optimization target. Optimize
+  for smaller total live context: current input plus cached context.
+- Start a new session for unrelated new tasks when old context is no longer
+  useful, and use compact handoff summaries instead of carrying long
+  investigation history forward.
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted queries for relevant files or patterns.
 - For first-pass project study, read local instructions, README, manifests, and
@@ -73,6 +78,8 @@ so this library can turn it into accepted guidance after maintenance review.
   printing the whole HTML document.
 - Do not produce broad artifacts, such as zip archives, or run full check
   matrices unless the user explicitly asks for that scope.
+- Split multi-step R&D into separate tasks when later steps do not need the
+  full previous reasoning trace.
 - Broader scans, longer logs, or larger check suites are acceptable for incident
   debugging, explicit user requests, release checks, or unclear failures after
   targeted searches.

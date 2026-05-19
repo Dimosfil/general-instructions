@@ -29,6 +29,11 @@ project. Use it to restore only the needed context from local instructions,
 handoff summaries, targeted searches, and project memory instead of reading the
 whole repository or printing broad outputs.
 
+Treat `cached input` as a symptom, not the main optimization target. Keep total
+live context small by starting new sessions for unrelated tasks, using compact
+handoff summaries instead of long investigation history, and splitting multi-step
+R&D when later steps do not need the full previous reasoning trace.
+
 ## Durable Memory
 
 Durable project knowledge lives in:

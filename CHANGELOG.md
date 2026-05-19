@@ -4,6 +4,10 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.19
 
+- Clarified cached-context token economy: treat `cached input` as a symptom,
+  optimize for smaller total live context, prefer compact summaries over long
+  investigation history, start new sessions for unrelated tasks, and split R&D
+  when later steps do not need the full prior reasoning trace.
 - Added private local data guidance: agents must not read user-home app data,
   personal telemetry, `.codex`, `.cursor`, IDE logs, browser profiles, shell
   history, application SQLite databases, or app logs outside the project root

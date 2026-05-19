@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.19.7",
+  "instruction_kit_version": "2026.05.19.8",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -40,7 +40,8 @@
     "2026.05.19.4__reread_instructions_before_missing_entity_questions",
     "2026.05.19.5__keep_progress_updates_phase_level",
     "2026.05.19.6__tighten_project_study_and_nested_scope",
-    "2026.05.19.7__protect_private_local_app_data"
+    "2026.05.19.7__protect_private_local_app_data",
+    "2026.05.19.8__optimize_total_live_context"
   ],
   "copied_files": [
     "AGENTS.md",
