@@ -14,75 +14,43 @@ generated outputs, secrets, credentials, or private production data.
 
 ## Tasks
 
-### Task-Manager Single-Task Intake Contract
+### Reduce Rule Duplication
 
-Goal: accept the reusable WorkNest observation that single-task intake must be
-executable through lifecycle endpoints or explicitly rejected/documented as
-intake-only.
+Goal: reduce maintenance risk from the same rules being duplicated across 5+
+files (AGENTS.md, COMMANDS.md, patterns/, templates/).
 
 Planned changes:
 
-- [x] Add accepted migration guidance.
-- [x] Update task-manager skill and WorkNest adapter docs.
-- [x] Update copied templates and instruction-kit metadata.
-- [x] Run documentation checks.
+- [x] Audit template duplication in `templates/AGENTS.template.md` — removed
+  ~67 lines of duplicated `gi` rules (lines 136–203), replaced with short
+  cross-references.
+- [x] Restructure `COMMANDS.md` — removed duplicated policy paragraphs, kept
+  compact command reference with source references.
+- [x] Update `DEVELOPMENT_PLAN.md` with current planned items.
+- [ ] Audit remaining templates (`AGENT_RUNBOOK.template.md`,
+  `AGENT_WORKING_AGREEMENTS.template.md`) for similar duplication.
+- [ ] Audit `patterns/` for cross-duplication with `AGENTS.md` and
+  `GENERAL_DEVELOPMENT_PLAYBOOK.md`.
 
 ### Shared Instruction Bootstrap Sources
 
 Goal: make a new project bootstrap from either a local shared-instruction folder
-or a Git repository URL with enough clarity that any supported agent understands
-the source, reads only the required shared files, and deploys a local instruction
-kit into the current project.
+or a Git repository URL.
+
+Status: local folder bootstrap is covered. Git URL bootstrap is still pending.
 
 Planned changes:
 
 - [ ] Update `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md` with explicit source
-  handling for local folders, existing local clones, and Git repository URLs.
+  handling for Git repository URLs.
 - [ ] Update `patterns/FIRST_MESSAGE_HANDLING.md` so a first message containing
-  a shared-instruction folder or Git URL triggers bootstrap behavior.
+  a Git URL triggers bootstrap behavior.
 - [ ] Document that Git URL access may require user approval before clone/fetch.
-- [ ] Require bootstrapped projects to copy local files from templates, not add
-  the shared repository as a dependency, package, submodule, symlink, or runtime
-  reference.
-- [ ] Ensure `tools/project-memory/instruction-kit.json` records source,
-  installed version, install date, update-check settings, and copied files.
-- [ ] Confirm `updates/` remains maintenance-only and is not read during
-  consuming-project bootstrap.
-
-Execution order:
-
-- [ ] Update bootstrap and first-message patterns.
-- [ ] Update playbook/checklist/template references if needed.
 - [ ] Run documentation checks.
 
-Risks or dependencies:
+### Development Artifact Cleanup
 
-- [ ] Network access or private Git repositories may require explicit user
-  approval and credentials.
-- [ ] Existing project instruction files must be merged carefully rather than
-  overwritten.
+Goal: remove stale development artifacts from the shared library.
 
-Verification:
-
-- [ ] `git diff --check`
-- [ ] Reread edited bootstrap files.
-- [ ] Check that no guidance tells consuming projects to depend on the shared
-  repository at runtime.
-
-### Instruction Kit Migration Updates
-
-Goal: support "check instruction updates" in consuming projects using accepted
-migrations, similar to database schema migrations.
-
-Planned changes:
-
-- [x] Add `patterns/INSTRUCTION_KIT_MIGRATIONS.md`.
-- [x] Add accepted `migrations/` files for recent instruction-kit changes.
-- [x] Add `templates/check-instruction-kit-updates.template.ps1`.
-- [x] Update index, playbook, checklist, templates, version, and changelog.
-
-Verification:
-
-- [x] `git diff --check`
-- [x] Validate JSON templates.
-- [x] Run the update-check script in a temporary project shape.
+- [x] Remove stale handoff summaries from `tools/summary/` (5 files).
+- [x] Update status of completed tasks in this file.

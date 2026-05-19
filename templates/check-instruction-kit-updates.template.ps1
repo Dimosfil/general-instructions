@@ -2,6 +2,7 @@ param(
     [string]$InstructionKitPath = "tools/project-memory/instruction-kit.json",
     [string]$SharedLibraryPath = "",
     [switch]$RecordApplied,
+    [switch]$VerboseOutput,
     [switch]$Apply
 )
 
@@ -64,6 +65,14 @@ function Resolve-SharedLibraryPath {
     return $null
 }
 
+function Write-Detail {
+    param([string]$Message)
+
+    if ($VerboseOutput) {
+        Write-Host $Message
+    }
+}
+
 if (-not (Test-Path -LiteralPath $InstructionKitPath)) {
     Write-Host "No instruction kit metadata found at $InstructionKitPath."
     Write-Host "Bootstrap this project from the shared instruction library first."
@@ -95,8 +104,7 @@ if ($kit.applied_migrations) {
     $applied = @($kit.applied_migrations | ForEach-Object { [string]$_ })
 }
 
-Write-Host "Installed instruction kit: $installedVersion"
-Write-Host "Available instruction kit: $latestVersion"
+Write-Host "Instruction kit: installed=$installedVersion available=$latestVersion"
 
 if (-not (Test-Path -LiteralPath $migrationsPath)) {
     Write-Host "No migrations folder found at $migrationsPath."
@@ -116,9 +124,12 @@ if (-not $pending) {
     exit 0
 }
 
-Write-Host ""
-Write-Host "Pending instruction migrations:"
-$pending | ForEach-Object { Write-Host "- $($_.Name)" }
+Write-Host "Pending instruction migrations: $($pending.Count)"
+$pending | ForEach-Object {
+    $migrationId = [System.IO.Path]::GetFileNameWithoutExtension($_.Name)
+    Write-Host "- $migrationId"
+    Write-Detail "  file: $($_.Name)"
+}
 
 if ($Apply) {
     Write-Host ""
@@ -129,15 +140,12 @@ if ($Apply) {
 }
 
 if (-not $RecordApplied) {
-    Write-Host ""
-    Write-Host "Review CHANGELOG.md and have an agent apply each pending migration's file changes."
-    Write-Host "After verifying the file changes, run with -RecordApplied to update metadata."
+    Write-Host "Apply listed migrations, verify file changes, then run with -RecordApplied."
     exit 0
 }
 
-Write-Host ""
-Write-Host "Recording migration metadata only after file changes were applied and verified."
-Write-Host "If file changes are not complete, stop now and do not record migrations as applied."
+Write-Detail "Recording migration metadata only after file changes were applied and verified."
+Write-Detail "If file changes are not complete, stop now and do not record migrations as applied."
 
 $newApplied = @($applied)
 foreach ($migration in $pending) {
@@ -149,5 +157,5 @@ $kit | Add-Member -NotePropertyName applied_migrations -NotePropertyValue $newAp
 $kit | Add-Member -NotePropertyName last_update_check_at -NotePropertyValue (Get-Date -Format "yyyy-MM-ddTHH:mm:ssK") -Force
 $kit | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $InstructionKitPath -Encoding UTF8
 
-Write-Host "Recorded pending migrations as applied in $InstructionKitPath."
-Write-Host "Only do this after the agent has applied the migration instructions."
+Write-Host "Recorded applied migrations: $($pending.Count)"
+Write-Host "Instruction kit metadata: $InstructionKitPath"

@@ -73,6 +73,24 @@ the agent should:
     push fails, or a conflict remains, do not force it; stop and explain the
     blocker.
 
+Use quiet progress for this command. Do not narrate step-by-step reasoning,
+repeat "reading/applying/checking" updates, print command transcripts, or read
+broad files during a normal successful update. Surface only blockers,
+correctness-affecting warnings, or the final compact summary.
+
+The final summary should include only:
+
+- installed version before and after;
+- pending and applied migration count;
+- applied migration IDs;
+- changed instruction-kit files;
+- checks run;
+- commit/push result when applicable;
+- blocker or skipped step, if any.
+
+Use verbose/debug output only when the user asks for it or a failure needs
+diagnosis.
+
 `gi` means `general-instructions`, not `git`. A missing `.git` directory blocks
 only the automatic commit/push step; it does not block checking or applying
 instruction-kit file updates. If there is no git repository, apply the GI update

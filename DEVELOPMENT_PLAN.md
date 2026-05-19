@@ -16,34 +16,42 @@ Goal: let projects that already copied this instruction kit know when accepted
 shared-instruction updates are available, without making projects depend on this
 repository at runtime.
 
-Scope boundary: this development plan and the `updates/` intake queue are only
-for maintaining this `general-instructions` repository. Consuming projects must
-not read them during startup, bootstrap, or update checks. They should only look
-at accepted release artifacts such as `VERSION.md`, `CHANGELOG.md`, tags, or
-release notes.
+### Reduce Rule Duplication Across Files
+
+Status: planned
+
+Goal: the same rules (e.g., "do not read `updates/` during bootstrap", "gi means
+general-instructions, not git") are duplicated across 5+ files. This creates
+sync risk and makes maintenance expensive.
 
 Proposed approach:
 
-- Add a simple accepted-instructions version file, such as `VERSION.md`.
-- Add `CHANGELOG.md` for accepted changes that consuming projects may need to
-  review.
-- Add a copied provenance template, such as
-  `templates/instruction-kit.template.json`, so bootstrapped projects can record
-  the installed instruction-kit version, source, install date, and copied files.
-- Update `templates/agent-start.template.ps1` so local projects can compare the
-  installed version with a nearby shared instruction library and print a compact
-  notice when updates are available.
-- Keep startup checks local-first. For remote/shared repositories, support a
-  Git-based check only when explicitly configured or requested.
-- Add update guidance that agents should review accepted versions and changelog,
-  not the `updates/` intake queue, when deciding whether a consuming project
-  should refresh its local instructions.
+- Audit all rules across `AGENTS.md`, `COMMANDS.md`,
+  `GENERAL_DEVELOPMENT_PLAYBOOK.md`, `patterns/`, and `templates/`.
+- Define an authoritative source for each rule group.
+- Cross-reference instead of duplicating. Remove redundant paragraphs.
+- Keep templates lightweight (starter-only) with references to shared rules.
+- Ensure `COMMANDS.md` stays a command reference, not a policy document.
 
-Verification ideas:
+### Clean Up Development Artifacts
 
-- Bootstrap a sample project from the templates.
-- Confirm the startup script reports no update when versions match.
-- Confirm the startup script reports a concise update notice when the shared
-  version is newer.
-- Confirm remote update checks fail quietly when Git or network access is
-  unavailable.
+Status: implemented 2026-05-19
+
+- Removed stale handoff summaries from `tools/summary/`.
+- Check `tools/project-memory/pending-tasks.md` for completed vs dangling
+  items and update status.
+
+### Evaluate User Guide Naming Convention
+
+Status: planned
+
+`USER_GUIDE.md` is fully in Russian but has an English filename. Consider
+either renaming to `USER_GUIDE.ru.md` or maintaining a bilingual file pair.
+
+### Template Size Audit
+
+Status: planned
+
+`templates/AGENTS.template.md` was 203 lines, mostly duplicated rules of which
+~67 lines were removed. Audit other templates (`AGENT_RUNBOOK.template.md`,
+`AGENT_WORKING_AGREEMENTS.template.md`) for similar bloat.

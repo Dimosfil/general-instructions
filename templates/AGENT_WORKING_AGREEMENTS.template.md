@@ -119,6 +119,11 @@ or:
 - If the user asks to update from a shared instruction library and this project
   has no `tools/project-memory/instruction-kit.json`, treat that as first-time
   instruction bootstrap/init.
+- Run `gi обновить` quietly by default: do not narrate step-by-step reasoning,
+  repeated progress, command transcripts, broad file reads, or full diffs during
+  normal successful updates. Apply the update, then report a compact summary
+  with versions, migration counts/IDs, changed files, checks, commit/push
+  result, and blockers if any.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.

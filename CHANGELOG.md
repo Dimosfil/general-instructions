@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.19
 
+- Made `gi обновить` quiet by default: agents should avoid progress narration,
+  broad command transcripts, and large reads during normal instruction-kit
+  updates, then report only a compact result.
+- Added a compact default output mode and optional verbose mode guidance for
+  the update-check helper script.
 - Added a strict project filesystem boundary: agents work inside the current
   project root and must not inspect or modify other project folders unless the
   user gives an explicit concrete path and action.

@@ -131,68 +131,12 @@ Inspect logs:
   SQLite contents, full logs, generated outputs, or full diffs.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
-- Treat a short first message as a possible chat title: restore context, then
-  ask what to do next instead of executing the title as a task.
-- Treat short chat commands that start with `gi` as the local command surface
-  for the copied `general-instructions` instruction kit in this project.
-  `gi` is the only short prefix; do not rename it to `GAI` or another alias.
-  If a `gi` command is missing a needed parameter, ask one short clarification
-  question instead of guessing.
-- Keep `gi` command responses scoped to the shared instruction-kit command. Do
-  not resume an older product task after a `gi` command unless the user
-  explicitly asks.
-- Run `gi` commands against this project root. Do not switch to another
-  repository, the shared instruction library, or a path from an older task unless
-  the user explicitly asks.
-- Task-manager paths, raw intake metadata, summaries, or previous chat context
-  are not permission to enter another project folder.
-- `gi` means `general-instructions`, not `git`. Missing `.git` blocks only the
-  automatic commit/push step after a successful GI update; it does not block
-  checking or applying instruction-kit file updates.
-- Treat `gi саммари` and `gi summary` as requests to write a handoff summary
-  file under `tools/summary/`, not only as requests to summarize in chat.
-- Treat `gi гит-обзор` and `gi git summary` as requests to summarize the latest
-  git commit in the current project in chat. Include commit metadata, changed
-  files, compact stats, inferred purpose, and notable risks or checks. Do not
-  print a full diff, create a summary file, commit, or push for this command.
-- Treat `gi тест-план` and `gi test plan` as requests to inspect local project
-  test commands and produce a compact verification plan for the current feature,
-  bug fix, or release check. Plan first; run checks only when the user asks or
-  when the current task already requires verification.
-- Treat `gi коммит`, `gi пуш`, `gi коммит пуш`, and `gi только пуш` as explicit
-  git finish requests. `gi коммит` commits scoped current changes only; `gi пуш`
-  and `gi коммит пуш` commit scoped current changes and push the current branch;
-  `gi только пуш` pushes existing local commits without creating a new commit.
-  Inspect status, keep unrelated/user changes out, follow commit-message
-  preferences, and stop on ambiguous scope, missing remote, conflicts, secrets,
-  or push failures.
-- Treat task-manager configuration as project-local state. Store the manager API
-  endpoint in `base_url`; do not use a UI URL unless the adapter explicitly says
-  the same URL serves both UI and API. Verify workflow-specific manager
-  capabilities before posting plans or starting sprint work.
-- Treat task managers as work queues and lifecycle recorders, not as the actors
-  doing implementation work. The agent takes, implements, verifies, and reports
-  tasks through the manager.
-- For task-manager single-task intake, require executable lifecycle identifiers,
-  a clear rejection, or explicit intake-only documentation. Do not create a
-  replacement one-task plan to work around a raw task receipt that cannot be
-  advanced through the advertised lifecycle endpoints.
-- Treat a first message that points to a shared instruction library as an
-  instruction bootstrap, not as a request to add that library as a dependency.
-- When the user asks to check instruction updates, use accepted release
-  artifacts and `migrations/`; do not read the shared library's `updates/`.
-- If the user asks to update from a shared instruction library but this project
-  has no `tools/project-memory/instruction-kit.json`, treat it as a first-time
-  instruction bootstrap/init from that library.
-- For web applications, assume the user will inspect the UI manually. Do not
-  open, browse, screenshot, or visually inspect the UI automatically unless the
-  user explicitly asks for that.
-- Default git policy: agent edits and verifies; user reviews and commits unless
-  the project says otherwise.
-- Commit or push only after an explicit user request. Use
-  `tools/project-memory/git-preferences.json` for commit-message language
-  preferences.
-- Exception: after a successful `gi обновить` / `gi обновись`, commit and push
-  only the resulting instruction-kit update changes when this project is a git
-  repository with a configured remote. If unrelated/user changes, no remote,
-  push failure, or conflicts are present, stop and explain the blocker.
+- Follow the copied `general-instructions` instruction kit for the full set of
+  rules. In this project, use `AGENTS.md`, `tools/AGENT_WORKING_AGREEMENTS.md`,
+  `tools/AGENT_RUNBOOK.md`, `tools/agent-start.ps1`, and project memory as the
+  local authoritative sources.
+- Treat shared-library files such as `COMMANDS.md` and `patterns/*.md` as
+  upstream source material only when checking or applying accepted instruction
+  kit updates; do not assume they exist locally in this project.
+- When local project rules conflict with shared instructions, the local
+  `AGENTS.md`, runbook, and working agreements take precedence.

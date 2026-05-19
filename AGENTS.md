@@ -115,6 +115,11 @@ so this library can turn it into accepted guidance after maintenance review.
 - Treat recommendations as intake only. Do not add this repository as a
   dependency, package, submodule, symlink, or runtime reference unless the user
   explicitly asks for that.
+- Run `gi обновить` quietly by default. Do not narrate step-by-step reasoning,
+  repeated progress, command transcripts, broad file reads, or full diffs during
+  normal successful updates. Apply the update, then report a compact summary
+  with versions, migration counts/IDs, changed files, checks, commit/push
+  result, and blockers if any.
 
 ## Verification
 
