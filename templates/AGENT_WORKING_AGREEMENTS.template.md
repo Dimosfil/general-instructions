@@ -44,6 +44,12 @@
   Inspect status, keep unrelated/user changes out, follow commit-message
   preferences, and stop on ambiguous scope, missing remote, conflicts, secrets,
   or push failures.
+- Treat `gi пул`, `gi pull`, and `ги пул` as explicit requests to fetch and pull
+  the current branch from its configured upstream. Inspect status, branch, and
+  upstream first. Resolve only obvious, low-risk conflicts where intent is clear
+  and user changes are preserved; if product judgment, unrelated changes,
+  secrets, or uncertainty are involved, stop and ask the user with concise
+  options.
 - Exception: after a successful `gi обновить` / `gi обновись`, commit and push
   only the resulting instruction-kit update changes when this project is a git
   repository with a configured remote. If unrelated/user changes, no remote,

@@ -11,11 +11,16 @@ language preferences.
   or history rewrites without an explicit user request.
 - Treat `gi коммит`, `gi пуш`, `gi коммит пуш`, and `gi только пуш` as explicit
   git finish requests for the current project.
+- Treat `gi пул`, `gi pull`, and `ги пул` as explicit requests to update the
+  current branch from its configured upstream.
 - `gi коммит` means commit only.
 - `gi пуш` means commit the scoped current changes, then push the current branch.
 - `gi коммит пуш` means the same as `gi пуш`.
 - `gi только пуш` means push existing local commits only; do not create a new
   commit for this command.
+- `gi пул` means fetch and pull the current branch only; do not switch branches,
+  rewrite history, or pull from a different remote unless the user explicitly
+  asks.
 - Exception: a successful `gi обновить` / `gi обновись` is an explicit request to
   commit and push the resulting instruction-kit update changes, if the current
   project is a git repository with a configured remote and the changes are
@@ -59,6 +64,32 @@ For `gi только пуш`:
 - do not stage files;
 - do not create a commit;
 - push only already committed local work on the current branch.
+
+## Pull Workflow
+
+Before any `gi пул`, `gi pull`, or `ги пул` action:
+
+- inspect `git status --short`;
+- identify the current branch and configured upstream;
+- inspect compact incoming/outgoing state when possible;
+- stop and explain the blocker if the project is not a git repository, no
+  upstream is configured, the worktree has unresolved conflicts, or local
+  changes make the pull unsafe.
+
+For `gi пул`:
+
+- fetch from the configured remote for the current branch;
+- pull only the current branch from its configured upstream;
+- avoid branch switches, history rewrites, rebases, or broad cleanup unless the
+  user explicitly asks;
+- if conflicts appear, inspect the conflicted files and resolve only obvious,
+  low-risk conflicts where intent is clear and user changes are preserved;
+- run a targeted verification or at least `git diff --check` after resolving
+  documentation-only conflicts;
+- if a conflict needs product judgment, touches secrets or unrelated user
+  changes, spans files outside the requested scope, or cannot be resolved with
+  high confidence, stop and ask the user with a concise summary of the conflict
+  and the available choices.
 
 ## Commit Message Languages
 

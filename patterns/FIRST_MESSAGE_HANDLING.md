@@ -84,6 +84,8 @@ Examples:
 - `gi пуш` or `gi коммит пуш`: commit scoped current changes, then push the
   current branch.
 - `gi только пуш`: push existing local commits without creating a new commit.
+- `gi пул`, `gi pull`, or `ги пул`: fetch and pull the current branch, resolving
+  only clear low-risk conflicts and asking the user when judgment is needed.
 
 If a `gi` command is missing a needed parameter, ask one short clarification
 question instead of guessing.

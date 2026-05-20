@@ -4,6 +4,10 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.20
 
+- Added `gi пул` / `gi pull` / `ги пул` as a current-branch fetch-and-pull
+  command with cautious conflict handling: resolve only obvious low-risk
+  conflicts, preserve user changes, and ask the user when product judgment or
+  uncertainty is involved.
 - Added project system-language preferences: `gi system language`, `gi систем
   язык`, and `ги систем язык` configure the agent's user-facing working
   language separately from commit-message language preferences. `gi commit
