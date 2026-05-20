@@ -4,6 +4,9 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.20
 
+- Made the instruction-kit update helper singleton-safe when counting pending
+  migrations, so strict PowerShell mode handles zero, one, or many pending
+  migration files consistently.
 - Added `gi пул` / `gi pull` / `ги пул` as a current-branch fetch-and-pull
   command with cautious conflict handling: resolve only obvious low-risk
   conflicts, preserve user changes, and ask the user when product judgment or

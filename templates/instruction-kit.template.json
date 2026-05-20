@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.20.6",
+  "instruction_kit_version": "2026.05.20.7",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -48,7 +48,8 @@
     "2026.05.20.3__analyze_bug_evidence_before_fixing",
     "2026.05.20.4__require_executable_sprint_plan_contract",
     "2026.05.20.5__add_project_system_language_preferences",
-    "2026.05.20.6__add_gi_pull_command"
+    "2026.05.20.6__add_gi_pull_command",
+    "2026.05.20.7__make_pending_migration_count_singleton_safe"
   ],
   "copied_files": [
     "AGENTS.md",
