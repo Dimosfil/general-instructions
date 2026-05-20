@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.19
 
+- Added minimal no-op handling for greetings, thanks, acknowledgements, and
+  status-neutral messages: agents should not run startup restore or read project
+  files unless the message includes a task, path, command, error, or project
+  question.
+- Tightened compact restore guidance for `gi start`, `gi restore`, and
+  title-only first messages: read only enough orientation for the next turn and
+  avoid full summaries, runbooks, memory notes, logs, or diffs until a concrete
+  task needs them.
 - Clarified cached-context token economy: treat `cached input` as a symptom,
   optimize for smaller total live context, prefer compact summaries over long
   investigation history, start new sessions for unrelated tasks, and split R&D

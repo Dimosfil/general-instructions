@@ -3,10 +3,18 @@
 Use this flow when restoring project context. The goal is to retrieve only the
 context needed for the current task, not to dump project memory into chat.
 
+## Before Restoring
+
+If the user only sends a short greeting, thanks, acknowledgement, or
+status-neutral message, do not restore project context. Reply briefly and ask
+what they want to do next. Run this flow only after the user gives a task,
+question, command, path, or error that needs project context.
+
 ## Flow
 
 1. Read root `AGENTS.md`.
-2. Read only the latest handoff summary from `tools/summary/`.
+2. Read only the latest handoff summary from `tools/summary/`, and read only
+   its heading, current state, and next steps unless the current task needs more.
 3. Search `tools/project-memory/` by task terms, symbols, paths, errors, or
    feature names.
 4. Query SQLite memory only with targeted searches and small `LIMIT`s.
@@ -26,6 +34,9 @@ targeted search fails or the task clearly requires repository-wide inventory.
   useful.
 - Prefer compact handoff summaries over carrying long investigation history
   forward.
+- For `gi start`, `gi restore`, or title-only first messages, restore the
+  minimum state needed to orient the next turn; do not read full summaries,
+  runbooks, memory notes, logs, or diffs unless a concrete task needs them.
 - Do not load the whole repository by default.
 - Do not read all summaries, all notes, all logs, or the full SQLite database.
 - Do not print full `git diff`; use `git diff --stat` and targeted searches.

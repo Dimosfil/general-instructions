@@ -2,6 +2,19 @@
 
 Use this pattern at the beginning of a new chat or after a context reset.
 
+## Greetings And No-Op Messages
+
+Treat a short greeting, thanks, acknowledgement, or status-neutral message as a
+no-op unless it includes an explicit task, path, command, error, or question
+that needs project context.
+
+In that case:
+
+- Do not run startup restore.
+- Do not read files, summaries, memory, logs, or git state.
+- Reply briefly and ask what the user wants to do next.
+- If the user then gives a task, restore only the context needed for that task.
+
 ## Short Titles
 
 Treat the first user message as a chat title when it looks like a short project

@@ -88,6 +88,15 @@ so this library can turn it into accepted guidance after maintenance review.
 
 ## Scope And Startup Behavior
 
+- Treat short greetings, thanks, acknowledgements, and status-neutral messages
+  as no-ops unless they include an explicit task, path, command, error, or
+  project question. Do not run startup restore or read project files for those
+  messages; reply briefly and ask what the user wants to do next.
+- For `gi start`, `gi restore`, and title-only first messages, restore only the
+  minimum orientation needed for the next turn: local instructions, latest
+  summary metadata or relevant sections, and compact git state. Do not read full
+  summaries, runbooks, memory notes, logs, or diffs unless a concrete task needs
+  them.
 - Ask before expanding into unrelated scope. Proceed without asking only when
   the expansion is required for the stated goal and remains low-risk.
 - Treat this repository root as the filesystem boundary for normal work. Do not
