@@ -61,6 +61,15 @@ the payload with a clear contract error, or documents it as raw intake only. Do
 not create a replacement one-task plan to complete a raw task receipt that lacks
 execution identifiers.
 
+Do not send `kind: "sprint-plan"` with `type: "raw"` and treat the receipt as a
+created sprint. Before sending sprint work, read `/agent-intake/contract` and
+use the documented executable plan shape. For the current WorkNest sprint
+workflow, that means a supported plan payload with fields such as `type:
+"plan"`, `project`, `title`, and `items[]`, unless the project-local contract
+documents a newer equivalent. If the contract does not support executable
+sprint creation, stop and report the mismatch instead of adding compatibility
+code or claiming a sprint was created.
+
 Raw intake payloads are stored under `storage/agent-intake/raw/` in the WorkNest
 project and may contain user-supplied data. Do not commit, print, or log full
 raw payloads by default.
@@ -207,20 +216,51 @@ When writing to the current WorkNest intake:
 
 1. Require `base_url` in `tools/project-memory/task-managers.json`; ask for it
    before sending if missing or still `TODO`.
-2. Prefer `POST /agent-intake/raw` with a compact payload containing:
+2. Read `/agent-intake/contract` before sending sprint-plan work and follow the
+   documented executable plan shape.
+3. Prefer `POST /agent-intake/raw` with a compact payload containing:
    - `agent`
    - `type`
    - `title` or `body`
    - optional `source`
    - optional `metadata` or `tags`
-3. Use `type: "task"` for task candidates unless the plan item is clearly an
+4. Use `type: "task"` for task candidates unless the plan item is clearly an
    idea, note, report, project candidate, decision, or unknown.
-4. Treat the raw intake response as a receipt, not as proof that a WorkNest card
+5. Treat the raw intake response as a receipt, not as proof that a WorkNest card
    or executable task exists.
-5. If the caller needs executable sprint work, require a response with lifecycle
-   identifiers or send a supported executable payload such as a plan.
-6. Do not auto-edit WorkNest project files. The parser/router and later
+6. If the caller needs executable sprint work, require a response with lifecycle
+   identifiers or send a supported executable payload such as `type: "plan"`
+   with `project`, `title`, and `items[]`. Do not downgrade `kind:
+   "sprint-plan"` to `type: "raw"`.
+7. Do not auto-edit WorkNest project files. The parser/router and later
    accept/reject flow decide what becomes a real card.
+
+Executable sprint-plan payloads for the current WorkNest API must be sent to
+`POST /agent-intake/raw` with `type: "plan"`, not with `type: "raw"`:
+
+```json
+{
+  "agent": "codex",
+  "type": "plan",
+  "project": "project-slug",
+  "title": "Sprint: short sprint title",
+  "goal": "What the sprint should achieve.",
+  "sourcePlanId": "stable-local-plan-id-or-path",
+  "items": [
+    {
+      "title": "First executable task",
+      "body": "What to do.",
+      "done": "How to verify completion.",
+      "tags": ["sprint"]
+    }
+  ]
+}
+```
+
+If an agent only has `description`, `planned_changes`, `verification`, or a
+local `plan_path`, it must normalize those fields into `items[]` before sending.
+Never send that shape as `{ "type": "raw", "kind": "sprint-plan" }` and report
+it as a sprint.
 
 When the user explicitly asks to turn a plan into a WorkNest Markdown sprint,
 use the sprint workflow above instead of treating the plan as only a raw intake

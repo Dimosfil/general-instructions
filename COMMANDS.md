@@ -13,8 +13,12 @@ For full policies, see `AGENTS.md`, `patterns/GIT_WORKFLOW.md`, and
 ```text
 gi обновись
 gi init D:\AI\general-instructions\
+gi коммит язык: Russian
+ги коммит язык: Russian
 gi язык коммита: Russian
 gi язык коммита: English only
+gi систем язык: Russian
+ги систем язык: Russian
 gi саммари
 gi старт
 gi restore
@@ -24,6 +28,8 @@ gi git summary
 gi тест-план
 gi test plan
 gi tm
+gi manager test
+gi tm test
 gi план
 gi post plan
 gi пуш
@@ -138,14 +144,32 @@ selected workflow. If only generic health works, stop before executing tasks.
 ### Настроить Языки Коммитов
 
 ```text
+gi коммит язык: Russian
+ги коммит язык: Russian
+gi commit language: Russian
 gi язык коммита: Russian
 gi язык коммита: English only
 ```
 
-По умолчанию `English` без дополнительных языков. Агент обновляет
+Это старая настройка языка commit-сообщений. По умолчанию `English` без
+дополнительных языков. Агент обновляет
 `tools/project-memory/git-preferences.json` сам и кратко подтверждает. Если
-пользователь не называет языки, агент показывает Markdown checklist с
-текущим выбором и пояснением, что `English` обязателен.
+пользователь не называет языки, агент показывает Markdown checklist с текущим
+выбором и пояснением, что `English` обязателен.
+
+### Настроить Системный Язык Агента
+
+```text
+gi систем язык: Russian
+ги систем язык: Russian
+gi system language: Russian
+```
+
+Это настройка языка работы агента в проекте: progress updates, финальные
+ответы, уточняющие вопросы и пользовательские объяснения. Агент обновляет
+`tools/project-memory/system-preferences.json` сам и кратко подтверждает. Эта
+настройка не меняет язык commit-сообщений, код, команды, логи, цитаты или язык,
+который пользователь явно попросил для конкретного ответа.
 
 ### Git Finish Commands
 
@@ -206,6 +230,22 @@ gi tm
 доступных адаптеров и `none`. После выбора создаёт конфиг и заполняет
 обязательные поля. `base_url` — API endpoint для операций, не UI URL.
 
+### Test Current Task Manager
+
+```text
+gi manager test
+gi tm test
+gi манагер тест
+gi менеджер тест
+```
+
+The agent tests the configured task manager end to end in the current project:
+create a disposable no-op task, load/read it back, take it in work when the
+adapter supports that lifecycle step, complete it as `done`, read the final
+status, and report the manager id, endpoint, task id or URL, completed lifecycle
+steps, and any missing capability. The test must not edit repository files,
+touch secrets, perform destructive actions, or use another project folder.
+
 ### Отправить План В Task Manager
 
 ```text
@@ -230,12 +270,19 @@ For when you want to run helpers yourself from a bootstrapped project root.
 ```text
 .\tools\agent-start.ps1
 .\tools\agent-start.ps1 -ConfigureGitCommitLanguages
+.\tools\agent-start.ps1 -ConfigureSystemLanguage
 ```
 
 ### Configure Commit Languages
 
 ```text
 .\tools\select-git-commit-languages.ps1
+```
+
+### Configure Agent System Language
+
+```text
+.\tools\select-system-language.ps1
 ```
 
 ### Check Instruction Updates

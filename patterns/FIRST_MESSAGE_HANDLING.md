@@ -62,9 +62,15 @@ Examples:
 - `gi обновись`: check or apply accepted instruction-kit updates.
 - `gi init D:\AI\general-instructions\`: bootstrap/init from that shared
   library path.
-- `gi язык коммита: Russian`: update commit-message language preferences.
-- `gi язык коммита: English only`: keep English as the only commit-message
+- `gi commit language: Russian`, `gi коммит язык: Russian`, or
+  `ги коммит язык: Russian`: update commit-message language preferences.
+- `gi язык коммита: Russian`: older alias for commit-message language
+  preferences.
+- `gi commit language: English only`: keep English as the only commit-message
   language.
+- `gi system language: Russian`, `gi систем язык: Russian`, or
+  `ги систем язык: Russian`: update the agent's user-facing working language
+  for this project.
 - `gi саммари` or `gi summary`: write a handoff summary file under
   `tools/summary/`.
 - `gi старт` or `gi restore`: restore project context from `AGENTS.md`, the

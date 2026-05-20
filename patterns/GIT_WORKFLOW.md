@@ -109,8 +109,13 @@ When the user asks in chat to configure commit-message languages, update
 new setting. Ask a short clarification only if the requested languages are
 ambiguous.
 
-Treat `gi язык коммита: ...` as the short shared-instruction command form for
-this workflow.
+Treat `gi commit language`, `gi коммит язык`, `ги коммит язык`, and older
+`gi язык коммита` forms as the short shared-instruction command forms for this
+workflow.
+
+Do not use commit-language commands to change the agent's user-facing working
+language. That is configured separately with `gi system language`, `gi систем
+язык`, or `ги систем язык` in `tools/project-memory/system-preferences.json`.
 
 Do not infer additional commit-message languages from the user's UI language or
 message language. If the user says only "choose/select commit language" without

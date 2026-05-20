@@ -2,6 +2,33 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.20
+
+- Added project system-language preferences: `gi system language`, `gi систем
+  язык`, and `ги систем язык` configure the agent's user-facing working
+  language separately from commit-message language preferences. `gi commit
+  language`, `gi коммит язык`, and `ги коммит язык` remain the commit-language
+  command family.
+- Clarified WorkNest sprint-plan intake: agents must not send `kind:
+  sprint-plan` as `type: raw` and treat the receipt as an executable sprint;
+  they must verify `/agent-intake/contract`, use a documented executable plan
+  payload, or stop with a contract mismatch.
+- Added bug-evidence intake guidance: screenshots, logs, pasted errors, or
+  other bug reports trigger analysis and a follow-up question before edits,
+  unless the user explicitly says `fix`, `почини`, or `gi почини`.
+- Added `gi manager test` / `gi tm test` / `gi манагер тест` as an end-to-end
+  task-manager lifecycle check: create a disposable no-op task, load/read it,
+  take it in work when supported, complete it as `done`, read final status, and
+  report any missing manager capability.
+- Added fresh-runtime verification guidance: after frontend, backend, API, or
+  full-stack feature changes, restart the affected dev server or backend process
+  when local run instructions provide a restart command or hot reload is
+  uncertain, then refresh the browser, client, or API caller before checking
+  behavior.
+- Clarified that changed API endpoints or route contracts should be probed after
+  restart when they feed the UI, and skipped restarts or refreshes should be
+  reported with a reason.
+
 ## 2026.05.19
 
 - Added minimal no-op handling for greetings, thanks, acknowledgements, and

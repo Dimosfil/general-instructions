@@ -16,10 +16,16 @@ Use this when preparing a repository for AI-agent collaboration.
   `tools/project-memory/instruction-kit.json`.
 - [ ] Copy or adapt `templates/git-preferences.template.json` into
   `tools/project-memory/git-preferences.json`.
+- [ ] Copy or adapt `templates/system-preferences.template.json` into
+  `tools/project-memory/system-preferences.json`.
 - [ ] Copy or adapt `templates/select-git-commit-languages.template.ps1` into
   `tools/select-git-commit-languages.ps1`.
+- [ ] Copy or adapt `templates/select-system-language.template.ps1` into
+  `tools/select-system-language.ps1`.
 - [ ] Do not run the commit-language selector during bootstrap unless the user
   explicitly asks; keep the default `git-preferences.json`.
+- [ ] Do not run the system-language selector during bootstrap unless the user
+  explicitly asks; keep the default match-user behavior.
 - [ ] Copy or adapt `templates/check-instruction-kit-updates.template.ps1` into
   `tools/check-instruction-kit-updates.ps1`.
 - [ ] Confirm instruction updates use accepted `migrations/`, `VERSION.md`, and

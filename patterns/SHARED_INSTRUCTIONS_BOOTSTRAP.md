@@ -39,8 +39,12 @@ It does not mean:
    - `tools/AGENT_RUNBOOK.md`
    - `tools/project-memory/README.md`
    - `tools/project-memory/STUDY_PLAN.md`
+   - `tools/project-memory/git-preferences.json`
+   - `tools/project-memory/system-preferences.json`
    - `tools/summary/`
    - `tools/agent-start.ps1`
+   - `tools/select-git-commit-languages.ps1`
+   - `tools/select-system-language.ps1`
 3. Ask whether the project should connect task-manager plan sync. Offer the
    available adapters from `skills/task-manager-plans/references/managers/` plus
    a `none` option. If the user chooses a manager, copy the

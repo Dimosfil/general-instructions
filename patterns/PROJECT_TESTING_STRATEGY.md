@@ -59,6 +59,16 @@ For each new feature or behavior change, cover:
 - migration, rollback, or fallback behavior when relevant;
 - observability, logs, metrics, or user-visible errors when relevant.
 
+For frontend, backend, API, or full-stack features, verify against a fresh
+runtime:
+
+- restart the affected dev server or backend process when local run instructions
+  provide a restart command or hot reload is uncertain;
+- refresh the browser, client, or API caller before checking behavior;
+- probe changed API endpoints or route contracts after restart when they feed
+  the UI;
+- mention any restart or refresh that was skipped and why.
+
 ## UI And Visual Checks
 
 Follow local project instructions first. If the project says the user will
@@ -68,6 +78,8 @@ tools unless the user explicitly asks.
 When automatic UI verification is appropriate, prefer targeted checks:
 
 - run the app in the background;
+- restart the affected dev server or backend process after code changes when
+  hot reload is uncertain;
 - check key DOM states or route responses programmatically;
 - inspect screenshots only for the changed workflow;
 - include mobile and desktop viewports when layout risk is meaningful.

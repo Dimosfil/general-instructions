@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.19.9",
+  "instruction_kit_version": "2026.05.20.5",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -42,7 +42,12 @@
     "2026.05.19.6__tighten_project_study_and_nested_scope",
     "2026.05.19.7__protect_private_local_app_data",
     "2026.05.19.8__optimize_total_live_context",
-    "2026.05.19.9__skip_startup_for_greetings"
+    "2026.05.19.9__skip_startup_for_greetings",
+    "2026.05.20.1__restart_runtime_after_feature_changes",
+    "2026.05.20.2__add_task_manager_lifecycle_test_command",
+    "2026.05.20.3__analyze_bug_evidence_before_fixing",
+    "2026.05.20.4__require_executable_sprint_plan_contract",
+    "2026.05.20.5__add_project_system_language_preferences"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -53,7 +58,9 @@
     "tools/project-memory/STUDY_PLAN.md",
     "tools/project-memory/pending-tasks.md",
     "tools/project-memory/git-preferences.json",
+    "tools/project-memory/system-preferences.json",
     "tools/select-git-commit-languages.ps1",
+    "tools/select-system-language.ps1",
     "tools/check-instruction-kit-updates.ps1",
     "skills/TODO-skill-name/SKILL.md",
     ".gitignore"

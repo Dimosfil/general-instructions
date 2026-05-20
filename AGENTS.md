@@ -97,6 +97,10 @@ so this library can turn it into accepted guidance after maintenance review.
   summary metadata or relevant sections, and compact git state. Do not read full
   summaries, runbooks, memory notes, logs, or diffs unless a concrete task needs
   them.
+- Treat screenshots, logs, pasted errors, or other bug evidence as requests for
+  analysis first. Explain the likely issue and ask what action the user wants
+  before editing files, unless the user explicitly says to fix it, such as
+  `fix`, `почини`, or `gi почини`.
 - Ask before expanding into unrelated scope. Proceed without asking only when
   the expansion is required for the stated goal and remains low-risk.
 - Treat this repository root as the filesystem boundary for normal work. Do not
@@ -124,6 +128,21 @@ so this library can turn it into accepted guidance after maintenance review.
 - Follow `patterns/FIRST_MESSAGE_HANDLING.md` for first-message title handling
   and shared-instruction bootstrap requests.
 
+## Language Preferences
+
+- Keep commit-message language preferences separate from the agent's
+  user-facing working language.
+- Treat `gi commit language`, `gi коммит язык`, `ги коммит язык`, and older
+  `gi язык коммита` forms as requests to configure commit-message languages in
+  `tools/project-memory/git-preferences.json`.
+- Treat `gi system language`, `gi систем язык`, and `ги систем язык` as
+  requests to configure the agent's project working language in
+  `tools/project-memory/system-preferences.json`.
+- Follow `tools/project-memory/system-preferences.json` for progress updates,
+  final answers, clarifying questions, and user-facing explanations. Do not use
+  it to rewrite code, commands, logs, quoted text, or a response language the
+  user explicitly requested for a specific message.
+
 ## UI And Focus
 
 - Launch applications in the background so focus does not jump away from the
@@ -131,6 +150,11 @@ so this library can turn it into accepted guidance after maintenance review.
 - For web applications, assume the user will inspect the UI manually. Do not
   open, browse, screenshot, or visually inspect the UI automatically unless the
   user explicitly asks for that.
+- After implementing a frontend, backend, API, or full-stack feature, restart
+  the affected dev server or backend process when local run instructions provide
+  a restart command or when hot reload is uncertain. Then refresh the browser,
+  client, or API caller before verification so checks do not use stale HTML,
+  JavaScript, routes, schemas, or cached responses.
 
 ## Progress Updates
 

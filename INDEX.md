@@ -6,8 +6,9 @@ Reusable instructions in this repository are grouped by job.
 
 - `CHANGELOG.md`: accepted instruction-kit changes by version.
 - `COMMANDS.md`: user-facing agent prompts and helper commands for
-  bootstrapping projects, restoring context, configuring Git commit languages,
-  checking instruction updates, and maintaining this library.
+  bootstrapping projects, restoring context, configuring Git commit languages
+  and agent working languages, checking instruction updates, and maintaining
+  this library.
 - `USER_GUIDE.md`: short user-facing overview of the main instructions and
   rules.
 - `VERSION.md`: current accepted instruction-kit version.
@@ -63,12 +64,16 @@ Reusable instructions in this repository are grouped by job.
   feature or risky change.
 - `templates/git-preferences.template.json`: project-local commit-message
   language preference defaults.
+- `templates/system-preferences.template.json`: project-local agent working
+  language preference defaults.
 - `templates/gitignore-agent-memory.template`: ignore snippet for local agent
   memory and runtime noise.
 - `templates/instruction-kit.template.json`: copied provenance and local update
   check configuration for project instruction kits.
 - `templates/select-git-commit-languages.template.ps1`: interactive project
   setup command for commit-message language preferences.
+- `templates/select-system-language.template.ps1`: interactive project setup
+  command for the agent's user-facing working language.
 - `templates/SKILL.template.md`: starter `SKILL.md` for a self-contained agent
   skill module.
 - `templates/SUMMARY.template.md`: handoff summary template.

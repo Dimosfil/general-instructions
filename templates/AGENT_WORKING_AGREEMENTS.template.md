@@ -80,6 +80,33 @@ or:
 .\tools\agent-start.ps1 -ConfigureGitCommitLanguages
 ```
 
+## Agent Language
+
+- Follow `tools/project-memory/system-preferences.json` for the agent's
+  user-facing working language in this project.
+- Apply the configured system language to progress updates, final answers,
+  clarifying questions, and user-facing explanations.
+- Do not apply the system language to code, commands, logs, quoted text, or a
+  response language the user explicitly requested for a specific message.
+- Treat `gi system language`, `gi систем язык`, and `ги систем язык` as
+  requests to configure this preference.
+- Keep this setting separate from commit-message languages. `gi commit
+  language`, `gi коммит язык`, `ги коммит язык`, and older `gi язык коммита`
+  forms configure `tools/project-memory/git-preferences.json`, not the agent's
+  working language.
+- If the user explicitly wants to configure the system language manually, they
+  can run:
+
+```powershell
+.\tools\select-system-language.ps1
+```
+
+or:
+
+```powershell
+.\tools\agent-start.ps1 -ConfigureSystemLanguage
+```
+
 ## Context Hygiene
 
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and

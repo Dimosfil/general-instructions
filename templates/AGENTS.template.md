@@ -172,8 +172,29 @@ Inspect logs:
 - Treat short greetings, thanks, acknowledgements, and status-neutral messages
   as no-ops unless they include an explicit task, path, command, error, or
   project question. Do not run startup restore for those messages.
+- Treat screenshots, logs, pasted errors, or other bug evidence as requests for
+  analysis first. Explain the likely issue and ask what action the user wants
+  before editing files, unless the user explicitly says to fix it, such as
+  `fix`, `почини`, or `gi почини`.
+- Keep commit-message language preferences separate from the agent's
+  user-facing working language.
+- Treat `gi commit language`, `gi коммит язык`, `ги коммит язык`, and older
+  `gi язык коммита` forms as requests to configure commit-message languages in
+  `tools/project-memory/git-preferences.json`.
+- Treat `gi system language`, `gi систем язык`, and `ги систем язык` as
+  requests to configure the agent's project working language in
+  `tools/project-memory/system-preferences.json`.
+- Follow `tools/project-memory/system-preferences.json` for progress updates,
+  final answers, clarifying questions, and user-facing explanations. Do not use
+  it to rewrite code, commands, logs, quoted text, or a response language the
+  user explicitly requested for a specific message.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
+- After implementing a frontend, backend, API, or full-stack feature, restart
+  the affected dev server or backend process when local run instructions provide
+  a restart command or hot reload is uncertain. Then refresh the browser,
+  client, or API caller before verification so checks do not use stale HTML,
+  JavaScript, routes, schemas, or cached responses.
 - Follow the copied `general-instructions` instruction kit for the full set of
   rules. In this project, use `AGENTS.md`, `tools/AGENT_WORKING_AGREEMENTS.md`,
   `tools/AGENT_RUNBOOK.md`, `tools/agent-start.ps1`, and project memory as the

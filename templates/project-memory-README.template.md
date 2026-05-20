@@ -80,6 +80,8 @@ Markdown as the concise reviewable export.
 
 - `pending-tasks.md`: active project-wide plans and multi-step work.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
+- `git-preferences.json`: commit-message language preferences.
+- `system-preferences.json`: agent user-facing working language preferences.
 - `NOTES.md`: reviewable export of durable notes from local agent memory.
 - `architecture.md`: verified architecture notes.
 - `decisions.md`: durable decisions and rationale.

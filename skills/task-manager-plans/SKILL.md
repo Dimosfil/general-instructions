@@ -1,6 +1,6 @@
 ---
 name: task-manager-plans
-description: Read, write, import, export, and reconcile project plans with configured task managers. Use when the user asks to save a plan to a task manager, load tasks from a task manager, sync a planning checklist, configure task-manager integrations, run `gi tm`, run `gi план`, run `gi post plan`, or run `gi старт спринт`. Supports a generic project-owned contract plus optional manager-specific adapters such as WorkNest.
+description: Read, write, import, export, test, and reconcile project plans with configured task managers. Use when the user asks to save a plan to a task manager, load tasks from a task manager, sync a planning checklist, configure task-manager integrations, run `gi tm`, run `gi manager test`, run `gi tm test`, run `gi план`, run `gi post plan`, or run `gi старт спринт`. Supports a generic project-owned contract plus optional manager-specific adapters such as WorkNest.
 ---
 
 # Task Manager Plans
@@ -130,12 +130,47 @@ When the user runs `gi план`, `gi post plan`, or an equivalent send-plan com
 5. For single-task payloads, verify that accepted receipts can be executed
    through the manager's lifecycle endpoints, or that the adapter explicitly
    treats them as intake-only.
-6. Use the plan in the user's message when provided. Otherwise use the current
+6. Do not send `kind: sprint-plan` as a raw intake payload and then report it as
+   an executable sprint. Normalize sprint-plan requests to the adapter's
+   documented executable plan payload, or stop and report the contract mismatch.
+7. For WorkNest, executable sprint-plan requests must use `type: "plan"` with
+   `project`, `title`, and non-empty `items[]`; `type: "raw"` is only a receipt
+   unless the project-local contract documents otherwise.
+8. Use the plan in the user's message when provided. Otherwise use the current
    active plan from the conversation or project memory. If no plan is available,
    ask the user for the plan.
-7. Send the normalized plan to each enabled manager using its adapter reference.
-8. Report the manager response as a receipt and mention any items that were not
+9. Send the normalized plan to each enabled manager using its adapter reference.
+10. Report the manager response as a receipt and mention any items that were not
    sent.
+
+## `gi manager test` / `gi tm test`
+
+When the user runs `gi manager test`, `gi tm test`, `gi манагер тест`,
+`gi менеджер тест`, or an equivalent task-manager test command:
+
+1. Stay in the current project root.
+2. Read `tools/project-memory/task-managers.json`.
+3. If no manager is enabled, run the same manager selection flow as `gi tm`.
+4. Verify the current manager's required test capabilities before creating
+   anything: create/load task, next-task or task lookup, status update or start,
+   completion, and final readback.
+5. Create a clearly labeled disposable test task through the manager adapter.
+   The task must require no repository edits, secret access, network side
+   effects beyond the manager API, destructive action, or cross-project file
+   access.
+6. Load or read the created task back through the manager API and verify its
+   title, description, status, and lifecycle identifiers.
+7. Take the task in work using the manager's lifecycle operation when supported.
+8. Execute the task as a no-op verification step, such as recording that the
+   manager lifecycle round trip was observed.
+9. Mark the task `done` or completed through the manager adapter.
+10. Read the task back again and verify that the final status is `done`,
+    completed, archived, or the adapter's documented equivalent.
+11. Report a compact result with manager id, endpoint, created task id or URL,
+    lifecycle steps completed, final status, and any unsupported capability.
+
+If any step fails, stop at the first contract gap, leave the task in the safest
+available state, and report the exact missing or failing lifecycle operation.
 
 ## `gi старт спринт`
 
@@ -177,6 +212,11 @@ path.
 When a manager accepts a single-task payload, it must either create an executable
 task or sprint record and return lifecycle identifiers, reject the payload with
 a clear contract error, or document the payload as intake-only.
+
+Sprint-plan payloads must use the manager's documented executable plan contract.
+Agents must not assume that `kind: sprint-plan` with `type: raw` will be routed
+into a sprint. If the manager contract only documents raw storage for that
+shape, stop and ask for a supported plan endpoint or payload shape.
 
 Agents must not create a separate one-task plan to work around a raw task
 receipt that lacks execution identifiers. If the requested workflow needs
