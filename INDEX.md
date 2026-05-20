@@ -5,6 +5,7 @@ Reusable instructions in this repository are grouped by job.
 ## User Documents
 
 - `CHANGELOG.md`: accepted instruction-kit changes by version.
+- `config/gi-main.json`: bootstrap pointer to the local GI config service.
 - `COMMANDS.md`: user-facing agent prompts and helper commands for
   bootstrapping projects, restoring context, configuring Git commit languages
   and agent working languages, checking instruction updates, and maintaining
@@ -37,6 +38,8 @@ Reusable instructions in this repository are grouped by job.
   new features, bug fixes, smoke checks, and release confidence.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
+- `patterns/SERVICE_DISCOVERY_CONFIG.md`: config-service bootstrap,
+  service-identity verification, mismatch handling, and local override rules.
 - `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
   instruction files from this shared library when the user provides its path.
 - `patterns/SKILL_MODULES.md`: when to use rules, patterns, templates, or
@@ -55,6 +58,8 @@ Reusable instructions in this repository are grouped by job.
 - `templates/AGENT_WORKING_AGREEMENTS.template.md`: starter working agreements.
 - `templates/check-instruction-kit-updates.template.ps1`: project command for
   checking accepted instruction-kit migrations.
+- `templates/config-service-local.template.json`: starter project-local
+  bootstrap override for the GI config service.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.

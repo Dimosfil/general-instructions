@@ -108,6 +108,13 @@ so this library can turn it into accepted guidance after maintenance review.
   or arbitrary external folder unless the user gives an explicit concrete path
   and action. Communicate with other projects through documented APIs,
   connectors, or task-manager endpoints.
+- Treat `gi config`, `gi конфиг`, and `ги конфиг` as requests to get the
+  bootstrap config for the config/discovery service. Read the project-local
+  override only if local instructions define one, then read GI main config
+  from `D:\AI\general-instructions\config\gi-main.json` or
+  `GENERAL_INSTRUCTIONS_HOME`. Use its `configServiceUrl` to query the config
+  service. Do not scan sibling project folders, guess ports, or use stale
+  task-manager memory as a runtime fallback.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them as part of the
   main project unless the user explicitly asks, the task is about that nested

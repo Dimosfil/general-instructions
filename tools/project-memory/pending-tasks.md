@@ -48,6 +48,27 @@ Planned changes:
 - [ ] Document that Git URL access may require user approval before clone/fetch.
 - [ ] Run documentation checks.
 
+### GI Service Discovery Standard
+
+Goal: design a reusable discovery layer so agents stop relying on changing
+ports, stale UI endpoints, guessed lifecycle APIs, or project-specific service
+knowledge.
+
+Planned changes:
+
+- [ ] Define the GI main config role: point to discovery/config sources, not
+  store secrets or volatile runtime state.
+- [ ] Define project-local or user-local service registry shape for task
+  manager, token-lens, Telegram bot, and other agent-facing services.
+- [ ] Specify a service health/discovery contract that returns service identity,
+  API version, capabilities, and relevant endpoint paths.
+- [ ] Document endpoint-selection rules for agents: project-local registry
+  first, GI discovery pointer second, capability verification before use.
+- [ ] Decide whether to recommend a stable local reverse proxy for moving
+  localhost ports.
+- [ ] Add mismatch handling rules for cases where `/health` works but required
+  lifecycle endpoints are missing.
+
 ### Development Artifact Cleanup
 
 Goal: remove stale development artifacts from the shared library.

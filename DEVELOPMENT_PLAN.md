@@ -55,3 +55,29 @@ Status: planned
 `templates/AGENTS.template.md` was 203 lines, mostly duplicated rules of which
 ~67 lines were removed. Audit other templates (`AGENT_RUNBOOK.template.md`,
 `AGENT_WORKING_AGREEMENTS.template.md`) for similar bloat.
+
+### GI Service Discovery Standard
+
+Status: planned
+
+Goal: stop agents and services from relying on changing localhost ports,
+stale UI endpoints, or guessed lifecycle APIs.
+
+Proposed approach:
+
+- Define a small GI main config that points projects to the current service
+  registry or config-service source.
+- Keep machine-local runtime values, such as current ports and local service
+  URLs, in project-local or user-local registry files rather than in shared
+  reusable instructions.
+- Standardize a health/discovery contract for services such as task manager,
+  token-lens, Telegram bot, and future agent-facing services.
+- Require agents to verify service identity and required workflow capabilities
+  before using an endpoint, not only generic `/health`.
+- Prefer a stable local reverse proxy or discovery endpoint for agent-facing
+  URLs when ports are expected to move.
+- Keep secrets, tokens, private workspace data, and machine-specific paths out
+  of committed GI config.
+- Document the startup algorithm: read project-local registry first, fall back
+  to GI main config only for discovery pointers, verify capabilities, then
+  stop with a service-mismatch report if required endpoints are missing.

@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "configServiceUrl": "http://127.0.0.1:4100",
+  "notes": [
+    "Copy this file into a project-local config path only when local instructions define that override.",
+    "Do not commit machine-specific ports, secrets, tokens, cookies, passwords, or private production data."
+  ]
+}

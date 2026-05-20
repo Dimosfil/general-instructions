@@ -22,6 +22,7 @@ gi систем язык: Russian
 gi саммари
 gi старт
 gi restore
+gi config
 gi старт спринт
 gi гит-обзор
 gi git summary
@@ -101,6 +102,26 @@ gi restore
 Агент восстанавливает контекст из `AGENTS.md`, последнего handoff summary и
 `tools/agent-start.ps1`, затем кратко говорит статус и спрашивает, что делать
 дальше. Не продолжает старую задачу автоматически.
+
+### Получить GI Config
+
+```text
+gi config
+gi конфиг
+ги конфиг
+```
+
+Агент получает bootstrap-конфиг сервиса конфигов, а не ищет runtime-конфиги в
+папках соседних проектов. Сначала читать project-local override, если он явно
+задан локальными инструкциями, затем `D:\AI\general-instructions\config\gi-main.json`
+или путь из `GENERAL_INSTRUCTIONS_HOME`. Из GI main config взять
+`configServiceUrl` и проверить сам config-service через его `/health` или
+документированный discovery endpoint.
+
+Если GI main config или config-service недоступен, остановиться с коротким
+блокером. Не подбирать порты, не сканировать `D:\AI\*`, не читать другие
+project roots и не использовать старые task-manager записи как замену
+config-service.
 
 ### Взять Активный Sprint В Работу
 
