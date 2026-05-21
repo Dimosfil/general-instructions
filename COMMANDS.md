@@ -23,6 +23,9 @@ gi саммари
 gi старт
 gi restore
 gi config
+gi install
+gi инсталл
+ги инсталл
 gi старт спринт
 gi гит-обзор
 gi git summary
@@ -122,6 +125,39 @@ gi конфиг
 блокером. Не подбирать порты, не сканировать `D:\AI\*`, не читать другие
 project roots и не использовать старые task-manager записи как замену
 config-service.
+
+### Собрать Билд И Инсталлятор
+
+```text
+gi install
+gi инсталл
+ги инсталл
+gi install Inno Setup
+gi инсталл Inno Setup
+gi инсталл <программа>
+```
+
+Также распознавать очевидные опечатки вроде `gi иснтлл`, если намерение
+собрать installer ясно из контекста.
+
+Агент собирает production build и установочный файл для текущего проекта.
+Если программа не указана, по умолчанию использовать Inno Setup: найти
+project-local build/package инструкции, скрипты и `.iss` файл, затем собрать
+приложение и installer. Если после команды указана программа, использовать её
+как предпочитаемый packaging/installer tool вместо Inno Setup.
+
+Перед packaging агент определяет версию приложения из project-local metadata:
+manifests, package files, assembly attributes, release files или installer
+configs. Агент обновляет версию в production build, installer metadata и имени
+installer-файла или installer-артефакта, если локальные инструменты это
+поддерживают. Если versioning contract отсутствует или неоднозначен, агент
+задаёт один короткий уточняющий вопрос вместо изобретения версии.
+
+Перед сборкой агент проверяет локальные инструкции, README, manifests и
+существующие packaging scripts/configs. Если build или installer contract не
+найден, агент задаёт короткий уточняющий вопрос вместо изобретения installer
+конфига без опоры на проект. После сборки кратко сообщает артефакты, путь к
+инсталлятору и выполненные проверки.
 
 ### Взять Активный Sprint В Работу
 

@@ -34,6 +34,9 @@ Reusable instructions in this repository are grouped by job.
   worktrees, and commit-message language preferences.
 - `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for
   copied project instruction kits.
+- `patterns/MODEL_ROUTING_AND_COST_CONTROL.md`: model-routing and cost-control
+  pattern for agent applications that use multiple models, tools, RAG, prompt
+  caching, and explicit budget limits.
 - `patterns/PROJECT_TESTING_STRATEGY.md`: project-aware testing strategy for
   new features, bug fixes, smoke checks, and release confidence.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for

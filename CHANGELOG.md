@@ -2,6 +2,20 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.21
+
+- Added `patterns/MODEL_ROUTING_AND_COST_CONTROL.md` for agent applications
+  that route requests across templates, fast models, tool-capable models, RAG,
+  and reasoning models while controlling context, caching, budgets, and safety.
+- Added versioning requirements for `gi install`: agents resolve the
+  application version from project-local metadata and update build output,
+  installer metadata, and installer filename or artifact naming when local
+  tooling supports it.
+- Added `gi install` / `gi инсталл` / `ги инсталл` as a build-and-installer
+  command. By default agents use Inno Setup; when the user names another
+  program after the command, agents use that program as the preferred packaging
+  tool.
+
 ## 2026.05.20
 
 - Made the instruction-kit update helper singleton-safe when counting pending
