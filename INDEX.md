@@ -32,6 +32,9 @@ Reusable instructions in this repository are grouped by job.
   engineering cost reduction while preserving task quality.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
+- `patterns/FULL_RAG_AGENT_PLATFORM.md`: architecture pattern for a LangGraph
+  agent platform with structured memory, semantic retrieval, tracing, evals,
+  and optional n8n automation.
 - `patterns/GIT_WORKFLOW.md`: git policy, explicit commit requests, dirty
   worktrees, and commit-message language preferences.
 - `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for
