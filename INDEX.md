@@ -28,6 +28,8 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/AGENT_HARNESS_RUNTIME.md`: runtime pattern for building or auditing
   model-tool-observation loops, tool permissions, compaction, connectors, evals,
   and production agent harnesses.
+- `patterns/AI_ENGINEERING_BENCHMARKS.md`: benchmark pattern for proving AI
+  engineering cost reduction while preserving task quality.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
 - `patterns/GIT_WORKFLOW.md`: git policy, explicit commit requests, dirty
@@ -59,6 +61,8 @@ Reusable instructions in this repository are grouped by job.
 - `templates/AGENTS.template.md`: starter root `AGENTS.md` for a project.
 - `templates/AGENT_RUNBOOK.template.md`: starter project runbook.
 - `templates/AGENT_WORKING_AGREEMENTS.template.md`: starter working agreements.
+- `templates/AI_ENGINEERING_BENCHMARK.template.md`: copyable form for measuring
+  raw and optimized AI engineering workflows.
 - `templates/check-instruction-kit-updates.template.ps1`: project command for
   checking accepted instruction-kit migrations.
 - `templates/config-service-local.template.json`: starter project-local
