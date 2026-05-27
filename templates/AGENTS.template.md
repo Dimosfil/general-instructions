@@ -212,6 +212,15 @@ Inspect logs:
 - Keep commit-message language preferences separate from the agent's
   user-facing working language unless the user uses the unified project-language
   command.
+- If `gi язык` or an equivalent unified project-language command is sent
+  without explicit languages, run a three-step chat flow instead of asking for
+  one free-form line. At each step, show the same numbered Markdown checklist of
+  available languages with the current selection checked, name the current
+  surface, and tell the user they may reply with numbers or language names.
+- When the user replies to that flow with a numeric-only answer such as `1 2`,
+  interpret the numbers against the most recent language checklist and apply the
+  resulting ordered languages to the current step. Do not ask which languages the
+  numbers mean when the checklist was just shown.
 - Treat `gi commit language`, `gi коммит язык`, `ги коммит язык`, and older
   `gi язык коммита` forms as requests to configure commit-message languages in
   `tools/project-memory/git-preferences.json`.

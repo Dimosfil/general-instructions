@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.27.2",
+  "instruction_kit_version": "2026.05.27.4",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -54,7 +54,9 @@
     "2026.05.21.2__add_gi_install_versioning",
     "2026.05.21.3__add_model_routing_and_cost_control",
     "2026.05.27.1__resolve_task_managers_through_config_service",
-    "2026.05.27.2__add_unified_project_language"
+    "2026.05.27.2__add_unified_project_language",
+    "2026.05.27.3__clarify_update_intake_project_ownership",
+    "2026.05.27.4__number_unified_project_language_selection"
   ],
   "copied_files": [
     "AGENTS.md",

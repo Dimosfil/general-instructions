@@ -100,6 +100,13 @@ or:
   `gi проект язык`, `ги проект язык`, `gi язык проекта`, and `ги язык проекта`
   as requests to configure three ordered language sequences: project working
   environment, commit messages, and tasks.
+- If the unified project-language command does not include explicit languages,
+  ask in three numbered steps. For each step, show a concise numbered Markdown
+  checklist with the available languages and the current selection, then accept
+  the user's next answer as numbers or language names for that step.
+- If the user replies with only numbers, such as `1 2`, map them to the most
+  recent checklist and preserve that order. Do not ask what those numbers mean
+  after showing the checklist.
 - Treat `gi system language`, `gi систем язык`, and `ги систем язык` as
   requests to configure this preference.
 - Keep this setting separate from commit-message languages. `gi commit

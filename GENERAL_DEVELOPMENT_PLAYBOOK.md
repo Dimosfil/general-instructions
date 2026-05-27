@@ -420,6 +420,11 @@ When maintaining this library:
 - Extract reusable rules, patterns, templates, or checklist items into the main
   library.
 - Keep project-specific details out of shared instructions.
+- Treat source project names, evidence paths, task-manager notes, and owner
+  labels in recommendations as provenance only. They are not permission to read,
+  search, edit, or inspect the source project. Ask the user or that project's
+  owner for an explicit concrete path and action before crossing the current
+  repository boundary.
 - Preserve token economy: avoid recommendations that encourage dumping large
   files, full diffs, logs, SQLite contents, generated outputs, or all memory.
 - Remember accepted updates by committing the resulting instruction changes.

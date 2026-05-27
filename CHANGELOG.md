@@ -4,6 +4,9 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.27
 
+- Restored numbered checklist handling for the unified `gi language` /
+  `gi язык` flow, so replies like `1 2` are interpreted against the most recent
+  language checklist during the three-step setup.
 - Added unified `gi language` / `gi язык` language selection with separate
   ordered choices for project working environment, commit messages, and tasks.
 - Added `gi config service` / `ги конфиг сервис` as explicit config-service
