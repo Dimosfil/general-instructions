@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.20.7",
+  "instruction_kit_version": "2026.05.27.1",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -49,7 +49,11 @@
     "2026.05.20.4__require_executable_sprint_plan_contract",
     "2026.05.20.5__add_project_system_language_preferences",
     "2026.05.20.6__add_gi_pull_command",
-    "2026.05.20.7__make_pending_migration_count_singleton_safe"
+    "2026.05.20.7__make_pending_migration_count_singleton_safe",
+    "2026.05.21.1__add_gi_install_command",
+    "2026.05.21.2__add_gi_install_versioning",
+    "2026.05.21.3__add_model_routing_and_cost_control",
+    "2026.05.27.1__resolve_task_managers_through_config_service"
   ],
   "copied_files": [
     "AGENTS.md",

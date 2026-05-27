@@ -35,16 +35,28 @@ action verb or an explicit request.
 If the first user message is a path to a shared instruction library, or a request
 to connect shared instructions, treat it as an instruction bootstrap.
 
+Also treat `init <path>`, `инит <path>`, and `инициализируй <path>` as an
+instruction bootstrap when the path points to a known shared-instruction library,
+including `D:\AI\general-instructions\`, even when the message does not include
+the `gi` prefix.
+
 In that case:
 
 - Read the shared rules needed for bootstrapping.
 - Deploy a local instruction kit into the current project from the shared
   templates and checklist.
+- When the target path is the active `general-instructions` repository itself,
+  follow the repository's `gi start` / `gi restore` startup rules: restore only
+  minimal orientation, compact git state, and relevant local instructions, then
+  stop and ask what to do next.
 - Do not create only a thin `AGENTS.md` that points back to the shared folder.
 - Do not add the shared folder as a dependency, package, submodule, symlink, or
   runtime reference unless the user explicitly asks for that.
 - Do not read the shared library's `updates/` folder while bootstrapping a
   consuming project.
+- Do not reinterpret this form as Git initialization, OpenCode setup, project
+  creation, agent creation, or skill creation unless the user explicitly names
+  that action.
 
 ## GI Command Prefix
 
@@ -62,6 +74,9 @@ Examples:
 - `gi обновись`: check or apply accepted instruction-kit updates.
 - `gi init D:\AI\general-instructions\`: bootstrap/init from that shared
   library path.
+- `инит D:\AI\general-instructions\` or `init D:\AI\general-instructions\`:
+  same bootstrap/startup behavior for the shared instruction library, without
+  requiring the `gi` prefix.
 - `gi commit language: Russian`, `gi коммит язык: Russian`, or
   `ги коммит язык: Russian`: update commit-message language preferences.
 - `gi язык коммита: Russian`: older alias for commit-message language

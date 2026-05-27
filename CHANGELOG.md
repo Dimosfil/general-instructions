@@ -2,8 +2,21 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.27
+
+- Added `gi config service` / `ги конфиг сервис` as explicit config-service
+  discovery aliases, with `url=<url>` / `урл=<url>` forms for declaring the
+  canonical config-service URL used by local services.
+- Changed task-manager discovery guidance so project memory stores only the
+  manager name or `service_id`; runtime URLs are resolved through
+  config-service and the target service contract.
+
 ## 2026.05.21
 
+- Added bare shared-instruction init aliases for `D:\AI\general-instructions\`:
+  `инит`, `init`, and `инициализируй` now mean GI bootstrap/startup instead of
+  Git initialization, OpenCode setup, project creation, agent creation, or skill
+  creation.
 - Added `patterns/MODEL_ROUTING_AND_COST_CONTROL.md` for agent applications
   that route requests across templates, fast models, tool-capable models, RAG,
   and reasoning models while controlling context, caching, budgets, and safety.

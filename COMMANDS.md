@@ -13,6 +13,8 @@ For full policies, see `AGENTS.md`, `patterns/GIT_WORKFLOW.md`, and
 ```text
 gi обновись
 gi init D:\AI\general-instructions\
+инит D:\AI\general-instructions\
+init D:\AI\general-instructions\
 gi коммит язык: Russian
 ги коммит язык: Russian
 gi язык коммита: Russian
@@ -23,6 +25,9 @@ gi саммари
 gi старт
 gi restore
 gi config
+gi config service
+gi config service url=http://127.0.0.1:4100
+ги конфиг сервис урл=http://127.0.0.1:4100
 gi install
 gi инсталл
 ги инсталл
@@ -112,6 +117,11 @@ gi restore
 gi config
 gi конфиг
 ги конфиг
+gi config service
+ги конфиг сервис
+gi config service url=http://127.0.0.1:4100
+ги конфиг сервис url=http://127.0.0.1:4100
+ги конфиг сервис урл=http://127.0.0.1:4100
 ```
 
 Агент получает bootstrap-конфиг сервиса конфигов, а не ищет runtime-конфиги в
@@ -120,6 +130,22 @@ gi конфиг
 или путь из `GENERAL_INSTRUCTIONS_HOME`. Из GI main config взять
 `configServiceUrl` и проверить сам config-service через его `/health` или
 документированный discovery endpoint.
+
+`gi config service` / `ги конфиг сервис` — явное имя того же сценария. Для
+runtime-адресов локальных приложений и task manager агент берёт из локального
+проекта только имя или service id, затем запрашивает `GET /services/{serviceId}`
+в config-service. После этого он использует `endpoints.availability` для
+проверки доступности, `endpoints.contract` для актуального протокола и
+`endpoints.api` для операций.
+
+`gi config service url=<url>` / `ги конфиг сервис url=<url>` /
+`ги конфиг сервис урл=<url>` задаёт canonical URL config-service для текущего
+окружения, например
+`http://127.0.0.1:4100`. В shared instruction library агент обновляет
+`config/gi-main.json`; в проекте с явным local override обновляет только этот
+override. Все локальные сервисы используют этот URL, чтобы регистрироваться в
+config-service и читать discovery. URL должен быть полным `http://` или
+`https://` адресом без секретов, токенов, query string и fragment.
 
 Если GI main config или config-service недоступен, остановиться с коротким
 блокером. Не подбирать порты, не сканировать `D:\AI\*`, не читать другие
@@ -295,7 +321,9 @@ gi tm
 Агент проверяет `tools/project-memory/task-managers.json`. Если менеджеры уже
 есть — обновляет skill/config из shared kit. Если нет — показывает checklist
 доступных адаптеров и `none`. После выбора создаёт конфиг и заполняет
-обязательные поля. `base_url` — API endpoint для операций, не UI URL.
+обязательные поля. В конфиге task manager хранится имя или service id менеджера
+и project-local preferences; runtime URL агент получает через config-service по
+этому service id.
 
 ### Test Current Task Manager
 
@@ -307,11 +335,13 @@ gi менеджер тест
 ```
 
 The agent tests the configured task manager end to end in the current project:
-create a disposable no-op task, load/read it back, take it in work when the
-adapter supports that lifecycle step, complete it as `done`, read the final
-status, and report the manager id, endpoint, task id or URL, completed lifecycle
-steps, and any missing capability. The test must not edit repository files,
-touch secrets, perform destructive actions, or use another project folder.
+resolve the manager service id through config-service, read the manager contract,
+create a disposable no-op task through the documented API entry point, load/read
+it back, take it in work when the adapter supports that lifecycle step, complete
+it as `done`, read the final status, and report the manager id, resolved service
+endpoint, task id or URL, completed lifecycle steps, and any missing capability.
+The test must not edit repository files, touch secrets, perform destructive
+actions, or use another project folder.
 
 ### Отправить План В Task Manager
 

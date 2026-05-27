@@ -100,10 +100,28 @@ so this library can turn it into accepted guidance after maintenance review.
   summary metadata or relevant sections, and compact git state. Do not read full
   summaries, runbooks, memory notes, logs, or diffs unless a concrete task needs
   them.
+- Treat `init <path>`, `инит <path>`, and `инициализируй <path>` that point to
+  `D:\AI\general-instructions\` or another known shared-instruction library as
+  a shared-instruction bootstrap/startup request, even without the `gi` prefix.
+  Read the repository's local instructions and follow the documented `gi`
+  bootstrap rules. Do not reinterpret that form as Git initialization, OpenCode
+  setup, project creation, or skill creation unless the user explicitly names
+  that action.
 - Treat screenshots, logs, pasted errors, or other bug evidence as requests for
   analysis first. Explain the likely issue and ask what action the user wants
   before editing files, unless the user explicitly says to fix it, such as
   `fix`, `почини`, or `gi почини`.
+- When a user provides a PDF path or attachment and asks to inspect, verify, or
+  reread it, read the actual PDF before relying on memory, chat fragments, or
+  screenshots. First confirm the file exists and page count/metadata when cheap,
+  then try local text extraction with available PDF tools or libraries. On this
+  Windows setup, if plain `python` is blocked by user-profile AppData access,
+  prefer `uv run --with pypdf python -c "..."` as a non-project fallback for
+  extracting page text without changing repository dependencies. If extracted
+  text is empty or clearly incomplete, treat the PDF as possibly scanned and
+  ask before using OCR, network services, installing tools, or writing extracted
+  content to the repository. Summarize only task-relevant findings and avoid
+  printing full private documents by default.
 - Ask before expanding into unrelated scope. Proceed without asking only when
   the expansion is required for the stated goal and remains low-risk.
 - Treat this repository root as the filesystem boundary for normal work. Do not
@@ -111,13 +129,22 @@ so this library can turn it into accepted guidance after maintenance review.
   or arbitrary external folder unless the user gives an explicit concrete path
   and action. Communicate with other projects through documented APIs,
   connectors, or task-manager endpoints.
-- Treat `gi config`, `gi конфиг`, and `ги конфиг` as requests to get the
-  bootstrap config for the config/discovery service. Read the project-local
-  override only if local instructions define one, then read GI main config
-  from `D:\AI\general-instructions\config\gi-main.json` or
+- Treat `gi config`, `gi конфиг`, `ги конфиг`, `gi config service`,
+  `ги конфиг сервис`, `ги конфиг сервис url=<url>`, and
+  `ги конфиг сервис урл=<url>` as requests to get or set the bootstrap config
+  for the config/discovery service. Read the
+  project-local override only if local instructions define one, then read GI
+  main config from
+  `D:\AI\general-instructions\config\gi-main.json` or
   `GENERAL_INSTRUCTIONS_HOME`. Use its `configServiceUrl` to query the config
-  service. Do not scan sibling project folders, guess ports, or use stale
-  task-manager memory as a runtime fallback.
+  service. Resolve local app and task-manager runtime URLs by service id through
+  config-service; project task-manager config should keep only the selected
+  manager name/id and non-secret project preferences. For the `url=<url>` form,
+  validate a full `http://` or `https://` URL with no secrets, update the shared
+  `configServiceUrl` or the explicit project-local override, and tell services
+  to use that URL for registration and discovery. Do not scan sibling project
+  folders, guess ports, copy URLs from old task-manager memory, or use stale
+  task-manager records as a runtime fallback.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and obvious typo variants
   such as `gi иснтлл` as requests to build the current project and produce an
   installer. Use Inno Setup by default when no installer tool is named. If the
