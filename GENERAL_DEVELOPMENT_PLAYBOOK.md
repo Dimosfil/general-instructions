@@ -16,6 +16,8 @@ It should contain:
 
 - What the project is.
 - How to restore context.
+- Permission for the agent to ask concise implementation questions and propose
+  better-fit workflows, stacks, algorithms, or tradeoffs when useful.
 - Where durable memory lives.
 - How to run, test, build, and inspect logs.
 - What files/folders are safe working areas.
