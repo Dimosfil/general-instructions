@@ -179,22 +179,23 @@ so this library can turn it into accepted guidance after maintenance review.
 
 ## Language Preferences
 
-- Prefer one ordered project language preference when the user wants language
-  choices for project work. Treat `gi language`, `gi язык`, `ги язык`,
+- Prefer one language command with three ordered choices when the user wants
+  language preferences for project work. Treat `gi language`, `gi язык`, `ги язык`,
   `gi project language`, `gi проект язык`, `ги проект язык`,
-  `gi язык проекта`, and `ги язык проекта` as requests to configure the
-  project language order in both
+  `gi язык проекта`, and `ги язык проекта` as requests to configure, in order:
+  project working environment languages, commit-message languages, and task
+  languages in
   `tools/project-memory/system-preferences.json` and
   `tools/project-memory/git-preferences.json`.
-- Apply the configured project or system language to agent-created task titles,
-  task descriptions, task-manager updates, plans, checklists, progress updates,
+- Apply the configured project working-environment language order to plans,
+  checklists, progress updates,
   final answers, clarifying questions, and user-facing explanations. Do not use
   it to rewrite existing task text, code, commands, logs, quoted text, or a
   response language the user explicitly requested for a specific message.
-- For the unified language command, preserve the user's selected order. Use the
-  first selected language as the primary language for agent-created tasks and
-  user-facing communication, and use the same ordered language sequence for
-  commit-message preferences.
+- Apply the configured task language order to agent-created task titles, task
+  descriptions, and task-manager updates.
+- For each `gi язык` choice, preserve the user's selected order. The first
+  selected language in each choice is primary for that surface.
 - Keep commit-message language preferences separate from the agent's
   user-facing working language unless the user uses the unified project-language
   command.

@@ -97,17 +97,22 @@ $config = [ordered]@{
         mode = $mode
         language = $language
         languages = if ($language) { @($language) } else { @() }
+        project_environment_languages = if ($language) { @($language) } else { @() }
+        task_language = $language
+        task_languages = if ($language) { @($language) } else { @() }
         available = @("English", "Russian", "Spanish", "German", "French")
         applies_to = @(
             "progress_updates",
             "final_answers",
             "clarifying_questions",
             "user_facing_explanations",
-            "agent_created_task_titles",
-            "agent_created_task_descriptions",
-            "task_manager_updates",
             "plans",
             "checklists"
+        )
+        task_applies_to = @(
+            "agent_created_task_titles",
+            "agent_created_task_descriptions",
+            "task_manager_updates"
         )
         exceptions = @(
             "existing_task_text",

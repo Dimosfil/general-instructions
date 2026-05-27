@@ -6,6 +6,15 @@
       "Russian",
       "English"
     ],
+    "project_environment_languages": [
+      "Russian",
+      "English"
+    ],
+    "task_language": "Russian",
+    "task_languages": [
+      "Russian",
+      "English"
+    ],
     "available": [
       "English",
       "Russian",
@@ -18,11 +27,13 @@
       "final_answers",
       "clarifying_questions",
       "user_facing_explanations",
-      "agent_created_task_titles",
-      "agent_created_task_descriptions",
-      "task_manager_updates",
       "plans",
       "checklists"
+    ],
+    "task_applies_to": [
+      "agent_created_task_titles",
+      "agent_created_task_descriptions",
+      "task_manager_updates"
     ],
     "exceptions": [
       "existing_task_text",

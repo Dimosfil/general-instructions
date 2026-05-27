@@ -205,9 +205,16 @@ function Write-SystemLanguagePreferenceNotice {
         $preferences = Get-Content -LiteralPath $systemPreferencesPath -Raw | ConvertFrom-Json
         $mode = [string]$preferences.agent_response_language.mode
         $language = [string]$preferences.agent_response_language.language
-        $languages = @($preferences.agent_response_language.languages | ForEach-Object { [string]$_ })
+        $languages = @($preferences.agent_response_language.project_environment_languages | ForEach-Object { [string]$_ })
+        if ($languages.Count -eq 0) {
+            $languages = @($preferences.agent_response_language.languages | ForEach-Object { [string]$_ })
+        }
+        $taskLanguages = @($preferences.agent_response_language.task_languages | ForEach-Object { [string]$_ })
         if ($mode -eq "fixed" -and $languages.Count -gt 0) {
-            Write-Host ("Agent working language order: {0}" -f ($languages -join ", "))
+            Write-Host ("Project working environment: {0}" -f ($languages -join ", "))
+            if ($taskLanguages.Count -gt 0) {
+                Write-Host ("Tasks: {0}" -f ($taskLanguages -join ", "))
+            }
         }
         elseif ($mode -eq "fixed" -and $language) {
             Write-Host "Agent working language: $language"

@@ -4,9 +4,8 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.27
 
-- Added unified `gi project language` / `gi проект язык` language selection for
-  project communication, agent-created tasks, plans, checklists, task-manager
-  updates, and commit-message translation preferences.
+- Added unified `gi language` / `gi язык` language selection with separate
+  ordered choices for project working environment, commit messages, and tasks.
 - Added `gi config service` / `ги конфиг сервис` as explicit config-service
   discovery aliases, with `url=<url>` / `урл=<url>` forms for declaring the
   canonical config-service URL used by local services.

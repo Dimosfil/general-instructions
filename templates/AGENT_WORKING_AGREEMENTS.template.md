@@ -98,9 +98,8 @@ or:
   requested for a specific message.
 - Treat `gi language`, `gi язык`, `ги язык`, `gi project language`,
   `gi проект язык`, `ги проект язык`, `gi язык проекта`, and `ги язык проекта`
-  as requests to configure one ordered language sequence for agent
-  communication, agent-created tasks and task-manager updates, plans,
-  checklists, and commit-message preferences.
+  as requests to configure three ordered language sequences: project working
+  environment, commit messages, and tasks.
 - Treat `gi system language`, `gi систем язык`, and `ги систем язык` as
   requests to configure this preference.
 - Keep this setting separate from commit-message languages. `gi commit

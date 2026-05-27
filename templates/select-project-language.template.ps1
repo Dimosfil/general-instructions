@@ -1,7 +1,10 @@
 param(
     [string]$SystemOutputPath = "tools/project-memory/system-preferences.json",
     [string]$GitOutputPath = "tools/project-memory/git-preferences.json",
-    [string]$Selection = ""
+    [string]$Selection = "",
+    [string]$ProjectSelection = "",
+    [string]$CommitSelection = "",
+    [string]$TaskSelection = ""
 )
 
 Set-StrictMode -Version Latest
@@ -26,50 +29,38 @@ $languageAliases[(-join ((0x0438,0x0441,0x043F,0x0430,0x043D,0x0441,0x043A,0x043
 $languageAliases[(-join ((0x043D,0x0435,0x043C,0x0435,0x0446,0x043A,0x0438,0x0439) | ForEach-Object { [char]$_ }))] = "German"
 $languageAliases[(-join ((0x0444,0x0440,0x0430,0x043D,0x0446,0x0443,0x0437,0x0441,0x043A,0x0438,0x0439) | ForEach-Object { [char]$_ }))] = "French"
 
-$defaultSelected = @("English")
-if (Test-Path -LiteralPath $SystemOutputPath) {
-    try {
-        $existing = Get-Content -LiteralPath $SystemOutputPath -Raw | ConvertFrom-Json
-        if ($existing.agent_response_language.languages) {
-            $existingLanguages = @($existing.agent_response_language.languages | ForEach-Object { [string]$_ })
-            $defaultSelected = @($existingLanguages | Where-Object { $available -contains $_ } | Select-Object -Unique)
-        }
-        elseif ($existing.agent_response_language.mode -eq "fixed" -and $existing.agent_response_language.language) {
-            $existingLanguage = [string]$existing.agent_response_language.language
-            if ($available -contains $existingLanguage) {
-                $defaultSelected = @($existingLanguage)
-            }
-        }
-        if ($defaultSelected.Count -eq 0) {
-            $defaultSelected = @("English")
-        }
+function Select-LanguageOrder {
+    param(
+        [Parameter(Mandatory = $true)][string]$Title,
+        [Parameter(Mandatory = $true)][string[]]$DefaultSelected,
+        [string]$InputText = ""
+    )
+
+    $default = @($DefaultSelected | Where-Object { $available -contains $_ } | Select-Object -Unique)
+    if ($default.Count -eq 0) {
+        $default = @("English")
     }
-    catch {
-        Write-Host "Could not read existing system preferences; using defaults."
+
+    Write-Host ""
+    Write-Host $Title
+    Write-Host "Enter numbers or names in priority order, for example: 2 1"
+    Write-Host ""
+
+    for ($i = 0; $i -lt $available.Count; $i++) {
+        $language = $available[$i]
+        $checked = if ($default -contains $language) { "[x]" } else { "[ ]" }
+        Write-Host ("{0} {1}. {2}" -f $checked, ($i + 1), $language)
     }
-}
 
-Write-Host "Select project languages in priority order for agent communication, agent-created tasks, plans, checklists, and commits."
-Write-Host "Enter numbers or names in order, for example: 2 1"
-Write-Host ""
+    if ([string]::IsNullOrWhiteSpace($InputText)) {
+        $InputText = Read-Host "Selection"
+    }
 
-for ($i = 0; $i -lt $available.Count; $i++) {
-    $language = $available[$i]
-    $checked = if ($defaultSelected -contains $language) { "[x]" } else { "[ ]" }
-    Write-Host ("{0} {1}. {2}" -f $checked, ($i + 1), $language)
-}
+    if ([string]::IsNullOrWhiteSpace($InputText)) {
+        return $default
+    }
 
-Write-Host ""
-if ([string]::IsNullOrWhiteSpace($Selection)) {
-    $inputText = Read-Host "Selection"
-}
-else {
-    $inputText = $Selection
-}
-
-$selected = $defaultSelected
-if (-not [string]::IsNullOrWhiteSpace($inputText)) {
-    $normalizedInput = $inputText.ToLowerInvariant() -replace "[^\p{L}0-9]+", " "
+    $normalizedInput = $InputText.ToLowerInvariant() -replace "[^\p{L}0-9]+", " "
     $selected = foreach ($part in ($normalizedInput -split "\s+")) {
         $trimmed = $part.Trim()
         if ($trimmed -match "^[0-9]+$") {
@@ -82,29 +73,93 @@ if (-not [string]::IsNullOrWhiteSpace($inputText)) {
             $languageAliases[$trimmed]
         }
     }
+
+    $selected = @($selected | Where-Object { $_ } | Select-Object -Unique)
+    if ($selected.Count -eq 0) {
+        return $default
+    }
+
+    return $selected
 }
 
-$selected = @($selected | Where-Object { $_ } | Select-Object -Unique)
-if ($selected.Count -eq 0) {
-    $selected = @("English")
+$defaultProject = @("English")
+$defaultTasks = @("English")
+if (Test-Path -LiteralPath $SystemOutputPath) {
+    try {
+        $existing = Get-Content -LiteralPath $SystemOutputPath -Raw | ConvertFrom-Json
+        if ($existing.agent_response_language.project_environment_languages) {
+            $defaultProject = @($existing.agent_response_language.project_environment_languages | ForEach-Object { [string]$_ })
+        }
+        elseif ($existing.agent_response_language.languages) {
+            $defaultProject = @($existing.agent_response_language.languages | ForEach-Object { [string]$_ })
+        }
+        elseif ($existing.agent_response_language.mode -eq "fixed" -and $existing.agent_response_language.language) {
+            $defaultProject = @([string]$existing.agent_response_language.language)
+        }
+
+        if ($existing.agent_response_language.task_languages) {
+            $defaultTasks = @($existing.agent_response_language.task_languages | ForEach-Object { [string]$_ })
+        }
+        else {
+            $defaultTasks = $defaultProject
+        }
+    }
+    catch {
+        Write-Host "Could not read existing system preferences; using defaults."
+    }
 }
+
+$defaultCommits = @("English")
+if (Test-Path -LiteralPath $GitOutputPath) {
+    try {
+        $existingGit = Get-Content -LiteralPath $GitOutputPath -Raw | ConvertFrom-Json
+        $defaultCommits = @()
+        if ($existingGit.commit_message_languages.primary) {
+            $defaultCommits += [string]$existingGit.commit_message_languages.primary
+        }
+        if ($existingGit.commit_message_languages.additional) {
+            $defaultCommits += @($existingGit.commit_message_languages.additional | ForEach-Object { [string]$_ })
+        }
+    }
+    catch {
+        Write-Host "Could not read existing git preferences; using defaults."
+    }
+}
+
+if (-not [string]::IsNullOrWhiteSpace($Selection)) {
+    $ProjectSelection = $Selection
+    $CommitSelection = $Selection
+    $TaskSelection = $Selection
+}
+
+Write-Host "Configure language order for this project."
+Write-Host "You will choose: 1) project working environment, 2) commits, 3) tasks."
+
+$projectLanguages = @(Select-LanguageOrder -Title "1. Project working environment language order" -DefaultSelected $defaultProject -InputText $ProjectSelection)
+$commitLanguages = @(Select-LanguageOrder -Title "2. Commit message language order" -DefaultSelected $defaultCommits -InputText $CommitSelection)
+$taskLanguages = @(Select-LanguageOrder -Title "3. Task language order" -DefaultSelected $defaultTasks -InputText $TaskSelection)
 
 $systemConfig = [ordered]@{
     agent_response_language = [ordered]@{
         mode = "fixed"
-        language = $selected[0]
-        languages = $selected
+        language = $projectLanguages[0]
+        languages = $projectLanguages
+        project_environment_languages = $projectLanguages
+        task_language = $taskLanguages[0]
+        task_languages = $taskLanguages
         available = $available
         applies_to = @(
             "progress_updates",
             "final_answers",
             "clarifying_questions",
             "user_facing_explanations",
-            "agent_created_task_titles",
-            "agent_created_task_descriptions",
-            "task_manager_updates",
             "plans",
             "checklists"
+        )
+        task_applies_to = @(
+            "agent_created_task_titles",
+            "agent_created_task_descriptions",
+            "task_manager_updates"
         )
         exceptions = @(
             "existing_task_text",
@@ -117,12 +172,11 @@ $systemConfig = [ordered]@{
     }
 }
 
-$additional = @($selected | Select-Object -Skip 1)
-
+$commitAdditional = @($commitLanguages | Select-Object -Skip 1)
 $gitConfig = [ordered]@{
     commit_message_languages = [ordered]@{
-        primary = $selected[0]
-        additional = $additional
+        primary = $commitLanguages[0]
+        additional = $commitAdditional
         available = $available
         format = "selected_order"
     }
@@ -139,12 +193,7 @@ $systemConfig | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $SystemOutput
 $gitConfig | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $GitOutputPath -Encoding UTF8
 
 Write-Host ""
-Write-Host "Saved project language preferences."
-Write-Host ("Project language order: {0}" -f ($selected -join ", "))
-Write-Host ("Git commit primary language: {0}" -f $selected[0])
-if ($additional.Count -gt 0) {
-    Write-Host ("Git commit additional languages: {0}" -f ($additional -join ", "))
-}
-else {
-    Write-Host "Git commit additional languages: none"
-}
+Write-Host "Saved language preferences."
+Write-Host ("Project working environment: {0}" -f ($projectLanguages -join ", "))
+Write-Host ("Commit messages: {0}" -f ($commitLanguages -join ", "))
+Write-Host ("Tasks: {0}" -f ($taskLanguages -join ", "))
