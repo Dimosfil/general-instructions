@@ -47,7 +47,7 @@ if (Test-Path -LiteralPath $OutputPath) {
 }
 
 Write-Host "Select the agent working language for user-facing project messages."
-Write-Host "This is separate from Git commit-message languages."
+Write-Host "This applies to agent-created task text and is separate from Git commit-message languages."
 Write-Host ""
 
 for ($i = 0; $i -lt $available.Count; $i++) {
@@ -96,14 +96,21 @@ $config = [ordered]@{
     agent_response_language = [ordered]@{
         mode = $mode
         language = $language
+        languages = if ($language) { @($language) } else { @() }
         available = @("English", "Russian", "Spanish", "German", "French")
         applies_to = @(
             "progress_updates",
             "final_answers",
             "clarifying_questions",
-            "user_facing_explanations"
+            "user_facing_explanations",
+            "agent_created_task_titles",
+            "agent_created_task_descriptions",
+            "task_manager_updates",
+            "plans",
+            "checklists"
         )
         exceptions = @(
+            "existing_task_text",
             "code",
             "commands",
             "logs",

@@ -81,6 +81,9 @@ Reusable instructions in this repository are grouped by job.
   language preference defaults.
 - `templates/system-preferences.template.json`: project-local agent working
   language preference defaults.
+- `templates/select-project-language.template.ps1`: interactive project setup
+  command for an ordered project language sequence covering agent
+  communication, agent-created tasks and plans, and commit-message preferences.
 - `templates/gitignore-agent-memory.template`: ignore snippet for local agent
   memory and runtime noise.
 - `templates/instruction-kit.template.json`: copied provenance and local update

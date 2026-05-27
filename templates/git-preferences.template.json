@@ -9,6 +9,6 @@
       "German",
       "French"
     ],
-    "format": "english_plus_selected_translations"
+    "format": "selected_order"
   }
 }

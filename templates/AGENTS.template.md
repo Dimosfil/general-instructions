@@ -155,6 +155,22 @@ Inspect logs:
   If the entity is still missing, ask the user a short clarification question.
   Do not use another project folder or the shared instruction library as a
   runtime fallback unless the user explicitly gives that path and action.
+- Prefer one ordered project language preference when the user wants language
+  choices for project work. Treat `gi language`, `gi язык`, `ги язык`,
+  `gi project language`, `gi проект язык`, `ги проект язык`,
+  `gi язык проекта`, and `ги язык проекта` as requests to configure the
+  project language order in both
+  `tools/project-memory/system-preferences.json` and
+  `tools/project-memory/git-preferences.json`.
+- Apply the configured project or system language to agent-created task titles,
+  task descriptions, task-manager updates, plans, checklists, progress updates,
+  final answers, clarifying questions, and user-facing explanations. Do not use
+  it to rewrite existing task text, code, commands, logs, quoted text, or a
+  response language the user explicitly requested for a specific message.
+- For the unified language command, preserve the user's selected order. Use the
+  first selected language as the primary language for agent-created tasks and
+  user-facing communication, and use the same ordered language sequence for
+  commit-message preferences.
 - Do not commit secrets, credentials, local databases, logs, or generated caches.
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted queries for relevant files or patterns.
@@ -193,7 +209,8 @@ Inspect logs:
   before editing files, unless the user explicitly says to fix it, such as
   `fix`, `почини`, or `gi почини`.
 - Keep commit-message language preferences separate from the agent's
-  user-facing working language.
+  user-facing working language unless the user uses the unified project-language
+  command.
 - Treat `gi commit language`, `gi коммит язык`, `ги коммит язык`, and older
   `gi язык коммита` forms as requests to configure commit-message languages in
   `tools/project-memory/git-preferences.json`.
@@ -201,9 +218,10 @@ Inspect logs:
   requests to configure the agent's project working language in
   `tools/project-memory/system-preferences.json`.
 - Follow `tools/project-memory/system-preferences.json` for progress updates,
-  final answers, clarifying questions, and user-facing explanations. Do not use
-  it to rewrite code, commands, logs, quoted text, or a response language the
-  user explicitly requested for a specific message.
+  final answers, clarifying questions, user-facing explanations, and
+  agent-created task artifacts. Do not use it to rewrite existing task text,
+  code, commands, logs, quoted text, or a response language the user explicitly
+  requested for a specific message.
 - Launch applications in the background so focus does not jump away from the
   user's current window.
 - After implementing a frontend, backend, API, or full-stack feature, restart

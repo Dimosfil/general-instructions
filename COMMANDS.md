@@ -15,6 +15,13 @@ gi обновись
 gi init D:\AI\general-instructions\
 инит D:\AI\general-instructions\
 init D:\AI\general-instructions\
+gi язык: 2 1
+ги язык: 2 1
+gi language: Russian English
+gi проект язык: Russian
+ги проект язык: Russian
+gi project language: Russian
+gi язык проекта: Russian
 gi коммит язык: Russian
 ги коммит язык: Russian
 gi язык коммита: Russian
@@ -225,6 +232,47 @@ selected workflow. If only generic health works, stop before executing tasks.
 Если сохранённый shared library path недоступен — использовать путь из
 команды, `GENERAL_INSTRUCTIONS_HOME` или спросить.
 
+### Настроить Язык Проекта
+
+```text
+gi язык: 2 1
+ги язык: 2 1
+gi language: Russian English
+gi проект язык: Russian
+ги проект язык: Russian
+gi project language: Russian
+gi язык проекта: Russian
+ги язык проекта: Russian
+```
+
+Это основной способ выбрать язык проекта одной командой. Можно выбрать один или
+несколько языков; порядок важен. Первый выбранный язык становится основным для
+общения и создаваемых агентом задач, второй — вторым языком, и так далее.
+Агент обновляет
+`tools/project-memory/system-preferences.json` и
+`tools/project-memory/git-preferences.json`: общение, progress updates,
+финальные ответы, уточняющие вопросы, task titles, task descriptions,
+task-manager updates, планы и checklists ведутся в выбранной
+последовательности. Commit-сообщения используют ту же последовательность
+языков.
+
+Настройка не переводит уже существующий текст задач, код, команды, логи,
+цитаты или язык, который пользователь явно попросил для конкретного ответа.
+Если пользователь не называет язык, агент показывает короткий Markdown
+checklist с доступными языками и текущим выбором.
+
+Если пользователь явно хочет настроить язык проекта вручную, можно запустить:
+
+```powershell
+.\tools\select-project-language.ps1
+```
+
+или:
+
+```powershell
+.\tools\agent-start.ps1 -ConfigureProjectLanguage
+```
+
 ### Настроить Языки Коммитов
 
 ```text
@@ -250,7 +298,8 @@ gi system language: Russian
 ```
 
 Это настройка языка работы агента в проекте: progress updates, финальные
-ответы, уточняющие вопросы и пользовательские объяснения. Агент обновляет
+ответы, уточняющие вопросы, пользовательские объяснения, task titles, task
+descriptions, task-manager updates, планы и checklists. Агент обновляет
 `tools/project-memory/system-preferences.json` сам и кратко подтверждает. Эта
 настройка не меняет язык commit-сообщений, код, команды, логи, цитаты или язык,
 который пользователь явно попросил для конкретного ответа.

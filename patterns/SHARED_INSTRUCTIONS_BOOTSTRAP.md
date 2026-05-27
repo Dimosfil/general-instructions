@@ -43,6 +43,7 @@ It does not mean:
    - `tools/project-memory/system-preferences.json`
    - `tools/summary/`
    - `tools/agent-start.ps1`
+   - `tools/select-project-language.ps1`
    - `tools/select-git-commit-languages.ps1`
    - `tools/select-system-language.ps1`
 3. Ask whether the project should connect task-manager plan sync. Offer the

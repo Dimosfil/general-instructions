@@ -90,16 +90,24 @@ or:
 
 - Follow `tools/project-memory/system-preferences.json` for the agent's
   user-facing working language in this project.
-- Apply the configured system language to progress updates, final answers,
-  clarifying questions, and user-facing explanations.
-- Do not apply the system language to code, commands, logs, quoted text, or a
-  response language the user explicitly requested for a specific message.
+- Apply the configured system or project language to progress updates, final
+  answers, clarifying questions, user-facing explanations, agent-created task
+  titles, task descriptions, task-manager updates, plans, and checklists.
+- Do not apply the system or project language to existing task text, code,
+  commands, logs, quoted text, or a response language the user explicitly
+  requested for a specific message.
+- Treat `gi language`, `gi язык`, `ги язык`, `gi project language`,
+  `gi проект язык`, `ги проект язык`, `gi язык проекта`, and `ги язык проекта`
+  as requests to configure one ordered language sequence for agent
+  communication, agent-created tasks and task-manager updates, plans,
+  checklists, and commit-message preferences.
 - Treat `gi system language`, `gi систем язык`, and `ги систем язык` as
   requests to configure this preference.
 - Keep this setting separate from commit-message languages. `gi commit
   language`, `gi коммит язык`, `ги коммит язык`, and older `gi язык коммита`
   forms configure `tools/project-memory/git-preferences.json`, not the agent's
-  working language.
+  working language. The unified project-language command updates both
+  preference files.
 - If the user explicitly wants to configure the system language manually, they
   can run:
 
