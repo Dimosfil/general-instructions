@@ -102,6 +102,9 @@ When the user runs `gi tm`:
    the connected managers and next available sync action.
 4. If no enabled manager exists, show a short numbered Markdown checklist with
    checkbox items for available adapters plus `none`, and ask which to connect.
+   Render each option as a task-list bullet with the number inside the label,
+   such as `- [ ] 1. WorkNest`; do not use ordered-task syntax such as
+   `1. [ ] WorkNest`.
 5. After the user chooses managers, create or update
    `tools/project-memory/task-managers.json` from the shared template.
 6. Do not finish manager setup with required project fields left as `TODO`. Ask
@@ -116,8 +119,8 @@ Example checklist:
 ```markdown
 Choose task-manager adapters for plan sync:
 
-1. [ ] WorkNest - send plans to WorkNest raw intake.
-2. [ ] none - do not connect a task manager now.
+- [ ] 1. WorkNest - send plans to WorkNest raw intake.
+- [ ] 2. none - do not connect a task manager now.
 ```
 
 ## `gi план` / `gi post plan`

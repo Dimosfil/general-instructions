@@ -70,7 +70,10 @@
   checklist showing `English` as always selected and current additional
   languages as checked. Explain that `English` is the required primary
   commit-message language and cannot be disabled. Ask the user to reply with
-  language names or numbers.
+  language names or numbers. Render each option as a task-list bullet with the
+  number inside the label, such as `- [x] 1. English`; do not use
+  `1. [x] English`, because some chat renderers split the checkbox and label
+  onto separate lines.
 - When reporting this change, mention the plain
   `tools/project-memory/git-preferences.json` path instead of malformed or
   placeholder markdown links.

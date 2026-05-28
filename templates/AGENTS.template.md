@@ -217,6 +217,10 @@ Inspect logs:
   one free-form line. At each step, show the same numbered Markdown checklist of
   available languages with the current selection checked, name the current
   surface, and tell the user they may reply with numbers or language names.
+  Render each option as a task-list bullet with the number inside the label,
+  such as `- [x] 1. English`; do not use ordered-task syntax such as
+  `1. [x] English`, because some chat renderers split the checkbox and label
+  onto separate lines.
 - When the user replies to that flow with a numeric-only answer such as `1 2`,
   interpret the numbers against the most recent language checklist and apply the
   resulting ordered languages to the current step. Do not ask which languages the

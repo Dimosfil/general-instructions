@@ -157,7 +157,10 @@ For ambiguous commit-language selection, present a concise numbered Markdown
 checklist instead of a prose-only list. Show `English` as always selected,
 explain that it is the required primary commit-message language, and mark
 current additional languages as checked. Ask the user to reply with language
-names or numbers.
+names or numbers. Render each option as a task-list bullet with the number
+inside the label, such as `- [x] 1. English`; do not use ordered-task syntax
+such as `1. [x] English`, because some chat renderers split the checkbox and
+label onto separate lines.
 
 Example:
 
@@ -167,11 +170,11 @@ Which additional commit-message languages should be enabled?
 English is the required primary commit-message language and cannot be disabled.
 Reply with numbers or language names for any additional languages to enable.
 
-1. [x] English (primary, required)
-2. [x] Russian
-3. [ ] Spanish
-4. [ ] German
-5. [ ] French
+- [x] 1. English (primary, required)
+- [x] 2. Russian
+- [ ] 3. Spanish
+- [ ] 4. German
+- [ ] 5. French
 ```
 
 When reporting the change, mention the plain path
