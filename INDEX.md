@@ -14,6 +14,13 @@ Reusable instructions in this repository are grouped by job.
   rules.
 - `VERSION.md`: current accepted instruction-kit version.
 
+## Project Memory
+
+- `tools/project-memory/README.md`: local project-memory usage, including the
+  generated SQLite index workflow.
+- `tools/project-memory/build_project_memory_index.py`: stdlib-only SQLite
+  indexer for fast rebuilds from git tracked files and targeted searches.
+
 ## Core Playbooks
 
 - `DEVELOPMENT_PLAN.md`: planned improvements for this shared instruction
@@ -44,6 +51,8 @@ Reusable instructions in this repository are grouped by job.
   caching, and explicit budget limits.
 - `patterns/PROJECT_TESTING_STRATEGY.md`: project-aware testing strategy for
   new features, bug fixes, smoke checks, and release confidence.
+- `patterns/PROJECT_FTP_DEPLOY.md`: project-local FTP/FTPS/SFTP deploy config
+  and `gi ftp` upload workflow.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
 - `patterns/SERVICE_DISCOVERY_CONFIG.md`: config-service bootstrap,
@@ -77,6 +86,8 @@ Reusable instructions in this repository are grouped by job.
   line guards and `git diff --stat`.
 - `templates/FEATURE_TEST_PLAN.template.md`: copyable plan for verifying a new
   feature or risky change.
+- `templates/ftp.local.template.json`: redacted starter shape for a
+  project-local `tools/deploy/ftp.local.json` upload config.
 - `templates/git-preferences.template.json`: project-local commit-message
   language preference defaults.
 - `templates/system-preferences.template.json`: project-local agent working

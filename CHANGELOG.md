@@ -2,6 +2,33 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.05.29
+
+- Added `gi ftp config` / `ги фтп конфиг` for project-local FTP/SFTP config
+  setup in `tools/deploy/ftp.local.json`, plus `gi ftp` / `ги фтп` for uploading
+  the configured build output to FTP, FTPS, or SFTP without exposing secrets.
+
+## 2026.05.28
+
+- Added encoding-safety guidance for agents: avoid PowerShell whole-file
+  rewrites without explicit known encodings, prefer small patches or explicit
+  UTF-8 APIs, and stop/restore if non-ASCII text turns into mojibake.
+- Render language selection choices as task-list bullets such as
+  `- [x] 1. English` instead of ordered-task syntax, so chat renderers keep
+  checkboxes and labels on the same line while numeric replies still work.
+- Added `gi config service on/off` as the current application's
+  config-service self-registration flag, separate from
+  `gi config service url=<url>`; enabling self-registration now requires an
+  existing config-service URL or an explicit prompt to set one first.
+- Added `gi reboot` / `ги ребут` as a start-or-restart command for the current
+  application through project-local run instructions.
+- Added a startup rule for applications that self-register in config-service:
+  check the current config-service config on every process startup before
+  publishing or refreshing the app's own service record, with cached config only
+  as an explicitly documented degraded-startup fallback.
+- Added a reviewable project-memory README and stdlib SQLite index helper for
+  rebuilding a local searchable index from git tracked text files.
+
 ## 2026.05.27
 
 - Restored numbered checklist handling for the unified `gi language` /

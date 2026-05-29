@@ -31,6 +31,11 @@ specific terms, and query SQLite memory only with small `LIMIT`s. For `gi start`
 the next turn; do not read full summaries, runbooks, memory notes, logs, or diffs
 unless a concrete task needs them.
 
+During `gi start` or `gi restore`, do not treat remembered plans, stale task
+notes, old refactoring phases, or local commits ahead of a remote as the next
+action. Mention them only as compact context when relevant, then ask for the
+user's current task instead of offering to continue, run, push, or finish them.
+
 The copied instruction kit is a token-economy and RAG-startup layer for this
 project. Use it to restore only the needed context from local instructions,
 handoff summaries, targeted searches, and project memory instead of reading the
@@ -115,6 +120,13 @@ Inspect logs:
 - Do not revert user changes unless explicitly requested.
 - Treat dirty worktrees as normal.
 - Keep changes scoped to the current task.
+- Preserve text encodings when editing files. On Windows, do not rewrite source
+  files with PowerShell pipelines such as `Get-Content ... | Set-Content ...`
+  unless both read and write encodings are explicit and known correct. Prefer
+  `apply_patch`, editor-native saves, or language APIs that read and write the
+  file with an explicit encoding such as UTF-8. If non-ASCII text appears as
+  mojibake after a command, stop, restore the last clean file version, and
+  reapply only the intended small patch.
 - Ask before destructive operations, broad refactors, or unrelated scope
   expansion.
 - Treat this project root as the filesystem boundary for normal work. Do not
@@ -138,6 +150,34 @@ Inspect logs:
   to use that URL for registration and discovery. Do not scan sibling project
   folders, guess ports, copy URLs from old task-manager memory, or use stale
   task-manager records as a runtime fallback.
+- Treat `gi config service on`, `gi config service off`, `ги конфиг сервис on`,
+  and `ги конфиг сервис off` as requests to set the current application's
+  project-local config-service self-registration flag. `on` means the app
+  should publish or refresh its own service record during startup; `off` means
+  it must not. Do not reinterpret this as starting or stopping config-service
+  itself. When setting `on`, first confirm a config-service URL is already
+  configured in the same local config area or documented GI bootstrap config; if
+  no URL is configured, tell the user to set `gi config service url=<url>`
+  before enabling self-registration. Ask one short question if no local config
+  location is documented.
+- For applications that must register themselves in config-service, require a
+  live config-service config check on every process startup before publishing or
+  refreshing the app's own service record. Use cached config only as an explicit
+  degraded-startup fallback documented by local run instructions.
+- Treat `gi ftp`, `ги фтп`, `gi upload ftp`, `gi deploy ftp`, and
+  `gi залей на фтп` as requests to upload this project's configured build output
+  to FTP, FTPS, or SFTP. Treat `gi ftp config`, `gi ftp конфиг`, and
+  `ги фтп конфиг` as requests to create, inspect, or update the project-local
+  FTP/SFTP config without uploading. Read project-local deploy instructions and
+  `tools/deploy/ftp.local.json` first; keep FTP/SFTP settings in that separate
+  project-local config file rather than shared instructions or chat history.
+  Prefer `tools/deploy/ftp.local.example.json` only as a redacted shape. Do not
+  commit hostnames, usernames, passwords, tokens, private keys, or private
+  remote paths unless project policy explicitly marks them non-secret.
+- Treat `gi reboot`, `ги ребут`, `gi restart`, and `ги рестарт` as requests to
+  start or restart the current application using project-local run instructions.
+  If the app is running, restart it; if it is not running, start it. Launch in
+  the background so focus does not jump away from the user's current window.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them as part of the
   main project unless the user explicitly asks, the task is about that nested
@@ -170,6 +210,13 @@ Inspect logs:
   response language the user explicitly requested for a specific message.
 - Apply the configured task language order to agent-created task titles, task
   descriptions, and task-manager updates.
+- For task titles, descriptions, and task-manager updates, treat the first
+  configured task language as the main language. If exactly one task language is
+  configured, write task text only in that language. If multiple task languages
+  are configured, write the main-language text first and then add one clear
+  translation per additional language. Do not duplicate the same content twice
+  in one language, and do not mix untranslated labels, templates, or Definition
+  of Done text from another configured language into the main-language text.
 - For each `gi язык` choice, preserve the user's selected order. The first
   selected language in each choice is primary for that surface.
 - Do not commit secrets, credentials, local databases, logs, or generated caches.
@@ -202,6 +249,9 @@ Inspect logs:
   system UI counters are not agent progress updates.
 - Startup restore must be compact; do not dump large files, full runbooks, full
   SQLite contents, full logs, generated outputs, or full diffs.
+- `gi start` and `gi restore` must not promote remembered plans, old task notes,
+  or local commits ahead of a remote into suggested next actions unless the user
+  explicitly asks to continue, run, push, or finish them.
 - Treat short greetings, thanks, acknowledgements, and status-neutral messages
   as no-ops unless they include an explicit task, path, command, error, or
   project question. Do not run startup restore for those messages.

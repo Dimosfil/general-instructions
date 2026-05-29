@@ -96,6 +96,13 @@ or:
 - Apply the configured system or project language to progress updates, final
   answers, clarifying questions, user-facing explanations, agent-created task
   titles, task descriptions, task-manager updates, plans, and checklists.
+- For task titles, descriptions, and task-manager updates, treat the first
+  configured task language as the main language. If exactly one task language is
+  configured, write task text only in that language. If multiple task languages
+  are configured, write the main-language text first and then add one clear
+  translation per additional language. Do not duplicate the same content twice
+  in one language, and do not mix untranslated labels, templates, or Definition
+  of Done text from another configured language into the main-language text.
 - Do not apply the system or project language to existing task text, code,
   commands, logs, quoted text, or a response language the user explicitly
   requested for a specific message.

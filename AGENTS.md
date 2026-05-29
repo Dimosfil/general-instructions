@@ -74,6 +74,13 @@ so this library can turn it into accepted guidance after maintenance review.
   `Get-Content -TotalCount`, `Get-Content -Tail`, and `Select-String`.
 - Command examples use PowerShell on Windows. Use equivalent head, tail,
   line-range, and targeted-search commands on other shells.
+- Preserve text encodings when editing files. On Windows, do not rewrite source
+  files with PowerShell pipelines such as `Get-Content ... | Set-Content ...`
+  unless both read and write encodings are explicit and known correct. Prefer
+  `apply_patch`, editor-native saves, or language APIs that read and write the
+  file with an explicit encoding such as UTF-8. If non-ASCII text appears as
+  mojibake after a command, stop, restore the last clean file version, and
+  reapply only the intended small patch.
 - Search for specific symbols, paths, errors, or patterns before doing broad
   repository scans.
 - Do not print large logs. Prefer tails and targeted error searches.
@@ -99,6 +106,11 @@ so this library can turn it into accepted guidance after maintenance review.
   minimum orientation needed for the next turn: local instructions, latest
   summary metadata or relevant sections, and compact git state. Do not read full
   summaries, runbooks, memory notes, logs, or diffs unless a concrete task needs
+  them.
+- Do not treat remembered plans, old refactoring phases, stale task notes, or
+  local commits ahead of a remote as the next action during `gi start` or
+  `gi restore`. Mention them only as compact context when relevant, then ask for
+  the user's current task instead of offering to continue, run, push, or finish
   them.
 - Treat `init <path>`, `инит <path>`, and `инициализируй <path>` that point to
   `D:\AI\general-instructions\` or another known shared-instruction library as
@@ -145,6 +157,35 @@ so this library can turn it into accepted guidance after maintenance review.
   to use that URL for registration and discovery. Do not scan sibling project
   folders, guess ports, copy URLs from old task-manager memory, or use stale
   task-manager records as a runtime fallback.
+- Treat `gi config service on`, `gi config service off`, `ги конфиг сервис on`,
+  and `ги конфиг сервис off` as requests to set the current application's
+  project-local config-service self-registration flag. `on` means the app
+  should publish or refresh its own service record during startup; `off` means
+  it must not. Do not reinterpret this as starting or stopping config-service
+  itself. When setting `on`, first confirm a config-service URL is already
+  configured in the same local config area or documented GI bootstrap config; if
+  no URL is configured, tell the user to set `gi config service url=<url>`
+  before enabling self-registration. Ask one short question if no local config
+  location is documented.
+- For applications that must register themselves in config-service, require a
+  live config-service config check on every process startup before publishing or
+  refreshing the app's own service record. Use cached config only as an explicit
+  degraded-startup fallback documented by local run instructions.
+- Treat `gi ftp`, `ги фтп`, `gi upload ftp`, `gi deploy ftp`, and
+  `gi залей на фтп` as requests to upload the current project's configured
+  build output to FTP, FTPS, or SFTP. Treat `gi ftp config`, `gi ftp конфиг`,
+  and `ги фтп конфиг` as requests to create, inspect, or update the
+  project-local FTP/SFTP config without uploading. Read project-local deploy
+  instructions and `tools/deploy/ftp.local.json` first; keep FTP/SFTP settings
+  in that separate project-local config file rather than shared instructions or
+  chat history. Prefer `tools/deploy/ftp.local.example.json` only as a redacted
+  shape. Do not commit hostnames, usernames, passwords, tokens, private keys, or
+  private remote paths unless project policy explicitly marks them non-secret.
+  Follow `patterns/PROJECT_FTP_DEPLOY.md`.
+- Treat `gi reboot`, `ги ребут`, `gi restart`, and `ги рестарт` as requests to
+  start or restart the current application using project-local run instructions.
+  If the app is running, restart it; if it is not running, start it. Launch in
+  the background so focus does not jump away from the user's current window.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and obvious typo variants
   such as `gi иснтлл` as requests to build the current project and produce an
   installer. Use Inno Setup by default when no installer tool is named. If the
@@ -194,6 +235,13 @@ so this library can turn it into accepted guidance after maintenance review.
   response language the user explicitly requested for a specific message.
 - Apply the configured task language order to agent-created task titles, task
   descriptions, and task-manager updates.
+- For task titles, descriptions, and task-manager updates, treat the first
+  configured task language as the main language. If exactly one task language is
+  configured, write task text only in that language. If multiple task languages
+  are configured, write the main-language text first and then add one clear
+  translation per additional language. Do not duplicate the same content twice
+  in one language, and do not mix untranslated labels, templates, or Definition
+  of Done text from another configured language into the main-language text.
 - For each `gi язык` choice, preserve the user's selected order. The first
   selected language in each choice is primary for that surface.
 - If `gi язык` or an equivalent unified project-language command is sent
@@ -282,6 +330,11 @@ so this library can turn it into accepted guidance after maintenance review.
   normal successful updates. Apply the update, then report a compact summary
   with versions, migration counts/IDs, changed files, checks, commit/push
   result, and blockers if any.
+- Keep `gi обновить` scoped to accepted instruction-kit updates and migrations.
+  Do not reinterpret it as a request to push pre-existing local commits, sync a
+  feature branch, resume a remembered plan, or perform general Git maintenance.
+  Commit or push only changes created by the update flow itself and only when
+  the local update policy permits it.
 
 ## Verification
 

@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.27.4",
+  "instruction_kit_version": "2026.05.28.5",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -56,7 +56,12 @@
     "2026.05.27.1__resolve_task_managers_through_config_service",
     "2026.05.27.2__add_unified_project_language",
     "2026.05.27.3__clarify_update_intake_project_ownership",
-    "2026.05.27.4__number_unified_project_language_selection"
+    "2026.05.27.4__number_unified_project_language_selection",
+    "2026.05.28.1__check_config_service_on_self_registering_app_startup",
+    "2026.05.28.2__add_config_service_flag_and_reboot_command",
+    "2026.05.28.3__render_language_checklists_as_task_bullets",
+    "2026.05.28.4__preserve_text_encoding_when_editing",
+    "2026.05.28.5__add_project_memory_sqlite_index"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -64,6 +69,7 @@
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
     "tools/project-memory/README.md",
+    "tools/project-memory/build_project_memory_index.py",
     "tools/project-memory/STUDY_PLAN.md",
     "tools/project-memory/pending-tasks.md",
     "tools/project-memory/git-preferences.json",

@@ -22,6 +22,10 @@ It should contain:
 - How to run, test, build, and inspect logs.
 - What files/folders are safe working areas.
 - Rules about git, commits, generated files, secrets, and destructive commands.
+- Encoding safety rules: preserve existing file encodings; avoid rewriting
+  source files through PowerShell `Get-Content ... | Set-Content ...` pipelines
+  unless both encodings are explicit and correct; prefer patch tools or
+  language APIs that read and write UTF-8 explicitly.
 
 For other tools, add tiny redirect files when useful:
 

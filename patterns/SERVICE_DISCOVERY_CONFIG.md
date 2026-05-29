@@ -44,6 +44,12 @@ All local services that publish discovery records should read this URL before
 registering themselves. Do not hardcode another config-service address in
 service startup scripts, task-manager config, summaries, or agent memory.
 
+Applications that self-register in config-service must check the current
+config-service config on every process startup before publishing or refreshing
+their own service record. Treat cached or previously bundled config as a
+fallback only after a live check fails and the local run instructions explicitly
+allow degraded startup.
+
 Validate the URL before saving it:
 
 - It must be a full `http://` or `https://` URL.
@@ -51,6 +57,26 @@ Validate the URL before saving it:
   fragments.
 - After saving, verify `GET <url>/health` when the task allows contacting the
   running service.
+
+## App Self-Registration Flag
+
+Use `gi config service on`, `gi config service off`, `ги конфиг сервис on`, or
+`ги конфиг сервис off` to set whether the current application should publish
+itself to config-service during startup.
+
+- `on` means the application is expected to self-register or refresh its own
+  config-service record on startup.
+- `off` means the application must not publish or refresh its own service
+  record, even if config-service is available.
+- Store this flag alongside the project's documented config-service URL or run
+  instructions. Do not store the flag in GI main config, and do not reinterpret
+  it as starting or stopping the config-service process.
+- When setting the flag to `on`, first confirm a config-service URL is already
+  configured in that same local config path or in the documented GI bootstrap
+  config. If no URL is configured, stop and tell the user to set
+  `gi config service url=<url>` before enabling self-registration.
+- If the project has no documented place for this flag, ask one short
+  clarification question instead of inventing a hidden config file.
 
 ## GI Main Config
 

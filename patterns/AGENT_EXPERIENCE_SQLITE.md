@@ -33,7 +33,8 @@ Commit reviewable assets instead:
 - `tools/project-memory/README.md`
 - `tools/project-memory/STUDY_PLAN.md`
 - `tools/project-memory/NOTES.md`
-- schema or indexing scripts, for example `tools/project-memory/index_project.py`
+- schema or indexing scripts, for example
+  `tools/project-memory/build_project_memory_index.py`
 - optional exported Markdown notes
 
 ## Rules
@@ -76,13 +77,12 @@ SQLite builds without FTS5.
 Provide one small script, for example:
 
 ```powershell
-python .\tools\project-memory\index_project.py rebuild
-python .\tools\project-memory\index_project.py stats
-python .\tools\project-memory\index_project.py search "SomeSymbol"
-python .\tools\project-memory\index_project.py note "topic" "title" "body" --evidence "path/to/file"
-python .\tools\project-memory\index_project.py notes
-python .\tools\project-memory\index_project.py export-notes
-python .\tools\project-memory\index_project.py import-notes
+python .\tools\project-memory\build_project_memory_index.py rebuild
+python .\tools\project-memory\build_project_memory_index.py stats
+python .\tools\project-memory\build_project_memory_index.py search "SomeSymbol"
+python .\tools\project-memory\build_project_memory_index.py note "topic" "title" "body" --evidence "path/to/file"
+python .\tools\project-memory\build_project_memory_index.py notes
+python .\tools\project-memory\build_project_memory_index.py export-notes
 ```
 
 ## Markdown Export
