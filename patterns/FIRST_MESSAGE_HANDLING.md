@@ -129,6 +129,13 @@ read, search, edit, create, delete, move, or inspect files in another project or
 arbitrary external folder just because a task manager, summary, migration, or
 previous chat mentions it.
 
+Treat `D:\AI\others` as the standard local parent folder for third-party
+projects, cloned external repositories, and vendor experiments when no more
+specific destination is provided. This default folder is configurable: if the
+user gives another path or project-local instructions define another third-party
+workspace parent, use that instead. Do not mix third-party projects into the
+current project workspace.
+
 Treat nested checkouts, vendored repositories, cloned examples, and third-party
 source trees as separate scope. Do not inspect them as part of the main project
 unless the user explicitly asks, the task is about that nested tree, or local

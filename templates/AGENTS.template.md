@@ -134,6 +134,12 @@ Inspect logs:
   or arbitrary external folder unless the user gives an explicit concrete path
   and action. Use APIs, connectors, or task-manager endpoints for cross-project
   communication.
+- Treat `D:\AI\others` as the standard local parent folder for third-party
+  projects, cloned external repositories, and vendor experiments when no more
+  specific destination is provided. This default folder is configurable: if the
+  user gives another path or project-local instructions define another
+  third-party workspace parent, use that instead. Do not mix third-party
+  projects into the current project workspace.
 - Treat `gi config`, `gi конфиг`, `ги конфиг`, `gi config service`,
   `ги конфиг сервис`, `ги конфиг сервис url=<url>`, and
   `ги конфиг сервис урл=<url>` as requests to get or set the bootstrap config
