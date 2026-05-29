@@ -1,16 +1,23 @@
 # Project FTP Deploy
 
-Use this pattern when the user asks `gi ftp`, `gi ftp config`, `gi upload ftp`,
-`gi deploy ftp`, `gi zaley na ftp`, `gi залей на фтп`, `ги фтп`, or
-`ги фтп конфиг`.
+Use this pattern when the user asks `gi ftp`, `gi ftp push`, `gi ftp config`,
+`gi ftp folder`, `gi ftp service`, `gi upload ftp`, `gi deploy ftp`,
+`gi zaley na ftp`, `gi залей на фтп`, `ги фтп`, `ги фтп пуш`,
+`ги фтп конфиг`, `ги фтп папка`, or `ги фтп сервис`.
 
 ## Intent
 
-- Treat `gi ftp` and `ги фтп` as requests to upload the current project's
-  configured build output to FTP, FTPS, or SFTP.
+- Treat `gi ftp`, `ги фтп`, `gi ftp push`, and `ги фтп пуш` as requests to
+  upload the current project's configured build output to FTP, FTPS, or SFTP.
 - Treat `gi ftp config`, `gi ftp конфиг`, and `ги фтп конфиг` as requests to
   create, inspect, or update the current project's FTP/SFTP config without
   uploading.
+- Treat `gi ftp folder`, `gi ftp папка`, and `ги фтп папка` as requests to
+  inspect, choose, or update the remote upload folder (`remotePath`) without
+  uploading.
+- Treat `gi ftp service`, `gi ftp сервис`, and `ги фтп сервис` as requests to
+  manually register, inspect, or select an FTP/FTPS/SFTP service record in
+  config-service without uploading.
 - Keep FTP/SFTP settings in a separate project-local config file, not in chat,
   shared instructions, README prose, or global agent memory.
 - Prefer `tools/deploy/ftp.local.json` for the project-local config.
@@ -31,6 +38,7 @@ Use this JSON shape unless project-local instructions define a stricter one:
   "username": "deploy",
   "passwordEnv": "PROJECT_FTP_PASSWORD",
   "privateKeyPath": null,
+  "serviceId": null,
   "localPath": "dist/",
   "remotePath": "/www/example/",
   "cleanRemote": false
@@ -38,7 +46,11 @@ Use this JSON shape unless project-local instructions define a stricter one:
 ```
 
 - `protocol` must be one of `ftp`, `ftps`, or `sftp`.
-- `host`, `username`, `localPath`, and `remotePath` are required.
+- `host`, `username`, `localPath`, and `remotePath` are required unless a
+  selected `serviceId` and verified service contract supply the shared host and
+  credential reference.
+- `serviceId` is optional and should name the selected config-service FTP
+  record when a shared FTP service is registered.
 - Use `passwordEnv` or `privateKeyPath` instead of storing a password when
   practical.
 - If a user explicitly provides credentials in chat, write them only to the
@@ -48,10 +60,38 @@ Use this JSON shape unless project-local instructions define a stricter one:
 
 ## Workflow
 
+- For `gi ftp service` / `ги фтп сервис`, read the configured
+  `configServiceUrl`, query config-service for services whose contract declares
+  FTP, FTPS, or SFTP capability, and either register the user-provided service
+  metadata or write the selected `serviceId` into the project-local FTP config.
+  Do not upload during this command.
+- If a project needs FTP and `tools/deploy/ftp.local.json` has no `serviceId`,
+  check config-service before asking the user for host details.
+- If one matching FTP-capable service exists, use it after reading and verifying
+  its contract.
+- If several matching services exist, ask the user to choose with the numbered
+  Markdown checkbox style used by `gi language`, for example
+  `- [ ] 1. Display name (service-id)`. Accept numeric replies against that
+  latest checklist.
+- If no matching service exists, offer `gi ftp service` as the command to
+  register one manually, then continue with project-local config only if the
+  user provides details for this project.
+- Store only non-secret discovery metadata in config-service: service id,
+  display name, protocol, base URL or host/port when policy allows it,
+  endpoint paths, capability tags, and secret reference names such as
+  `passwordEnv`. Never store raw passwords, tokens, private keys, or private
+  remote paths in config-service.
 - For `gi ftp config` / `ги фтп конфиг`, create or update
   `tools/deploy/ftp.local.json` from the template shape, ask only for missing
   required values, and remind the user when secrets are referenced through
   environment variables instead of stored in the file.
+- For `gi ftp folder` / `ги фтп папка`, inspect or update only `remotePath`.
+  If the user provides a path, validate that it is a remote deploy folder and
+  save it to the project-local FTP config. If the user asks to choose a folder,
+  list remote directories through the configured FTP service or project-local
+  credentials when available, present a short numbered Markdown checkbox list,
+  and accept numeric replies against that latest checklist. Do not upload files
+  during this command.
 - When writing config values, preserve existing fields unless the user asks to
   change them.
 - When showing config status, redact `host`, `username`, `password`,

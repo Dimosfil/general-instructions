@@ -177,17 +177,28 @@ so this library can turn it into accepted guidance after maintenance review.
   to config-service during normal startup unless local instructions explicitly
   define a discoverable web/API runtime. Use cached config only as an explicit
   degraded-startup fallback documented by local run instructions.
-- Treat `gi ftp`, `ги фтп`, `gi upload ftp`, `gi deploy ftp`, and
-  `gi залей на фтп` as requests to upload the current project's configured
-  build output to FTP, FTPS, or SFTP. Treat `gi ftp config`, `gi ftp конфиг`,
-  and `ги фтп конфиг` as requests to create, inspect, or update the
-  project-local FTP/SFTP config without uploading. Read project-local deploy
-  instructions and `tools/deploy/ftp.local.json` first; keep FTP/SFTP settings
-  in that separate project-local config file rather than shared instructions or
-  chat history. Prefer `tools/deploy/ftp.local.example.json` only as a redacted
-  shape. Do not commit hostnames, usernames, passwords, tokens, private keys, or
-  private remote paths unless project policy explicitly marks them non-secret.
-  Follow `patterns/PROJECT_FTP_DEPLOY.md`.
+- Treat `gi ftp`, `ги фтп`, `gi ftp push`, `ги фтп пуш`, `gi upload ftp`,
+  `gi deploy ftp`, and `gi залей на фтп` as requests to upload the current
+  project's configured build output to FTP, FTPS, or SFTP. Treat
+  `gi ftp config`, `gi ftp конфиг`, and `ги фтп конфиг` as requests to create,
+  inspect, or update the project-local FTP/SFTP config without uploading. Treat
+  `gi ftp folder`, `gi ftp папка`, and `ги фтп папка` as requests to inspect,
+  choose, or update the remote upload folder (`remotePath`) without uploading.
+  Treat `gi ftp service`, `gi ftp сервис`, and `ги фтп сервис` as requests to
+  manually register, inspect, or select an FTP/FTPS/SFTP service record in
+  config-service without uploading. Read project-local deploy instructions and
+  `tools/deploy/ftp.local.json` first; when a project needs FTP and local config
+  does not name a target service, query config-service for FTP-capable services.
+  If exactly one matching service exists, use it after verifying its contract;
+  if several exist, ask the user to choose with the same numbered Markdown
+  checkbox style used by language selection. Keep secrets out of config-service:
+  store only discovery metadata and secret references such as environment
+  variable names. Keep project-specific deploy settings in the separate
+  project-local config file rather than shared instructions or chat history.
+  Prefer `tools/deploy/ftp.local.example.json` only as a redacted shape. Do not
+  commit hostnames, usernames, passwords, tokens, private keys, or private
+  remote paths unless project policy explicitly marks them non-secret. Follow
+  `patterns/PROJECT_FTP_DEPLOY.md`.
 - Treat `gi reboot`, `ги ребут`, `gi restart`, and `ги рестарт` as requests to
   start or restart the current application using project-local run instructions.
   If the app is running, restart it; if it is not running, start it. Launch in

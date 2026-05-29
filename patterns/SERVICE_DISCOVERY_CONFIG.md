@@ -145,6 +145,36 @@ For `gi manager`, `gi tm`, `gi manager test`, `gi plan`, and sprint workflows:
 5. Report a concise blocker if the manager id is missing or config-service has
    no matching service record.
 
+## FTP Services
+
+Projects that need FTP, FTPS, or SFTP should resolve shared FTP services through
+config-service before asking the user for host details or creating a purely
+project-local deploy config.
+
+Use `gi ftp service`, `gi ftp сервис`, or `ги фтп сервис` to manually register,
+inspect, or select an FTP/FTPS/SFTP service record. This command must not upload
+files.
+
+FTP-capable service records should expose non-secret discovery metadata only:
+service id, display name, protocol, base URL or host/port when policy allows it,
+endpoint paths, capability tags, and secret reference names such as
+`passwordEnv`. Do not store raw passwords, tokens, private keys, or private
+remote paths in config-service.
+
+When resolving FTP for a project:
+
+1. Read the project-local FTP config and selected `serviceId`, if present.
+2. If no `serviceId` is selected, query config-service for FTP-capable services.
+3. If exactly one matching service exists, read and verify its contract, then
+   use it.
+4. If several matching services exist, ask the user to choose with the numbered
+   Markdown checkbox style used by language selection, such as
+   `- [ ] 1. Display name (service-id)`, and accept numeric replies against the
+   latest checklist.
+5. If no matching service exists, offer `gi ftp service` as the command to
+   register one manually, then fall back to project-local FTP config only when
+   the user provides project-specific details.
+
 ## Project-Local Overrides
 
 Use project-local overrides only for explicit project needs, such as selecting a

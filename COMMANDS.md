@@ -511,8 +511,14 @@ git status --short
 
 ```text
 gi ftp config
+gi ftp service
+gi ftp folder
+gi ftp push
 gi ftp
 ги фтп конфиг
+ги фтп сервис
+ги фтп папка
+ги фтп пуш
 ги фтп
 gi upload ftp
 gi deploy ftp
@@ -527,8 +533,24 @@ private keys; do not commit real hostnames, usernames, passwords, tokens,
 private keys, or private remote paths unless project policy explicitly marks
 them non-secret.
 
-`gi ftp` / `ги фтп` uploads the configured build output to FTP, FTPS, or SFTP.
-The agent first reads project-local deploy instructions and
+`gi ftp service` / `ги фтп сервис` manually registers, inspects, or selects an
+FTP/FTPS/SFTP service record in config-service without uploading. When a project
+needs FTP and no local `serviceId` is selected, agents query config-service for
+FTP-capable services first. If one exists, they verify its contract and use it;
+if several exist, they ask the user to choose with the same numbered Markdown
+checkbox style used by language selection. Store only non-secret discovery
+metadata and secret reference names in config-service, never raw credentials or
+private remote paths.
+
+`gi ftp folder` / `ги фтп папка` inspects, chooses, or updates the remote upload
+folder (`remotePath`) without uploading. If credentials and a selected FTP
+service are available, the agent may list remote directories and ask the user to
+choose with numbered Markdown checkboxes; otherwise it asks for the destination
+path and saves it in `tools/deploy/ftp.local.json`.
+
+`gi ftp push` / `ги фтп пуш` is the explicit upload command. `gi ftp` /
+`ги фтп` remains a shorter alias. The agent first reads project-local deploy
+instructions and
 `tools/deploy/ftp.local.json`, builds the configured `localPath` when needed,
 then uploads to `remotePath`. If the config is missing, use the redacted
 template shape from `templates/ftp.local.template.json` or

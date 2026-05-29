@@ -5,6 +5,7 @@
   "username": "deploy",
   "passwordEnv": "PROJECT_FTP_PASSWORD",
   "privateKeyPath": null,
+  "serviceId": null,
   "localPath": "dist/",
   "remotePath": "/www/example/",
   "cleanRemote": false

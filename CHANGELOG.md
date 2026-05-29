@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.29
 
+- Added explicit FTP command aliases: `gi ftp push` / `ги фтп пуш` for uploading
+  configured build output, and `gi ftp folder` / `ги фтп папка` for choosing or
+  updating the remote upload folder without uploading.
+- Added `gi ftp service` / `ги фтп сервис` for manually registering, inspecting,
+  or selecting FTP/FTPS/SFTP service records through config-service. Project
+  agents now resolve FTP-capable services from config-service before asking for
+  host details, and use numbered Markdown checkboxes when several services are
+  available.
 - Clarified config-service startup behavior: only web-facing projects should
   self-register; on startup they check their own `service_id`, create a missing
   record with the current port and endpoints, and refresh changed records.
