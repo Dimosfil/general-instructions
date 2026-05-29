@@ -167,9 +167,15 @@ so this library can turn it into accepted guidance after maintenance review.
   no URL is configured, tell the user to set `gi config service url=<url>`
   before enabling self-registration. Ask one short question if no local config
   location is documented.
-- For applications that must register themselves in config-service, require a
-  live config-service config check on every process startup before publishing or
-  refreshing the app's own service record. Use cached config only as an explicit
+- For web-facing applications that expose a port, HTTP API, web UI, task-manager
+  service, or local daemon endpoint, require a live config-service config check
+  on every process startup before publishing or refreshing the app's own service
+  record. On startup, query the app's own `service_id`; if no record exists,
+  create one with the current port and documented endpoints, and if the record
+  exists but the port or endpoints changed, refresh it. Desktop apps, CLI tools,
+  libraries, scripts, and other non-web applications must not query or publish
+  to config-service during normal startup unless local instructions explicitly
+  define a discoverable web/API runtime. Use cached config only as an explicit
   degraded-startup fallback documented by local run instructions.
 - Treat `gi ftp`, `ги фтп`, `gi upload ftp`, `gi deploy ftp`, and
   `gi залей на фтп` as requests to upload the current project's configured

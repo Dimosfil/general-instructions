@@ -4,6 +4,9 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.29
 
+- Clarified config-service startup behavior: only web-facing projects should
+  self-register; on startup they check their own `service_id`, create a missing
+  record with the current port and endpoints, and refresh changed records.
 - Added `gi ftp config` / `ги фтп конфиг` for project-local FTP/SFTP config
   setup in `tools/deploy/ftp.local.json`, plus `gi ftp` / `ги фтп` for uploading
   the configured build output to FTP, FTPS, or SFTP without exposing secrets.

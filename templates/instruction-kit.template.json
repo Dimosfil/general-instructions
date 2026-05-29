@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.28.5",
+  "instruction_kit_version": "2026.05.29.2",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -61,7 +61,10 @@
     "2026.05.28.2__add_config_service_flag_and_reboot_command",
     "2026.05.28.3__render_language_checklists_as_task_bullets",
     "2026.05.28.4__preserve_text_encoding_when_editing",
-    "2026.05.28.5__add_project_memory_sqlite_index"
+    "2026.05.28.5__add_project_memory_sqlite_index",
+    "2026.05.28.6__keep_start_and_update_scoped",
+    "2026.05.29.1__add_project_ftp_config_and_deploy_command",
+    "2026.05.29.2__web_services_self_register_when_missing"
   ],
   "copied_files": [
     "AGENTS.md",

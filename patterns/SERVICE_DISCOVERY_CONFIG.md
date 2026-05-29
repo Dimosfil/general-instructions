@@ -44,11 +44,20 @@ All local services that publish discovery records should read this URL before
 registering themselves. Do not hardcode another config-service address in
 service startup scripts, task-manager config, summaries, or agent memory.
 
-Applications that self-register in config-service must check the current
-config-service config on every process startup before publishing or refreshing
-their own service record. Treat cached or previously bundled config as a
-fallback only after a live check fails and the local run instructions explicitly
-allow degraded startup.
+Only web-facing applications should use startup self-registration: HTTP APIs,
+web apps, task-manager services, local daemons with a port, or other services
+that expose a runtime URL another project may need to discover. Desktop apps,
+CLI tools, libraries, scripts, and other non-web applications must not query or
+publish to config-service during normal startup unless project-local
+instructions explicitly say they expose a discoverable local service.
+
+Web-facing applications must check the current config-service config on every
+process startup before publishing or refreshing their own service record. During
+startup, query the app's own configured `service_id`; if the service record is
+missing, create it with the current port and documented endpoints. If the record
+exists but the port or endpoints changed, refresh it. Treat cached or previously
+bundled config as a fallback only after a live check fails and the local run
+instructions explicitly allow degraded startup.
 
 Validate the URL before saving it:
 
@@ -64,10 +73,12 @@ Use `gi config service on`, `gi config service off`, `ги конфиг серв
 `ги конфиг сервис off` to set whether the current application should publish
 itself to config-service during startup.
 
-- `on` means the application is expected to self-register or refresh its own
-  config-service record on startup.
+- `on` means a web-facing application is expected to self-register or refresh
+  its own config-service record on startup.
 - `off` means the application must not publish or refresh its own service
   record, even if config-service is available.
+- For non-web applications, leave this flag off or absent unless local run
+  instructions define a web/API runtime for the project.
 - Store this flag alongside the project's documented config-service URL or run
   instructions. Do not store the flag in GI main config, and do not reinterpret
   it as starting or stopping the config-service process.

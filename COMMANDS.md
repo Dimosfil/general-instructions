@@ -537,11 +537,17 @@ Do not print secrets or full credential-bearing commands.
 
 `gi config service on` / `gi config service off` sets the current application's
 project-local config-service self-registration flag in the same documented
-local config area as its config-service URL. `on` means the app should publish
-or refresh its own service record on startup; `off` means it must not. If the
-flag is being set to `on` and no config-service URL is configured, stop and tell
-the user to set `gi config service url=<url>` first. Do not reinterpret
-`on`/`off` as starting or stopping the config-service process.
+local config area as its config-service URL. `on` is for web-facing apps that
+expose a port, HTTP API, web UI, task-manager service, or local daemon endpoint:
+on startup they check their own `service_id` in config-service, create the
+record if it is missing, and refresh it when the current port or endpoints
+changed. `off` means the app must not publish or refresh its own service record.
+Desktop apps, CLI tools, libraries, scripts, and other non-web apps should not
+query or publish to config-service during normal startup unless local
+instructions explicitly define a discoverable web/API runtime. If the flag is
+being set to `on` and no config-service URL is configured, stop and tell the
+user to set `gi config service url=<url>` first. Do not reinterpret `on`/`off`
+as starting or stopping the config-service process.
 
 `gi reboot` / `gi restart` starts or restarts the current application using
 project-local run instructions. If it is already running, restart it; otherwise
