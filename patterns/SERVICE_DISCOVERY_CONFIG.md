@@ -52,12 +52,22 @@ publish to config-service during normal startup unless project-local
 instructions explicitly say they expose a discoverable local service.
 
 Web-facing applications must check the current config-service config on every
-process startup before publishing or refreshing their own service record. During
-startup, query the app's own configured `service_id`; if the service record is
-missing, create it with the current port and documented endpoints. If the record
-exists but the port or endpoints changed, refresh it. Treat cached or previously
-bundled config as a fallback only after a live check fails and the local run
-instructions explicitly allow degraded startup.
+process startup before binding or reserving any port. The startup sequence is:
+
+1. Read the configured config-service URL.
+2. Verify config-service is reachable.
+3. Query the app's own configured `service_id` service/startup record.
+4. Read the port the app should bind and the endpoints of neighboring services
+   from config-service records.
+5. Bind only the port returned by config-service.
+6. If documented endpoints changed, refresh the app's service record only after
+   the live config-service check succeeds.
+
+If config-service is missing, unreachable, has no record for the app, or returns
+an incomplete port/startup config, stop startup, report the blocker, and wait
+for the user or supervisor to configure, repair, or start config-service. Do not
+guess ports, scan for free ports, reuse stale local runtime config, or bind a
+fallback port while config-service is unavailable.
 
 Validate the URL before saving it:
 

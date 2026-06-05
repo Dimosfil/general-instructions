@@ -193,16 +193,18 @@ start-active-sprint command:
 4. Verify the manager supports active sprint lookup and task completion for the
    requested workflow. If those capabilities are missing, report the endpoint
    mismatch and stop.
-5. If an intake receipt lacks the identifiers required for next-task,
+5. When a manager endpoint returns an unexpected method, parameter, or routing
+   error, re-read the adapter's endpoint contract before trying a workaround.
+6. If an intake receipt lacks the identifiers required for next-task,
    task-completed, archive, or close flows, report the task-manager contract gap
    and stop instead of inventing a replacement plan.
-6. If exactly one active sprint exists, the agent takes it in work through the
+7. If exactly one active sprint exists, the agent takes it in work through the
    manager. If none or many exist, ask the user to choose.
-7. Execute sprint tasks in manager-defined order until no `todo` or `ready`
+8. Execute sprint tasks in manager-defined order until no `todo` or `ready`
    tasks remain or a blocker requires user input.
-8. Update task status and completion notes according to the manager adapter.
-9. Keep normal safety rules: ask before destructive actions, credential changes,
-   broad rewrites, or irreversible external changes.
+9. Update task status and completion notes according to the manager adapter.
+10. Keep normal safety rules: ask before destructive actions, credential changes,
+    broad rewrites, or irreversible external changes.
 
 ## Task-Manager Role
 

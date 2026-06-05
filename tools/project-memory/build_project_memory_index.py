@@ -126,6 +126,15 @@ def has_fts5(con: sqlite3.Connection) -> bool:
         return False
 
 
+def create_fts_table(con: sqlite3.Connection) -> None:
+    con.execute(
+        """
+        CREATE VIRTUAL TABLE IF NOT EXISTS files_fts
+        USING fts5(path, content, content='files', content_rowid='rowid')
+        """
+    )
+
+
 def ensure_schema(con: sqlite3.Connection) -> bool:
     fts = has_fts5(con)
     con.executescript(
@@ -156,12 +165,7 @@ def ensure_schema(con: sqlite3.Connection) -> bool:
         """
     )
     if fts:
-        con.execute(
-            """
-            CREATE VIRTUAL TABLE IF NOT EXISTS files_fts
-            USING fts5(path, content, content='files', content_rowid='rowid')
-            """
-        )
+        create_fts_table(con)
     return fts
 
 
@@ -180,9 +184,10 @@ def rebuild(args: argparse.Namespace) -> int:
     indexed_at = utc_now()
     with con:
         fts = ensure_schema(con)
-        con.execute("DELETE FROM files")
         if fts:
-            con.execute("DELETE FROM files_fts")
+            con.execute("DROP TABLE IF EXISTS files_fts")
+            create_fts_table(con)
+        con.execute("DELETE FROM files")
 
         indexed = 0
         skipped = 0
@@ -199,7 +204,7 @@ def rebuild(args: argparse.Namespace) -> int:
                 skipped += 1
                 continue
             line_count = text.count("\n") + (1 if text else 0)
-            cur = con.execute(
+            con.execute(
                 """
                 INSERT INTO files(path, extension, size_bytes, sha256, line_count, indexed_at, content)
                 VALUES(?, ?, ?, ?, ?, ?, ?)
@@ -214,12 +219,10 @@ def rebuild(args: argparse.Namespace) -> int:
                     text,
                 ),
             )
-            if fts:
-                con.execute(
-                    "INSERT INTO files_fts(rowid, path, content) VALUES(?, ?, ?)",
-                    (cur.lastrowid, rel_path.replace("\\", "/"), text),
-                )
             indexed += 1
+
+        if fts:
+            con.execute("INSERT INTO files_fts(files_fts) VALUES('rebuild')")
 
         set_meta(con, "schema_version", "1")
         set_meta(con, "indexed_at", indexed_at)
@@ -382,7 +385,7 @@ def export_notes(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", type=Path, default=DEFAULT_DB, help="SQLite database path.")
-    sub = parser.add_subparsers(dest="command", required=True)
+    sub = parser.add_subparsers(dest="command")
 
     sub.add_parser("rebuild", help="Rebuild the SQLite index from git tracked files.").set_defaults(func=rebuild)
     sub.add_parser("stats", help="Show index statistics.").set_defaults(func=stats)
@@ -413,6 +416,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if not hasattr(args, "func"):
+        parser.print_help()
+        return 0
     return args.func(args)
 
 

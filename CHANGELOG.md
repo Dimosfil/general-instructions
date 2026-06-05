@@ -2,6 +2,21 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.05
+
+- Tightened config-service startup rules for web-facing applications: before
+  binding any port, services must read their own startup/service record and
+  neighboring service endpoints from a live config-service. If config-service is
+  missing, unreachable, or incomplete, startup reports the blocker and waits
+  instead of guessing or falling back to stale ports.
+
+## 2026.05.30
+
+- Clarified the WorkNest `next-task` endpoint contract as
+  `GET /agent-intake/next-task?project=<project>&sprintId=<sprintId>` and told
+  agents to re-read adapter endpoint docs before working around unexpected
+  task-manager method or parameter errors.
+
 ## 2026.05.29
 
 - Added explicit FTP command aliases: `gi ftp push` / `ги фтп пуш` for uploading

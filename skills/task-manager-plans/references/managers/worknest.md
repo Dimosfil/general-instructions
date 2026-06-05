@@ -43,15 +43,17 @@ Known endpoints:
 - `POST /agent-intake/raw`
 - `GET /agent-intake/raw`
 - `GET /agent-intake/raw/:id`
-- `GET /agent-intake/next-task`
+- `GET /agent-intake/next-task?project=<project>&sprintId=<sprintId>`
 - `POST /agent-intake/task-completed`
 
 Use `/health` only as a basic liveness check. Before posting a plan, verify the
 raw intake contract or raw intake endpoint. Before running `gi start sprint`,
 verify active/next task and completion endpoints required by the current
-workflow. If `/health` succeeds but required workflow endpoints return missing
-or incompatible responses, report a stale or misconfigured WorkNest API endpoint
-and stop before sending work.
+workflow, including the documented HTTP method and query parameters. If
+`/health` succeeds but required workflow endpoints return missing or
+incompatible responses, re-read this adapter contract, report a stale or
+misconfigured WorkNest API endpoint when the contract still does not match, and
+stop before sending work.
 
 If WorkNest accepts `type: "task"` or another single-task intake payload, verify
 that the response either creates an executable sprint/task and returns the IDs

@@ -15,6 +15,12 @@ Use it to restore only task-relevant context through local instructions, handoff
 summaries, targeted searches, accepted migrations, and project memory instead of
 broad repository reads or large chat outputs.
 
+Treat `gi ...` and `ги ...` forms as chat commands for the agent, not as
+PowerShell commands. When the user wants a command that should be run literally
+in PowerShell, require or use an explicit `PS` marker or a real PowerShell
+command/script path such as `.\tools\agent-start.ps1`; do not present `gi ...`
+as a terminal command.
+
 Treat connected projects as experience sources for `gi`. When a project reveals
 a reusable workflow, failure pattern, token-saving tactic, or agent instruction
 improvement, capture a concise recommendation with evidence and privacy review
@@ -174,15 +180,19 @@ so this library can turn it into accepted guidance after maintenance review.
   before enabling self-registration. Ask one short question if no local config
   location is documented.
 - For web-facing applications that expose a port, HTTP API, web UI, task-manager
-  service, or local daemon endpoint, require a live config-service config check
-  on every process startup before publishing or refreshing the app's own service
-  record. On startup, query the app's own `service_id`; if no record exists,
-  create one with the current port and documented endpoints, and if the record
-  exists but the port or endpoints changed, refresh it. Desktop apps, CLI tools,
-  libraries, scripts, and other non-web applications must not query or publish
-  to config-service during normal startup unless local instructions explicitly
-  define a discoverable web/API runtime. Use cached config only as an explicit
-  degraded-startup fallback documented by local run instructions.
+  service, or local daemon endpoint, require a live config-service lookup before
+  the process binds or reserves any port. On every startup, read the configured
+  config-service URL, verify the config service is reachable, and query the
+  app's own `service_id` startup/service record to learn the port and
+  neighboring service endpoints. If config-service is missing, unreachable, has
+  no record for the app, or returns an incomplete port/startup config, report a
+  clear blocker and wait for config-service to be configured, repaired, or
+  started; do not guess ports, scan for free ports, reuse stale local config, or
+  bind a fallback port. If the record exists but the currently documented
+  endpoints changed, refresh the record only after the config-service check
+  succeeds. Desktop apps, CLI tools, libraries, scripts, and other non-web
+  applications must not query or publish to config-service during normal startup
+  unless local instructions explicitly define a discoverable web/API runtime.
 - Treat `gi ftp`, `ги фтп`, `gi ftp push`, `ги фтп пуш`, `gi upload ftp`,
   `gi deploy ftp`, and `gi залей на фтп` as requests to upload the current
   project's configured build output to FTP, FTPS, or SFTP. Treat
@@ -269,13 +279,18 @@ so this library can turn it into accepted guidance after maintenance review.
   selected language in each choice is primary for that surface.
 - If `gi язык` or an equivalent unified project-language command is sent
   without explicit languages, run a three-step chat flow instead of asking for
-  one free-form line. At each step, show the same numbered Markdown checklist of
-  available languages with the current selection checked, name the current
-  surface, and tell the user they may reply with numbers or language names.
+  one free-form line. First show a compact `Current settings` block for all
+  three language surfaces. At each step, show the same numbered Markdown
+  checklist of available languages with the current selection checked, add a
+  final unchecked `Cancel / Отмена` option, name the current surface, and tell
+  the user they may reply with numbers, language names, or cancel/отмена.
   Render each option as a task-list bullet with the number inside the label,
   such as `- [x] 1. English`; do not use ordered-task syntax such as
   `1. [x] English`, because some chat renderers split the checkbox and label
   onto separate lines.
+- If the user selects `Cancel / Отмена`, replies `cancel` or `отмена`, or
+  chooses only the cancel option during the language flow, stop the flow without
+  changing any language preference files.
 - When the user replies to that flow with a numeric-only answer such as `1 2`,
   interpret the numbers against the most recent language checklist and apply the
   resulting ordered languages to the current step. Do not ask which languages the
