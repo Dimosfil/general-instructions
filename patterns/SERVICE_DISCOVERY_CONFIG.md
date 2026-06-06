@@ -146,7 +146,8 @@ only, plus non-secret project preferences such as workspace, project, and intake
 mode. Do not store or copy task-manager runtime URLs in project memory when the
 manager is registered in config-service.
 
-For `gi manager`, `gi tm`, `gi manager test`, `gi plan`, and sprint workflows:
+For `gi manager`, `gi tm`, `gi manager test`, `gi active task`,
+`gi next task`, `gi plan`, and sprint workflows:
 
 1. Read the enabled manager id from project-local task-manager config.
 2. Resolve that id through config-service with `GET /services/{serviceId}`.
@@ -154,6 +155,8 @@ For `gi manager`, `gi tm`, `gi manager test`, `gi plan`, and sprint workflows:
 4. Use `endpoints.api` for manager operations.
 5. Report a concise blocker if the manager id is missing or config-service has
    no matching service record.
+6. Stop instead of guessing alternate endpoints when the contract lacks the
+   active-task lookup, lifecycle update, completion, or requested object type.
 
 ## FTP Services
 

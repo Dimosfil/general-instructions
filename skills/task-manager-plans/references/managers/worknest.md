@@ -62,6 +62,13 @@ the payload with a clear contract error, or documents it as raw intake only. Do
 not create a replacement one-task plan to complete a raw task receipt that lacks
 execution identifiers.
 
+Do not replace a requested WorkNest object type with another object type. If a
+visible Cycle/Sprint is required and `/product/cycles` or the documented cycle
+operation returns `401 Authentication required`, a permission error, or a
+contract mismatch, stop and report that Cycle creation is blocked. Do not create
+a Work Item, raw receipt, or local `pending-tasks.md` note as a substitute for
+the missing Cycle.
+
 Do not send `kind: "sprint-plan"` with `type: "raw"` and treat the receipt as a
 created sprint. Before sending sprint work, read `/agent-intake/contract` and
 use the documented executable plan shape. For the current WorkNest sprint
@@ -177,9 +184,11 @@ For the selected sprint:
    records.
 4. Execute the task in the current project according to its instructions and
    project rules.
-5. On success, submit concise completion notes with changed files, checks, and
-   important caveats.
-6. Continue to the next `todo` or `ready` task in order through the manager.
+5. Submit progress or blocker notes through WorkNest when the task cannot be
+   completed in the same run.
+6. On success, submit concise completion notes with changed files, checks, and
+   important caveats, then read the task back when the API supports readback.
+7. Continue to the next `todo` or `ready` task in order through the manager.
 
 Stop the sprint run and report the blocker when a task needs user input, has
 missing access, conflicts with project instructions, requires a destructive

@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.06
 
+- Added active-task task-manager guidance: agents must get executable work
+  through the configured manager contract, send progress/blocker/completion
+  notes back to the manager, and stop on auth, permission, lifecycle, or object
+  type mismatches instead of creating raw receipts, local notes, or substitute
+  Work Items for requested Cycles/Sprints.
 - Added Windows Codex tool setup guidance: prefer a trusted user-level
   `.codex\bin` directory, PowerShell-native HTTP commands, and narrow antivirus
   exclusions for Codex tool folders instead of broad System32 or PowerShell

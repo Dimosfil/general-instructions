@@ -61,6 +61,8 @@ gi git summary
 gi тест-план
 gi test plan
 gi tm
+gi active task
+gi next task
 gi manager test
 gi tm test
 gi план
@@ -459,6 +461,27 @@ it as `done`, read the final status, and report the manager id, resolved service
 endpoint, task id or URL, completed lifecycle steps, and any missing capability.
 The test must not edit repository files, touch secrets, perform destructive
 actions, or use another project folder.
+
+### Get Active Task From Task Manager
+
+```text
+gi active task
+gi next task
+gi get task
+```
+
+The agent gets executable work from the configured task manager, not from raw
+intake receipts or guessed UI routes. It resolves the manager through
+config-service, reads the contract, requests the active task first when
+supported, otherwise requests the next task through the documented operation,
+marks it in progress when supported, executes the task, and sends progress,
+blocker, or completion notes back to the manager.
+
+If the manager cannot return lifecycle identifiers, cannot update status, or
+the requested object type is blocked by auth/permissions, the agent stops and
+reports the exact blocker. It must not create a different object type, raw
+intake record, or local checklist note as a substitute for the requested
+manager object.
 
 ### Отправить План В Task Manager
 

@@ -206,6 +206,15 @@ added or run.
   no URL is configured, tell the user to set `gi config service url=<url>`
   before enabling self-registration. Ask one short question if no local config
   location is documented.
+- Treat `gi active task`, `gi next task`, `gi get task`, and equivalent
+  active-task wording as requests to get executable work from the configured
+  task manager. Resolve the manager through config-service, read the manager
+  contract, request the active or next task through the documented operation,
+  update manager lifecycle state and notes, and stop with the exact blocker if
+  the contract, auth, permissions, lifecycle IDs, or requested object type is
+  missing or mismatched. Do not create raw intake receipts, local checklist
+  notes, or a different manager object type as a substitute for the requested
+  task, sprint, or cycle.
 - For web-facing applications that expose a port, HTTP API, web UI, task-manager
   service, or local daemon endpoint, require a live config-service lookup before
   the process binds or reserves any port. On every startup, read the configured
