@@ -28,6 +28,13 @@ language preferences.
 - If the current project is not a git repository, still apply successful GI
   instruction-kit updates when possible, then skip commit/push and report that
   git is unavailable for this project.
+- In a shared instruction-library repository, a user request to add or accept a
+  reusable rule is an explicit finish request for that accepted rule: update the
+  relevant files, verify them, commit and push only the scoped rule changes,
+  then run the `gi обновить` update flow when accepted instruction-kit
+  propagation applies. Do not include unrelated dirty worktree changes, secrets,
+  private data, or generated noise; do not recurse into another commit/push
+  merely because this finish rule itself was added or run.
 - Treat dirty worktrees as normal.
 - Do not revert user changes unless the user explicitly asks.
 - Keep changes scoped to the current task.

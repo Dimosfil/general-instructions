@@ -2,6 +2,17 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.06
+
+- Added Windows Codex tool setup guidance: prefer a trusted user-level
+  `.codex\bin` directory, PowerShell-native HTTP commands, and narrow antivirus
+  exclusions for Codex tool folders instead of broad System32 or PowerShell
+  exclusions.
+- Added a shared-instruction-library finish rule: when the user asks to add or
+  accept a reusable rule, agents verify, commit, and push only the scoped rule
+  changes, then run the `gi обновить` update flow when instruction-kit
+  propagation applies.
+
 ## 2026.06.05
 
 - Tightened config-service startup rules for web-facing applications: before

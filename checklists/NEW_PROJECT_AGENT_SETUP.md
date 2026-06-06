@@ -59,6 +59,19 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Confirm startup retrieval loads only task-relevant context.
 - [ ] Confirm multi-step tasks have a concise durable checklist before editing.
 - [ ] Define run, test, build, smoke-check, and log-inspection commands.
+- [ ] On Windows, prepare a stable user-level Codex tools directory before
+  relying on common CLI tools:
+  - Put trusted helper binaries in `C:\Users\<user>\.codex\bin`.
+  - Put that directory before WindowsApps and System32 shims in the user `PATH`.
+  - Prefer `rg.exe` from that directory when bundled `rg` or WindowsApps shims
+    fail with `Access denied`.
+  - Prefer PowerShell-native HTTP commands such as `Invoke-RestMethod` and
+    `Invoke-WebRequest` instead of `curl.exe`.
+  - Do not diagnose HTTP tooling by probing `curl.exe` with `where.exe curl` or
+    `Get-Command curl` unless the user explicitly asks for curl diagnostics.
+  - If antivirus blocks agent commands, add narrow exclusions for Codex-owned
+    runner/tool folders such as `.codex\.sandbox-bin\` and `.codex\bin\`;
+    avoid broad exclusions for System32 or PowerShell itself.
 - [ ] Review `.gitignore` for logs, caches, local databases, build outputs, and
   secrets.
 - [ ] Write the first handoff summary after meaningful setup work.

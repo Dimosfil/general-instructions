@@ -54,6 +54,12 @@
   only the resulting instruction-kit update changes when this project is a git
   repository with a configured remote. If unrelated/user changes, no remote,
   push failure, or conflicts are present, stop and explain the blocker.
+- In a shared instruction-library project, a user request to add or accept a
+  reusable rule is also an explicit finish request for that accepted rule:
+  verify, commit, and push only the scoped rule changes, then run the
+  `gi обновить` update flow when accepted instruction-kit propagation applies.
+  Do not include unrelated dirty worktree changes or recurse merely because this
+  finish rule itself was added or run.
 - Branch naming: `TODO`.
 - Generated files policy: `TODO`.
 - Never commit secrets, credentials, local databases, logs, or caches.

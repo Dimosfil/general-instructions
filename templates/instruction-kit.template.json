@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.05.29.2",
+  "instruction_kit_version": "2026.06.06.1",
   "source": "D:\\AI\\general-instructions",
   "installed_at": "TODO",
   "update_check": {
@@ -64,7 +64,11 @@
     "2026.05.28.5__add_project_memory_sqlite_index",
     "2026.05.28.6__keep_start_and_update_scoped",
     "2026.05.29.1__add_project_ftp_config_and_deploy_command",
-    "2026.05.29.2__web_services_self_register_when_missing"
+    "2026.05.29.2__web_services_self_register_when_missing",
+    "2026.05.29.3__resolve_ftp_services_through_config_service",
+    "2026.05.29.4__add_explicit_ftp_push_and_folder_commands",
+    "2026.05.30.1__clarify_worknest_next_task_endpoint_contract",
+    "2026.06.06.1__add_windows_tool_setup_and_rule_finish_policy"
   ],
   "copied_files": [
     "AGENTS.md",

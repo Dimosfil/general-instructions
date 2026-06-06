@@ -26,6 +26,15 @@ a reusable workflow, failure pattern, token-saving tactic, or agent instruction
 improvement, capture a concise recommendation with evidence and privacy review
 so this library can turn it into accepted guidance after maintenance review.
 
+When maintaining this shared `general-instructions` repository, treat a user
+request to add or accept a new reusable rule as approval to finish the accepted
+instruction change end to end: update the relevant library files, verify them,
+commit and push only the scoped rule changes, then run the `gi обновить` update
+flow for accepted instruction-kit propagation when applicable. Do not include
+unrelated dirty worktree changes, secrets, private data, or generated noise; do
+not recurse into another commit/push merely because this finish rule itself was
+added or run.
+
 ## Repository Map
 
 - `README.md`: short human-facing overview.
@@ -60,6 +69,18 @@ so this library can turn it into accepted guidance after maintenance review.
   practical.
 - Avoid long nested conditionals, filler, narration, and non-actionable prose.
 - Use clear Markdown headings and copy-pasteable examples.
+
+## Windows Command Policy
+
+- Prefer PowerShell-native networking commands such as `Invoke-RestMethod` and
+  `Invoke-WebRequest` instead of `curl.exe`.
+- Do not probe for `curl.exe` with `where.exe curl` or `Get-Command curl` unless
+  the user explicitly asks for curl diagnostics.
+- Prefer trusted helper binaries from `C:\Users\<user>\.codex\bin` before
+  WindowsApps or System32 shims.
+- If Windows or antivirus tools block agent commands with `Access denied`,
+  trust narrow Codex-owned tool folders such as `.codex\.sandbox-bin\` and
+  `.codex\bin\`; do not add broad exclusions for System32 or PowerShell itself.
 
 ## Tool Usage And Token Economy
 
@@ -129,6 +150,12 @@ so this library can turn it into accepted guidance after maintenance review.
   analysis first. Explain the likely issue and ask what action the user wants
   before editing files, unless the user explicitly says to fix it, such as
   `fix`, `почини`, or `gi почини`.
+- When the user explicitly says to fix an issue, treat that as approval to take
+  required low-risk implementation and verification actions without an extra
+  confirmation prompt, including rebuilding, restarting the affected local
+  process, or closing a currently running app window that blocks single-instance
+  verification. Still ask before destructive actions, possible data loss,
+  credential or secret handling, external system changes, or unrelated scope.
 - When a user provides a PDF path or attachment and asks to inspect, verify, or
   reread it, read the actual PDF before relying on memory, chat fragments, or
   screenshots. First confirm the file exists and page count/metadata when cheap,
