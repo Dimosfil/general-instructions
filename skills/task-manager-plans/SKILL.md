@@ -19,8 +19,8 @@ configured task managers.
 5. Resolve each manager runtime URL through GI config-service by service id. Do
    not copy manager endpoints from project memory, another project, old notes,
    or guessed ports.
-6. Before using a manager endpoint, read the manager contract and verify the
-   capabilities required for the
+6. Before using a manager endpoint, read the manager guide when present, then
+   read the manager contract and verify the capabilities required for the
    requested workflow, not only generic health.
 7. For each configured manager, read only its adapter reference from
    `references/managers/`.
@@ -46,10 +46,10 @@ configured task managers.
     for executable work: request the active or next task through the documented
     manager operation, mark the task in progress when supported, and submit
     progress, completion, or blocker notes back to the manager.
-16. If the manager contract, active-task lookup, lifecycle identifiers, or
-    status update operation is missing or fails, stop at that point and report
-    the exact blocker. Do not guess alternate routes, fabricate manager IDs, or
-    create shadow tasks in raw intake to bypass the missing lifecycle.
+16. If the manager guide, contract, active-task lookup, lifecycle identifiers,
+    or status update operation is missing or fails, stop at that point and
+    report the exact blocker. Do not guess alternate routes, fabricate manager
+    IDs, or create shadow tasks in raw intake to bypass the missing lifecycle.
 17. When the user asks to add or create a sprint, create a visible executable
     Sprint/Cycle only through the manager's documented sprint/cycle operation or
     executable plan payload, then verify readback and lifecycle identifiers. If
@@ -85,8 +85,8 @@ project identifiers, and non-secret sync preferences.
 `service_id` is the config-service lookup key for the manager. The local project
 config should not store runtime URLs when the manager is registered in
 config-service. Resolve `service_id` with `GET /services/{serviceId}`, check
-`endpoints.availability`, read `endpoints.contract`, and use `endpoints.api` for
-operations.
+`endpoints.availability`, read `endpoints.guide` when present, read
+`endpoints.contract`, and use `endpoints.api` for operations.
 
 Expected shape:
 

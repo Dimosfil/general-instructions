@@ -177,6 +177,13 @@ Inspect logs:
   to use that URL for registration and discovery. Do not scan sibling project
   folders, guess ports, copy URLs from old task-manager memory, or use stale
   task-manager records as a runtime fallback.
+- For agent-facing HTTP services, prefer a service-owned guide endpoint plus a
+  strict contract endpoint. Resolve runtime URLs through config-service. Read
+  `endpoints.guide` first when present, then `endpoints.contract` before
+  sending state-changing requests. Treat the guide as onboarding and the
+  contract as workflow validation. If they disagree, stop and report the
+  mismatch. Do not infer permissions from filesystem paths, stale memory, old
+  dashboard URLs, or raw task receipts.
 - Treat `gi config service on`, `gi config service off`, `ги конфиг сервис on`,
   and `ги конфиг сервис off` as requests to set the current application's
   project-local config-service self-registration flag. `on` means the app

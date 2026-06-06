@@ -20,9 +20,9 @@ shared instruction files or committed project memory.
 
 `service_id` is required when enabling WorkNest. Resolve it through GI
 config-service with `GET /services/worknest`, check `endpoints.availability`,
-read `endpoints.contract`, and use `endpoints.api` for operations. Do not store
-or copy WorkNest runtime URLs in project memory when the service is registered
-in config-service.
+read `endpoints.guide` when present, read `endpoints.contract`, and use
+`endpoints.api` for operations. Do not store or copy WorkNest runtime URLs in
+project memory when the service is registered in config-service.
 
 Local project memory may name WorkNest with `service_id: "worknest"` and a
 default project such as `worknest-core`. Historical local URLs such as
@@ -47,6 +47,7 @@ npm run dev:api
 Known endpoints:
 
 - `GET /health`
+- `GET /agent-intake/guide` when the live service exposes an agent guide
 - `GET /agent-intake/contract`
 - `POST /agent-intake/raw`
 - `GET /agent-intake/raw`
@@ -60,13 +61,13 @@ archival, task ordering, and task movement unless the live contract explicitly
 delegates a specific lifecycle operation to the external agent.
 
 Use `/health` only as a basic liveness check. Before posting a plan, verify the
-raw intake contract or raw intake endpoint. Before running `gi start sprint`,
-verify active/next task and completion endpoints required by the current
-workflow, including the documented HTTP method and query parameters. If
-`/health` succeeds but required workflow endpoints return missing or
-incompatible responses, re-read this adapter contract, report a stale or
-misconfigured WorkNest API endpoint when the contract still does not match, and
-stop before sending work.
+agent guide when present, then verify the raw intake contract or raw intake
+endpoint. Before running `gi start sprint`, verify active/next task and
+completion endpoints required by the current workflow, including the documented
+HTTP method and query parameters. If `/health` succeeds but required workflow
+endpoints return missing or incompatible responses, re-read the guide and this
+adapter contract, report a stale or misconfigured WorkNest API endpoint when
+the contract still does not match, and stop before sending work.
 
 If WorkNest accepts `type: "task"` or another single-task intake payload, verify
 that the response either creates an executable sprint/task and returns the IDs

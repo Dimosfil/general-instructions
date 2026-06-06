@@ -171,8 +171,11 @@ gi config service url=http://127.0.0.1:4100
 runtime-адресов локальных приложений и task manager агент берёт из локального
 проекта только имя или service id, затем запрашивает `GET /services/{serviceId}`
 в config-service. После этого он использует `endpoints.availability` для
-проверки доступности, `endpoints.contract` для актуального протокола и
-`endpoints.api` для операций.
+проверки доступности, `endpoints.guide` для агентского onboarding, когда этот
+endpoint есть, `endpoints.contract` для актуального протокола и `endpoints.api`
+для операций. Если guide и contract расходятся по endpoint, ownership или
+permissions, агент останавливается и сообщает mismatch вместо догадок по
+старой памяти, dashboard URL, filesystem paths или raw receipts.
 
 `gi config service url=<url>` / `ги конфиг сервис url=<url>` /
 `ги конфиг сервис урл=<url>` задаёт canonical URL config-service для текущего

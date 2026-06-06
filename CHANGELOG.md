@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.06
 
+- Added agent-facing service guide guidance: HTTP services should publish
+  `endpoints.guide` alongside `endpoints.contract`; agents read the guide first,
+  then the contract, and stop on guide/contract mismatches instead of inferring
+  permissions from stale memory, dashboard URLs, filesystem paths, or raw
+  receipts.
+
 - Added `gi add sprint` / `gi create sprint` / `gi добавить спринт` guidance:
   agents must create visible executable Sprints/Cycles through the configured
   manager contract, verify readback/lifecycle identifiers, and stop on

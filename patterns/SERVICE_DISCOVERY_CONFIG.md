@@ -15,13 +15,16 @@ for live service discovery.
 4. Query the GI config service.
 5. Query `GET /services/{serviceId}` for the named target service.
 6. Verify `endpoints.availability` and the expected identity.
-7. Query `endpoints.contract` when the task needs the target service protocol,
+7. Query `endpoints.guide` when present for agent-facing onboarding: allowed
+   actions, forbidden actions, startup order, ownership boundaries, and safe
+   payload examples.
+8. Query `endpoints.contract` when the task needs the target service protocol,
    schemas, supported actions, or workflow-specific rules.
-8. Use `endpoints.api` as the target service API entry point after reading the
-   contract.
-9. Check required workflow capabilities before using a service.
-10. Stop with a clear `service mismatch` blocker when identity, contract, or
-   required capabilities do not match.
+9. Use `endpoints.api` as the target service API entry point after reading the
+   guide and contract.
+10. Check required workflow capabilities before using a service.
+11. Stop with a clear `service mismatch` blocker when identity, guide,
+   contract, or required capabilities do not match.
 
 ## Config Service URL Command
 
@@ -131,13 +134,38 @@ http://127.0.0.1:4100
 ```
 
 Service records are discovery records, not full API documentation. They should
-store a service id, display name, `baseUrl`, and the three entry point paths:
-`availability`, `contract`, and `api`. Read responses should include full
-`endpoints.availability`, `endpoints.contract`, and `endpoints.api` URLs.
+store a service id, display name, `baseUrl`, and entry point paths:
+`availability`, `guide`, `contract`, and `api` when available. Read responses
+should include full `endpoints.availability`, `endpoints.guide`,
+`endpoints.contract`, and `endpoints.api` URLs.
 
 Do not store endpoint catalogs, schemas, authentication details, workflow logic,
-or secrets in config-service. After discovery, ask the target service for its
-contract through `endpoints.contract`.
+or secrets in config-service. After discovery, ask an agent-facing target
+service for its onboarding guide through `endpoints.guide` when present, then
+ask for its strict protocol through `endpoints.contract`.
+
+## Agent-Facing Service Guides
+
+Agent-facing HTTP services should expose both a compact service-owned guide and
+a strict contract. Prefer generic routes such as `GET /agent/guide` and
+`GET /agent/contract`, or adapter-specific equivalents such as
+`GET /agent-intake/guide` and `GET /agent-intake/contract`.
+
+The guide is onboarding for external agents. It should explain discovery,
+startup steps, allowed actions, forbidden actions, ownership boundaries,
+required capabilities, safe payload examples, error policy, privacy policy, and
+guide/contract version fields. It must not include secrets, cookies, raw private
+payload dumps, production data, or large logs.
+
+The contract is workflow validation. It should define schemas, methods,
+capabilities, lifecycle identifiers, error shapes, and state-changing operations
+the service actually supports.
+
+Agents should read `endpoints.guide` first when present, then
+`endpoints.contract` before sending tasks, plans, or state-changing requests. If
+the guide and contract disagree about required endpoints, lifecycle ownership,
+or permissions, stop and report the mismatch. Do not infer permissions from
+filesystem paths, stale memory, old dashboard URLs, or raw intake receipts.
 
 ## Task Managers
 
@@ -152,11 +180,13 @@ workflows:
 
 1. Read the enabled manager id from project-local task-manager config.
 2. Resolve that id through config-service with `GET /services/{serviceId}`.
-3. Read `endpoints.contract` to learn the current task-manager API.
-4. Use `endpoints.api` for manager operations.
-5. Report a concise blocker if the manager id is missing or config-service has
+3. Read `endpoints.guide` when present for manager onboarding and forbidden
+   actions.
+4. Read `endpoints.contract` to learn the current task-manager API.
+5. Use `endpoints.api` for manager operations.
+6. Report a concise blocker if the manager id is missing or config-service has
    no matching service record.
-6. Stop instead of guessing alternate endpoints when the contract lacks the
+7. Stop instead of guessing alternate endpoints when the guide or contract lacks
    active-task lookup, sprint/cycle creation, lifecycle update, completion, or
    requested object type.
 
