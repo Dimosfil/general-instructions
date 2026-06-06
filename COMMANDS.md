@@ -63,6 +63,9 @@ gi test plan
 gi tm
 gi active task
 gi next task
+gi add sprint
+gi create sprint
+gi добавить спринт
 gi manager test
 gi tm test
 gi план
@@ -477,11 +480,34 @@ supported, otherwise requests the next task through the documented operation,
 marks it in progress when supported, executes the task, and sends progress,
 blocker, or completion notes back to the manager.
 
+For WorkNest, external agents use `/agent-intake/...` API operations. They do
+not move Markdown files, edit internal statuses, archive tasks, or rely on an
+old local URL instead of resolving `service_id: worknest` through config-service.
+
 If the manager cannot return lifecycle identifiers, cannot update status, or
 the requested object type is blocked by auth/permissions, the agent stops and
 reports the exact blocker. It must not create a different object type, raw
 intake record, or local checklist note as a substitute for the requested
 manager object.
+
+### Add Sprint To Task Manager
+
+```text
+gi add sprint
+gi create sprint
+gi добавить спринт
+```
+
+The agent creates a visible executable Sprint/Cycle in the configured task
+manager. It resolves the manager through config-service, reads the contract, and
+uses only the documented sprint/cycle creation operation or the adapter's
+documented executable plan payload. After creation it reads the sprint/cycle
+back and reports the lifecycle identifiers or URL.
+
+If the manager only accepts raw intake, or the sprint/cycle endpoint returns an
+auth, permission, schema, routing, or object-type error, the agent stops and
+reports the blocker. It must not create a Work Item, raw receipt, local
+checklist, or one-task plan as a substitute for the requested Sprint/Cycle.
 
 ### Отправить План В Task Manager
 

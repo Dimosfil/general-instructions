@@ -1,6 +1,6 @@
 ﻿---
 name: task-manager-plans
-description: Read, write, import, export, test, and reconcile project plans with configured task managers. Use when the user asks to save a plan to a task manager, load tasks from a task manager, get the active task, sync a planning checklist, configure task-manager integrations, run `gi tm`, run `gi manager test`, run `gi tm test`, run `gi active task`, run `gi next task`, run `gi план`, run `gi post plan`, or run `gi старт спринт`. Supports a generic project-owned contract plus optional manager-specific adapters such as WorkNest.
+description: Read, write, import, export, test, and reconcile project plans with configured task managers. Use when the user asks to save a plan to a task manager, load tasks from a task manager, get the active task, add a sprint, sync a planning checklist, configure task-manager integrations, run `gi tm`, run `gi manager test`, run `gi tm test`, run `gi active task`, run `gi next task`, run `gi add sprint`, run `gi create sprint`, run `gi добавить спринт`, run `gi план`, run `gi post plan`, or run `gi старт спринт`. Supports a generic project-owned contract plus optional manager-specific adapters such as WorkNest.
 ---
 
 # Task Manager Plans
@@ -50,6 +50,14 @@ configured task managers.
     status update operation is missing or fails, stop at that point and report
     the exact blocker. Do not guess alternate routes, fabricate manager IDs, or
     create shadow tasks in raw intake to bypass the missing lifecycle.
+17. When the user asks to add or create a sprint, create a visible executable
+    Sprint/Cycle only through the manager's documented sprint/cycle operation or
+    executable plan payload, then verify readback and lifecycle identifiers. If
+    the required operation is missing or blocked, stop and report the blocker.
+18. Treat status transitions, timing, archival, and task movement as manager
+    responsibilities unless the contract explicitly exposes those operations to
+    the external agent. The agent may submit task/plan intake, request assigned
+    work, and return results through the manager API.
 
 ## Common Plan Model
 
@@ -220,6 +228,35 @@ or an equivalent command to get work from the manager:
     If the contract still does not match, stop and report the exact mismatch
     instead of trying other endpoints.
 
+## `gi add sprint` / `gi create sprint`
+
+When the user runs `gi add sprint`, `gi create sprint`, `gi добавить спринт`,
+or an equivalent command to add a sprint to the manager:
+
+1. Stay in the current project root.
+2. Read configured task managers from
+   `tools/project-memory/task-managers.json`.
+3. Resolve the enabled manager service id through config-service, read
+   `endpoints.contract`, and use `endpoints.api` for operations.
+4. Verify the contract documents sprint/cycle creation, executable plan
+   creation, readback, and lifecycle identifiers for the requested project.
+5. Use the sprint title, goal, and task items from the user's message, current
+   plan, or project memory. If no sprint content is available, ask for it.
+6. Normalize the sprint into the adapter's documented executable shape. For raw
+   intake adapters, this must be a documented executable plan payload, not
+   arbitrary `type: "raw"` storage.
+7. Create the Sprint/Cycle through the documented operation.
+8. Read the created Sprint/Cycle back and verify it is visible/executable by
+   checking returned lifecycle identifiers, URL, status, and task list when the
+   manager supports those fields.
+9. Report the manager id, sprint/cycle id or URL, title, task count, and any
+   unsupported but non-blocking fields.
+10. If creation or readback returns an unexpected auth, permission, method,
+    parameter, routing, schema, project, status, or object-type error, re-read
+    the contract once. If the contract still does not match, stop and report the
+    exact mismatch instead of creating a Work Item, raw receipt, local checklist,
+    one-task plan, or other substitute object.
+
 ## `gi старт спринт`
 
 When the user runs `gi старт спринт`, `gi start sprint`, or an equivalent
@@ -257,6 +294,12 @@ Task-manager paths are metadata, not filesystem permission. Agents working in
 one project must not inspect or edit another project's files through those paths
 unless the user explicitly instructs them to perform a concrete action at that
 path.
+
+For managers that use Markdown or filesystem files internally, external agents
+still use the public manager API. They must not move task files, edit internal
+status fields, archive folders, or reorder work directly unless they are running
+as a local agent inside that manager project and project-local instructions
+explicitly allow that mode.
 
 ## Single-Task Intake Contract
 

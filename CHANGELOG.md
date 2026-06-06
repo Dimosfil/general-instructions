@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.06
 
+- Added `gi add sprint` / `gi create sprint` / `gi добавить спринт` guidance:
+  agents must create visible executable Sprints/Cycles through the configured
+  manager contract, verify readback/lifecycle identifiers, and stop on
+  auth/permission/schema/object-type blockers instead of downgrading to raw
+  intake or Work Items. Clarified that external WorkNest agents use
+  `/agent-intake/...` through config-service discovery while WorkNest owns
+  internal Markdown files, status transitions, timing, archives, ordering, and
+  task movement.
 - Added active-task task-manager guidance: agents must get executable work
   through the configured manager contract, send progress/blocker/completion
   notes back to the manager, and stop on auth, permission, lifecycle, or object

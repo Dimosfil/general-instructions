@@ -215,6 +215,13 @@ added or run.
   missing or mismatched. Do not create raw intake receipts, local checklist
   notes, or a different manager object type as a substitute for the requested
   task, sprint, or cycle.
+- Treat `gi add sprint`, `gi create sprint`, `gi добавить спринт`, and
+  equivalent add-sprint wording as requests to create a visible executable
+  Sprint/Cycle through the configured task manager. Resolve the manager through
+  config-service, read the manager contract, use only the documented sprint or
+  cycle creation operation, verify readback/lifecycle identifiers, and stop with
+  the exact blocker if auth, permissions, schema, lifecycle, or object type
+  support is missing. Do not downgrade the request to raw intake or a Work Item.
 - For web-facing applications that expose a port, HTTP API, web UI, task-manager
   service, or local daemon endpoint, require a live config-service lookup before
   the process binds or reserves any port. On every startup, read the configured
