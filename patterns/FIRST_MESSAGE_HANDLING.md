@@ -32,14 +32,16 @@ action verb or an explicit request.
 
 ## Shared Instruction Bootstrap
 
-If the first user message is a path to a shared instruction library, or a request
-to connect shared instructions, treat it as an instruction bootstrap.
+If the first user message is the canonical shared-instruction Git repository
+URL, a path to a shared instruction checkout/cache, or a request to connect
+shared instructions, treat it as an instruction bootstrap.
 
-Also treat `init <path>`, `инит <path>`, and `инициализируй <path>` as an
-instruction bootstrap when the path points to the current shared-instruction
-library, a relative shared-library path such as `.\general-instructions\`,
-`GENERAL_INSTRUCTIONS_HOME`, or another known shared-instruction library, even
-when the message does not include the `gi` prefix.
+Also treat `init <source>`, `инит <source>`, and `инициализируй <source>` as an
+instruction bootstrap when the source points to the canonical repo
+`https://github.com/Dimosfil/general-instructions.git`, the current
+shared-instruction checkout/cache, `GENERAL_INSTRUCTIONS_HOME`, or another known
+shared-instruction source, even when the message does not include the `gi`
+prefix.
 
 In that case:
 
@@ -73,10 +75,11 @@ repository or print broad outputs by default.
 Examples:
 
 - `gi обновись`: check or apply accepted instruction-kit updates.
-- `gi init .\general-instructions\`: bootstrap/init from that shared
-  library path.
-- `инит .\general-instructions\` or `init .\general-instructions\`:
-  same bootstrap/startup behavior for the shared instruction library, without
+- `gi init https://github.com/Dimosfil/general-instructions.git`:
+  bootstrap/init from the canonical shared-instruction source repo.
+- `инит https://github.com/Dimosfil/general-instructions.git` or
+  `init https://github.com/Dimosfil/general-instructions.git`: same
+  bootstrap/startup behavior for the shared instruction source, without
   requiring the `gi` prefix.
 - `gi commit language: Russian`, `gi коммит язык: Russian`, or
   `ги коммит язык: Russian`: update commit-message language preferences.

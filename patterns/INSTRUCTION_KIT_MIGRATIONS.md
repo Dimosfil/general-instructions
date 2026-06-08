@@ -13,7 +13,8 @@ library.
 - `CHANGELOG.md`: human-readable accepted changes.
 - `migrations/`: ordered accepted upgrade steps.
 - `tools/project-memory/instruction-kit.json`: project-local installed version,
-  source, copied files, and applied migrations.
+  canonical `source_repo`, optional checkout/cache path, copied files, and
+  applied migrations.
 
 Fresh bootstraps should treat the copied version as a baseline and record all
 migrations included in that version as already applied.
@@ -35,7 +36,7 @@ or:
 or:
 
 ```text
-Обновись из .\general-instructions\
+Обновись из https://github.com/Dimosfil/general-instructions.git
 ```
 
 or:
@@ -48,30 +49,30 @@ the agent should:
 
 1. Check whether `tools/project-memory/instruction-kit.json` exists.
 2. If it does not exist, treat the command as a first-time instruction kit
-   bootstrap/init from the requested shared library path, then record the copied
+   bootstrap/init from the requested shared source repo, then record the copied
    kit baseline with included migrations marked as applied.
 3. If it exists, read it.
-4. Resolve the shared library path from the user's command, the current shared
-   library when the command is running inside one, `GENERAL_INSTRUCTIONS_HOME`,
-   or `update_check.shared_library_path`.
-   Prefer a path that exists in the current environment.
-   If the recorded path is unavailable, for example a missing Windows drive,
-   do not fail hard; ask the user for the shared library path or tell them to set
-   `GENERAL_INSTRUCTIONS_HOME`. Prefer relative paths in metadata; avoid storing
-   machine-specific absolute paths unless the user explicitly provides one.
-5. Read only accepted release artifacts: `VERSION.md`, `CHANGELOG.md`,
-   `INDEX.md`, and relevant files under `migrations/`.
-6. Do not read `updates/`.
-7. Identify migrations that are not listed in `applied_migrations`.
-8. Apply pending migrations in filename order.
-9. Merge project-owned files carefully; do not overwrite project-specific
+4. Resolve the shared instruction source from the user's URL, `source_repo` /
+   `update_check.source_repo`, the current shared checkout/cache,
+   `GENERAL_INSTRUCTIONS_HOME`, or optional local cache metadata. Use
+   `https://github.com/Dimosfil/general-instructions.git` as the canonical
+   default repo. Do not require a machine-specific local folder.
+5. Clone or fetch the source repo into a local cache/checkout when no usable
+   checkout is already available. If git, network, or repo access is blocked,
+   stop with that blocker instead of falling back to stale absolute paths.
+6. Read only accepted release artifacts from the checkout/cache: `VERSION.md`,
+   `CHANGELOG.md`, `INDEX.md`, and relevant files under `migrations/`.
+7. Do not read `updates/`.
+8. Identify migrations that are not listed in `applied_migrations`.
+9. Apply pending migrations in filename order.
+10. Merge project-owned files carefully; do not overwrite project-specific
    content without review.
-10. Update `instruction-kit.json` only after successful application.
-11. Summarize changed files, skipped files, conflicts, and checks.
-12. If migrations were applied successfully and the current project is a git
+11. Update `instruction-kit.json` only after successful application.
+12. Summarize changed files, skipped files, conflicts, and checks.
+13. If migrations were applied successfully and the current project is a git
     repository with a configured remote, commit and push only the instruction-kit
     update changes.
-13. If unrelated/user changes are present, no git repository or remote exists,
+14. If unrelated/user changes are present, no git repository or remote exists,
     push fails, or a conflict remains, do not force it; stop and explain the
     blocker.
 

@@ -4,7 +4,7 @@ Date: 2026-05-19 22:11:52 +03:00
 
 ## Current State
 
-The repository is `D:\AI\general-instructions` on branch `main`.
+The repository is `https://github.com/Dimosfil/general-instructions.git` on branch `main`.
 Working tree was clean immediately after the latest push.
 
 Current accepted instruction-kit version is `2026.05.19.7`.

@@ -1,7 +1,7 @@
 # Agent Recommended General Instructions Updates
 
 Date: 2026-05-14
-Target repository: `D:\AI\general-instructions`
+Target repository: `https://github.com/Dimosfil/general-instructions.git`
 Audience: future AI agents maintaining the reusable instruction library
 
 ## Summary
@@ -30,12 +30,12 @@ Suggested rule:
 When a project reveals a reusable improvement to agent instructions, workflows,
 templates, or checklists:
 
-- First check whether the shared instruction repository exists at
-  `D:\AI\general-instructions\`.
+- First check whether a checkout/cache of the shared instruction repository
+  `https://github.com/Dimosfil/general-instructions.git` is available.
 - If it exists, write the proposed update to:
 
   ```text
-  D:\AI\general-instructions\updates\
+  <general-instructions checkout>\updates\
   ```
 
 - Name the file:
@@ -48,7 +48,7 @@ templates, or checklists:
   accepted instructions.
 - Keep project-specific details out of reusable instructions unless they are
   clearly marked as examples.
-- If `D:\AI\general-instructions\` does not exist, create an appropriate local
+- If no shared source checkout/cache exists, create an appropriate local
   project folder for instruction recommendations, such as:
 
   ```text
@@ -136,7 +136,7 @@ Status markers:
 
 This keeps reusable instruction improvements out of chat-only memory and gives
 agents one predictable place to put recommendations. It also gives projects
-without `D:\AI\general-instructions\` a sensible local fallback until a better
+without a shared source checkout/cache a sensible local fallback until a better
 automation path is designed.
 
 The task planning workflow prevents large analysis/refactor tasks from becoming

@@ -1,7 +1,7 @@
 # Agent Recommended General Instructions Updates
 
 Date: 2026-05-15
-Target repository: `D:\AI\general-instructions`
+Target repository: `https://github.com/Dimosfil/general-instructions.git`
 Audience: future AI agents maintaining the reusable instruction library
 
 ## Summary

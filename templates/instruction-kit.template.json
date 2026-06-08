@@ -1,8 +1,10 @@
 {
-  "instruction_kit_version": "2026.06.08.1",
-  "source": "TODO: relative shared-library path or GENERAL_INSTRUCTIONS_HOME",
+  "instruction_kit_version": "2026.06.08.2",
+  "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
+    "source_repo": "https://github.com/Dimosfil/general-instructions.git",
+    "source_cache_path": "",
     "shared_library_path": "",
     "enabled": true
   },
@@ -72,7 +74,8 @@
     "2026.06.06.2__require_task_manager_active_task_lifecycle",
     "2026.06.06.3__add_task_manager_add_sprint_command",
     "2026.06.06.4__add_agent_service_guide_endpoint",
-    "2026.06.08.1__prefer_relative_shared_instruction_paths"
+    "2026.06.08.1__prefer_relative_shared_instruction_paths",
+    "2026.06.08.2__use_github_source_repo_for_instruction_updates"
   ],
   "copied_files": [
     "AGENTS.md",

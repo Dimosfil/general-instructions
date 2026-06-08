@@ -8,9 +8,10 @@ for live service discovery.
 
 1. Read project-local overrides only when local project instructions explicitly
    define them.
-2. Read GI main config from `config/gi-main.json` under the current
-   shared-instruction library, a configured relative shared-library path, or the
-   `GENERAL_INSTRUCTIONS_HOME` equivalent.
+2. Read GI main config from `config/gi-main.json` under the configured
+   shared-instruction source repo checkout/cache, the current shared checkout,
+   or the `GENERAL_INSTRUCTIONS_HOME` equivalent. The canonical source repo is
+   `https://github.com/Dimosfil/general-instructions.git`.
 3. Read `configServiceUrl`.
 4. Query the GI config service.
 5. Query `GET /services/{serviceId}` for the named target service.

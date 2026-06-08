@@ -139,11 +139,12 @@ added or run.
   `gi restore`. Mention them only as compact context when relevant, then ask for
   the user's current task instead of offering to continue, run, push, or finish
   them.
-- Treat `init <path>`, `инит <path>`, and `инициализируй <path>` that point to
-  the current shared-instruction library, a relative shared-library path such as
-  `.\general-instructions\`, `GENERAL_INSTRUCTIONS_HOME`, or another known
-  shared-instruction library as a shared-instruction bootstrap/startup request,
-  even without the `gi` prefix.
+- Treat `init <source>`, `инит <source>`, and `инициализируй <source>` that
+  point to the canonical shared-instruction Git repository
+  `https://github.com/Dimosfil/general-instructions.git`, the current
+  shared-instruction checkout/cache, `GENERAL_INSTRUCTIONS_HOME`, or another
+  known shared-instruction source as a shared-instruction bootstrap/startup
+  request, even without the `gi` prefix.
   Read the repository's local instructions and follow the documented `gi`
   bootstrap rules. Do not reinterpret that form as Git initialization, OpenCode
   setup, project creation, or skill creation unless the user explicitly names
@@ -188,10 +189,10 @@ added or run.
   `ги конфиг сервис урл=<url>` as requests to get or set the bootstrap config
   for the config/discovery service. Read the
   project-local override only if local instructions define one, then read GI
-  main config from the current shared-instruction library, a configured relative
-  shared-library path, or `GENERAL_INSTRUCTIONS_HOME`. Use its
-  `config/gi-main.json` `configServiceUrl` to query the config service. Resolve
-  local app and task-manager runtime URLs by service id through
+  main config from the configured shared-instruction source repo checkout/cache,
+  the current shared-instruction checkout, or `GENERAL_INSTRUCTIONS_HOME`. Use
+  its `config/gi-main.json` `configServiceUrl` to query the config service.
+  Resolve local app and task-manager runtime URLs by service id through
   config-service; project task-manager config should keep only the selected
   manager name/id and non-secret project preferences. For the `url=<url>` form,
   validate a full `http://` or `https://` URL with no secrets, update the shared

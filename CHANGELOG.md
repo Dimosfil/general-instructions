@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.08
 
+- Added canonical source-repo guidance for instruction updates:
+  `https://github.com/Dimosfil/general-instructions.git` is now the default
+  shared-instruction source, while local folders are only checkouts/caches.
+  Update tooling can clone or fetch that repo when no usable local checkout is
+  available.
+
 - Prefer relative shared-instruction-library paths, `GENERAL_INSTRUCTIONS_HOME`,
   or the current shared library over machine-specific absolute paths. Startup,
   update, bootstrap, and config-service guidance now avoid hard-coding
@@ -108,7 +114,8 @@ Accepted changes for the shared instruction library.
 
 ## 2026.05.21
 
-- Added bare shared-instruction init aliases for `D:\AI\general-instructions\`:
+- Added bare shared-instruction init aliases for
+  `https://github.com/Dimosfil/general-instructions.git`:
   `инит`, `init`, and `инициализируй` now mean GI bootstrap/startup instead of
   Git initialization, OpenCode setup, project creation, agent creation, or skill
   creation.
@@ -288,17 +295,18 @@ Accepted changes for the shared instruction library.
 - Clarified that `gi` command responses must stay scoped to the shared
   instruction-kit command and must not resume an older product task unless the
   user explicitly asks.
-- Made instruction-kit update checks tolerant of unavailable saved shared
-  library paths, such as `D:\AI\general-instructions` in environments without a
-  `D:` drive; agents should use `GENERAL_INSTRUCTIONS_HOME`, an explicit command
-  path, or ask for the shared library path instead of failing hard.
+- Made instruction-kit update checks tolerant of unavailable saved
+  checkout/cache paths; agents should use the configured source repo, an
+  explicit command URL, or ask for the shared instruction source instead of
+  failing hard.
 - Added `gi саммари` / `gi summary` as a short shared-instruction command that
   writes a handoff summary file under `tools/summary/` instead of only replying
   in chat.
 - Clarified that ambiguous commit-message language selection prompts should use
   a concise Markdown checklist with current selections, not a prose-only list.
 - Added the short `gi` chat-command prefix for shared instruction-kit commands,
-  such as `gi обновись`, `gi init D:\AI\general-instructions\`, and
+  such as `gi обновись`,
+  `gi init https://github.com/Dimosfil/general-instructions.git`, and
   `gi язык коммита: Russian`.
 - Clarified that agents must not infer additional commit-message languages from
   the user's UI or message language; ambiguous requests should get a short
@@ -308,7 +316,9 @@ Accepted changes for the shared instruction library.
   placeholder markdown link.
 - Added short user-facing agent prompts for bootstrapping, updating, restoring
   context, configuring commit-message languages, and requesting commits.
-- Clarified that `Обновись из D:\AI\general-instructions\` is idempotent:
+- Clarified that
+  `Обновись из https://github.com/Dimosfil/general-instructions.git` is
+  idempotent:
   bootstrap/init first when no local instruction kit exists, otherwise apply
   only pending migrations.
 - Clarified that chat requests to configure commit-message languages should

@@ -4,7 +4,7 @@ Date: 2026-05-19 11:08:46 +03:00
 
 ## Current State
 
-The repository is `D:\AI\general-instructions` on branch `main`.
+The repository is `https://github.com/Dimosfil/general-instructions.git` on branch `main`.
 Latest local commit is `cd0b19d Clarify task manager and project boundary rules`.
 
 Working tree is dirty. There are instruction-kit edits in progress, plus older

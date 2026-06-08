@@ -18,21 +18,24 @@
 - Если первое сообщение в новом чате похоже на название чата или проекта, агент
   должен восстановить контекст, остановиться и спросить, что делать дальше.
   Название не выполняется как задача.
-- Для нового проекта лучше писать явную команду с относительным или явно
-  настроенным путём: `Connect shared instructions: .\general-instructions`.
-- Если агент уже загрузил эти общие правила, голый путь к библиотеке, например
-  `.\general-instructions`, тоже означает bootstrap: агент должен прочитать эти
-  правила и развернуть локальный комплект инструкций в текущем проекте по
-  шаблонам/checklist'у.
-- Команды `инит .\general-instructions\`, `init .\general-instructions\`
-  и `инициализируй .\general-instructions\` означают тот же
+- Для нового проекта лучше писать явную команду с canonical repo:
+  `Connect shared instructions: https://github.com/Dimosfil/general-instructions.git`.
+- Если агент уже загрузил эти общие правила, URL canonical repo
+  `https://github.com/Dimosfil/general-instructions.git` тоже означает
+  bootstrap: агент должен прочитать эти правила, создать или обновить локальный
+  checkout/cache и развернуть локальный комплект инструкций в текущем проекте
+  по шаблонам/checklist'у.
+- Команды `инит https://github.com/Dimosfil/general-instructions.git`,
+  `init https://github.com/Dimosfil/general-instructions.git` и
+  `инициализируй https://github.com/Dimosfil/general-instructions.git` означают тот же
   bootstrap/startup для общей библиотеки инструкций. Агент не должен трактовать
   их как `git init`, настройку OpenCode, создание проекта, агента или навыка,
   если пользователь явно этого не попросил.
 - Агент не должен ограничиваться тонким `AGENTS.md`, который только ссылается
   на общую библиотеку.
-- Агент не должен добавлять общую папку как dependency, package, submodule,
-  symlink или runtime-ссылку, если пользователь явно этого не попросил.
+- Агент не должен добавлять общий repo или checkout как dependency, package,
+  submodule, symlink или runtime-ссылку, если пользователь явно этого не
+  попросил.
 
 ## Экономия токенов
 

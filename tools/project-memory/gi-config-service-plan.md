@@ -19,7 +19,8 @@ Projects must not inspect sibling project folders to discover services.
 Agent flow:
 
 1. Read project-local overrides only if present.
-2. Read GI main config from `D:\AI\general-instructions\config\gi-main.json`.
+2. Read GI main config from `config/gi-main.json` in a checkout/cache of
+   `https://github.com/Dimosfil/general-instructions.git`.
 3. Get `configServiceUrl`.
 4. Query GI config service.
 5. Verify target service `/health` and required capabilities.
@@ -160,7 +161,8 @@ Use one of:
 
 ## General Instructions Changes Later
 
-After the service exists, update `D:\AI\general-instructions` with:
+After the service exists, update
+`https://github.com/Dimosfil/general-instructions.git` with:
 
 - `config/gi-main.json`
 - service discovery pattern

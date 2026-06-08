@@ -20,10 +20,11 @@ When this project reveals a reusable workflow, failure pattern, token-saving
 tactic, or agent-instruction improvement, write a concise recommendation for the
 shared instruction kit.
 
-Prefer the shared intake folder when available:
+Prefer the `updates/` folder in an available checkout/cache of the canonical
+shared-instruction source repo when this repository is being maintained:
 
 ```text
-.\general-instructions\updates\
+<general-instructions checkout>\updates\
 ```
 
 If the shared library is unavailable, use a local intake folder:
