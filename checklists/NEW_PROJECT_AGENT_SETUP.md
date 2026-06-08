@@ -61,7 +61,7 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Define run, test, build, smoke-check, and log-inspection commands.
 - [ ] On Windows, prepare a stable user-level Codex tools directory before
   relying on common CLI tools:
-  - Put trusted helper binaries in `C:\Users\<user>\.codex\bin`.
+  - Put trusted helper binaries in `%USERPROFILE%\.codex\bin`.
   - Put that directory before WindowsApps and System32 shims in the user `PATH`.
   - Prefer `rg.exe` from that directory when bundled `rg` or WindowsApps shims
     fail with `Access denied`.

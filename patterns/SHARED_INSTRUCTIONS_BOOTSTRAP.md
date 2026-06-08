@@ -4,7 +4,7 @@ Use this when a user starts a new project by giving a path to the shared
 instruction library, for example:
 
 ```text
-Connect shared instructions: D:\AI\general-instructions
+Connect shared instructions: .\general-instructions
 ```
 
 Also use this when the user asks to update from a shared instruction library but
@@ -12,7 +12,7 @@ the current project does not yet have `tools/project-memory/instruction-kit.json
 for example:
 
 ```text
-Обновись из D:\AI\general-instructions\
+Обновись из .\general-instructions\
 ```
 
 ## Meaning
@@ -56,7 +56,10 @@ It does not mean:
 6. Mention the shared library only as the source used for bootstrapping, not as a
    live dependency.
 7. Record the copied baseline in `tools/project-memory/instruction-kit.json`
-   with included migrations marked as already applied.
+   with included migrations marked as already applied. Prefer a relative
+   `update_check.shared_library_path`, an empty path plus
+   `GENERAL_INSTRUCTIONS_HOME`, or the explicit path from the user command over
+   a machine-specific absolute path.
 8. Stop after setup and ask what the user wants to do next.
 
 ## Token Rules

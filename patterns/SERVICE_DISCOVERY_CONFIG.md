@@ -8,8 +8,8 @@ for live service discovery.
 
 1. Read project-local overrides only when local project instructions explicitly
    define them.
-2. Read GI main config from
-   `D:\AI\general-instructions\config\gi-main.json`, or from the
+2. Read GI main config from `config/gi-main.json` under the current
+   shared-instruction library, a configured relative shared-library path, or the
    `GENERAL_INSTRUCTIONS_HOME` equivalent.
 3. Read `configServiceUrl`.
 4. Query the GI config service.

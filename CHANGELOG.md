@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.08
+
+- Prefer relative shared-instruction-library paths, `GENERAL_INSTRUCTIONS_HOME`,
+  or the current shared library over machine-specific absolute paths. Startup,
+  update, bootstrap, and config-service guidance now avoid hard-coding
+  one machine's shared-library location as a requirement.
+
 ## 2026.06.06
 
 - Added agent-facing service guide guidance: HTTP services should publish

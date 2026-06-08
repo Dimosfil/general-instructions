@@ -46,11 +46,17 @@ function Write-InstructionKitUpdateNotice {
     }
 
     $sharedPath = $null
-    if ($kit.update_check -and $kit.update_check.shared_library_path) {
-        $sharedPath = [string]$kit.update_check.shared_library_path
-    }
-    elseif ($env:GENERAL_INSTRUCTIONS_HOME) {
+    if ($env:GENERAL_INSTRUCTIONS_HOME) {
         $sharedPath = $env:GENERAL_INSTRUCTIONS_HOME
+    }
+    elseif ((Test-Path -LiteralPath "VERSION.md") -and (Test-Path -LiteralPath "INDEX.md") -and (Test-Path -LiteralPath "migrations")) {
+        $sharedPath = "."
+    }
+    elseif ($kit.update_check -and $kit.update_check.shared_library_path) {
+        $candidate = [string]$kit.update_check.shared_library_path
+        if (Test-Path -LiteralPath $candidate) {
+            $sharedPath = $candidate
+        }
     }
 
     if (-not $sharedPath) {

@@ -36,9 +36,10 @@ If the first user message is a path to a shared instruction library, or a reques
 to connect shared instructions, treat it as an instruction bootstrap.
 
 Also treat `init <path>`, `инит <path>`, and `инициализируй <path>` as an
-instruction bootstrap when the path points to a known shared-instruction library,
-including `D:\AI\general-instructions\`, even when the message does not include
-the `gi` prefix.
+instruction bootstrap when the path points to the current shared-instruction
+library, a relative shared-library path such as `.\general-instructions\`,
+`GENERAL_INSTRUCTIONS_HOME`, or another known shared-instruction library, even
+when the message does not include the `gi` prefix.
 
 In that case:
 
@@ -72,9 +73,9 @@ repository or print broad outputs by default.
 Examples:
 
 - `gi обновись`: check or apply accepted instruction-kit updates.
-- `gi init D:\AI\general-instructions\`: bootstrap/init from that shared
+- `gi init .\general-instructions\`: bootstrap/init from that shared
   library path.
-- `инит D:\AI\general-instructions\` or `init D:\AI\general-instructions\`:
+- `инит .\general-instructions\` or `init .\general-instructions\`:
   same bootstrap/startup behavior for the shared instruction library, without
   requiring the `gi` prefix.
 - `gi commit language: Russian`, `gi коммит язык: Russian`, or
@@ -129,12 +130,13 @@ read, search, edit, create, delete, move, or inspect files in another project or
 arbitrary external folder just because a task manager, summary, migration, or
 previous chat mentions it.
 
-Treat `D:\AI\others` as the standard local parent folder for third-party
-projects, cloned external repositories, and vendor experiments when no more
-specific destination is provided. This default folder is configurable: if the
-user gives another path or project-local instructions define another third-party
-workspace parent, use that instead. Do not mix third-party projects into the
-current project workspace.
+Treat `.\others\` under the current workspace parent, or another project-local
+relative path named by local instructions, as the standard local parent folder
+for third-party projects, cloned external repositories, and vendor experiments
+when no more specific destination is provided. This default folder is
+configurable: if the user gives another path or project-local instructions
+define another third-party workspace parent, use that instead. Do not mix
+third-party projects into the current project workspace.
 
 Treat nested checkouts, vendored repositories, cloned examples, and third-party
 source trees as separate scope. Do not inspect them as part of the main project

@@ -43,12 +43,13 @@ targeted search fails or the task clearly requires repository-wide inventory.
 - Do not print large files. Use heads, tails, line ranges, or search snippets.
 - Do not print large SQLite query results. Always use `LIMIT`.
 - Prefer evidence paths and short snippets over raw file dumps.
-- Treat `D:\AI\others` as the standard local parent folder for third-party
-  projects, cloned external repositories, and vendor experiments when no more
-  specific destination is provided. This default folder is configurable: if the
-  user gives another path or project-local instructions define another
-  third-party workspace parent, use that instead. Do not mix third-party
-  projects into the current project workspace.
+- Treat `.\others\` under the current workspace parent, or another
+  project-local relative path named by local instructions, as the standard local
+  parent folder for third-party projects, cloned external repositories, and
+  vendor experiments when no more specific destination is provided. This default
+  folder is configurable: if the user gives another path or project-local
+  instructions define another third-party workspace parent, use that instead. Do
+  not mix third-party projects into the current project workspace.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them during startup
   unless the user explicitly asks, the task is about that nested tree, or local

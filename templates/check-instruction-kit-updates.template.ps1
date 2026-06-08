@@ -49,6 +49,9 @@ function Resolve-SharedLibraryPath {
     if (-not [string]::IsNullOrWhiteSpace($ExplicitPath)) {
         $candidates += [string]$ExplicitPath
     }
+    if ((Test-Path -LiteralPath "VERSION.md") -and (Test-Path -LiteralPath "INDEX.md") -and (Test-Path -LiteralPath "migrations")) {
+        $candidates += "."
+    }
     if ($env:GENERAL_INSTRUCTIONS_HOME) {
         $candidates += [string]$env:GENERAL_INSTRUCTIONS_HOME
     }

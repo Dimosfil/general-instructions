@@ -122,7 +122,7 @@ Inspect logs:
   `Invoke-WebRequest` instead of `curl.exe`.
 - Do not probe for `curl.exe` with `where.exe curl` or `Get-Command curl` unless
   the user explicitly asks for curl diagnostics.
-- Prefer trusted helper binaries from `C:\Users\<user>\.codex\bin` before
+- Prefer trusted helper binaries from `%USERPROFILE%\.codex\bin` before
   WindowsApps or System32 shims.
 - If Windows or antivirus tools block agent commands with `Access denied`,
   trust narrow Codex-owned tool folders such as `.codex\.sandbox-bin\` and
@@ -155,21 +155,22 @@ Inspect logs:
   or arbitrary external folder unless the user gives an explicit concrete path
   and action. Use APIs, connectors, or task-manager endpoints for cross-project
   communication.
-- Treat `D:\AI\others` as the standard local parent folder for third-party
-  projects, cloned external repositories, and vendor experiments when no more
-  specific destination is provided. This default folder is configurable: if the
-  user gives another path or project-local instructions define another
-  third-party workspace parent, use that instead. Do not mix third-party
-  projects into the current project workspace.
+- Treat `.\others\` under the current workspace parent, or another
+  project-local relative path named by local instructions, as the standard local
+  parent folder for third-party projects, cloned external repositories, and
+  vendor experiments when no more specific destination is provided. This default
+  folder is configurable: if the user gives another path or project-local
+  instructions define another third-party workspace parent, use that instead. Do
+  not mix third-party projects into the current project workspace.
 - Treat `gi config`, `gi конфиг`, `ги конфиг`, `gi config service`,
   `ги конфиг сервис`, `ги конфиг сервис url=<url>`, and
   `ги конфиг сервис урл=<url>` as requests to get or set the bootstrap config
   for the config/discovery service. Read a
   project-local override only if local instructions define one, then read GI
-  main config from
-  `D:\AI\general-instructions\config\gi-main.json` or
-  `GENERAL_INSTRUCTIONS_HOME`. Use its `configServiceUrl` to query the config
-  service. Resolve local app and task-manager runtime URLs by service id through
+  main config from the current shared-instruction library, a configured relative
+  shared-library path, or `GENERAL_INSTRUCTIONS_HOME`. Use its
+  `config/gi-main.json` `configServiceUrl` to query the config service. Resolve
+  local app and task-manager runtime URLs by service id through
   config-service; project task-manager config should keep only the selected
   manager name/id and non-secret project preferences. For the `url=<url>` form,
   validate a full `http://` or `https://` URL with no secrets, update the shared

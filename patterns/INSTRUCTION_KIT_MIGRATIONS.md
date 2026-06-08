@@ -35,7 +35,7 @@ or:
 or:
 
 ```text
-Обновись из D:\AI\general-instructions\
+Обновись из .\general-instructions\
 ```
 
 or:
@@ -51,12 +51,14 @@ the agent should:
    bootstrap/init from the requested shared library path, then record the copied
    kit baseline with included migrations marked as applied.
 3. If it exists, read it.
-4. Resolve the shared library path from the user's command,
-   `GENERAL_INSTRUCTIONS_HOME`, or `update_check.shared_library_path`.
+4. Resolve the shared library path from the user's command, the current shared
+   library when the command is running inside one, `GENERAL_INSTRUCTIONS_HOME`,
+   or `update_check.shared_library_path`.
    Prefer a path that exists in the current environment.
    If the recorded path is unavailable, for example a missing Windows drive,
    do not fail hard; ask the user for the shared library path or tell them to set
-   `GENERAL_INSTRUCTIONS_HOME`.
+   `GENERAL_INSTRUCTIONS_HOME`. Prefer relative paths in metadata; avoid storing
+   machine-specific absolute paths unless the user explicitly provides one.
 5. Read only accepted release artifacts: `VERSION.md`, `CHANGELOG.md`,
    `INDEX.md`, and relevant files under `migrations/`.
 6. Do not read `updates/`.
