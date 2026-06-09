@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.09
+
+- Added configuration-boundary guidance: deploy, user, runtime, machine,
+  service, credential, filesystem, feature-flag, and operational-policy values
+  must live in documented config, environment variables, or service discovery
+  instead of application logic. Config-provided paths should be resolved and
+  validated as absolute paths at application boundaries, and consuming projects
+  should audit/refactor existing hard-coded values when applying the migration.
+
 ## 2026.06.08
 
 - Added canonical source-repo guidance for instruction updates:

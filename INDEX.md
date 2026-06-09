@@ -37,6 +37,9 @@ Reusable instructions in this repository are grouped by job.
   and production agent harnesses.
 - `patterns/AI_ENGINEERING_BENCHMARKS.md`: benchmark pattern for proving AI
   engineering cost reduction while preserving task quality.
+- `patterns/CONFIGURATION_BOUNDARIES.md`: configuration-boundary rules for
+  keeping deploy, user, runtime, machine, service, credential, path,
+  feature-flag, and operational values out of application logic.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
 - `patterns/FULL_RAG_AGENT_PLATFORM.md`: architecture pattern for a LangGraph

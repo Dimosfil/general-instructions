@@ -1,0 +1,52 @@
+# Configuration Boundaries
+
+Keep application code focused on logic, constants, and internal defaults. Values
+that can change outside the codebase belong in configuration, environment
+variables, service discovery, or deployment metadata.
+
+## Rule
+
+- Do not hard-code deploy, user, runtime, host-machine, service, credential,
+  filesystem-layout, feature-flag, or operational-policy values in source code.
+- Keep project-local config in documented files such as `config/*.json`,
+  `.env.example`, `tools/deploy/*.example.json`, or the platform-native config
+  location for the stack.
+- Keep secrets out of committed config. Commit only redacted examples, secret
+  reference names, or environment variable names.
+- Use service identifiers and config-service records for local HTTP services
+  instead of fixed ports, URLs, dashboard links, or stale task-manager records.
+- Avoid machine-specific absolute paths in source, shared instructions, and
+  committed examples unless the file is explicitly a local-only example.
+- When a configured value is a path, resolve it to an absolute path at startup
+  or at the I/O boundary, validate that it is within the allowed workspace or
+  configured data root, and fail with a clear message if it is missing or unsafe.
+- Prefer typed config loading and schema validation when the stack supports it.
+  At minimum, validate required keys, path shape, URL shape, numeric ranges, and
+  enum values before using the config.
+- Keep internal constants in code only when they are true invariants of the
+  algorithm or protocol and are not expected to differ by deployment, user,
+  environment, or operations.
+
+## Refactoring Existing Projects
+
+When this rule arrives through an accepted instruction-kit migration, treat it
+as a refactoring task, not only a documentation update:
+
+- Search targeted code paths for hard-coded ports, URLs, hostnames, credentials,
+  private paths, user names, feature toggles, limits, model names, deployment
+  folders, and environment-specific switches.
+- Move scoped findings into existing config files, environment variables, or
+  service discovery records that match the project architecture.
+- Add or update redacted example config files and docs so a new environment can
+  supply the values without reading source code.
+- Keep the migration low-risk: do not rewrite unrelated modules, do not expose
+  secrets, and record deferred hard-code cleanup in project memory when a full
+  refactor is too large for the current update.
+
+## Verification
+
+- Run the project's relevant config/schema checks, tests, or smoke checks.
+- Confirm committed examples contain no real secrets, private hostnames, private
+  folders, tokens, or machine-specific absolute paths.
+- Confirm path values from config are resolved to absolute paths before use and
+  rejected when outside the allowed project or data boundary.

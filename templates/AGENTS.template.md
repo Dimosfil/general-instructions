@@ -141,6 +141,16 @@ Inspect logs:
 - Do not revert user changes unless explicitly requested.
 - Treat dirty worktrees as normal.
 - Keep changes scoped to the current task.
+- Do not hard-code values that can change by deployment, user choice, runtime
+  environment, host machine, service discovery, credentials, filesystem layout,
+  feature flags, or operational policy. Keep application code focused on logic,
+  constants, and internal defaults; move deploy/user/environment/system values
+  into documented project-local configuration, environment variables, or
+  service discovery records. Avoid embedding machine-specific absolute paths in
+  source or shared instructions; when paths are accepted from config, resolve
+  and validate them as absolute paths at startup or I/O boundaries. When
+  applying this rule to existing projects, audit and refactor relevant
+  hard-coded values instead of only adding the rule text.
 - Preserve text encodings when editing files. On Windows, do not rewrite source
   files with PowerShell pipelines such as `Get-Content ... | Set-Content ...`
   unless both read and write encodings are explicit and known correct. Prefer

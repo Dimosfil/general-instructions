@@ -69,6 +69,16 @@ added or run.
   practical.
 - Avoid long nested conditionals, filler, narration, and non-actionable prose.
 - Use clear Markdown headings and copy-pasteable examples.
+- Do not hard-code values that can change by deployment, user choice, runtime
+  environment, host machine, service discovery, credentials, filesystem layout,
+  feature flags, or operational policy. Keep application code focused on logic,
+  constants, and internal defaults; move deploy/user/environment/system values
+  into documented project-local configuration, environment variables, or
+  service discovery records. Avoid embedding machine-specific absolute paths in
+  source or shared instructions; when paths are accepted from config, resolve
+  and validate them as absolute paths at the application boundary. When applying
+  this rule to existing projects, audit and refactor relevant hard-coded values
+  instead of only adding the rule text. Follow `patterns/CONFIGURATION_BOUNDARIES.md`.
 
 ## Windows Command Policy
 

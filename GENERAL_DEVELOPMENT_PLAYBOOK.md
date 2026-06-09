@@ -22,6 +22,11 @@ It should contain:
 - How to run, test, build, and inspect logs.
 - What files/folders are safe working areas.
 - Rules about git, commits, generated files, secrets, and destructive commands.
+- Configuration boundary rules: do not hard-code deploy, user, runtime,
+  machine, service, credential, filesystem, feature-flag, or operational-policy
+  values in application logic; keep them in documented project-local config,
+  environment variables, or service discovery, and validate config-derived paths
+  as absolute paths at startup or I/O boundaries.
 - Encoding safety rules: preserve existing file encodings; avoid rewriting
   source files through PowerShell `Get-Content ... | Set-Content ...` pipelines
   unless both encodings are explicit and correct; prefer patch tools or
@@ -272,6 +277,13 @@ Before large changes, build a first map:
 
 Do not try to understand everything in one pass. Build a searchable index and record small verified findings.
 
+Use `patterns/CONFIGURATION_BOUNDARIES.md` when adding or refactoring runtime
+settings. Treat accepted instruction-kit updates that introduce the
+configuration-boundary rule as a prompt to audit existing code for hard-coded
+deployment, user, environment, host, service, credential, path, feature-flag,
+and operational values, then refactor scoped findings into config as part of the
+migration when it is safe.
+
 ## 9. Establish Quality Gates
 
 Every project should define minimum checks:
@@ -325,6 +337,10 @@ Before real work starts:
 - Ignore local databases, logs, cache folders, build outputs, temp folders.
 - Never store credentials in summaries or notes.
 - Document where secret/config examples live.
+- Keep deploy/user/environment/system-dependent values out of source code and
+  shared instructions. Use redacted config examples, environment variable names,
+  or service identifiers instead of real hostnames, ports, credentials, private
+  folders, machine-specific absolute paths, or user-specific options.
 
 ## 12. Make The First Useful Vertical Slice
 
