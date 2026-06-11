@@ -175,11 +175,12 @@ only, plus non-secret project preferences such as workspace, project, and intake
 mode. Do not store or copy task-manager runtime URLs in project memory when the
 manager is registered in config-service.
 
-For `gi manager`, `gi tm`, `gi manager test`, `gi active task`,
-`gi next task`, `gi add sprint`, `gi create sprint`, `gi plan`, and sprint
-workflows:
+For `gi manager`, `gi tm`, `gi manager test`, `ги менеджер`, `ги манагер`,
+`gi active task`, `gi next task`, `gi add sprint`, `gi create sprint`,
+`gi plan`, and sprint workflows:
 
-1. Read the enabled manager id from project-local task-manager config.
+1. Read the enabled manager id or `service_id` from project-local task-manager
+   config.
 2. Resolve that id through config-service with `GET /services/{serviceId}`.
 3. Read `endpoints.guide` when present for manager onboarding and forbidden
    actions.
@@ -190,6 +191,8 @@ workflows:
 7. Stop instead of guessing alternate endpoints when the guide or contract lacks
    active-task lookup, sprint/cycle creation, lifecycle update, completion, or
    requested object type.
+8. Ignore legacy `base_url` values in project memory unless a project-local
+   migration rule explicitly says to convert them into a config-service record.
 
 ## FTP Services
 

@@ -4,11 +4,11 @@
     {
       "id": "worknest",
       "enabled": true,
-      "base_url": "http://127.0.0.1:5175/",
+      "service_id": "worknest",
       "workspace": "",
       "project": "general-instructions",
       "intake_mode": "raw",
-      "notes": "Project-local WorkNest API endpoint. UI URLs are documented separately if needed."
+      "notes": "Resolve the WorkNest runtime URL through GI config-service. Do not store or use legacy base_url values here."
     }
   ]
 }

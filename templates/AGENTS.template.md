@@ -220,6 +220,16 @@ Inspect logs:
   contract as workflow validation. If they disagree, stop and report the
   mismatch. Do not infer permissions from filesystem paths, stale memory, old
   dashboard URLs, or raw task receipts.
+- Treat `gi manager`, `gi tm`, `gi manager test`, `ги менеджер`,
+  `ги манагер`, and equivalent task-manager status or test wording as requests
+  to inspect the configured task manager through config-service. Read the
+  enabled manager id or `service_id` from project-local task-manager config,
+  resolve it through `GET /services/{serviceId}`, read `endpoints.guide` when
+  present, read `endpoints.contract`, then use `endpoints.api` for documented
+  manager operations. Stop with the exact blocker if the manager id is missing,
+  config-service is unavailable, no matching service record exists, or the
+  guide/contract lacks the requested capability. Do not fall back to `base_url`,
+  stale task-manager memory, port scans, sibling projects, or guessed endpoints.
 - Treat `gi config service on`, `gi config service off`, `ги конфиг сервис on`,
   and `ги конфиг сервис off` as requests to set the current application's
   project-local config-service self-registration flag. `on` means the app

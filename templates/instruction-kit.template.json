@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.11.3",
+  "instruction_kit_version": "2026.06.11.4",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -79,7 +79,8 @@
     "2026.06.09.1__add_configuration_boundary_rule",
     "2026.06.11.1__protect_rag_cleanup_assets",
     "2026.06.11.2__add_feature_workflow_contracts",
-    "2026.06.11.3__add_feature_planning_hierarchy"
+    "2026.06.11.3__add_feature_planning_hierarchy",
+    "2026.06.11.4__clarify_gi_manager_config_service_flow"
   ],
   "copied_files": [
     "AGENTS.md",

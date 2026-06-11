@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.11
 
+- Clarified `gi manager`, `gi tm`, `gi manager test`, `ги менеджер`, and
+  `ги манагер` handling: agents must inspect configured task managers through
+  config-service by `service_id`, read guide/contract endpoints, and must not
+  fall back to legacy `base_url`, stale memory, port scans, sibling projects,
+  or guessed endpoints.
+
 - Extended feature workflow contracts with a planning hierarchy for
   non-trivial features: feature idea, functional description, workflow
   contract, implementation plan, sprint breakdown, task breakdown, definitions
