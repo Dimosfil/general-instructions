@@ -4,6 +4,16 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.11
 
+- Clarified GI's scope as agent-runtime neutral instructions for any compatible
+  AI agent or assistant, not only Codex. Codex should be named only for
+  Codex-specific tooling, surfaces, folders, or workflows.
+- Clarified task-manager operations as routine sync/execution commands once the
+  sprint/task content or workflow is known. Fast or weaker models may run them,
+  but must follow config-service, guide/contract, documented payload, and
+  readback steps exactly; they must not substitute project-memory notes, raw
+  receipts, local checklists, guessed commands, or "tell me the exact command"
+  fallbacks for manager API work.
+
 - Clarified accepted rule propagation: RAG, startup, command, workflow, and
   agent-safety rules must be applied to the shared source repository itself and
   to consuming-project propagation artifacts, including templates, migrations,

@@ -1,6 +1,7 @@
 # General Development Playbook
 
-This is a reusable must-have plan for starting and maintaining a software project with an AI coding agent. Keep it short, explicit, and local to the repository.
+This is a reusable must-have plan for starting and maintaining a project with an
+AI agent. Keep it short, explicit, and local to the repository.
 
 The copied `general-instructions` kit is primarily a token-economy and
 RAG-startup layer for each project. Its short command prefix is always `gi`,

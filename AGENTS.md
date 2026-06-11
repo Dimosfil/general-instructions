@@ -9,6 +9,10 @@ Keep durable, project-agnostic rules, playbooks, templates, and checklists here.
 Project-specific details belong in each project's own `AGENTS.md`, runbook, or
 memory folder.
 
+Keep GI agent-runtime neutral. These instructions are for any compatible AI
+agent or assistant, not only Codex. Mention Codex only when a rule is about a
+Codex-specific tool, folder, permission model, app surface, or workflow.
+
 Treat this library as a token-economy and RAG-startup layer for projects that
 copy it. Its short command prefix is always `gi`, not `GAI` or another alias.
 Use it to restore only task-relevant context through local instructions, handoff
@@ -48,7 +52,7 @@ in this repository's live `AGENTS.md`.
 - `README.md`: short human-facing overview.
 - `INDEX.md`: catalog of reusable instruction documents.
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline playbook for starting and
-  maintaining projects with AI coding agents.
+  maintaining projects with AI agents.
 - `templates/`: copyable starter files for project repositories.
 - `checklists/`: short operational checklists.
 
@@ -100,7 +104,7 @@ in this repository's live `AGENTS.md`.
 - Prefer trusted helper binaries from `%USERPROFILE%\.codex\bin` before
   WindowsApps or System32 shims.
 - If Windows or antivirus tools block agent commands with `Access denied`,
-  trust narrow Codex-owned tool folders such as `.codex\.sandbox-bin\` and
+  trust narrow agent-owned tool folders such as `.codex\.sandbox-bin\` and
   `.codex\bin\`; do not add broad exclusions for System32 or PowerShell itself.
 
 ## Tool Usage And Token Economy
@@ -281,6 +285,14 @@ in this repository's live `AGENTS.md`.
   missing or mismatched. Do not create raw intake receipts, local checklist
   notes, or a different manager object type as a substitute for the requested
   task, sprint, or cycle.
+- Treat task-manager sync commands as routine execution steps, similar in
+  certainty to `gi commit`, `gi push`, or FTP deploy commands after the user has
+  supplied the content or selected workflow. A fast or weaker model may execute
+  these commands, but it must still follow the manager contract exactly: do not
+  replace manager API work with `project-memory`, pending-task notes, guessed
+  commands, raw intake receipts, local checklists, or "tell me the exact
+  command" fallback. If discovery, auth, contract, capability, payload shape, or
+  readback is missing, stop with the exact blocker.
 - Treat `gi add sprint`, `gi create sprint`, `gi добавить спринт`, and
   equivalent add-sprint wording as requests to create a visible executable
   Sprint/Cycle through the configured task manager. Resolve the manager through

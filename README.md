@@ -14,8 +14,8 @@ Start with:
 - `COMMANDS.md`: common commands for using and maintaining the instruction kit.
 - `USER_GUIDE.md`: short user-facing overview of the main rules.
 - `INDEX.md`: catalog of available instructions and templates.
-- `GENERAL_DEVELOPMENT_PLAYBOOK.md`: must-have setup plan for starting a new
-  software project with an AI coding agent.
+- `GENERAL_DEVELOPMENT_PLAYBOOK.md`: must-have setup plan for starting and
+  maintaining a project with an AI agent.
 - `patterns/GIT_WORKFLOW.md`: reusable git policy and commit-message language
   preferences.
 - `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for

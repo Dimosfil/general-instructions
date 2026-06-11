@@ -175,6 +175,14 @@ only, plus non-secret project preferences such as workspace, project, and intake
 mode. Do not store or copy task-manager runtime URLs in project memory when the
 manager is registered in config-service.
 
+Task-manager commands are routine service-integration commands once the user
+has supplied the sprint/task content or selected the workflow. Treat them like
+other deterministic `gi` operations: resolve the service, verify the contract,
+send the documented payload, read back the result, and report blockers. Do not
+replace manager API work with project-memory notes, raw receipts, guessed
+commands, local checklists, or a request for the user to provide the exact
+manager command.
+
 For `gi manager`, `gi tm`, `gi manager test`, `ги менеджер`, `ги манагер`,
 `gi active task`, `gi next task`, `gi add sprint`, `gi create sprint`,
 `gi plan`, and sprint workflows:

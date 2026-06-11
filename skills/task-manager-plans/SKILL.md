@@ -5,8 +5,17 @@ description: Read, write, import, export, test, and reconcile project plans with
 
 # Task Manager Plans
 
-Use this skill to move plans between project memory and one or more
-configured task managers.
+Use this skill to move plans between project memory and one or more configured
+task managers, and to execute routine task-manager sync commands.
+
+Task-manager sync is an execution/integration layer, not open-ended planning.
+After the user has supplied the sprint/task content or selected the workflow, a
+fast or weaker model may run it, but it must follow the manager guide and
+contract exactly. Do not substitute `project-memory`, `pending-tasks.md`, raw
+intake receipts, guessed commands, local checklists, Work Items, or "tell me the
+exact command" fallback for manager API operations. If discovery, auth,
+contract, capability, payload shape, lifecycle identifiers, or readback is
+missing, stop and report the exact blocker.
 
 ## Core Workflow
 
@@ -34,8 +43,10 @@ configured task managers.
    updating existing tasks.
 11. Treat task-manager data as an external system: preview destructive changes
    and ask before deleting, closing, or bulk-changing remote tasks.
-12. Record sync results in the project memory file or user-facing response,
-   including what changed and what still needs manual follow-up.
+12. Record sync results in the project memory file or user-facing response only
+   after the manager operation has been attempted through the documented API.
+   Local notes are audit/supporting context, not a substitute for manager
+   readback or lifecycle identifiers.
 13. Describe roles precisely: the agent takes and executes tasks through the
    manager; the manager stores the queue, assignment, ordering, and lifecycle
    metadata.

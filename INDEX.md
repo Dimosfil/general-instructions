@@ -26,7 +26,7 @@ Reusable instructions in this repository are grouped by job.
 - `DEVELOPMENT_PLAN.md`: planned improvements for this shared instruction
   library.
 - `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline process for starting and
-  maintaining a software project with an AI coding agent.
+  maintaining a project with an AI agent.
 
 ## Patterns
 

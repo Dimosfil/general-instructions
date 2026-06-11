@@ -41,6 +41,10 @@ project. Use it to restore only the needed context from local instructions,
 handoff summaries, targeted searches, and project memory instead of reading the
 whole repository or printing broad outputs.
 
+Keep GI agent-runtime neutral. These instructions are for any compatible AI
+agent or assistant, not only Codex. Mention Codex only when a rule is about a
+Codex-specific tool, folder, permission model, app surface, or workflow.
+
 Treat `cached input` as a symptom, not the main optimization target. Keep total
 live context small by starting new sessions for unrelated tasks, using compact
 handoff summaries instead of long investigation history, and splitting multi-step
@@ -132,7 +136,7 @@ Inspect logs:
 - Prefer trusted helper binaries from `%USERPROFILE%\.codex\bin` before
   WindowsApps or System32 shims.
 - If Windows or antivirus tools block agent commands with `Access denied`,
-  trust narrow Codex-owned tool folders such as `.codex\.sandbox-bin\` and
+  trust narrow agent-owned tool folders such as `.codex\.sandbox-bin\` and
   `.codex\bin\`; do not add broad exclusions for System32 or PowerShell itself.
 
 ## Working Areas
@@ -220,6 +224,14 @@ Inspect logs:
   to use that URL for registration and discovery. Do not scan sibling project
   folders, guess ports, copy URLs from old task-manager memory, or use stale
   task-manager records as a runtime fallback.
+- Treat task-manager sync commands as routine execution steps, similar in
+  certainty to `gi commit`, `gi push`, or FTP deploy commands after the user has
+  supplied the content or selected workflow. A fast or weaker model may execute
+  these commands, but it must still follow the manager contract exactly: do not
+  replace manager API work with `project-memory`, pending-task notes, guessed
+  commands, raw intake receipts, local checklists, or "tell me the exact
+  command" fallback. If discovery, auth, contract, capability, payload shape, or
+  readback is missing, stop with the exact blocker.
 - For agent-facing HTTP services, prefer a service-owned guide endpoint plus a
   strict contract endpoint. Resolve runtime URLs through config-service. Read
   `endpoints.guide` first when present, then `endpoints.contract` before

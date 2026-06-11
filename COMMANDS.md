@@ -453,6 +453,16 @@ gi tm
 и project-local preferences; runtime URL агент получает через config-service по
 этому service id.
 
+Task-manager commands are routine sync/execution commands once the user has
+provided the sprint/task content or selected the workflow. They are suitable for
+fast or weaker models only if the model still follows the manager guide and
+contract exactly: resolve service id, verify capabilities, send the documented
+payload, read back lifecycle identifiers, and stop with the exact blocker when
+that cannot be done. Do not replace the manager operation with
+`project-memory`, pending-task notes, raw intake receipts, guessed commands,
+local checklists, or a request for the user to provide the exact manager
+command.
+
 ### Test Current Task Manager
 
 ```text
