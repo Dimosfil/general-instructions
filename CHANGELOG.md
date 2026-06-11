@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.11
 
+- Added feature workflow contract guidance: when a feature has an agreed
+  runtime workflow, loading order, state machine, branching behavior,
+  background work, or user-visible guarantee, agents should record it in
+  project-local docs and read it before changing the feature. Added a copyable
+  `FEATURE_WORKFLOW_CONTRACT` template.
+
 - Added repository cleanup guidance: when preparing a project for GitHub or
   removing "unneeded" files, agents must not treat `AGENTS.md`, `tools/`,
   `tools/project-memory/`, `skills/`, bootstrap/update/deploy scripts, or

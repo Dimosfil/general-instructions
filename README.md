@@ -20,6 +20,8 @@ Start with:
   preferences.
 - `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for
   copied project instruction kits.
+- `patterns/FEATURE_WORKFLOW_CONTRACTS.md`: project-local contracts for agreed
+  feature workflows, branching states, background work, and behavior guarantees.
 - `patterns/SKILL_MODULES.md`: guidance for reusable agent skill modules.
 - `migrations/`: accepted ordered migrations for updating copied instruction
   kits.

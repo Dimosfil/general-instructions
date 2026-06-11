@@ -141,6 +141,11 @@ Inspect logs:
 - Do not revert user changes unless explicitly requested.
 - Treat dirty worktrees as normal.
 - Keep changes scoped to the current task.
+- When a feature has an agreed runtime workflow, loading order, branching state
+  flow, background work, or user-visible guarantee, record it in project-local
+  docs or project memory. Before changing that feature, read the relevant
+  feature workflow contract and preserve its guarantees unless the user
+  explicitly changes the agreement.
 - When preparing this project for a repository, publishing to GitHub, or
   removing "unneeded" files, do not classify `AGENTS.md`, `tools/`,
   `tools/project-memory/`, `skills/`, bootstrap scripts, update scripts, deploy

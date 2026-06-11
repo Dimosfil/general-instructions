@@ -42,6 +42,9 @@ Reusable instructions in this repository are grouped by job.
   feature-flag, and operational values out of application logic.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
+- `patterns/FEATURE_WORKFLOW_CONTRACTS.md`: project-local contracts for agreed
+  feature workflows, branching states, background work, and user-visible
+  behavior guarantees.
 - `patterns/FULL_RAG_AGENT_PLATFORM.md`: architecture pattern for a LangGraph
   agent platform with structured memory, semantic retrieval, tracing, evals,
   and optional n8n automation.
@@ -89,6 +92,8 @@ Reusable instructions in this repository are grouped by job.
   line guards and `git diff --stat`.
 - `templates/FEATURE_TEST_PLAN.template.md`: copyable plan for verifying a new
   feature or risky change.
+- `templates/FEATURE_WORKFLOW_CONTRACT.template.md`: copyable contract for
+  documenting a feature's agreed runtime workflow and behavior guarantees.
 - `templates/ftp.local.template.json`: redacted starter shape for a
   project-local `tools/deploy/ftp.local.json` upload config.
 - `templates/git-preferences.template.json`: project-local commit-message

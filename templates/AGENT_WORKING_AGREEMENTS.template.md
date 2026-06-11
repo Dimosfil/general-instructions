@@ -33,6 +33,10 @@
 - Do not revert user changes unless explicitly requested.
 - Treat dirty worktrees as normal.
 - If user changes affect the task, work with them.
+- Preserve recorded feature workflow contracts. If a feature has an agreed
+  runtime workflow, loading order, branching state flow, background work, or
+  user-visible guarantee, read that contract before changing the feature and
+  update it in the same scoped change when behavior intentionally changes.
 
 ## Git
 

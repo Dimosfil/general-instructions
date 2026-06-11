@@ -63,6 +63,9 @@ added or run.
 - Do not add secrets, credentials, private project data, or local machine paths
   unless the file is explicitly a local example.
 - If a rule applies only to one specific project, do not put it here.
+- If a feature workflow applies only to one project, keep it in that project's
+  local docs or project memory. Use shared instructions only for the reusable
+  rule that such contracts should exist and be respected.
 - Prefer small, focused documents over one giant policy file.
 - When adding a new instruction file, also add it to `INDEX.md`.
 - Write instruction documents in imperative voice, with one rule per bullet when
@@ -120,6 +123,10 @@ added or run.
   reapply only the intended small patch.
 - Search for specific symbols, paths, errors, or patterns before doing broad
   repository scans.
+- Before changing a feature with a recorded workflow contract, read the
+  contract and preserve its user-visible sequence, branches, background work,
+  loading/error states, and verification guarantees unless the user explicitly
+  changes the agreement.
 - Do not print large logs. Prefer tails and targeted error searches.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.
