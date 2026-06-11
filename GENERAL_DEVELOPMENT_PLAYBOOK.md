@@ -128,6 +128,13 @@ Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
 too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
 Markdown as the concise reviewable export.
 
+When a project needs retrieval that can later grow into semantic RAG, add a
+project-local `tools/project-memory/rag-system.json` from
+`templates/rag-system.template.json` and follow
+`patterns/RAG_SYSTEM_STRUCTURE.md`. Keep Chroma, Qdrant, pgvector, and similar
+stores behind a retrieval adapter so `gi` startup, memory writeback, and prompt
+assembly do not depend on one vector database.
+
 For analysis, refactoring, migration, or multi-step implementation tasks, create
 or update a concise checklist in the project's durable planning location before
 editing code. For project-wide or ongoing work, use a shared task file such as

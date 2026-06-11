@@ -41,6 +41,12 @@ project. Use it to restore only the needed context from local instructions,
 handoff summaries, targeted searches, and project memory instead of reading the
 whole repository or printing broad outputs.
 
+When this project needs retrieval that can grow beyond Markdown and SQLite FTS,
+use `patterns/RAG_SYSTEM_STRUCTURE.md` and a project-local
+`tools/project-memory/rag-system.json`. Keep Chroma, Qdrant, pgvector, and
+similar stores behind retrieval adapters so startup, prompt assembly, and memory
+writeback do not depend on one vector database.
+
 Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a
 Codex-specific tool, folder, permission model, app surface, or workflow.

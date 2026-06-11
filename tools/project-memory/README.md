@@ -34,3 +34,15 @@ python .\tools\project-memory\build_project_memory_index.py search "gi config"
 
 The database is ignored by git. Commit this README, durable Markdown notes,
 preference JSON files, and indexing scripts instead.
+
+## RAG System Structure
+
+This repository records its expandable RAG configuration in:
+
+```text
+tools/project-memory/rag-system.json
+```
+
+The current mode is SQLite FTS. Chroma, Qdrant, pgvector, or other vector stores
+should be added as retrieval adapters behind the same structure rather than as a
+replacement for project memory.

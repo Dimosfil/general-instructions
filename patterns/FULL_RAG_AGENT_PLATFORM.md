@@ -18,6 +18,11 @@ pgvector are retrieval storage options; the full system also needs source
 selection, chunking, embeddings, metadata, ranking, prompt assembly,
 observability, tests, and update workflows.
 
+Use `patterns/RAG_SYSTEM_STRUCTURE.md` as the base structure for source corpus,
+structured memory, retrieval adapters, context packets, and writeback. Use this
+file when the project needs to grow that structure into a full agent platform
+with orchestration, tracing, evals, and optional automation.
+
 ## Target Stack
 
 - Core orchestration: LangGraph.

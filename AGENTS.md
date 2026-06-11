@@ -19,6 +19,12 @@ Use it to restore only task-relevant context through local instructions, handoff
 summaries, targeted searches, accepted migrations, and project memory instead of
 broad repository reads or large chat outputs.
 
+When a project needs retrieval that can grow beyond Markdown and SQLite FTS,
+use `patterns/RAG_SYSTEM_STRUCTURE.md` and a project-local
+`tools/project-memory/rag-system.json`. Keep Chroma, Qdrant, pgvector, and
+similar stores behind retrieval adapters so `gi` startup, prompt assembly, and
+memory writeback do not depend on one vector database.
+
 Treat `gi ...` and `ги ...` forms as chat commands for the agent, not as
 PowerShell commands. When the user wants a command that should be run literally
 in PowerShell, require or use an explicit `PS` marker or a real PowerShell

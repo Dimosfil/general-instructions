@@ -46,6 +46,10 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Decide whether the project needs local agent memory SQLite/index.
 - [ ] If SQLite memory is used, ignore the generated database and commit only
   scripts/schema/docs/Markdown exports.
+- [ ] If retrieval may grow into semantic RAG, copy or adapt
+  `templates/rag-system.template.json` into
+  `tools/project-memory/rag-system.json` and follow
+  `patterns/RAG_SYSTEM_STRUCTURE.md`.
 - [ ] Add `tools/summary/`.
 - [ ] Copy or adapt `templates/agent-start.template.ps1` into
   `tools/agent-start.ps1`.

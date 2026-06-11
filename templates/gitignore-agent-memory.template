@@ -3,6 +3,7 @@ tools/project-memory/*.sqlite
 tools/project-memory/*.sqlite-*
 tools/project-memory/*.db
 tools/project-memory/*.db-*
+tools/project-memory/vector-index/
 tools/summary/*.tmp
 tools/deploy/ftp.local.json
 *.log

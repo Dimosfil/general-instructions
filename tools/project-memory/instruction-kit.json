@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.11.6",
+  "instruction_kit_version": "2026.06.11.7",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -82,7 +82,8 @@
     "2026.06.11.3__add_feature_planning_hierarchy",
     "2026.06.11.4__clarify_gi_manager_config_service_flow",
     "2026.06.11.5__self_apply_and_propagate_accepted_rules",
-    "2026.06.11.6__universal_gi_and_routine_task_manager_sync"
+    "2026.06.11.6__universal_gi_and_routine_task_manager_sync",
+    "2026.06.11.7__add_unified_rag_system_structure"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -95,6 +96,7 @@
     "tools/project-memory/pending-tasks.md",
     "tools/project-memory/git-preferences.json",
     "tools/project-memory/system-preferences.json",
+    "tools/project-memory/rag-system.json",
     "tools/select-project-language.ps1",
     "tools/select-git-commit-languages.ps1",
     "tools/select-system-language.ps1",

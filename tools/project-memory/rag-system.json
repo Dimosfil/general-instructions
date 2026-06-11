@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "project_id": "general-instructions",
+  "mode": "sqlite-fts",
+  "source_groups": [
+    {
+      "id": "shared-instructions",
+      "paths": [
+        "AGENTS.md",
+        "COMMANDS.md",
+        "GENERAL_DEVELOPMENT_PLAYBOOK.md",
+        "INDEX.md",
+        "README.md"
+      ],
+      "trust": "shared-library",
+      "include": true
+    },
+    {
+      "id": "patterns",
+      "paths": [
+        "patterns/*.md"
+      ],
+      "trust": "shared-library",
+      "include": true
+    },
+    {
+      "id": "project-memory",
+      "paths": [
+        "tools/project-memory/*.md",
+        "tools/project-memory/*.json"
+      ],
+      "trust": "project-local",
+      "include": true
+    }
+  ],
+  "exclude_globs": [
+    "**/.env*",
+    "**/*secret*",
+    "**/*token*",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/*.log",
+    "**/*.lock",
+    "tools/project-memory/*.sqlite",
+    "tools/project-memory/*.sqlite-*",
+    "tools/project-memory/vector-index/**"
+  ],
+  "structured_memory": {
+    "kind": "sqlite",
+    "path": "tools/project-memory/project_memory.sqlite",
+    "commit_database": false,
+    "reviewable_export": "tools/project-memory/NOTES.md"
+  },
+  "keyword_retrieval": {
+    "enabled": true,
+    "kind": "sqlite-fts5",
+    "purpose": "exact paths, commands, symbols, and error text"
+  },
+  "vector_retrieval": {
+    "enabled": false,
+    "provider": "chroma",
+    "collection": "general-instructions-project-memory-v1",
+    "local_index_path": "tools/project-memory/vector-index",
+    "embedding_model_ref": "configure-in-project-local-runtime",
+    "dimensions": null
+  },
+  "service_retrieval": {
+    "enabled": false,
+    "provider": "qdrant",
+    "service_id": "",
+    "collection": "general-instructions-project-memory-v1"
+  },
+  "context_packet": {
+    "max_chunks": 8,
+    "max_estimated_tokens": 4000,
+    "require_source_paths": true,
+    "include_rejected_source_summary": false
+  },
+  "writeback": {
+    "write_verified_findings": true,
+    "markdown_export": "tools/project-memory/NOTES.md",
+    "store_uncertain_findings": "mark-explicitly"
+  }
+}

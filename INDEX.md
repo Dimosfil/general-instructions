@@ -59,6 +59,9 @@ Reusable instructions in this repository are grouped by job.
   new features, bug fixes, smoke checks, and release confidence.
 - `patterns/PROJECT_FTP_DEPLOY.md`: project-local FTP/FTPS/SFTP deploy config
   and `gi ftp` upload workflow.
+- `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure that separates
+  source corpus, structured memory, retrieval adapters, context packets,
+  tracing, evals, and writeback.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
 - `patterns/SERVICE_DISCOVERY_CONFIG.md`: config-service bootstrap,
@@ -86,6 +89,9 @@ Reusable instructions in this repository are grouped by job.
 - `templates/config-service-local.template.json`: starter project-local
   bootstrap override for the GI config service.
 - `templates/project-memory-README.template.md`: starter memory folder README.
+- `templates/rag-system.template.json`: project-local RAG configuration shape
+  for source groups, exclusions, structured memory, retrieval adapters, context
+  packets, and writeback.
 - `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
 - `templates/agent-start.template.ps1`: compact startup script template with

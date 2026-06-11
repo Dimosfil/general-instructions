@@ -46,6 +46,9 @@ It does not mean:
    - `tools/project-memory/STUDY_PLAN.md`
    - `tools/project-memory/git-preferences.json`
    - `tools/project-memory/system-preferences.json`
+   - optional `tools/project-memory/rag-system.json` from
+     `templates/rag-system.template.json` when retrieval may grow into semantic
+     RAG
    - `tools/summary/`
    - `tools/agent-start.ps1`
    - `tools/select-project-language.ps1`

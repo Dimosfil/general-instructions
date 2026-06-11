@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.11
 
+- Added a unified, expandable RAG system structure that separates source
+  corpus, manifests, chunk metadata, structured memory, retrieval adapters,
+  context packets, observability, evals, and writeback. Added a project-local
+  `rag-system.json` template and clarified that Chroma, Qdrant, pgvector, and
+  similar tools should sit behind retrieval adapters rather than define the
+  whole RAG system.
+
 - Clarified GI's scope as agent-runtime neutral instructions for any compatible
   AI agent or assistant, not only Codex. Codex should be named only for
   Codex-specific tooling, surfaces, folders, or workflows.

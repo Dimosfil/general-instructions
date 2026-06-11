@@ -77,12 +77,28 @@ Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
 too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
 Markdown as the concise reviewable export.
 
+## RAG System Structure
+
+When the project needs retrieval that can grow beyond Markdown and SQLite FTS,
+add:
+
+```text
+tools/project-memory/rag-system.json
+```
+
+Use `templates/rag-system.template.json` as the starter shape and
+`patterns/RAG_SYSTEM_STRUCTURE.md` as the architecture rule. Keep vector stores
+such as Chroma, Qdrant, and pgvector behind retrieval adapters so prompts and
+agent workflows do not depend on one storage backend.
+
 ## Suggested Files
 
 - `pending-tasks.md`: active project-wide plans and multi-step work.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
 - `git-preferences.json`: commit-message language preferences.
 - `system-preferences.json`: agent user-facing working language preferences.
+- `rag-system.json`: RAG source, exclusion, retrieval, context-packet, and
+  writeback configuration.
 - `NOTES.md`: reviewable export of durable notes from local agent memory.
 - `architecture.md`: verified architecture notes.
 - `decisions.md`: durable decisions and rationale.
