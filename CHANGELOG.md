@@ -2,6 +2,20 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.11
+
+- Added repository cleanup guidance: when preparing a project for GitHub or
+  removing "unneeded" files, agents must not treat `AGENTS.md`, `tools/`,
+  `tools/project-memory/`, `skills/`, bootstrap/update/deploy scripts, or
+  agent-facing instruction/config files as removable solely because they look
+  internal. Agents must inspect their purpose and preserve RAG/startup
+  infrastructure unless the user explicitly confirms it is temporary.
+- Clarified cleanup handling for SQLite/database files: generated agent-memory
+  indexes should usually stay ignored and rebuildable, while reviewable docs,
+  Markdown/JSON exports, schemas, and indexing scripts should be committed when
+  useful. Databases containing secrets, private data, telemetry, task-manager
+  state, absolute local paths, or conversation history must not be committed.
+
 ## 2026.06.09
 
 - Added configuration-boundary guidance: deploy, user, runtime, machine,

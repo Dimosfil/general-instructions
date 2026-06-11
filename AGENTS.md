@@ -182,6 +182,21 @@ added or run.
   printing full private documents by default.
 - Ask before expanding into unrelated scope. Proceed without asking only when
   the expansion is required for the stated goal and remains low-risk.
+- When preparing a project for a repository, publishing to GitHub, or removing
+  "unneeded" files, do not classify `AGENTS.md`, `tools/`,
+  `tools/project-memory/`, `skills/`, bootstrap scripts, update scripts, deploy
+  scripts, or agent-facing instruction/config files as removable only because
+  they look internal or tool-related. Inspect their purpose first and treat them
+  as possible RAG/startup infrastructure. Delete them only when the user
+  explicitly confirms they are temporary or unrelated to the project.
+- During repository cleanup, classify SQLite and database files before acting.
+  Do not delete or commit `*.sqlite`, `*.sqlite3`, or `*.db` files solely
+  because they are binary or local-looking. Keep generated agent-memory indexes
+  such as `tools/project-memory/project_memory.sqlite` ignored when they are
+  rebuildable, and commit the reviewable README, Markdown/JSON memory exports,
+  schema, and indexing scripts instead. Do not commit databases containing
+  secrets, private data, telemetry, task-manager state, absolute local paths, or
+  agent conversation history.
 - Treat this repository root as the filesystem boundary for normal work. Do not
   read, search, edit, create, delete, move, or inspect files in another project
   or arbitrary external folder unless the user gives an explicit concrete path

@@ -74,4 +74,11 @@ Use this when preparing a repository for AI-agent collaboration.
     avoid broad exclusions for System32 or PowerShell itself.
 - [ ] Review `.gitignore` for logs, caches, local databases, build outputs, and
   secrets.
+- [ ] For repository cleanup/GitHub preparation, preserve `AGENTS.md`,
+  `tools/`, `tools/project-memory/`, `skills/`, bootstrap/update/deploy scripts,
+  and agent-facing instruction/config files unless the user explicitly confirms
+  they are temporary or unrelated.
+- [ ] Classify SQLite/database files before deleting or committing them: ignore
+  generated/rebuildable agent-memory databases, and commit only reviewable docs,
+  Markdown/JSON exports, schema, and indexing scripts.
 - [ ] Write the first handoff summary after meaningful setup work.

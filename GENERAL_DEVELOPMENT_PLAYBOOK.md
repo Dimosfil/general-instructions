@@ -335,6 +335,15 @@ Before real work starts:
 
 - Review `.gitignore`.
 - Ignore local databases, logs, cache folders, build outputs, temp folders.
+- During repository cleanup or GitHub preparation, do not remove `AGENTS.md`,
+  `tools/`, `tools/project-memory/`, `skills/`, bootstrap/update/deploy scripts,
+  or agent-facing instruction/config files just because they look internal.
+  Inspect them first and preserve them when they provide RAG startup, durable
+  project memory, update flow, deployment, or agent workflow support.
+- Classify SQLite/database files before deleting or committing them. Generated
+  agent-memory indexes such as `tools/project-memory/project_memory.sqlite`
+  should usually stay ignored and rebuildable, while README files, Markdown/JSON
+  exports, schemas, and indexing scripts should be committed when useful.
 - Never store credentials in summaries or notes.
 - Document where secret/config examples live.
 - Keep deploy/user/environment/system-dependent values out of source code and
