@@ -37,6 +37,10 @@
   runtime workflow, loading order, branching state flow, background work, or
   user-visible guarantee, read that contract before changing the feature and
   update it in the same scoped change when behavior intentionally changes.
+- For non-trivial features, keep the feature idea, functional description,
+  workflow contract, implementation plan, sprint breakdown, task breakdown,
+  definitions of done, and verification connected. Tasks do not replace the
+  feature contract.
 
 ## Git
 

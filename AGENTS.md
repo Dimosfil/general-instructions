@@ -127,6 +127,11 @@ added or run.
   contract and preserve its user-visible sequence, branches, background work,
   loading/error states, and verification guarantees unless the user explicitly
   changes the agreement.
+- For non-trivial feature work, keep the feature idea, functional description,
+  workflow contract, implementation plan, sprint breakdown, task breakdown,
+  definitions of done, and verification linked together. Tasks do not replace
+  the feature contract: tasks say what to change, while the contract says what
+  behavior must remain true.
 - Do not print large logs. Prefer tails and targeted error searches.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.

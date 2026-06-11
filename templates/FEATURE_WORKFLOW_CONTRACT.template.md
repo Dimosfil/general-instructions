@@ -4,9 +4,25 @@ Feature: TODO
 Owner or source of agreement: TODO
 Last updated: TODO
 
+## Feature Idea
+
+TODO
+
+## User Problem
+
+TODO
+
 ## Goal
 
 TODO
+
+## Functional Description
+
+TODO
+
+## Non-Goals
+
+- TODO
 
 ## User-Visible Promise
 
@@ -64,6 +80,44 @@ flowchart TD
 
 - User-visible errors: TODO
 - Logs or metrics: TODO
+
+## Implementation Plan
+
+Technical approach: TODO
+
+Likely affected areas:
+
+- TODO
+
+Dependencies and risks:
+
+- TODO
+
+Rollout or fallback:
+
+- TODO
+
+## Sprint Breakdown
+
+### Sprint 1: TODO
+
+Goal: TODO
+
+Scope:
+
+- TODO
+
+Tasks:
+
+- [ ] TODO
+
+Exit criteria:
+
+- TODO
+
+Verification:
+
+- TODO
 
 ## Verification
 

@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.11
 
+- Extended feature workflow contracts with a planning hierarchy for
+  non-trivial features: feature idea, functional description, workflow
+  contract, implementation plan, sprint breakdown, task breakdown, definitions
+  of done, and verification. Clarified that tasks do not replace the feature
+  contract because tasks say what to change while the contract says what
+  behavior must remain true.
+
 - Added feature workflow contract guidance: when a feature has an agreed
   runtime workflow, loading order, state machine, branching behavior,
   background work, or user-visible guarantee, agents should record it in

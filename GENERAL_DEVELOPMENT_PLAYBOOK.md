@@ -30,7 +30,10 @@ It should contain:
 - Feature workflow contracts: when a feature has an agreed runtime workflow,
   loading order, branching state flow, background work, or user-visible
   guarantee, record it in project-local docs and require agents to read it
-  before changing that feature.
+  before changing that feature. For non-trivial features, keep the feature
+  idea, functional description, workflow contract, implementation plan, sprint
+  breakdown, task breakdown, definitions of done, and verification linked
+  together.
 - Encoding safety rules: preserve existing file encodings; avoid rewriting
   source files through PowerShell `Get-Content ... | Set-Content ...` pipelines
   unless both encodings are explicit and correct; prefer patch tools or
@@ -142,7 +145,10 @@ or memory area such as `docs/features/` or `tools/project-memory/`. Use
 workflow, branches, background work, loading/error states, and verification
 signals. Before changing a feature with a recorded contract, read it and
 preserve its user-visible guarantees unless the user explicitly changes the
-agreement.
+agreement. Use one sprint for small features and several sprints for larger
+features; break each sprint into concrete tasks that trace back to the feature
+workflow or implementation plan. Do not let task lists replace the feature
+contract.
 
 ## 3. Add A Startup Script
 

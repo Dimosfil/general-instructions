@@ -146,6 +146,11 @@ Inspect logs:
   docs or project memory. Before changing that feature, read the relevant
   feature workflow contract and preserve its guarantees unless the user
   explicitly changes the agreement.
+- For non-trivial feature work, keep the feature idea, functional description,
+  workflow contract, implementation plan, sprint breakdown, task breakdown,
+  definitions of done, and verification linked together. Tasks do not replace
+  the feature contract: tasks say what to change, while the contract says what
+  behavior must remain true.
 - When preparing this project for a repository, publishing to GitHub, or
   removing "unneeded" files, do not classify `AGENTS.md`, `tools/`,
   `tools/project-memory/`, `skills/`, bootstrap scripts, update scripts, deploy
