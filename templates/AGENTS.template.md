@@ -84,6 +84,13 @@ dirty worktree changes, secrets, private data, or generated noise; do not
 recurse into another commit/push merely because this finish rule itself was
 added or run.
 
+Accepted RAG, startup, command, workflow, and agent-safety rules must apply to
+both the shared instruction source repository and every consuming project. When
+changing an accepted reusable rule, update the source repository's live files,
+the copied-project templates, accepted migrations, version/changelog, and local
+instruction-kit metadata so future `gi обновить` runs can propagate the same
+rule.
+
 ## Common Commands
 
 Install dependencies:

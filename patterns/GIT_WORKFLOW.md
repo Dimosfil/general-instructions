@@ -35,6 +35,10 @@ language preferences.
   propagation applies. Do not include unrelated dirty worktree changes, secrets,
   private data, or generated noise; do not recurse into another commit/push
   merely because this finish rule itself was added or run.
+- Apply accepted RAG, startup, command, workflow, and agent-safety rules to the
+  shared instruction source repository itself and to copied-project propagation
+  artifacts in the same scoped change. Keep source live files, templates,
+  migrations, version/changelog, and local instruction-kit metadata in sync.
 - Treat dirty worktrees as normal.
 - Do not revert user changes unless the user explicitly asks.
 - Keep changes scoped to the current task.

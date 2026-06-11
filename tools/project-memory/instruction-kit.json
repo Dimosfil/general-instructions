@@ -1,7 +1,7 @@
 {
   "instruction_kit_version": "2026.06.11.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
-  "installed_at": "TODO",
+  "installed_at": "2026-06-11",
   "update_check": {
     "source_repo": "https://github.com/Dimosfil/general-instructions.git",
     "source_cache_path": "",

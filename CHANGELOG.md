@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.11
 
+- Clarified accepted rule propagation: RAG, startup, command, workflow, and
+  agent-safety rules must be applied to the shared source repository itself and
+  to consuming-project propagation artifacts, including templates, migrations,
+  version/changelog, and local instruction-kit metadata.
+
 - Clarified `gi manager`, `gi tm`, `gi manager test`, `ги менеджер`, and
   `ги манагер` handling: agents must inspect configured task managers through
   config-service by `service_id`, read guide/contract endpoints, and must not

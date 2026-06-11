@@ -7,6 +7,15 @@ This is the accepted update path for consuming projects. Do not use `updates/`
 for project refreshes; `updates/` is maintenance-only intake for this shared
 library.
 
+Accepted RAG, startup, command, workflow, and agent-safety rules must be
+self-applied in the shared source repository and propagated to consuming
+projects. For the source repository, update live files such as `AGENTS.md`,
+`COMMANDS.md`, `patterns/`, `templates/`, `VERSION.md`, `CHANGELOG.md`,
+accepted migration files, and local instruction-kit metadata as applicable. For
+consuming projects, `gi обновить` applies the accepted migrations and updates
+their project-local metadata. Never leave an accepted rule only in `updates/`,
+only in source-only files, or only in copied templates.
+
 ## Model
 
 - `VERSION.md`: latest accepted shared instruction-kit version.

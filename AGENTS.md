@@ -35,6 +35,14 @@ unrelated dirty worktree changes, secrets, private data, or generated noise; do
 not recurse into another commit/push merely because this finish rule itself was
 added or run.
 
+Accepted RAG, startup, command, workflow, and agent-safety rules must apply to
+both this source repository and every consuming project. When changing an
+accepted reusable rule, update the source repository's live files first, then
+update the copied-project templates, accepted migrations, version/changelog, and
+local instruction-kit metadata so future `gi обновить` runs can propagate the
+same rule. Do not leave a rule only in `updates/`, only in a template, or only
+in this repository's live `AGENTS.md`.
+
 ## Repository Map
 
 - `README.md`: short human-facing overview.
