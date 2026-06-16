@@ -306,6 +306,13 @@ Inspect logs:
   start or restart the current application using project-local run instructions.
   If the app is running, restart it; if it is not running, start it. Launch in
   the background so focus does not jump away from the user's current window.
+- Treat `gi install`, `gi инсталл`, `ги инсталл`, and clear typo variants as
+  requests to build the current project and produce an installer. Read local
+  build/package instructions, resolve the application version from project
+  metadata, run the packaging command, and verify the current installer
+  artifact. `restore`, dependency install, build, and test checks are
+  prerequisites only; do not report `gi install` complete or the project
+  installed/restored when only those checks ran.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them as part of the
   main project unless the user explicitly asks, the task is about that nested

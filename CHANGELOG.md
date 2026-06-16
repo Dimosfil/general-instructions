@@ -4,6 +4,10 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Tightened `gi install` guidance so restore, dependency install, build, and
+  tests are only prerequisites. Agents must run packaging and verify a current
+  installer artifact before reporting installer success.
+
 - Added an optional local Chroma adapter for semantic retrieval. The adapter
   builds a generated Chroma index from exported project-memory chunks and
   provides `rebuild`, `update`, `query`, `status`, and `clean` commands while

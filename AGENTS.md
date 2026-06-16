@@ -360,7 +360,12 @@ in this repository's live `AGENTS.md`.
   application version from project-local metadata such as manifests, package
   files, assembly attributes, release files, or installer configs before
   packaging; update the version in build output, installer metadata, and the
-  installer filename or artifact name when the local tooling supports it. Ask a
+  installer filename or artifact name when the local tooling supports it.
+  `restore`, dependency install, build, and test checks are prerequisites only:
+  they do not complete `gi install` unless the packaging command also runs and
+  a current installer artifact is produced or explicitly verified. Do not report
+  the project as installed/restored when only verification ran; report the
+  installer artifact path, version, and checks after successful packaging. Ask a
   short clarification question if the build, installer, or versioning contract
   is missing instead of inventing one.
 - Treat nested checkouts, vendored repositories, cloned examples, and
