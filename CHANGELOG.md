@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Added an optional local Chroma adapter for semantic retrieval. The adapter
+  builds a generated Chroma index from exported project-memory chunks and
+  provides `rebuild`, `update`, `query`, `status`, and `clean` commands while
+  keeping Chroma behind the retrieval-adapter boundary.
+
 - Added semantic RAG retrieval guidance for embeddings, model metadata,
   collection versioning, chunk export, hybrid search, evals, and safety.
   Extended the project-memory indexer to create semantic-ready chunks and

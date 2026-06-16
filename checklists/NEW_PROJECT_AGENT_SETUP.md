@@ -53,6 +53,9 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Before enabling vector retrieval, prepare semantic-ready chunks,
   embedding metadata, and a small eval set from
   `templates/semantic-retrieval-evals.template.md`.
+- [ ] If using local Chroma semantic retrieval, copy or adapt
+  `tools/project-memory/build_chroma_index.py` and keep
+  `tools/project-memory/vector-index/chroma` ignored.
 - [ ] Add `tools/summary/`.
 - [ ] Copy or adapt `templates/agent-start.template.ps1` into
   `tools/agent-start.ps1`.

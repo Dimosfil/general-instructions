@@ -20,6 +20,8 @@ Reusable instructions in this repository are grouped by job.
   generated SQLite index workflow.
 - `tools/project-memory/build_project_memory_index.py`: stdlib-only SQLite
   indexer for fast rebuilds from git tracked files and targeted searches.
+- `tools/project-memory/build_chroma_index.py`: optional Chroma adapter that
+  builds and queries a generated local vector index from exported chunks.
 
 ## Core Playbooks
 

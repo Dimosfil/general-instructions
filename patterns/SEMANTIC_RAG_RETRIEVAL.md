@@ -53,6 +53,31 @@ python .\tools\project-memory\build_project_memory_index.py export-chunks
 Use the JSONL export as the corpus for a Chroma, Qdrant, pgvector, or other
 vector adapter. The export is generated and should remain ignored by git.
 
+## Chroma Adapter
+
+Use the local Chroma adapter when the project needs semantic retrieval without a
+separate vector service:
+
+```powershell
+python .\tools\project-memory\build_project_memory_index.py rebuild
+python .\tools\project-memory\build_project_memory_index.py export-chunks
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py rebuild
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py query "semantic retrieval rules"
+```
+
+The adapter uses `chromadb.PersistentClient`, reads
+`tools/project-memory/rag-system.json`, and writes a generated local index under
+`tools/project-memory/vector-index/chroma`. Keep that index ignored and
+rebuildable.
+
+Use `status` to inspect the collection and `clean` to remove the generated
+index:
+
+```powershell
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py status
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py clean
+```
+
 ## Hybrid Retrieval Flow
 
 1. Classify whether the query needs exact, semantic, or hybrid retrieval.

@@ -39,6 +39,7 @@ Optional implementation files:
 ```text
 tools/project-memory/
   build_project_memory_index.py
+  build_chroma_index.py
   rag-schema.md
   retrieval-evals.md
   semantic-corpus.jsonl        # generated/ignored when exported

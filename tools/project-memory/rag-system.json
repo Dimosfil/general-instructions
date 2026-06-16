@@ -72,10 +72,10 @@
     "do_not_mix_models_in_collection": true
   },
   "vector_retrieval": {
-    "enabled": false,
+    "enabled": true,
     "provider": "chroma",
     "collection": "general-instructions-project-memory-v1",
-    "local_index_path": "tools/project-memory/vector-index",
+    "local_index_path": "tools/project-memory/vector-index/chroma",
     "embedding_model_ref": "configure-in-project-local-runtime",
     "dimensions": null
   },

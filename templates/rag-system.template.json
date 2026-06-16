@@ -65,7 +65,7 @@
     "enabled": false,
     "provider": "chroma",
     "collection": "project-memory-v1",
-    "local_index_path": "tools/project-memory/vector-index",
+    "local_index_path": "tools/project-memory/vector-index/chroma",
     "embedding_model_ref": "configure-in-project-local-runtime",
     "dimensions": null
   },

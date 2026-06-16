@@ -52,6 +52,8 @@ It does not mean:
    - optional semantic retrieval evals from
      `templates/semantic-retrieval-evals.template.md` when vector retrieval is
      enabled
+   - optional `tools/project-memory/build_chroma_index.py` when local Chroma
+     semantic retrieval is enabled
    - `tools/summary/`
    - `tools/agent-start.ps1`
    - `tools/select-project-language.ps1`

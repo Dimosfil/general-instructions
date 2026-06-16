@@ -38,6 +38,18 @@ Export semantic-ready chunks for a future embedding adapter:
 python .\tools\project-memory\build_project_memory_index.py export-chunks
 ```
 
+Build a local Chroma vector index from the exported chunks:
+
+```powershell
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py rebuild
+```
+
+Run semantic search through Chroma:
+
+```powershell
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py query "semantic startup retrieval"
+```
+
 The database is ignored by git. Commit this README, durable Markdown notes,
 preference JSON files, and indexing scripts instead.
 
@@ -55,3 +67,6 @@ replacement for project memory.
 
 Generated semantic exports such as `tools/project-memory/semantic-corpus.jsonl`
 are ignored and should be rebuilt from tracked source files.
+
+The generated Chroma index under `tools/project-memory/vector-index/chroma` is
+ignored and can be rebuilt from `semantic-corpus.jsonl`.

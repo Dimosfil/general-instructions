@@ -95,6 +95,14 @@ Before enabling vector retrieval, prepare semantic-ready chunks and embedding
 metadata with `patterns/SEMANTIC_RAG_RETRIEVAL.md`. Keep generated files such as
 `tools/project-memory/semantic-corpus.jsonl` ignored.
 
+For a local semantic MVP, build Chroma from exported chunks:
+
+```powershell
+python .\tools\project-memory\build_project_memory_index.py rebuild
+python .\tools\project-memory\build_project_memory_index.py export-chunks
+uv run --with chromadb python .\tools\project-memory\build_chroma_index.py rebuild
+```
+
 ## Suggested Files
 
 - `pending-tasks.md`: active project-wide plans and multi-step work.
@@ -105,6 +113,8 @@ metadata with `patterns/SEMANTIC_RAG_RETRIEVAL.md`. Keep generated files such as
   writeback configuration.
 - `semantic-retrieval-evals.md`: small eval set for semantic and hybrid
   retrieval quality.
+- `build_chroma_index.py`: optional local Chroma adapter when semantic
+  retrieval is enabled.
 - `NOTES.md`: reviewable export of durable notes from local agent memory.
 - `architecture.md`: verified architecture notes.
 - `decisions.md`: durable decisions and rationale.
