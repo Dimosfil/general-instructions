@@ -45,6 +45,14 @@ follow GI bootstrap rules; never reinterpret these forms as `git init`, folder
 creation, OpenCode setup, project creation, `npm init`, or `python -m venv`
 unless the user explicitly names that action.
 
+Treat `gi help`, `gi хелп`, `ги help`, `ги хелп`, `gi commands`,
+`gi команды`, and `ги команды` as requests to show a compact list of available
+GI chat commands with short descriptions. Read the local command index such as
+`COMMANDS.md` when present, prefer project-local command additions over the
+shared baseline, and keep the answer informational: do not run startup restore,
+resume old work, call task managers, mutate files, or execute the listed
+commands unless the user asks for a specific command next.
+
 The copied instruction kit is a token-economy and RAG-startup layer for this
 project. Use it to restore only the needed context from local instructions,
 handoff summaries, targeted searches, and project memory instead of reading the
@@ -372,6 +380,34 @@ Inspect logs:
   are inspection commands by default; do not create external services, install
   heavy dependencies, upload data, or index private sources unless the user
   explicitly asks and project-local rules allow it.
+- Treat `gi root rebuild`, `gi rag rebuild`, `ги рут ребилд`,
+  `ги раг ребилд`, and equivalent full-RAG rebuild wording as requests to
+  rebuild the current project's entire configured RAG/project-memory retrieval
+  system from approved sources. This is a heavy command and requires explicit
+  user confirmation immediately before running the full rebuild. Before asking,
+  read `tools/project-memory/rag-system.json`, list configured rebuild nodes,
+  generated paths that may be replaced, local scripts or adapters, and privacy
+  exclusions. After success, run configured stats/status/eval checks, update
+  local rebuild state such as `last_full_rebuild_migration` or per-node markers
+  when present, and report generated artifacts without committing rebuildable
+  indexes.
+- Treat `gi root rebuild sql`, `gi rag rebuild sql`, `gi root rebuild vector`,
+  `gi rag rebuild vector`, `gi root rebuild chunks`,
+  `gi root rebuild manifest`, `gi root rebuild evals`, and Russian equivalents
+  such as `ги рут ребилд sql`, `ги рут ребилд вектор`,
+  `ги рут ребилд чанки`, `ги рут ребилд манифест`, and
+  `ги рут ребилд тесты` as requests to rebuild only the named RAG node. Read
+  `rag-system.json`, run only the documented node command or local helper, then
+  verify that node's status. Ask one short clarification question if the node is
+  not configured.
+- During `gi обновить`, inspect each newly applied migration. If a migration
+  changes RAG source rules, chunking, embedding metadata, SQLite/vector schemas,
+  retrieval adapters, or project-memory index scripts, check `rag-system.json`
+  rebuild state. If the project has not rebuilt affected RAG nodes for that
+  migration, tell the user which nodes are stale and ask for confirmation before
+  running the full `gi root rebuild`; for narrow migrations, run or offer the
+  smallest documented node rebuild that satisfies the migration. Do not mark
+  RAG rebuild state current until rebuild and status checks succeed.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them as part of the
   main project unless the user explicitly asks, the task is about that nested

@@ -115,6 +115,53 @@
       "service_grade_chunks": 10000
     }
   },
+  "rebuild": {
+    "full_command": "gi root rebuild",
+    "requires_confirmation_for_full": true,
+    "nodes": {
+      "manifest": {
+        "command": "",
+        "status_command": ""
+      },
+      "sql": {
+        "command": "python .\\tools\\project-memory\\build_project_memory_index.py rebuild",
+        "status_command": "python .\\tools\\project-memory\\build_project_memory_index.py stats"
+      },
+      "chunks": {
+        "command": "python .\\tools\\project-memory\\build_project_memory_index.py export-chunks",
+        "status_command": ""
+      },
+      "vector": {
+        "command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py rebuild",
+        "status_command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py status"
+      },
+      "evals": {
+        "command": "",
+        "status_command": ""
+      }
+    },
+    "state": {
+      "last_full_rebuild_migration": "2026.06.16.10__add_gi_help_command_index",
+      "last_full_rebuild_at": "2026-06-16T15:57:14+00:00",
+      "last_node_rebuilds": {
+        "sql": {
+          "migration": "2026.06.16.9__add_gi_root_rebuild_command",
+          "rebuilt_at": "2026-06-16T15:57:14+00:00",
+          "status": "Files: 169; Chunks: 1200; FTS5 enabled"
+        },
+        "chunks": {
+          "migration": "2026.06.16.9__add_gi_root_rebuild_command",
+          "rebuilt_at": "2026-06-16T15:57:14+00:00",
+          "status": "Exported chunks: 1200"
+        },
+        "vector": {
+          "migration": "2026.06.16.9__add_gi_root_rebuild_command",
+          "rebuilt_at": "2026-06-16T15:57:14+00:00",
+          "status": "Collection: general-instructions-project-memory-v1; Records: 1200"
+        }
+      }
+    }
+  },
   "writeback": {
     "write_verified_findings": true,
     "markdown_export": "tools/project-memory/NOTES.md",

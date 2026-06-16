@@ -4,6 +4,18 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Added `gi help` / `ги хелп` / `gi commands` / `ги команды` as an
+  informational command that shows a compact GI command list with short
+  descriptions. Added the command index to `COMMANDS.md` and clarified that
+  help must not run startup restore, resume old work, call services, mutate
+  files, or execute listed commands.
+
+- Added `gi root rebuild` / `gi rag rebuild` / `ги рут ребилд` as a confirmed
+  full project-memory/RAG rebuild command, plus node rebuild forms for SQL,
+  chunks, vector, manifest, and evals. `gi обновить` must now inspect newly
+  applied migrations for RAG-impacting changes and keep affected rebuild state
+  stale until the documented rebuild and status checks succeed.
+
 - Added portable project-memory specification guidance. `tools/summary/` is
   compact chat handoff state, while `tools/project-memory/` is durable product
   knowledge that should let another agent rebuild the same behavior on a

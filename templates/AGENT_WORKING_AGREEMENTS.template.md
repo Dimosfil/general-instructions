@@ -194,6 +194,11 @@ or:
   the only short prefix; do not rename it to `GAI` or another alias.
   If a `gi` command is missing a needed parameter, ask one short clarification
   question instead of guessing.
+- Treat `gi help`, `gi хелп`, `ги help`, `ги хелп`, `gi commands`,
+  `gi команды`, and `ги команды` as informational requests for the local GI
+  command list. Show compact command names and short descriptions; do not run
+  startup restore, resume old tasks, call services, or execute the listed
+  commands.
 - Use the instruction kit as a token-economy and RAG-startup layer: restore only
   task-relevant context from local instructions, summaries, targeted searches,
   and project memory instead of broad repository reads or large outputs.
@@ -201,6 +206,13 @@ or:
   retrieval metrics and activation limits. Report current counts, readiness,
   staleness, and recommendations; do not deploy heavy databases or external
   services by default.
+- Use `gi root rebuild` / `gi rag rebuild` only for a confirmed full rebuild of
+  the current project's configured RAG/project-memory retrieval system. Use
+  node forms such as `gi root rebuild sql`, `gi root rebuild chunks`,
+  `gi root rebuild vector`, and `gi root rebuild evals` for scoped rebuilds.
+  During `gi обновить`, migrations that change RAG rules, indexers, chunking,
+  embedding metadata, or retrieval adapters must leave affected rebuild state
+  stale until the documented rebuild and status checks succeed.
 - Keep `gi` command responses scoped to the shared instruction-kit command. Do
   not resume an older product task after a `gi` command unless the user
   explicitly asks.

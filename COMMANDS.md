@@ -14,6 +14,10 @@ For full policies, see `AGENTS.md`, `patterns/GIT_WORKFLOW.md`, and
 команду/путь к скрипту, например `.\tools\agent-start.ps1`.
 
 ```text
+gi help
+ги хелп
+gi commands
+ги команды
 gi обновись
 gi init https://github.com/Dimosfil/general-instructions.git
 инит https://github.com/Dimosfil/general-instructions.git
@@ -41,6 +45,18 @@ gi restore
 gi sql
 gi sqlite
 gi vector
+gi root rebuild
+gi rag rebuild
+gi root rebuild sql
+gi root rebuild chunks
+gi root rebuild vector
+gi root rebuild evals
+ги рут ребилд
+ги раг ребилд
+ги рут ребилд sql
+ги рут ребилд чанки
+ги рут ребилд вектор
+ги рут ребилд тесты
 gi config
 gi config service
 gi config service url=http://127.0.0.1:4100
@@ -84,6 +100,65 @@ gi только пуш
 gi коммит пуш
 gi пул
 ```
+
+### GI Help / Command Index
+
+```text
+gi help
+gi хелп
+ги help
+ги хелп
+gi commands
+gi команды
+ги команды
+```
+
+`gi help` asks the agent to show a compact list of available GI chat commands
+with short descriptions. The agent reads the local command index when present,
+prefers project-local additions over this shared baseline, and does not run
+startup restore, resume old work, call task managers, mutate files, or execute
+the listed commands.
+
+| Command | Description |
+| --- | --- |
+| `gi help`, `ги хелп`, `gi commands`, `ги команды` | Show the local GI command list with short descriptions. |
+| `gi обновить`, `gi обновись` | Apply accepted instruction-kit updates and migrations. |
+| `gi init <source>`, `инит <source>`, `инит правила <source>` | Bootstrap or restore shared instructions from `general-instructions`. |
+| `gi start`, `gi старт`, `gi restore` | Restore minimal project context and ask for the current task. |
+| `gi summary`, `gi саммари` | Write a compact handoff summary under `tools/summary/`. |
+| `gi language`, `gi язык` | Configure project working-environment languages. |
+| `gi project language`, `gi проект язык`, `gi язык проекта` | Configure project-facing language preferences. |
+| `gi commit language`, `gi коммит язык`, `gi язык коммита` | Configure commit-message languages. |
+| `gi system language`, `gi систем язык` | Configure agent working-response language. |
+| `gi sql`, `gi sqlite` | Inspect SQLite/FTS project-memory readiness and metrics. |
+| `gi vector` | Inspect semantic/vector retrieval readiness and metrics. |
+| `gi root rebuild`, `gi rag rebuild`, `ги рут ребилд` | Rebuild the full configured project-memory/RAG system after confirmation. |
+| `gi root rebuild sql` | Rebuild only the SQL/FTS structured-memory node. |
+| `gi root rebuild chunks` | Rebuild only semantic chunk exports. |
+| `gi root rebuild vector` | Rebuild only the vector retrieval node. |
+| `gi root rebuild manifest` | Rebuild only source manifest/inventory metadata. |
+| `gi root rebuild evals` | Run or rebuild retrieval eval artifacts only. |
+| `gi config`, `gi config service` | Inspect config/discovery service settings. |
+| `gi config service url=<url>` | Set the config-service URL after validation. |
+| `gi config service on`, `gi config service off` | Toggle current app self-registration with config-service. |
+| `gi reboot`, `gi restart`, `ги ребут`, `ги рестарт` | Start or restart the current app using local run instructions. |
+| `gi first test`, `gi первый тест` | Reset documented first-run state and verify first-launch experience. |
+| `gi install`, `gi инсталл`, `ги инсталл` | Build/package the current project and verify an installer artifact. |
+| `gi ftp config`, `gi ftp service`, `gi ftp folder` | Inspect or configure FTP/SFTP deployment settings without uploading. |
+| `gi ftp`, `gi ftp push`, `gi deploy ftp`, `gi upload ftp` | Upload configured build output to the configured FTP/SFTP target. |
+| `gi tm`, `gi manager` | Inspect the configured task manager through config-service. |
+| `gi manager test`, `gi tm test` | Test the configured task manager contract and operations. |
+| `gi active task`, `gi next task`, `gi get task` | Get executable work from the configured task manager. |
+| `gi add sprint`, `gi create sprint`, `gi добавить спринт` | Create a visible Sprint/Cycle through the configured task manager. |
+| `gi plan`, `gi план`, `gi post plan` | Send the current plan to the configured task manager. |
+| `gi start sprint`, `gi старт спринт` | Take the active Sprint/Cycle into work. |
+| `gi test plan`, `gi тест-план` | Build a verification plan from current project contracts. |
+| `gi git summary`, `gi гит-обзор` | Summarize the latest git commit without printing a full diff. |
+| `gi commit`, `gi коммит` | Commit scoped changes. |
+| `gi push`, `gi пуш` | Commit and push scoped changes. |
+| `gi only push`, `gi только пуш` | Push the current branch without creating a commit. |
+| `gi commit push`, `gi коммит пуш` | Commit and push scoped changes. |
+| `gi pull`, `gi пул` | Fetch and pull the current branch. |
 
 Если команда неполная, агент уточняет недостающий параметр.
 
@@ -180,6 +255,53 @@ index path, freshness caveats, and readiness.
 These are inspection commands by default. They do not deploy external services,
 install heavy dependencies, upload data, or index private sources unless the
 user explicitly asks and project-local rules allow it.
+
+### Rebuild Project RAG
+
+```text
+gi root rebuild
+gi rag rebuild
+ги рут ребилд
+ги раг ребилд
+
+gi root rebuild sql
+gi root rebuild chunks
+gi root rebuild vector
+gi root rebuild manifest
+gi root rebuild evals
+ги рут ребилд sql
+ги рут ребилд чанки
+ги рут ребилд вектор
+ги рут ребилд манифест
+ги рут ребилд тесты
+```
+
+`gi root rebuild` / `gi rag rebuild` asks the agent to rebuild the whole
+configured project-memory/RAG retrieval system for the current project:
+manifest/source inventory, SQLite/FTS or structured indexes, semantic chunk
+exports, vector indexes, adapter metadata, and retrieval status/eval checks.
+
+Full rebuild is heavy and requires explicit confirmation immediately before it
+runs. Before asking, the agent reads `tools/project-memory/rag-system.json`,
+lists configured rebuild nodes, generated paths that may be replaced, commands
+or adapters that will run, and privacy exclusions. It does not index secrets,
+private runtime data, ignored telemetry, or sources outside the project root.
+
+Node forms such as `gi root rebuild sql`, `gi root rebuild chunks`,
+`gi root rebuild vector`, `gi root rebuild manifest`, and
+`gi root rebuild evals` rebuild only that node through the command documented in
+`rag-system.json` or the project-local runbook, then run the matching status
+check. If the node is not configured, the agent asks one short clarification
+question instead of inventing a command.
+
+During `gi обновить`, the agent checks newly applied migrations. If a migration
+changes RAG source rules, chunking, embedding metadata, SQLite/vector schemas,
+retrieval adapters, or project-memory index scripts, the agent compares the
+migration id with `rag-system.json` rebuild state. If affected nodes have not
+been rebuilt for that migration, it reports the stale nodes and asks before the
+full rebuild, or runs/offers the smallest documented node rebuild for narrow
+migrations. Rebuild state is updated only after rebuild and readback/status
+checks pass.
 
 ### Получить GI Config
 

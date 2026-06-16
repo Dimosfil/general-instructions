@@ -200,6 +200,45 @@ Do not rebuild indexes during normal startup. Use current indexes, mark stale
 sources, and run incremental updates only when the task requires fresh
 retrieval.
 
+## Rebuild Contract
+
+Expose RAG rebuilds as documented agent commands, not guessed shell snippets:
+
+- `gi root rebuild` / `gi rag rebuild` / `ги рут ребилд` rebuilds the entire
+  configured project-memory/RAG system from approved sources.
+- Node commands such as `gi root rebuild sql`, `gi root rebuild chunks`,
+  `gi root rebuild vector`, `gi root rebuild manifest`, and
+  `gi root rebuild evals` rebuild only one configured node.
+
+Full rebuild is heavy. Require explicit user confirmation immediately before
+running it. Before confirmation, read `tools/project-memory/rag-system.json` and
+report:
+
+- source groups and privacy exclusions that will be used;
+- generated paths that may be deleted or replaced;
+- configured node commands or local adapters;
+- expected stats, status, and eval checks;
+- whether external services, network, credentials, or heavyweight dependencies
+  are required.
+
+Do not use a broad repository scan, guessed ports, guessed vector stores, or
+stale chat history as a rebuild plan. If a node has no documented command, ask
+one short clarification question or stop with the missing contract.
+
+Track rebuild state in reviewable project-local configuration when possible:
+
+- last full rebuild migration id;
+- last full rebuild timestamp;
+- per-node migration ids or timestamps;
+- the status command or evidence used for readback.
+
+During `gi обновить`, inspect newly applied migrations. If a migration changes
+RAG source rules, chunking, embedding metadata, SQLite/vector schemas,
+retrieval adapters, or project-memory index scripts, compare that migration id
+with rebuild state. Leave affected nodes stale until the documented rebuild and
+status/eval checks succeed. Do not mark a migration's RAG rebuild current just
+because migration text was applied.
+
 ## Growth Path
 
 Use this upgrade path:
