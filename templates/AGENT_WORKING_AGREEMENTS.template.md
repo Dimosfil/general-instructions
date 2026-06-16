@@ -221,6 +221,13 @@ or:
   build-and-installer requests. The task is complete only after the packaging
   command runs and a current installer artifact is produced or explicitly
   verified; restore/build/test alone are preliminary checks.
+- Treat `gi first test`, `gi первый тест`, and `ги первый тест` as first-launch
+  verification requests. Reset only documented project-owned app cache,
+  generated state, temporary first-run profiles, and rebuildable local settings;
+  do not delete user documents, production data, secrets, credentials, shared
+  system caches, sibling projects, or arbitrary user-home folders. If exact
+  reset paths or commands are missing, ask one concise question instead of
+  guessing.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - Treat `init <source>`, `инит <source>`, `инициализируй <source>`, and

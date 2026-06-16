@@ -51,6 +51,9 @@ gi ftp
 ги конфиг сервис off
 gi reboot
 gi restart
+gi first test
+gi первый тест
+ги первый тест
 ги ребут
 ги рестарт
 ги конфиг сервис урл=http://127.0.0.1:4100
@@ -196,6 +199,32 @@ config-service и читать discovery. URL должен быть полным
 блокером. Не подбирать порты, не сканировать sibling workspace roots, не читать
 другие project roots и не использовать старые task-manager записи как замену
 config-service.
+
+### Проверить Первый Запуск
+
+```text
+gi first test
+gi первый тест
+ги первый тест
+```
+
+Агент проверяет сценарий первого запуска текущего приложения. Сначала он читает
+project-local run, test, cleanup и cache reset инструкции, manifests и config
+entry points, затем останавливает или перезапускает только процессы текущего
+проекта, если это требуется для безопасного сброса.
+
+Сброс включает только задокументированные project-owned кеши, временные профили,
+локальные настройки приложения, generated state и другие rebuildable данные,
+которые проект явно относит к first-run state. Не удалять пользовательские
+документы, production данные, секреты, credentials, внешние сервисные данные,
+общие системные кеши, sibling project folders или произвольные user-home
+папки. Если локальные инструкции не называют точные paths, keys, commands или
+reset script, агент задаёт один короткий вопрос вместо угадывания.
+
+После сброса агент запускает приложение как при первом использовании,
+проверяет documented smoke checks или onboarding/first-run workflow и сообщает,
+что именно было очищено, какие проверки прошли и какие данные намеренно не
+трогались.
 
 ### Собрать Билд И Инсталлятор
 
@@ -672,3 +701,13 @@ or stopping the config-service process.
 `gi reboot` / `gi restart` starts or restarts the current application using
 project-local run instructions. If it is already running, restart it; otherwise
 start it in the background.
+
+`gi first test` / `gi первый тест` / `ги первый тест` resets only documented
+project-owned application cache, generated state, temporary first-run profiles,
+and rebuildable local app settings, then starts the app and verifies the
+documented first-launch workflow. The agent first reads project-local run,
+cleanup, cache reset, and test instructions. It must not delete user documents,
+production data, secrets, credentials, external service data, shared system
+caches, sibling projects, or arbitrary user-home folders. If exact reset paths,
+keys, or commands are missing, ask one concise clarification question instead
+of guessing.

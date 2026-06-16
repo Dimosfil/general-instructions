@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Added `gi first test` / `gi первый тест` / `ги первый тест` as a first-launch
+  verification command. Agents must reset only documented project-owned app
+  cache, generated state, temporary first-run profiles, and rebuildable local
+  settings, then start the app and run documented first-launch smoke checks.
+
 - Added verification-plan guidance that agents must confirm exact CLI flags,
   ports, routes, health endpoints, JSON payload fields, and environment
   variables from current project-local instructions, manifests, config, or

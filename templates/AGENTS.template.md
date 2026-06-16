@@ -319,6 +319,17 @@ Inspect logs:
   start or restart the current application using project-local run instructions.
   If the app is running, restart it; if it is not running, start it. Launch in
   the background so focus does not jump away from the user's current window.
+- Treat `gi first test`, `gi первый тест`, and `ги первый тест` as requests to
+  verify the current application's first-launch experience by resetting only
+  documented project-owned app cache, generated state, temporary first-run
+  profiles, and rebuildable local app settings. Read project-local run, cleanup,
+  cache reset, and test instructions first. Do not delete user documents,
+  production data, secrets, credentials, external service data, shared system
+  caches, sibling projects, or arbitrary user-home folders. If exact reset
+  paths, keys, scripts, or commands are missing, ask one short clarification
+  question instead of guessing. After reset, start the app, run the documented
+  first-launch smoke/onboarding checks, and report what was cleared, what
+  passed, and what was intentionally left untouched.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and clear typo variants as
   requests to build the current project and produce an installer. Read local
   build/package instructions, resolve the application version from project
