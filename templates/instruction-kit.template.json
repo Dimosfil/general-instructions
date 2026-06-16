@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.16.8",
+  "instruction_kit_version": "2026.06.16.11",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -93,7 +93,8 @@
     "2026.06.16.7__clarify_structured_memory_vs_semantic_retrieval",
     "2026.06.16.8__add_portable_project_memory_specifications",
     "2026.06.16.9__add_gi_root_rebuild_command",
-    "2026.06.16.10__add_gi_help_command_index"
+    "2026.06.16.10__add_gi_help_command_index",
+    "2026.06.16.11__add_context7_external_docs_rule"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -109,6 +110,7 @@
     "tools/project-memory/git-preferences.json",
     "tools/project-memory/system-preferences.json",
     "tools/project-memory/rag-system.json",
+    "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
     "tools/select-project-language.ps1",
     "tools/select-git-commit-languages.ps1",
     "tools/select-system-language.ps1",

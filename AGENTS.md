@@ -38,6 +38,19 @@ notes, summaries, architecture docs, and selected chunks. Do not replace exact
 graph queries with embeddings, and verify current source files before editing
 because memory indexes can be stale.
 
+Use Context7, when configured or explicitly requested, as an external current
+documentation retrieval layer for public library, framework, SDK, and API docs.
+Treat it as documentation lookup, not project memory, service discovery, task
+management, or an authoritative source for this project's current code. Prefer
+project-local instructions and service guide/contract endpoints for project
+behavior, and prefer official OpenAI documentation workflows for OpenAI product
+questions. Do not send secrets, credentials, private source code, private
+business rules, user data, or project-memory contents to Context7 or similar
+external doc services unless the project has explicit private-source
+configuration and the user approves that scope. Pin exact library IDs and
+versions when known, and verify current local source files before editing.
+Follow `patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md`.
+
 Treat `tools/summary/` as compact handoff state for the current or recent chat.
 Treat `tools/project-memory/` as durable product and project knowledge. For every
 non-trivial feature, business workflow, or architecture decision, keep

@@ -44,6 +44,9 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/CONFIGURATION_BOUNDARIES.md`: configuration-boundary rules for
   keeping deploy, user, runtime, machine, service, credential, path,
   feature-flag, and operational values out of application logic.
+- `patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md`: rules for using Context7 or
+  similar external current-docs retrieval tools without leaking private project
+  data or replacing project memory and official sources.
 - `patterns/FIRST_MESSAGE_HANDLING.md`: first-message title detection and shared
   instruction bootstrap behavior.
 - `patterns/FEATURE_WORKFLOW_CONTRACTS.md`: project-local contracts for agreed

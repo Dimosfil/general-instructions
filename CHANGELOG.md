@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Added Context7/external documentation retrieval guidance. Context7 may be
+  used for current public library, framework, SDK, and API docs when configured
+  or explicitly requested, but it must not replace project memory, service
+  contracts, task managers, local source verification, or official OpenAI docs.
+  Agents must avoid sending secrets, private code, private business rules, user
+  data, or project-memory contents to external doc services without explicit
+  private-source configuration and approval.
+
 - Added `gi help` / `ги хелп` / `gi commands` / `ги команды` as an
   informational command that shows a compact GI command list with short
   descriptions. Added the command index to `COMMANDS.md` and clarified that
