@@ -219,6 +219,11 @@ or:
   verified; restore/build/test alone are preliminary checks.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
+- Treat `init <source>`, `инит <source>`, `инициализируй <source>`, and
+  `инит правила <source>` as shared-instruction bootstrap/startup requests when
+  `<source>` points to a known `general-instructions` source. Never reinterpret
+  these forms as `git init`, folder creation, OpenCode setup, project creation,
+  `npm init`, or `python -m venv` unless the user explicitly names that action.
 - If the user asks to update from a shared instruction library and this project
   has no `tools/project-memory/instruction-kit.json`, treat that as first-time
   instruction bootstrap/init.

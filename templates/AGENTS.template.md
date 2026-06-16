@@ -36,6 +36,15 @@ notes, old refactoring phases, or local commits ahead of a remote as the next
 action. Mention them only as compact context when relevant, then ask for the
 user's current task instead of offering to continue, run, push, or finish them.
 
+Treat `init <source>`, `инит <source>`, `инициализируй <source>`, and
+`инит правила <source>` as shared-instruction bootstrap/startup requests when
+`<source>` points to `https://github.com/Dimosfil/general-instructions.git`, the
+current shared-instruction checkout/cache, `GENERAL_INSTRUCTIONS_HOME`, or
+another known `general-instructions` source. Read existing instruction files and
+follow GI bootstrap rules; never reinterpret these forms as `git init`, folder
+creation, OpenCode setup, project creation, `npm init`, or `python -m venv`
+unless the user explicitly names that action.
+
 The copied instruction kit is a token-economy and RAG-startup layer for this
 project. Use it to restore only the needed context from local instructions,
 handoff summaries, targeted searches, and project memory instead of reading the

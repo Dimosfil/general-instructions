@@ -194,6 +194,13 @@ in this repository's live `AGENTS.md`.
   bootstrap rules. Do not reinterpret that form as Git initialization, OpenCode
   setup, project creation, or skill creation unless the user explicitly names
   that action.
+  Treat `инит правила <source>` the same way when `<source>` points to
+  `general-instructions`. Examples such as
+  `инит <path-to-general-instructions>` and
+  `инит правила <path-to-general-instructions>` mean "load or initialize
+  instruction rules from the existing shared-instruction source"; they never
+  mean `git init`. Do not create folders, initialize `.git`, or suggest
+  `npm init` / `python -m venv` for this form.
 - Treat screenshots, logs, pasted errors, or other bug evidence as requests for
   analysis first. Explain the likely issue and ask what action the user wants
   before editing files, unless the user explicitly says to fix it, such as

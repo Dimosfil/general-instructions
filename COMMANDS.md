@@ -18,6 +18,8 @@ gi обновись
 gi init https://github.com/Dimosfil/general-instructions.git
 инит https://github.com/Dimosfil/general-instructions.git
 init https://github.com/Dimosfil/general-instructions.git
+инит <path-to-general-instructions>
+инит правила <path-to-general-instructions>
 gi язык
 ги язык
 gi язык: 2 1
@@ -126,6 +128,9 @@ Connect shared instructions: https://github.com/Dimosfil/general-instructions.gi
 - создаёт локальные `AGENTS.md`, `tools/AGENT_WORKING_AGREEMENTS.md`,
   `tools/AGENT_RUNBOOK.md`, `tools/agent-start.ps1` и project memory files
 - не добавляет shared library как dependency, submodule или symlink
+- не трактует `инит <path-to-general-instructions>` или
+  `инит правила <path-to-general-instructions>` как `git init`; не создаёт
+  папки, `.git`, `npm init` или `python -m venv` для этой формы
 - не спрашивает про языки коммитов при bootstrap
 - останавливается после setup и спрашивает, что делать дальше
 

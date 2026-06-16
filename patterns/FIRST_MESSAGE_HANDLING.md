@@ -43,6 +43,10 @@ shared-instruction checkout/cache, `GENERAL_INSTRUCTIONS_HOME`, or another known
 shared-instruction source, even when the message does not include the `gi`
 prefix.
 
+Treat `инит правила <source>` the same way when `<source>` points to
+`general-instructions`. This means "load or initialize instruction rules from
+the existing shared-instruction source," not "create a Git repository."
+
 In that case:
 
 - Read the shared rules needed for bootstrapping.
@@ -60,6 +64,8 @@ In that case:
 - Do not reinterpret this form as Git initialization, OpenCode setup, project
   creation, agent creation, or skill creation unless the user explicitly names
   that action.
+- Do not create folders, initialize `.git`, or suggest `npm init` /
+  `python -m venv` for this form.
 
 ## GI Command Prefix
 
@@ -81,6 +87,10 @@ Examples:
   `init https://github.com/Dimosfil/general-instructions.git`: same
   bootstrap/startup behavior for the shared instruction source, without
   requiring the `gi` prefix.
+- `инит <path-to-general-instructions>`: bootstrap/startup from the existing
+  shared-instruction checkout; never run `git init`.
+- `инит правила <path-to-general-instructions>`: load instruction rules from the
+  existing shared-instruction checkout; never run `git init`.
 - `gi commit language: Russian`, `gi коммит язык: Russian`, or
   `ги коммит язык: Russian`: update commit-message language preferences.
 - `gi язык коммита: Russian`: older alias for commit-message language

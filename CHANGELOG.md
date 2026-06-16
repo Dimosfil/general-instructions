@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Clarified that `инит <source>` and `инит правила <source>` pointing to
+  `general-instructions` are shared-instruction bootstrap/startup requests,
+  never `git init`, folder creation, OpenCode setup, `npm init`, or
+  `python -m venv`.
+
 - Tightened `gi install` guidance so restore, dependency install, build, and
   tests are only prerequisites. Agents must run packaging and verify a current
   installer artifact before reporting installer success.
