@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.16.7",
+  "instruction_kit_version": "2026.06.16.8",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -90,7 +90,8 @@
     "2026.06.16.4__clarify_general_instructions_init",
     "2026.06.16.5__verify_test_plan_command_contracts",
     "2026.06.16.6__add_gi_first_test_command",
-    "2026.06.16.7__clarify_structured_memory_vs_semantic_retrieval"
+    "2026.06.16.7__clarify_structured_memory_vs_semantic_retrieval",
+    "2026.06.16.8__add_portable_project_memory_specifications"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -100,6 +101,7 @@
     "tools/project-memory/README.md",
     "tools/project-memory/build_project_memory_index.py",
     "tools/project-memory/build_chroma_index.py",
+    "tools/project-memory/architecture-migrations.md",
     "tools/project-memory/STUDY_PLAN.md",
     "tools/project-memory/pending-tasks.md",
     "tools/project-memory/git-preferences.json",

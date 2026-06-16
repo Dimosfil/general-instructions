@@ -9,6 +9,12 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Add `tools/AGENT_WORKING_AGREEMENTS.md`.
 - [ ] Add `tools/AGENT_RUNBOOK.md`.
 - [ ] Add `tools/project-memory/README.md`.
+- [ ] Add `tools/project-memory/architecture-migrations.md` from
+  `templates/ARCHITECTURE_MIGRATIONS.template.md`.
+- [ ] Create focused project-memory spec folders when the project has
+  non-trivial product behavior, for example `specs/features/`,
+  `specs/business-rules/`, `specs/data-model/`, and
+  `specs/integration-contracts/`.
 - [ ] Add `tools/project-memory/STUDY_PLAN.md`.
 - [ ] Copy or adapt `templates/pending-tasks.template.md` into
   `tools/project-memory/pending-tasks.md`.
@@ -66,8 +72,12 @@ Use this when preparing a repository for AI-agent collaboration.
   `templates/gitignore-agent-memory.template` to `.gitignore`.
 - [ ] Decide whether the project uses SQLite memory, Markdown-only memory, or
   both.
+- [ ] Record the SQL/vector activation limits in `rag-system.json` or accept the
+  defaults from `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`.
 - [ ] Confirm startup retrieval loads only task-relevant context.
 - [ ] Confirm multi-step tasks have a concise durable checklist before editing.
+- [ ] Confirm non-trivial features have portable project-memory specifications,
+  not only code and handoff summaries.
 - [ ] Define run, test, build, smoke-check, and log-inspection commands.
 - [ ] On Windows, prepare a stable user-level Codex tools directory before
   relying on common CLI tools:

@@ -22,6 +22,9 @@ Start with:
   copied project instruction kits.
 - `patterns/FEATURE_WORKFLOW_CONTRACTS.md`: project-local contracts for agreed
   feature workflows, branching states, background work, and behavior guarantees.
+- `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`: durable, platform-neutral
+  project-memory specifications for features, business logic, architecture
+  migrations, and retrieval activation limits.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure for project
   memory, source indexing, retrieval adapters, context packets, and writeback.
 - `patterns/SEMANTIC_RAG_RETRIEVAL.md`: embedding and semantic retrieval rules

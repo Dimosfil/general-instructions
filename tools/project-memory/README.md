@@ -6,6 +6,34 @@ Use Markdown and JSON files here for human-reviewable memory. Use the local
 SQLite database only as a generated search index that can be rebuilt from git
 tracked files.
 
+## Summary Versus Project Memory
+
+`tools/summary/` is compact handoff state for the current or recent chat.
+`tools/project-memory/` is long-lived product and project knowledge.
+
+Write project-memory documents so another agent could rebuild the project on a
+different language, framework, platform, or UI stack and preserve the same
+behavior. Code is the current implementation; project-memory specifications are
+the portable behavioral source of truth.
+
+Recommended specification structure:
+
+```text
+tools/project-memory/
+  architecture-migrations.md
+  specs/
+    product-overview.md
+    glossary.md
+    features/
+    business-rules/
+    data-model/
+    integration-contracts/
+```
+
+Split documents by meaning. Keep feature behavior, business logic, architecture
+history, and implementation mapping searchable as separate focused files instead
+of one giant document.
+
 ## SQLite Index
 
 Recommended local database:
@@ -59,6 +87,14 @@ failures, and evidence-backed notes. In Unity-like projects, this can include
 `.meta` GUID mappings, prefab/scene/material/script references, and
 assembly-definition dependencies.
 
+Keep logical separation between code memory and specification memory. Code
+memory tracks current implementation facts such as files, symbols, commands,
+schemas, and errors. Specification memory tracks product behavior, business
+rules, feature algorithms, workflow contracts, architecture migrations, and
+verification guarantees. Small projects may use one SQLite database with source
+metadata. Larger projects should split code and spec indexes into separate
+databases, schemas, collections, or source groups.
+
 Use vector retrieval only as a second semantic layer for conceptual questions
 over curated notes, summaries, architecture docs, and selected chunks. Do not
 replace exact graph queries with embeddings, and always verify current source
@@ -81,3 +117,34 @@ are ignored and should be rebuilt from tracked source files.
 
 The generated Chroma index under `tools/project-memory/vector-index/chroma` is
 ignored and can be rebuilt from `semantic-corpus.jsonl`.
+
+## Activation Limits And Diagnostics
+
+Start with Markdown specifications and targeted search. Use generated databases
+when size or retrieval failures justify them.
+
+Default SQLite/FTS activation limits:
+
+- tracked text sources exceed 50 files;
+- project-memory Markdown/JSON exceeds 25 files or about 200 KB;
+- feature specifications exceed 10 files;
+- exact retrieval repeatedly misses paths, commands, symbols, or feature specs;
+- startup restore needs too many focused file reads.
+
+Default vector activation limits:
+
+- semantic-ready chunks exceed 300;
+- curated project-memory specs exceed about 500 KB;
+- feature specifications exceed 25 files;
+- conceptual retrieval misses relevant memory at least three times;
+- multiple agents need conceptual lookup over the same memory.
+
+Use `gi sql` to inspect SQLite/FTS readiness and metrics. The agent should read
+`rag-system.json`, run the local stats helper when available, count memory/spec
+files, compare them with limits, and report whether SQL indexing is absent,
+current, stale, or recommended.
+
+Use `gi vector` to inspect vector readiness and metrics. The agent should read
+embedding/vector metadata, check semantic corpus size and chunk count, run the
+vector adapter status helper when available, and report collection, record
+count, index path, freshness caveats, and readiness.

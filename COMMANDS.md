@@ -38,6 +38,9 @@ gi систем язык: Russian
 gi саммари
 gi старт
 gi restore
+gi sql
+gi sqlite
+gi vector
 gi config
 gi config service
 gi config service url=http://127.0.0.1:4100
@@ -154,6 +157,29 @@ gi restore
 remote можно упомянуть только как компактный контекст. Нельзя превращать их в
 предлагаемое следующее действие, если пользователь явно не попросил продолжить,
 запустить, дописать или запушить именно это.
+
+### Inspect Project Memory Retrieval
+
+```text
+gi sql
+gi sqlite
+gi vector
+```
+
+`gi sql` / `gi sqlite` asks the agent to inspect project-memory SQLite/FTS
+readiness. The agent reads `tools/project-memory/rag-system.json`, runs local
+stats helpers when available, counts memory/spec files, compares the numbers
+with activation limits, and reports whether SQL indexing is absent, current,
+stale, or recommended.
+
+`gi vector` asks the agent to inspect semantic/vector readiness. The agent reads
+embedding/vector metadata, checks semantic corpus size and chunk count, runs the
+vector adapter status helper when available, and reports collection, records,
+index path, freshness caveats, and readiness.
+
+These are inspection commands by default. They do not deploy external services,
+install heavy dependencies, upload data, or index private sources unless the
+user explicitly asks and project-local rules allow it.
 
 ### Получить GI Config
 

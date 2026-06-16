@@ -4,6 +4,16 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Added portable project-memory specification guidance. `tools/summary/` is
+  compact chat handoff state, while `tools/project-memory/` is durable product
+  knowledge that should let another agent rebuild the same behavior on a
+  different language, framework, platform, or UI stack. Non-trivial feature,
+  business-rule, data-model, integration, and architecture work must update the
+  relevant project-memory specification in the same scoped change. Added an
+  architecture migration history template, `gi sql` / `gi vector` diagnostic
+  command rules, and default activation limits for SQLite/FTS and vector
+  retrieval.
+
 - Clarified the project-memory/RAG split for exact graph facts versus semantic
   retrieval. SQLite or another structured store should hold deterministic paths,
   symbols, GUIDs, generated identifiers, asset links, reverse dependencies,

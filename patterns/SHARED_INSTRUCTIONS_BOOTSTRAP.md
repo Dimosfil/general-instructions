@@ -43,6 +43,8 @@ It does not mean:
    - `tools/AGENT_WORKING_AGREEMENTS.md`
    - `tools/AGENT_RUNBOOK.md`
    - `tools/project-memory/README.md`
+   - `tools/project-memory/architecture-migrations.md` from
+     `templates/ARCHITECTURE_MIGRATIONS.template.md`
    - `tools/project-memory/STUDY_PLAN.md`
    - `tools/project-memory/git-preferences.json`
    - `tools/project-memory/system-preferences.json`

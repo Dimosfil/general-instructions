@@ -5,6 +5,11 @@ state machine, background work, branching behavior, or user-visible guarantees.
 Also use it when a feature needs a durable implementation plan that can survive
 multiple agents, sessions, sprints, or task-manager handoffs.
 
+Use feature contracts as platform-neutral specifications. They should describe
+what behavior must remain true even if the project is rewritten in another
+language, framework, platform, or UI toolkit. Code is the current implementation;
+the contract is the portable behavior record.
+
 ## Purpose
 
 Feature workflow contracts preserve product behavior that should not be
@@ -24,7 +29,9 @@ Examples:
 ## Rule
 
 - For non-trivial features, record the feature idea, functional description,
-  runtime workflow, and implementation plan before or during implementation.
+  runtime workflow, business rules, state transitions, failure behavior,
+  verification rules, current implementation map, and implementation plan before
+  or during implementation.
 - When the user or team agrees that a feature must work in a specific sequence
   or state flow, record it as a project-local feature workflow contract.
 - Store project-specific contracts in project-owned docs such as
@@ -40,6 +47,9 @@ Examples:
   future agents.
 - Do not let sprint or task lists replace the feature contract. Tasks say what
   to change; the contract says what behavior must remain true.
+- After meaningful work changes a feature's behavior, business rules, data
+  contract, or architecture, update the contract in the same scoped change. A
+  handoff summary is not a substitute for the project-memory specification.
 
 ## Planning Hierarchy
 

@@ -124,6 +124,23 @@ Use two project-memory layers:
 - SQLite is the searchable agent-memory layer for detailed findings,
   file/symbol indexes, references, commands, failures, and evidence-backed notes.
 
+Keep a third distinction inside Markdown memory: handoff summaries are short
+session state, while project-memory specifications are durable product truth.
+For non-trivial features, business workflows, data models, integrations, and
+architecture decisions, write platform-neutral specifications that explain the
+behavior, algorithms, business rules, states, failures, and verification without
+depending on the current implementation language or framework. Include a current
+implementation map as evidence, but do not make code structure the only source
+of behavioral truth. Use `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`.
+
+Split project-memory specifications by meaning. Prefer focused files such as
+`tools/project-memory/specs/features/<feature>.md`,
+`tools/project-memory/specs/business-rules/<domain>.md`,
+`tools/project-memory/specs/data-model/<entity>.md`, and
+`tools/project-memory/specs/integration-contracts/<boundary>.md` over a single
+large document. Keep major architecture rewrites and platform migrations in
+`tools/project-memory/architecture-migrations.md`.
+
 Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
 too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
 Markdown as the concise reviewable export.
@@ -151,6 +168,11 @@ dependencies, and verification steps. Track progress while working and keep the
 file concise; do not store full diffs, large logs, generated outputs, secrets,
 credentials, or private production data.
 
+After meaningful work on a feature, workflow, business rule, data model,
+integration, or architecture, update the relevant project-memory specification
+in the same scoped change. Update the handoff summary separately only when the
+recent chat state needs to be handed to a future session.
+
 For complex product behavior, create feature workflow contracts in a local docs
 or memory area such as `docs/features/` or `tools/project-memory/`. Use
 `patterns/FEATURE_WORKFLOW_CONTRACTS.md` and
@@ -162,6 +184,29 @@ agreement. Use one sprint for small features and several sprints for larger
 features; break each sprint into concrete tasks that trace back to the feature
 workflow or implementation plan. Do not let task lists replace the feature
 contract.
+
+Use these default activation limits for generated retrieval stores unless a
+project-local `rag-system.json` defines stricter values:
+
+- Add or rebuild SQLite/FTS when tracked text sources exceed 50 files,
+  project-memory Markdown/JSON exceeds 25 files or about 200 KB, feature specs
+  exceed 10 files, exact retrieval repeatedly misses, or startup restore needs
+  too many focused reads.
+- Add vector retrieval only after curated specs or notes exist and keyword
+  retrieval is insufficient. Consider it when semantic-ready chunks exceed 300,
+  curated project-memory specs exceed about 500 KB, feature specs exceed 25
+  files, conceptual retrieval misses relevant memory at least three times, or
+  several agents need conceptual lookup over the same memory.
+- Move to service-grade PostgreSQL, pgvector, Qdrant, or a similar managed
+  retrieval service only for measured needs such as concurrent agents, shared
+  remote access, permission filtering, backups/snapshots, or corpora above
+  roughly 10,000 chunks.
+
+Treat `gi sql` and `gi vector` as diagnostic commands. They should read
+`tools/project-memory/rag-system.json`, run local stats/status helpers when
+available, compare current counts with activation limits, and report whether
+SQL/FTS or vector retrieval is absent, current, stale, or recommended. They do
+not create external services or install heavy dependencies by default.
 
 ## 3. Add A Startup Script
 

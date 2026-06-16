@@ -23,6 +23,8 @@ Use semantic retrieval for:
 - conceptual project questions;
 - "where is the rule about..." questions;
 - related architecture decisions;
+- platform-neutral feature specifications and business rules;
+- architecture migration history and similar rewrite decisions;
 - reusable workflow and failure-pattern discovery;
 - similar past fixes when the exact error text changed.
 
@@ -112,6 +114,13 @@ Use this order for a local semantic MVP:
 
 Do not add Qdrant, pgvector, or a managed vector service until local semantic
 retrieval has real eval wins or operational needs.
+
+Use the activation limits in `patterns/PROJECT_MEMORY_SPECIFICATIONS.md` and
+`tools/project-memory/rag-system.json` before enabling vector retrieval. As a
+default, do not enable vectors only because they are available; consider them
+when semantic-ready chunks exceed 300, curated project-memory specs exceed about
+500 KB, feature specs exceed 25 files, or repeated conceptual searches miss
+relevant memory.
 
 ## Eval Set
 

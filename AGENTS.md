@@ -38,6 +38,17 @@ notes, summaries, architecture docs, and selected chunks. Do not replace exact
 graph queries with embeddings, and verify current source files before editing
 because memory indexes can be stale.
 
+Treat `tools/summary/` as compact handoff state for the current or recent chat.
+Treat `tools/project-memory/` as durable product and project knowledge. For every
+non-trivial feature, business workflow, or architecture decision, keep
+platform-neutral project-memory specifications that describe the behavior,
+business rules, algorithms, state transitions, failure handling, verification,
+and current implementation map. Write them so another agent could rebuild the
+project on a different language, platform, or framework and preserve the same
+behavior. Split specifications by meaning instead of one giant file. Keep major
+rewrites in `tools/project-memory/architecture-migrations.md`. Follow
+`patterns/PROJECT_MEMORY_SPECIFICATIONS.md`.
+
 Treat `gi ...` and `ги ...` forms as chat commands for the agent, not as
 PowerShell commands. When the user wants a command that should be run literally
 in PowerShell, require or use an explicit `PS` marker or a real PowerShell
@@ -170,6 +181,9 @@ in this repository's live `AGENTS.md`.
   definitions of done, and verification linked together. Tasks do not replace
   the feature contract: tasks say what to change, while the contract says what
   behavior must remain true.
+- After meaningful work on a feature, workflow, business rule, data model, or
+  architecture, update the relevant project-memory specification in the same
+  scoped change. A handoff summary does not replace durable project memory.
 - Do not print large logs. Prefer tails and targeted error searches.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.
@@ -401,6 +415,19 @@ in this repository's live `AGENTS.md`.
   installer artifact path, version, and checks after successful packaging. Ask a
   short clarification question if the build, installer, or versioning contract
   is missing instead of inventing one.
+- Treat `gi sql`, `gi sqlite`, `ги sql`, `ги sqlite`, `gi vector`,
+  `gi вектор`, and `ги вектор` as requests to inspect project-memory retrieval
+  readiness and current metrics. For SQL, read `tools/project-memory/rag-system.json`
+  when present, run the local index stats command when available, count
+  reviewable project-memory/spec files, compare the numbers with the configured
+  or default SQLite activation limits, and report whether SQLite/FTS is absent,
+  current, stale, or recommended. For vector, read vector and embedding metadata,
+  check semantic corpus size and chunk count, run the vector adapter status
+  command when available, compare the numbers with vector activation limits, and
+  report collection, record count, index path, freshness caveats, and readiness.
+  These are inspection commands by default; do not create external services,
+  install heavy dependencies, upload data, or index private sources unless the
+  user explicitly asks and project-local rules allow it.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them as part of the
   main project unless the user explicitly asks, the task is about that nested

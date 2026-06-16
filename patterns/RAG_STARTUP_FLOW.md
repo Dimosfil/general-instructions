@@ -19,8 +19,11 @@ question, command, path, or error that needs project context.
    feature names.
 4. Query SQLite memory only with targeted searches and small `LIMIT`s.
 5. Open only the exact source files needed for the task.
-6. After meaningful work, write verified durable findings to project memory or
-   the handoff summary.
+6. For feature or business-logic work, read the relevant project-memory
+   specification or feature workflow contract before editing when one exists.
+7. After meaningful work, write verified durable findings to project memory and
+   update the relevant specification. Write a handoff summary separately when
+   chat state needs to be carried to the next session.
 
 For first-pass project study, read local instructions, README, manifests, and
 config entry points before building a file map. Use recursive scans only when a

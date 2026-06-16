@@ -56,9 +56,10 @@ Use these layers in order.
 1. Source corpus
    Define approved sources and exclusions before indexing. Include local
    instructions, runbooks, patterns, checklists, templates, migrations,
-   project-memory notes, and task-specific docs. Exclude secrets, generated
-   artifacts, lockfiles, large build outputs, telemetry, personal app data, and
-   private production data.
+   project-memory notes, platform-neutral specifications, architecture
+   migrations, and task-specific docs. Exclude secrets, generated artifacts,
+   lockfiles, large build outputs, telemetry, personal app data, and private
+   production data.
 
 2. Document manifest
    Track source path, source type, trust level, rule precedence, content hash,
@@ -78,6 +79,14 @@ Use these layers in order.
    graphs, store exact edges here: file paths, symbols, GUIDs, generated
    identifiers, asset links, reverse references, module dependencies, and
    evidence paths.
+
+   Keep code/source memory and specification memory logically separated. Code
+   memory tracks current implementation facts such as files, symbols, commands,
+   schemas, errors, and dependency edges. Specification memory tracks product
+   behavior, business rules, feature algorithms, workflow contracts,
+   architecture migrations, and verification guarantees. Small projects may use
+   one SQLite database with source metadata. Larger projects should split them
+   into separate databases, schemas, collections, or source groups.
 
 5. Retrieval adapters
    Provide one interface for keyword, vector, and hybrid retrieval:
@@ -131,6 +140,36 @@ in this script?", "which prefab references this material?", or "what module owns
 this class?". Use vector retrieval for approximate questions such as "where was
 the loading-dispatch architecture discussed?" or "which previous notes resemble
 this issue?".
+
+## Activation Limits
+
+Start with Markdown project-memory specifications and targeted text search.
+Introduce generated retrieval stores only when size or observed retrieval
+failures justify them.
+
+Use SQLite/FTS when any of these are true:
+
+- tracked text sources exceed 50 files;
+- project-memory Markdown/JSON exceeds 25 files or about 200 KB;
+- feature specifications exceed 10 files;
+- exact retrieval repeatedly misses paths, commands, symbols, or feature specs;
+- startup restore regularly needs too many focused file reads.
+
+Use vector retrieval only after curated specs or notes exist and keyword search
+is insufficient. Enable a local vector adapter when any of these are true:
+
+- semantic-ready chunks exceed 300;
+- curated project-memory specs exceed about 500 KB;
+- feature specifications exceed 25 files;
+- conceptual retrieval misses relevant memory at least three times;
+- multiple agents need conceptual lookup over the same memory.
+
+Move to PostgreSQL, pgvector, Qdrant, or another service-grade retrieval layer
+only for measured needs such as concurrent agents, shared remote access,
+permission filtering, backups/snapshots, or corpora above roughly 10,000 chunks.
+
+Record local thresholds in `tools/project-memory/rag-system.json` so `gi sql`
+and `gi vector` can report current counts against project policy.
 
 ## Adapter Rules
 

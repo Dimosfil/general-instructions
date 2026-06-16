@@ -87,6 +87,14 @@ curated notes, summaries, architecture documents, and selected code chunks. Keep
 exact identifiers, paths, GUIDs, references, and dependency edges in SQLite or
 another structured store where queries are deterministic.
 
+Keep code/source memory and specification memory logically separated. Code
+memory indexes current implementation facts such as files, symbols, commands,
+schemas, errors, and dependency edges. Specification memory indexes product
+behavior, business rules, feature algorithms, workflow contracts, architecture
+migrations, and verification guarantees. Small projects may keep both logical
+layers in one SQLite database with source metadata; larger projects should split
+them into separate databases, schemas, or source groups.
+
 ## Suggested CLI
 
 Provide one small script, for example:

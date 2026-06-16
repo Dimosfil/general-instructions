@@ -22,6 +22,8 @@ Reusable instructions in this repository are grouped by job.
   indexer for fast rebuilds from git tracked files and targeted searches.
 - `tools/project-memory/build_chroma_index.py`: optional Chroma adapter that
   builds and queries a generated local vector index from exported chunks.
+- `tools/project-memory/architecture-migrations.md`: durable history of major
+  architecture rewrites and platform migrations for this repository.
 
 ## Core Playbooks
 
@@ -61,6 +63,9 @@ Reusable instructions in this repository are grouped by job.
   new features, bug fixes, smoke checks, and release confidence.
 - `patterns/PROJECT_FTP_DEPLOY.md`: project-local FTP/FTPS/SFTP deploy config
   and `gi ftp` upload workflow.
+- `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`: portable project-memory
+  specifications for product behavior, feature algorithms, business logic,
+  architecture migrations, and SQL/vector activation limits.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure that separates
   source corpus, structured memory, retrieval adapters, context packets,
   tracing, evals, and writeback.
@@ -92,6 +97,8 @@ Reusable instructions in this repository are grouped by job.
   checking accepted instruction-kit migrations.
 - `templates/config-service-local.template.json`: starter project-local
   bootstrap override for the GI config service.
+- `templates/ARCHITECTURE_MIGRATIONS.template.md`: starter project-memory file
+  for recording major architecture rewrites and platform migrations.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/rag-system.template.json`: project-local RAG configuration shape
   for source groups, exclusions, structured memory, retrieval adapters, context

@@ -41,6 +41,11 @@
   workflow contract, implementation plan, sprint breakdown, task breakdown,
   definitions of done, and verification connected. Tasks do not replace the
   feature contract.
+- Treat project memory as the portable product specification layer. For
+  non-trivial feature, business-rule, data-model, integration, or architecture
+  work, update the relevant project-memory specification in the same scoped
+  change. Write it so another agent could rebuild the behavior on a different
+  language, framework, or platform. A handoff summary is not a substitute.
 
 ## Git
 
@@ -192,6 +197,10 @@ or:
 - Use the instruction kit as a token-economy and RAG-startup layer: restore only
   task-relevant context from local instructions, summaries, targeted searches,
   and project memory instead of broad repository reads or large outputs.
+- Use `gi sql` and `gi vector` as inspection commands for project-memory
+  retrieval metrics and activation limits. Report current counts, readiness,
+  staleness, and recommendations; do not deploy heavy databases or external
+  services by default.
 - Keep `gi` command responses scoped to the shared instruction-kit command. Do
   not resume an older product task after a `gi` command unless the user
   explicitly asks.
@@ -261,6 +270,8 @@ or:
 - Include the goal, planned changes, execution order, risks or dependencies, and
   verification steps.
 - Update progress as meaningful steps complete.
+- Update feature/business/architecture specifications as meaningful behavior
+  changes are completed.
 - Keep plans concise. Do not store full diffs, large logs, generated outputs,
   secrets, credentials, or private production data.
 

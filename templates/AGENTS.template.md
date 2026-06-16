@@ -69,6 +69,16 @@ notes, summaries, architecture docs, and selected chunks. Do not replace exact
 graph queries with embeddings, and verify current source files before editing
 because memory indexes can be stale.
 
+Treat `tools/summary/` as compact handoff state for the current or recent chat.
+Treat `tools/project-memory/` as durable product and project knowledge. For every
+non-trivial feature, business workflow, or architecture decision, keep
+platform-neutral project-memory specifications that describe the behavior,
+business rules, algorithms, state transitions, failure handling, verification,
+and current implementation map. Write them so another agent could rebuild the
+project on a different language, platform, or framework and preserve the same
+behavior. Split specifications by meaning instead of one giant file. Keep major
+rewrites in `tools/project-memory/architecture-migrations.md`.
+
 Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a
 Codex-specific tool, folder, permission model, app surface, or workflow.
@@ -86,8 +96,9 @@ Durable project knowledge lives in:
 tools/project-memory/
 ```
 
-Important findings should be written there or in a handoff summary, not only
-left in chat.
+Durable product behavior, business rules, feature algorithms, architecture
+decisions, and verified findings should be written there, not only in chat or in
+a handoff summary.
 
 For analysis, refactoring, migration, or multi-step implementation tasks, create
 or update a concise checklist in `tools/project-memory/pending-tasks.md` or a
@@ -190,6 +201,9 @@ Inspect logs:
   definitions of done, and verification linked together. Tasks do not replace
   the feature contract: tasks say what to change, while the contract says what
   behavior must remain true.
+- After meaningful work on a feature, workflow, business rule, data model, or
+  architecture, update the relevant project-memory specification in the same
+  scoped change. A handoff summary does not replace durable project memory.
 - When preparing this project for a repository, publishing to GitHub, or
   removing "unneeded" files, do not classify `AGENTS.md`, `tools/`,
   `tools/project-memory/`, `skills/`, bootstrap scripts, update scripts, deploy
@@ -345,6 +359,19 @@ Inspect logs:
   artifact. `restore`, dependency install, build, and test checks are
   prerequisites only; do not report `gi install` complete or the project
   installed/restored when only those checks ran.
+- Treat `gi sql`, `gi sqlite`, `ги sql`, `ги sqlite`, `gi vector`,
+  `gi вектор`, and `ги вектор` as requests to inspect project-memory retrieval
+  readiness and current metrics. For SQL, read `tools/project-memory/rag-system.json`
+  when present, run the local index stats command when available, count
+  reviewable project-memory/spec files, compare the numbers with configured or
+  default SQLite activation limits, and report whether SQLite/FTS is absent,
+  current, stale, or recommended. For vector, read vector and embedding metadata,
+  check semantic corpus size and chunk count, run vector adapter status when
+  available, compare the numbers with vector activation limits, and report
+  collection, record count, index path, freshness caveats, and readiness. These
+  are inspection commands by default; do not create external services, install
+  heavy dependencies, upload data, or index private sources unless the user
+  explicitly asks and project-local rules allow it.
 - Treat nested checkouts, vendored repositories, cloned examples, and
   third-party source trees as separate scope. Do not inspect them as part of the
   main project unless the user explicitly asks, the task is about that nested
