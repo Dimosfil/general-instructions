@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.16.6",
+  "instruction_kit_version": "2026.06.16.7",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -89,7 +89,8 @@
     "2026.06.16.3__require_gi_install_packaging_completion",
     "2026.06.16.4__clarify_general_instructions_init",
     "2026.06.16.5__verify_test_plan_command_contracts",
-    "2026.06.16.6__add_gi_first_test_command"
+    "2026.06.16.6__add_gi_first_test_command",
+    "2026.06.16.7__clarify_structured_memory_vs_semantic_retrieval"
   ],
   "copied_files": [
     "AGENTS.md",

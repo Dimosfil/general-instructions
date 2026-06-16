@@ -14,6 +14,7 @@ Keep exact keyword search for:
 - file paths;
 - command names;
 - identifiers, classes, routes, and config keys;
+- GUIDs, generated identifiers, asset references, and dependency edges;
 - pasted errors and log fragments;
 - migration ids and version strings.
 
@@ -24,6 +25,11 @@ Use semantic retrieval for:
 - related architecture decisions;
 - reusable workflow and failure-pattern discovery;
 - similar past fixes when the exact error text changed.
+
+For deterministic project graphs, semantic retrieval is a complement, not the
+authority. Store exact references in structured memory, then use vectors to find
+related notes, summaries, architecture documents, and selected chunks by
+meaning.
 
 ## Embedding Rules
 
@@ -82,12 +88,14 @@ uv run --with chromadb python .\tools\project-memory\build_chroma_index.py clean
 
 1. Classify whether the query needs exact, semantic, or hybrid retrieval.
 2. Run keyword search first for paths, commands, symbols, versions, and errors.
-3. Run semantic search for conceptual matches and related guidance.
-4. Merge results by source path, heading path, trust, freshness, and score.
-5. Deduplicate near-identical chunks.
-6. Prefer higher-precedence local instructions over shared defaults when they
+3. Run structured graph queries for exact references, reverse dependencies,
+   GUIDs, generated identifiers, and asset links when the project tracks them.
+4. Run semantic search for conceptual matches and related guidance.
+5. Merge results by source path, heading path, trust, freshness, and score.
+6. Deduplicate near-identical chunks.
+7. Prefer higher-precedence local instructions over shared defaults when they
    conflict.
-7. Assemble a bounded context packet with source paths and short evidence.
+8. Assemble a bounded context packet with source paths and short evidence.
 
 Do not send raw top-k vector results directly to the model. Apply source trust,
 privacy, conflict, and token-budget checks first.

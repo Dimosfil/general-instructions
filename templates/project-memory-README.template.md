@@ -66,6 +66,17 @@ paths. Do not store secrets, credentials, private user data, or production data.
 Do not dump the database into chat. Query it by symbol, path, topic, error, or
 feature name with small limits.
 
+Use SQLite for deterministic project facts and graphs: paths, symbols, exact
+references, generated identifiers, asset links, reverse dependencies, commands,
+failures, and evidence-backed notes. In Unity-like projects, this can include
+`.meta` GUID mappings, prefab/scene/material/script references, and
+assembly-definition dependencies.
+
+Use vector retrieval only as a second semantic layer for conceptual questions
+over curated notes, summaries, architecture docs, and selected chunks. Do not
+replace exact graph queries with embeddings, and always verify current source
+files before editing because generated indexes can be stale.
+
 ## Two Memory Layers
 
 - Markdown is the human-reviewable layer. Keep summaries, decisions,

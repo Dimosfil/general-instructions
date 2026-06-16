@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Clarified the project-memory/RAG split for exact graph facts versus semantic
+  retrieval. SQLite or another structured store should hold deterministic paths,
+  symbols, GUIDs, generated identifiers, asset links, reverse dependencies,
+  commands, failures, and evidence-backed notes. Vector retrieval is a second
+  semantic layer for conceptual search over curated notes, summaries,
+  architecture docs, and selected chunks, and agents must verify current source
+  files before editing because indexes can be stale.
+
 - Added `gi first test` / `gi первый тест` / `ги первый тест` as a first-launch
   verification command. Agents must reset only documented project-owned app
   cache, generated state, temporary first-run profiles, and rebuildable local

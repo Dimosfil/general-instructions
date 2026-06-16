@@ -50,6 +50,9 @@ Commit reviewable assets instead:
   SQL queries with `LIMIT`.
 - On startup, query only what is relevant to the task; do not load the whole
   database into context.
+- Treat SQLite as a navigator, not as a substitute for source verification.
+  Before changing behavior, open the current source files because indexed facts
+  may be stale after rebuilds, refactors, or generated-asset updates.
 - When a finding is reusable beyond the current project, export a concise
   recommendation to the shared instruction update intake or to a local
   `tools/project-memory/instruction-updates/` fallback. Do not treat SQLite
@@ -71,6 +74,18 @@ Generated index tables depend on the project. Common options:
 
 Use FTS5 search tables when available, but keep a fallback query path for local
 SQLite builds without FTS5.
+
+For projects with deterministic asset or dependency graphs, add tables that
+capture exact relationships rather than relying on semantic search. Examples:
+Unity `.meta` GUID to asset path mappings, prefab/scene/material/script
+references, assembly-definition dependencies, generated identifiers, route
+graphs, or module ownership maps. Include reverse references so the agent can
+answer "what uses this?" and "what will this change affect?" with evidence.
+
+Use a vector database only as a second layer for conceptual lookup across
+curated notes, summaries, architecture documents, and selected code chunks. Keep
+exact identifiers, paths, GUIDs, references, and dependency edges in SQLite or
+another structured store where queries are deterministic.
 
 ## Suggested CLI
 

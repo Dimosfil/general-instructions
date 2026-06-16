@@ -30,6 +30,14 @@ metadata, and a small eval set. Use `patterns/SEMANTIC_RAG_RETRIEVAL.md`, keep
 generated embedding corpora and vector indexes ignored when rebuildable, and do
 not mix embeddings from different models in one collection version.
 
+Use structured memory such as SQLite for deterministic project facts and graphs:
+file paths, symbols, exact references, GUIDs, generated identifiers, asset links,
+reverse dependencies, commands, failures, and evidence-backed notes. Use vector
+retrieval only as a second semantic layer for conceptual questions over curated
+notes, summaries, architecture docs, and selected chunks. Do not replace exact
+graph queries with embeddings, and verify current source files before editing
+because memory indexes can be stale.
+
 Treat `gi ...` and `ги ...` forms as chat commands for the agent, not as
 PowerShell commands. When the user wants a command that should be run literally
 in PowerShell, require or use an explicit `PS` marker or a real PowerShell

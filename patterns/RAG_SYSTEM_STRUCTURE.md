@@ -74,7 +74,10 @@ Use these layers in order.
    Store durable facts and state in SQLite for local MVPs or PostgreSQL for
    service-grade operation. Use it for preferences, task state, decisions,
    failures, commands, hashes, retrieval events, and audit events. Do not store
-   workflow state only in a vector database.
+   workflow state only in a vector database. For projects with deterministic
+   graphs, store exact edges here: file paths, symbols, GUIDs, generated
+   identifiers, asset links, reverse references, module dependencies, and
+   evidence paths.
 
 5. Retrieval adapters
    Provide one interface for keyword, vector, and hybrid retrieval:
@@ -121,6 +124,13 @@ Choose the smallest mode that solves the current problem.
 Keep keyword retrieval even after adding vectors. Exact command names, file
 paths, identifiers, and error messages often retrieve better through keyword
 search than through embeddings.
+
+For asset-heavy or graph-heavy projects, use SQLite or another structured store
+as the source of truth for exact relationship questions such as "which GUID is
+in this script?", "which prefab references this material?", or "what module owns
+this class?". Use vector retrieval for approximate questions such as "where was
+the loading-dispatch architecture discussed?" or "which previous notes resemble
+this issue?".
 
 ## Adapter Rules
 

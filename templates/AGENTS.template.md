@@ -61,6 +61,14 @@ metadata, and a small eval set. Use `patterns/SEMANTIC_RAG_RETRIEVAL.md`, keep
 generated embedding corpora and vector indexes ignored when rebuildable, and do
 not mix embeddings from different models in one collection version.
 
+Use structured memory such as SQLite for deterministic project facts and graphs:
+file paths, symbols, exact references, GUIDs, generated identifiers, asset links,
+reverse dependencies, commands, failures, and evidence-backed notes. Use vector
+retrieval only as a second semantic layer for conceptual questions over curated
+notes, summaries, architecture docs, and selected chunks. Do not replace exact
+graph queries with embeddings, and verify current source files before editing
+because memory indexes can be stale.
+
 Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a
 Codex-specific tool, folder, permission model, app surface, or workflow.
