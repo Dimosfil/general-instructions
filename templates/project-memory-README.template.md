@@ -91,6 +91,10 @@ Use `templates/rag-system.template.json` as the starter shape and
 such as Chroma, Qdrant, and pgvector behind retrieval adapters so prompts and
 agent workflows do not depend on one storage backend.
 
+Before enabling vector retrieval, prepare semantic-ready chunks and embedding
+metadata with `patterns/SEMANTIC_RAG_RETRIEVAL.md`. Keep generated files such as
+`tools/project-memory/semantic-corpus.jsonl` ignored.
+
 ## Suggested Files
 
 - `pending-tasks.md`: active project-wide plans and multi-step work.
@@ -99,6 +103,8 @@ agent workflows do not depend on one storage backend.
 - `system-preferences.json`: agent user-facing working language preferences.
 - `rag-system.json`: RAG source, exclusion, retrieval, context-packet, and
   writeback configuration.
+- `semantic-retrieval-evals.md`: small eval set for semantic and hybrid
+  retrieval quality.
 - `NOTES.md`: reviewable export of durable notes from local agent memory.
 - `architecture.md`: verified architecture notes.
 - `decisions.md`: durable decisions and rationale.

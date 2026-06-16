@@ -25,6 +25,11 @@ use `patterns/RAG_SYSTEM_STRUCTURE.md` and a project-local
 similar stores behind retrieval adapters so `gi` startup, prompt assembly, and
 memory writeback do not depend on one vector database.
 
+Before enabling vector retrieval, prepare semantic-ready chunks, embedding
+metadata, and a small eval set. Use `patterns/SEMANTIC_RAG_RETRIEVAL.md`, keep
+generated embedding corpora and vector indexes ignored when rebuildable, and do
+not mix embeddings from different models in one collection version.
+
 Treat `gi ...` and `ги ...` forms as chat commands for the agent, not as
 PowerShell commands. When the user wants a command that should be run literally
 in PowerShell, require or use an explicit `PS` marker or a real PowerShell

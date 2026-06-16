@@ -41,6 +41,7 @@ tools/project-memory/
   build_project_memory_index.py
   rag-schema.md
   retrieval-evals.md
+  semantic-corpus.jsonl        # generated/ignored when exported
 ```
 
 Keep `rag-system.json` reviewable and free of secrets. Store credentials,
@@ -165,6 +166,9 @@ Use this upgrade path:
 
 At each step, preserve the same source corpus rules, privacy rules, and context
 packet contract.
+
+For embedding-specific rules, model metadata, chunk export, and semantic evals,
+follow `patterns/SEMANTIC_RAG_RETRIEVAL.md`.
 
 ## Verification
 

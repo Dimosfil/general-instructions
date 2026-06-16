@@ -1,7 +1,7 @@
 {
   "version": 1,
   "project_id": "replace-with-stable-project-slug",
-  "mode": "sqlite-fts",
+  "mode": "hybrid-ready",
   "source_groups": [
     {
       "id": "local-instructions",
@@ -46,6 +46,20 @@
     "enabled": true,
     "kind": "sqlite-fts5",
     "purpose": "exact paths, commands, symbols, and error text"
+  },
+  "chunking": {
+    "enabled": true,
+    "kind": "markdown-aware",
+    "max_chars": 4000,
+    "export_path": "tools/project-memory/semantic-corpus.jsonl"
+  },
+  "embedding_metadata": {
+    "model_ref": "configure-in-project-local-runtime",
+    "provider": "configure-in-project-local-runtime",
+    "dimensions": null,
+    "collection_version": "project-memory-v1",
+    "embed_source": "chunks",
+    "do_not_mix_models_in_collection": true
   },
   "vector_retrieval": {
     "enabled": false,

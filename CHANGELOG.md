@@ -2,6 +2,14 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.16
+
+- Added semantic RAG retrieval guidance for embeddings, model metadata,
+  collection versioning, chunk export, hybrid search, evals, and safety.
+  Extended the project-memory indexer to create semantic-ready chunks and
+  export them as generated JSONL for future Chroma, Qdrant, pgvector, or other
+  vector adapters.
+
 ## 2026.06.11
 
 - Added a unified, expandable RAG system structure that separates source

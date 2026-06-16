@@ -24,6 +24,8 @@ Start with:
   feature workflows, branching states, background work, and behavior guarantees.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure for project
   memory, source indexing, retrieval adapters, context packets, and writeback.
+- `patterns/SEMANTIC_RAG_RETRIEVAL.md`: embedding and semantic retrieval rules
+  for chunk export, hybrid search, evals, and safety.
 - `patterns/SKILL_MODULES.md`: guidance for reusable agent skill modules.
 - `migrations/`: accepted ordered migrations for updating copied instruction
   kits.

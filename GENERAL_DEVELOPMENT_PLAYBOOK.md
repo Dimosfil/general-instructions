@@ -135,6 +135,11 @@ project-local `tools/project-memory/rag-system.json` from
 stores behind a retrieval adapter so `gi` startup, memory writeback, and prompt
 assembly do not depend on one vector database.
 
+Before enabling vector retrieval, prepare semantic-ready chunks and embedding
+metadata. Use `patterns/SEMANTIC_RAG_RETRIEVAL.md`, keep the generated
+`semantic-corpus.jsonl` ignored, and add a small eval set from
+`templates/semantic-retrieval-evals.template.md`.
+
 For analysis, refactoring, migration, or multi-step implementation tasks, create
 or update a concise checklist in the project's durable planning location before
 editing code. For project-wide or ongoing work, use a shared task file such as

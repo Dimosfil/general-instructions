@@ -64,6 +64,8 @@ Reusable instructions in this repository are grouped by job.
   tracing, evals, and writeback.
 - `patterns/RAG_STARTUP_FLOW.md`: token-conscious startup retrieval flow for
   restoring only task-relevant context.
+- `patterns/SEMANTIC_RAG_RETRIEVAL.md`: embedding and semantic retrieval rules
+  for chunk export, model metadata, hybrid search, evals, and safety.
 - `patterns/SERVICE_DISCOVERY_CONFIG.md`: config-service bootstrap,
   service-identity verification, mismatch handling, and local override rules.
 - `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
@@ -117,6 +119,8 @@ Reusable instructions in this repository are grouped by job.
   setup command for commit-message language preferences.
 - `templates/select-system-language.template.ps1`: interactive project setup
   command for the agent's user-facing working language.
+- `templates/semantic-retrieval-evals.template.md`: starter eval set for
+  semantic and hybrid retrieval quality.
 - `templates/SKILL.template.md`: starter `SKILL.md` for a self-contained agent
   skill module.
 - `templates/SUMMARY.template.md`: handoff summary template.

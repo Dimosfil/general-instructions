@@ -47,6 +47,11 @@ use `patterns/RAG_SYSTEM_STRUCTURE.md` and a project-local
 similar stores behind retrieval adapters so startup, prompt assembly, and memory
 writeback do not depend on one vector database.
 
+Before enabling vector retrieval, prepare semantic-ready chunks, embedding
+metadata, and a small eval set. Use `patterns/SEMANTIC_RAG_RETRIEVAL.md`, keep
+generated embedding corpora and vector indexes ignored when rebuildable, and do
+not mix embeddings from different models in one collection version.
+
 Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a
 Codex-specific tool, folder, permission model, app surface, or workflow.

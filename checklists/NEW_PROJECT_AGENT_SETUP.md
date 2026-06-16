@@ -50,6 +50,9 @@ Use this when preparing a repository for AI-agent collaboration.
   `templates/rag-system.template.json` into
   `tools/project-memory/rag-system.json` and follow
   `patterns/RAG_SYSTEM_STRUCTURE.md`.
+- [ ] Before enabling vector retrieval, prepare semantic-ready chunks,
+  embedding metadata, and a small eval set from
+  `templates/semantic-retrieval-evals.template.md`.
 - [ ] Add `tools/summary/`.
 - [ ] Copy or adapt `templates/agent-start.template.ps1` into
   `tools/agent-start.ps1`.

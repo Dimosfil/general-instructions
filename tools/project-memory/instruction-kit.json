@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.11.7",
+  "instruction_kit_version": "2026.06.16.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -83,7 +83,8 @@
     "2026.06.11.4__clarify_gi_manager_config_service_flow",
     "2026.06.11.5__self_apply_and_propagate_accepted_rules",
     "2026.06.11.6__universal_gi_and_routine_task_manager_sync",
-    "2026.06.11.7__add_unified_rag_system_structure"
+    "2026.06.11.7__add_unified_rag_system_structure",
+    "2026.06.16.1__add_semantic_rag_embedding_step"
   ],
   "copied_files": [
     "AGENTS.md",

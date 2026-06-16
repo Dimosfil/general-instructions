@@ -49,6 +49,9 @@ It does not mean:
    - optional `tools/project-memory/rag-system.json` from
      `templates/rag-system.template.json` when retrieval may grow into semantic
      RAG
+   - optional semantic retrieval evals from
+     `templates/semantic-retrieval-evals.template.md` when vector retrieval is
+     enabled
    - `tools/summary/`
    - `tools/agent-start.ps1`
    - `tools/select-project-language.ps1`

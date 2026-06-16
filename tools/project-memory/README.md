@@ -32,6 +32,12 @@ Search indexed content:
 python .\tools\project-memory\build_project_memory_index.py search "gi config"
 ```
 
+Export semantic-ready chunks for a future embedding adapter:
+
+```powershell
+python .\tools\project-memory\build_project_memory_index.py export-chunks
+```
+
 The database is ignored by git. Commit this README, durable Markdown notes,
 preference JSON files, and indexing scripts instead.
 
@@ -46,3 +52,6 @@ tools/project-memory/rag-system.json
 The current mode is SQLite FTS. Chroma, Qdrant, pgvector, or other vector stores
 should be added as retrieval adapters behind the same structure rather than as a
 replacement for project memory.
+
+Generated semantic exports such as `tools/project-memory/semantic-corpus.jsonl`
+are ignored and should be rebuilt from tracked source files.
