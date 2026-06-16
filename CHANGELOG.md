@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.16
 
+- Added verification-plan guidance that agents must confirm exact CLI flags,
+  ports, routes, health endpoints, JSON payload fields, and environment
+  variables from current project-local instructions, manifests, config, or
+  source code before recommending or running smoke/API checks. Handoff
+  summaries, screenshots, task notes, and old chat examples are status evidence,
+  not authoritative command contracts.
+
 - Clarified that `инит <source>` and `инит правила <source>` pointing to
   `general-instructions` are shared-instruction bootstrap/startup requests,
   never `git init`, folder creation, OpenCode setup, `npm init`, or

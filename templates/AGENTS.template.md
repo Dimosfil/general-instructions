@@ -280,15 +280,19 @@ Inspect logs:
   before enabling self-registration. Ask one short question if no local config
   location is documented.
 - For web-facing applications that expose a port, HTTP API, web UI, task-manager
-  service, or local daemon endpoint, require a live config-service config check
-  on every process startup before publishing or refreshing the app's own service
-  record. On startup, query the app's own `service_id`; if no record exists,
-  create one with the current port and documented endpoints, and if the record
-  exists but the port or endpoints changed, refresh it. Desktop apps, CLI tools,
-  libraries, scripts, and other non-web applications must not query or publish
-  to config-service during normal startup unless local instructions explicitly
-  define a discoverable web/API runtime. Use cached config only as an explicit
-  degraded-startup fallback documented by local run instructions.
+  service, or local daemon endpoint, require a live config-service lookup before
+  the process binds or reserves any port. On every startup, read the configured
+  config-service URL, verify the config service is reachable, and query the
+  app's own `service_id` startup/service record to learn the port and
+  neighboring service endpoints. If config-service is missing, unreachable, has
+  no record for the app, or returns an incomplete port/startup config, report a
+  clear blocker and wait for config-service to be configured, repaired, or
+  started; do not guess ports, scan for free ports, reuse stale local config, or
+  bind a fallback port. If the record exists but the currently documented
+  endpoints changed, refresh the record only after the config-service check
+  succeeds. Desktop apps, CLI tools, libraries, scripts, and other non-web
+  applications must not query or publish to config-service during normal startup
+  unless local instructions explicitly define a discoverable web/API runtime.
 - Treat `gi ftp`, `ги фтп`, `gi ftp push`, `ги фтп пуш`, `gi upload ftp`,
   `gi deploy ftp`, and `gi залей на фтп` as requests to upload this project's
   configured build output to FTP, FTPS, or SFTP. Treat `gi ftp config`,
@@ -370,6 +374,13 @@ Inspect logs:
   config entry points before building a file map. Use recursive scans only after
   a targeted search fails or the task clearly requires repository-wide
   inventory.
+- When creating or running a test, smoke-check, or verification plan, verify
+  exact commands, CLI flags, ports, routes, health endpoints, request payload
+  fields, and environment variables from current project-local instructions,
+  runbooks, manifests, config entry points, or source code. Treat handoff
+  summaries, task notes, screenshots, and old chat examples as status evidence,
+  not as authoritative command contracts; do not reuse stale ports, payloads, or
+  flags without checking the current project.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
   targeted searches, heads, tails, or small line ranges such as

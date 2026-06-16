@@ -131,6 +131,13 @@ in this repository's live `AGENTS.md`.
   config entry points before building a file map. Use recursive scans only after
   a targeted search fails or the task clearly requires repository-wide
   inventory.
+- When creating or running a test, smoke-check, or verification plan, verify
+  exact commands, CLI flags, ports, routes, health endpoints, request payload
+  fields, and environment variables from current project-local instructions,
+  runbooks, manifests, config entry points, or source code. Treat handoff
+  summaries, task notes, screenshots, and old chat examples as status evidence,
+  not as authoritative command contracts; do not reuse stale ports, payloads, or
+  flags without checking the current project.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
   targeted searches, heads, tails, or small line ranges, such as

@@ -213,6 +213,10 @@ or:
   test commands and produce a compact verification plan for the current feature,
   bug fix, or release check. Plan first; run checks only when the user asks or
   when the current task already requires verification.
+- For verification plans and smoke checks, confirm exact CLI flags, ports,
+  routes, methods, JSON payload fields, and required environment variables from
+  current local instructions, manifests, config, or source code. Summaries and
+  old chat snippets are evidence, not authoritative command contracts.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and clear typo variants as
   build-and-installer requests. The task is complete only after the packaging
   command runs and a current installer artifact is produced or explicitly

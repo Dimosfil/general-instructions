@@ -23,6 +23,19 @@ Inspect only task-relevant local context first:
 - test directories and naming conventions;
 - README commands when local instructions are missing.
 
+When recommending or running a command, verify the exact current contract:
+
+- CLI entry points and flags;
+- default host and port;
+- health, API, and UI routes;
+- request method, headers, and JSON payload field names;
+- required environment variables and local service discovery records.
+
+Treat handoff summaries, task notes, screenshots, and old chat examples as
+evidence of what happened, not as the source of truth for commands. If a summary
+names a check but local README, manifests, or source code disagree, follow the
+current project-local contract and call out the mismatch briefly.
+
 Identify the project type before recommending checks:
 
 - web frontend or full-stack app;

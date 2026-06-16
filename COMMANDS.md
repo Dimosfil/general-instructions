@@ -446,6 +446,12 @@ gi test plan
 manual → regression. По умолчанию планирует без запуска, если пользователь не
 просит запустить.
 
+Перед рекомендацией или запуском smoke/API/CLI checks агент сверяет точные
+commands, flags, ports, routes, methods, JSON payload fields и env vars с
+текущими project-local instructions, README, manifests, config или source code.
+Summary, screenshots и старый чат считаются evidence/status, а не
+authoritative command contract.
+
 Для новой фичи: expected behavior, failure paths, edge cases, rollback, что
 проверено, что требует ручной проверки.
 

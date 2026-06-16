@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.16.4",
+  "instruction_kit_version": "2026.06.16.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -87,7 +87,8 @@
     "2026.06.16.1__add_semantic_rag_embedding_step",
     "2026.06.16.2__add_local_chroma_adapter",
     "2026.06.16.3__require_gi_install_packaging_completion",
-    "2026.06.16.4__clarify_general_instructions_init"
+    "2026.06.16.4__clarify_general_instructions_init",
+    "2026.06.16.5__verify_test_plan_command_contracts"
   ],
   "copied_files": [
     "AGENTS.md",
