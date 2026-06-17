@@ -2,6 +2,17 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.17
+
+- Updated config-service startup guidance so web-facing services with
+  self-registration enabled can create or refresh their own service record when
+  none exists. Services must first read the config-service guide and contract,
+  choose a port that is free locally and absent from current config-service
+  records, bind and health-check that port, then publish the actual bound port
+  through the documented registration operation. Config-service must expose its
+  own guide and contract for listing, reading, creating, updating, validating,
+  and handling conflicts for service records.
+
 ## 2026.06.16
 
 - Added Context7/external documentation retrieval guidance. Context7 may be

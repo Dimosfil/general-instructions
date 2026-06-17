@@ -372,16 +372,21 @@ in this repository's live `AGENTS.md`.
   service, or local daemon endpoint, require a live config-service lookup before
   the process binds or reserves any port. On every startup, read the configured
   config-service URL, verify the config service is reachable, and query the
-  app's own `service_id` startup/service record to learn the port and
-  neighboring service endpoints. If config-service is missing, unreachable, has
-  no record for the app, or returns an incomplete port/startup config, report a
-  clear blocker and wait for config-service to be configured, repaired, or
-  started; do not guess ports, scan for free ports, reuse stale local config, or
-  bind a fallback port. If the record exists but the currently documented
-  endpoints changed, refresh the record only after the config-service check
-  succeeds. Desktop apps, CLI tools, libraries, scripts, and other non-web
-  applications must not query or publish to config-service during normal startup
-  unless local instructions explicitly define a discoverable web/API runtime.
+  app's own `service_id` startup/service record. If the record exists, bind only
+  the recorded port and use config-service records for neighboring service
+  endpoints. If the record is missing and project-local self-registration is
+  `on`, read the config-service guide and contract, list existing records,
+  choose a port that is free on the local host and absent from config-service,
+  bind it, verify the app's local health endpoint, and create or update the
+  service record through the documented config-service operation. If the record
+  is missing and self-registration is `off`, or config-service lacks a
+  documented registration contract, stop with a clear blocker; do not invent
+  payloads, write storage directly, reuse stale local config, or bind a fallback
+  port while config-service is unavailable. If the recorded endpoints changed,
+  refresh the record only after the config-service check succeeds. Desktop apps,
+  CLI tools, libraries, scripts, and other non-web applications must not query
+  or publish to config-service during normal startup unless local instructions
+  explicitly define a discoverable web/API runtime.
 - Treat `gi ftp`, `ги фтп`, `gi ftp push`, `ги фтп пуш`, `gi upload ftp`,
   `gi deploy ftp`, and `gi залей на фтп` as requests to upload the current
   project's configured build output to FTP, FTPS, or SFTP. Treat

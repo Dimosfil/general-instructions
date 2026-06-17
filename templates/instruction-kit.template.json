@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.16.11",
+  "instruction_kit_version": "2026.06.17.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -94,7 +94,8 @@
     "2026.06.16.8__add_portable_project_memory_specifications",
     "2026.06.16.9__add_gi_root_rebuild_command",
     "2026.06.16.10__add_gi_help_command_index",
-    "2026.06.16.11__add_context7_external_docs_rule"
+    "2026.06.16.11__add_context7_external_docs_rule",
+    "2026.06.17.1__allow_contract_based_service_self_registration"
   ],
   "copied_files": [
     "AGENTS.md",

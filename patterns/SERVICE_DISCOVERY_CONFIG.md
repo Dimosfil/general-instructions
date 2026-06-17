@@ -61,17 +61,25 @@ process startup before binding or reserving any port. The startup sequence is:
 1. Read the configured config-service URL.
 2. Verify config-service is reachable.
 3. Query the app's own configured `service_id` service/startup record.
-4. Read the port the app should bind and the endpoints of neighboring services
-   from config-service records.
-5. Bind only the port returned by config-service.
-6. If documented endpoints changed, refresh the app's service record only after
-   the live config-service check succeeds.
+4. If the record exists, read the port the app should bind and the endpoints of
+   neighboring services from config-service records.
+5. If the record is missing and the app's self-registration flag is `on`, read
+   the config-service guide and contract, list existing service records, choose
+   a port that is both free on the local host and absent from config-service,
+   bind that port, verify the app's local health endpoint, and create the app's
+   service record through the documented config-service registration operation.
+6. If the record is missing and self-registration is `off`, stop startup and
+   report that the service is not registered.
+7. If documented endpoints changed, refresh the app's service record only after
+   the live config-service check succeeds and through the documented
+   registration/update operation.
 
-If config-service is missing, unreachable, has no record for the app, or returns
-an incomplete port/startup config, stop startup, report the blocker, and wait
-for the user or supervisor to configure, repair, or start config-service. Do not
-guess ports, scan for free ports, reuse stale local runtime config, or bind a
-fallback port while config-service is unavailable.
+If config-service is missing, unreachable, or does not expose a guide/contract
+for service registration, stop startup, report the blocker, and wait for the
+user or supervisor to configure, repair, or start config-service. Do not reuse
+stale local runtime config or bind a fallback port while config-service is
+unavailable. Do not invent a registration payload or write directly to the
+config-service storage when the contract does not document the operation.
 
 Validate the URL before saving it:
 
@@ -122,10 +130,15 @@ The config service should expose:
 
 ```text
 GET /health
+GET /agent/guide
+GET /agent/contract
 GET /services
 GET /services/{serviceId}
 GET /services/{serviceId}/startup
 GET /projects/{projectId}/services
+POST /services
+PUT /services/{serviceId}
+PATCH /services/{serviceId}
 ```
 
 The stable local URL is:
@@ -139,6 +152,23 @@ store a service id, display name, `baseUrl`, and entry point paths:
 `availability`, `guide`, `contract`, and `api` when available. Read responses
 should include full `endpoints.availability`, `endpoints.guide`,
 `endpoints.contract`, and `endpoints.api` URLs.
+
+The config service must publish its own agent guide and strict contract using
+the same guide/contract pattern expected from other agent-facing services. Its
+guide should explain how services discover the config service, how startup
+self-registration works, which write operations are allowed, and which fields
+must never contain secrets. Its contract should define the exact schemas and
+methods for listing records, reading records, creating records, updating
+records, conflict handling, validation errors, and optimistic concurrency if
+supported.
+
+Service self-registration is allowed only through the documented config-service
+contract. A self-registering service may choose a new port only after reading
+current config-service records and checking local host availability. It must
+publish the port it actually bound, not a preferred port that failed. If record
+creation conflicts because another service claimed the id or port first, the
+service must release the port it just bound, reread config-service, and retry
+only through the documented conflict policy or stop with a clear blocker.
 
 Do not store endpoint catalogs, schemas, authentication details, workflow logic,
 or secrets in config-service. After discovery, ask an agent-facing target
