@@ -136,6 +136,8 @@ or:
   ask in three numbered steps. For each step, show a concise numbered Markdown
   checklist with the available languages and the current selection, then accept
   the user's next answer as numbers or language names for that step.
+- When a unified project-language step has no current selection, default it to
+  `1 2`: `English`, then `Russian`.
 - If the user replies with only numbers, such as `1 2`, map them to the most
   recent checklist and preserve that order. Do not ask what those numbers mean
   after showing the checklist.

@@ -603,6 +603,8 @@ in this repository's live `AGENTS.md`.
   of Done text from another configured language into the main-language text.
 - For each `gi язык` choice, preserve the user's selected order. The first
   selected language in each choice is primary for that surface.
+- When no current selection exists for a `gi язык` unified language surface,
+  use `1 2` as the default ordered selection: `English`, then `Russian`.
 - If `gi язык` or an equivalent unified project-language command is sent
   without explicit languages, run a three-step chat flow instead of asking for
   one free-form line. First show a compact `Current settings` block for all

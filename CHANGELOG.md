@@ -4,6 +4,10 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Defaulted missing unified `gi language` / `gi язык` selections to `1 2`
+  (`English`, then `Russian`) for project working environment, commit messages,
+  and tasks. Existing explicit language selections remain authoritative.
+
 - Replaced Markdown task-list syntax for chat selection prompts with plain
   inline checkbox markers such as `[x] 1. English` and `[ ] 2. Russian`, because
   some chat clients render `- [x] 1. English` as a detached checkbox control

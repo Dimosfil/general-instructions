@@ -1,19 +1,19 @@
 {
   "agent_response_language": {
     "mode": "fixed",
-    "language": "Russian",
+    "language": "English",
     "languages": [
-      "Russian",
-      "English"
+      "English",
+      "Russian"
     ],
     "project_environment_languages": [
-      "Russian",
-      "English"
+      "English",
+      "Russian"
     ],
-    "task_language": "Russian",
+    "task_language": "English",
     "task_languages": [
-      "Russian",
-      "English"
+      "English",
+      "Russian"
     ],
     "available": [
       "English",

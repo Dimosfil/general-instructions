@@ -533,6 +533,8 @@ Inspect logs:
   of Done text from another configured language into the main-language text.
 - For each `gi язык` choice, preserve the user's selected order. The first
   selected language in each choice is primary for that surface.
+- When no current selection exists for a `gi язык` unified language surface,
+  use `1 2` as the default ordered selection: `English`, then `Russian`.
 - Do not commit secrets, credentials, local databases, logs, or generated caches.
 - Do not print full `git diff` output by default. Prefer `git diff --stat` and
   targeted queries for relevant files or patterns.
