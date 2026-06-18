@@ -136,28 +136,33 @@
         "status_command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py status"
       },
       "evals": {
-        "command": "",
-        "status_command": ""
+        "command": "uv run --with chromadb python .\\tools\\project-memory\\rag_check.py run",
+        "status_command": "uv run --with chromadb python .\\tools\\project-memory\\rag_check.py health"
       }
     },
     "state": {
-      "last_full_rebuild_migration": "2026.06.16.10__add_gi_help_command_index",
-      "last_full_rebuild_at": "2026-06-16T15:57:14+00:00",
+      "last_full_rebuild_migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
+      "last_full_rebuild_at": "2026-06-18T15:11:34+00:00",
       "last_node_rebuilds": {
         "sql": {
-          "migration": "2026.06.16.9__add_gi_root_rebuild_command",
-          "rebuilt_at": "2026-06-16T15:57:14+00:00",
-          "status": "Files: 169; Chunks: 1200; FTS5 enabled"
+          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
+          "rebuilt_at": "2026-06-18T15:11:34+00:00",
+          "status": "Files: 183; Chunks: 1282; FTS5 enabled"
         },
         "chunks": {
-          "migration": "2026.06.16.9__add_gi_root_rebuild_command",
-          "rebuilt_at": "2026-06-16T15:57:14+00:00",
-          "status": "Exported chunks: 1200"
+          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
+          "rebuilt_at": "2026-06-18T15:11:34+00:00",
+          "status": "Exported chunks: 1282"
         },
         "vector": {
-          "migration": "2026.06.16.9__add_gi_root_rebuild_command",
-          "rebuilt_at": "2026-06-16T15:57:14+00:00",
-          "status": "Collection: general-instructions-project-memory-v1; Records: 1200"
+          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
+          "rebuilt_at": "2026-06-18T15:11:34+00:00",
+          "status": "Collection: general-instructions-project-memory-v1; Records: 1282"
+        },
+        "evals": {
+          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
+          "rebuilt_at": "2026-06-18T15:11:34+00:00",
+          "status": "RAG health and 5 retrieval eval cases passed"
         }
       }
     }

@@ -22,6 +22,10 @@ Reusable instructions in this repository are grouped by job.
   indexer for fast rebuilds from git tracked files and targeted searches.
 - `tools/project-memory/build_chroma_index.py`: optional Chroma adapter that
   builds and queries a generated local vector index from exported chunks.
+- `tools/project-memory/rag_check.py`: local RAG health and retrieval eval
+  runner for SQLite, semantic corpus, and Chroma consistency checks.
+- `tools/project-memory/retrieval-evals.json`: reviewable retrieval eval cases
+  for recurring keyword, semantic, and hybrid lookup expectations.
 - `tools/project-memory/architecture-migrations.md`: durable history of major
   architecture rewrites and platform migrations for this repository.
 

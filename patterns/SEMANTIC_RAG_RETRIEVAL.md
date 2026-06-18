@@ -136,6 +136,16 @@ include:
 Run evals after changing chunking, embedding model, vector store, filters, or
 reranking.
 
+Prefer machine-checkable evals for recurring retrieval expectations. A minimal
+local eval runner should verify:
+
+- index health and count consistency across SQLite chunks, JSONL corpus, and
+  vector records;
+- at least one exact keyword case for commands, paths, symbols, or errors;
+- at least one semantic case for conceptual guidance;
+- at least one hybrid case that can be satisfied by keyword or vector retrieval;
+- expected source paths in top results, not free-form answer wording.
+
 ## Safety
 
 - Do not index secrets, credentials, tokens, private user data, production data,

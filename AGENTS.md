@@ -532,7 +532,10 @@ in this repository's live `AGENTS.md`.
   the named GI/RAG node. Read `rag-system.json`, run only the documented node
   command or local helper, then verify that node's status. Ask one short
   clarification question if the node is not configured instead of guessing a
-  command.
+  command. For an `evals` node, prefer machine-checkable retrieval checks that
+  verify index health, count consistency, and expected source paths in top
+  keyword, semantic, or hybrid results; do not treat an answer's wording as the
+  primary eval target.
 - During `gi обновить`, inspect each newly applied migration. If a migration
   changes RAG source rules, chunking, embedding metadata, SQLite/vector schemas,
   retrieval adapters, or project-memory index scripts, check the project's

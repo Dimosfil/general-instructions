@@ -168,6 +168,18 @@ python .\tools\project-memory\build_project_memory_index.py export-chunks
 uv run --with chromadb python .\tools\project-memory\build_chroma_index.py rebuild
 ```
 
+Run RAG health checks and retrieval evals when an eval runner is present:
+
+```powershell
+python .\tools\project-memory\rag_check.py --skip-vector run
+uv run --with chromadb python .\tools\project-memory\rag_check.py run
+```
+
+The check should verify generated-ignore rules, count consistency across
+enabled retrieval layers, and expected source paths in top keyword, semantic,
+or hybrid results. Test retrieval evidence first; do not use a model's
+free-form answer wording as the primary eval target.
+
 ## Activation Limits And Diagnostics
 
 Start with Markdown specifications and targeted search. Use generated databases
@@ -211,8 +223,9 @@ count, index path, freshness caveats, and readiness.
   framework replacements, and storage/service/routing migrations.
 - `specs/`: platform-neutral feature, business-rule, data-model, and
   integration-contract specifications.
-- `semantic-retrieval-evals.md`: small eval set for semantic and hybrid
-  retrieval quality.
+- `retrieval-evals.json` or `semantic-retrieval-evals.md`: small eval set for
+  keyword, semantic, and hybrid retrieval quality.
+- `rag_check.py`: optional health and retrieval eval runner.
 - `build_chroma_index.py`: optional local Chroma adapter when semantic
   retrieval is enabled.
 - `NOTES.md`: reviewable export of durable notes from local agent memory.

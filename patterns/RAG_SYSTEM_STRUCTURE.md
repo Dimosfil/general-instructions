@@ -270,4 +270,9 @@ When adding or changing this structure in a project:
 - run the index status or stats command when one exists;
 - run at least one exact keyword retrieval check;
 - run at least one semantic or hybrid retrieval check when vectors are enabled;
+- keep a small reviewable retrieval eval set and run it through the configured
+  `evals` node after rebuilds, chunking changes, source-corpus changes,
+  embedding-model changes, vector-store changes, or retrieval-filter changes;
+- make evals assert source evidence in top results rather than exact answer text
+  so they test retrieval quality without depending on one model's wording;
 - verify startup reads only bounded, task-relevant context.

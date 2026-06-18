@@ -78,6 +78,18 @@ Run semantic search through Chroma:
 uv run --with chromadb python .\tools\project-memory\build_chroma_index.py query "semantic startup retrieval"
 ```
 
+Run local RAG health checks and retrieval evals:
+
+```powershell
+uv run --with chromadb python .\tools\project-memory\rag_check.py run
+```
+
+The check verifies that `rag-system.json` is readable, generated indexes are
+ignored, SQLite chunks match the semantic corpus, Chroma records match the
+semantic corpus when vector retrieval is enabled, and the reviewable eval cases
+in `retrieval-evals.json` return at least one expected source in the configured
+top results.
+
 The database is ignored by git. Commit this README, durable Markdown notes,
 preference JSON files, and indexing scripts instead.
 
@@ -148,3 +160,7 @@ Use `gi vector` to inspect vector readiness and metrics. The agent should read
 embedding/vector metadata, check semantic corpus size and chunk count, run the
 vector adapter status helper when available, and report collection, record
 count, index path, freshness caveats, and readiness.
+
+Use `gi tools rebuild evals` or `gi rag rebuild evals` to run the configured
+RAG checks without rebuilding source indexes. A failing eval means retrieval may
+still be structurally present but not yet trustworthy for that kind of question.

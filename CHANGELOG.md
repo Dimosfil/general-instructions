@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Added machine-checkable RAG retrieval eval guidance and a local eval runner
+  contract. `gi tools rebuild evals` / `gi rag rebuild evals` should verify RAG
+  health, generated-ignore rules, count consistency across enabled retrieval
+  layers, and expected source paths in top keyword, semantic, or hybrid results
+  instead of treating free-form answer wording as the primary eval target.
+
 - Added intent-preservation guidance for `gi summary` / `gi саммари`.
   Architecture and research handoffs, especially when the user evaluates an
   external project, article, pattern, or tool as a possible integration target,

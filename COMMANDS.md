@@ -152,7 +152,7 @@ the listed commands.
 | `gi tools rebuild chunks`, `gi rag rebuild chunks` | Rebuild only semantic chunk exports. |
 | `gi tools rebuild vector`, `gi rag rebuild vector` | Rebuild only the vector retrieval node. |
 | `gi tools rebuild manifest`, `gi rag rebuild manifest` | Rebuild only source manifest/inventory metadata. |
-| `gi tools rebuild evals`, `gi rag rebuild evals` | Run or rebuild retrieval eval artifacts only. |
+| `gi tools rebuild evals`, `gi rag rebuild evals` | Run configured RAG health and retrieval eval checks only. |
 | `gi config`, `gi config service` | Inspect config/discovery service settings. |
 | `gi config service url=<url>` | Set the config-service URL after validation. |
 | `gi config service on`, `gi config service off` | Toggle current app self-registration with config-service. |
@@ -336,8 +336,10 @@ Node forms such as `gi tools rebuild sql`, `gi rag rebuild chunks`,
 `gi tools rebuild vector`, `gi rag rebuild manifest`, and
 `gi tools rebuild evals` rebuild only that node through the command documented in
 `rag-system.json` or the project-local runbook, then run the matching status
-check. If the node is not configured, the agent asks one short clarification
-question instead of inventing a command.
+check. Retrieval evals should assert expected source evidence in top keyword,
+semantic, or hybrid results rather than exact answer wording. If the node is
+not configured, the agent asks one short clarification question instead of
+inventing a command.
 
 During `gi обновить`, the agent checks newly applied migrations. If a migration
 changes RAG source rules, chunking, embedding metadata, SQLite/vector schemas,
