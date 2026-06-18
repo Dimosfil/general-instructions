@@ -229,9 +229,13 @@ or:
   checking or applying instruction-kit file updates.
 - Treat `gi саммари` and `gi summary` as requests to write a handoff summary
   file under `tools/summary/`, not only as requests to summarize in chat.
-- Keep handoff summaries focused on thread substance: user intent, business
-  logic, code or architecture changes, decisions, verification evidence,
-  blockers, and next useful context. Omit routine command bookkeeping such as
+- Keep handoff summaries focused on thread substance as a thematic handoff, not
+  as a short chronological retelling. Break the thread into meaningful topic
+  sections, list the key theses under each topic, and briefly describe each
+  thesis. Add more detail only when a complex topic would lose necessary
+  context without it. Include links to code files, URLs, media, images, logs,
+  screenshots, or exact artifacts only when those references are needed to
+  understand or verify the context. Omit routine command bookkeeping such as
   successful `gi push`, staging counts, git directives, branch names, push
   targets, and commit hashes when git logs or command history can recover them.
   Mention repository state only when it affects the next agent's action. If a

@@ -6,7 +6,11 @@ Date: TODO
 
 TODO
 
-## Thread Essence
+## Thematic Thread Breakdown
+
+TODO
+
+## Topic Theses
 
 TODO
 
@@ -34,6 +38,15 @@ TODO
 Keep this summary focused on thread substance: user intent, important decisions,
 code or architecture changes, business/product logic, verification evidence,
 blockers, and next useful context.
+
+Do not write a short chronological retelling of the whole thread. Break the
+thread into meaningful topic sections, then list and briefly describe the key
+theses under each topic. Add details only when a complex topic would lose
+necessary context without them.
+
+Include links to code files, URLs, media, images, logs, screenshots, or exact
+artifacts only when those references are needed to understand or verify the
+context.
 
 Do not record routine command bookkeeping such as successful gi push/commit,
 staging counts, git directives, branch names, push targets, or commit hashes

@@ -28,10 +28,14 @@ question, command, path, or error that needs project context.
 7. After meaningful work, write verified durable findings to project memory and
    update the relevant specification. Write a handoff summary separately when
    chat state needs to be carried to the next session.
-   Keep that summary focused on thread substance and omit routine command
-   bookkeeping that can be recovered from git logs or command history unless it
-   affects the next action. If a step-by-step protocol is useful, keep it in a
-   separate `Thread Timeline` section or file.
+   Keep that summary focused on thread substance as a thematic handoff: break
+   the thread into meaningful topic sections, list and briefly describe key
+   theses under each topic, and add detail only when a complex topic needs it.
+   Link code files, URLs, media, images, logs, screenshots, or exact artifacts
+   only when they are needed to understand or verify the context. Omit routine
+   command bookkeeping that can be recovered from git logs or command history
+   unless it affects the next action. If a step-by-step protocol is useful, keep
+   it in a separate `Thread Timeline` section or file.
 
 For first-pass project study, read local instructions, README, manifests, and
 config entry points before building a file map. Use recursive scans only when a

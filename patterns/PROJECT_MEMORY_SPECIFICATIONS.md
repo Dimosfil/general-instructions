@@ -12,10 +12,16 @@ Treat `tools/summary/` and `tools/project-memory/` as different layers:
 
 Handoff summaries should capture user intent, decisions, code or architecture
 changes, business logic, verification evidence, blockers, and next useful
-context. Do not use them as a routine command ledger for successful `gi push`,
-staging counts, git directives, branch names, push targets, or commit hashes
-that are already recoverable from git logs or command history. Keep any needed
-step-by-step protocol in a separate `Thread Timeline` section or file.
+context as a thematic handoff, not as a short chronological retelling. Break the
+thread into meaningful topic sections, list the key theses under each topic,
+briefly describe each thesis, and add details only when a complex topic would
+lose necessary context without them. Include links to code files, URLs, media,
+images, logs, screenshots, or exact artifacts only when those references are
+needed to understand or verify the context. Do not use summaries as a routine
+command ledger for successful `gi push`, staging counts, git directives, branch
+names, push targets, or commit hashes that are already recoverable from git logs
+or command history. Keep any needed step-by-step protocol in a separate
+`Thread Timeline` section or file.
 
 Project memory should let a future agent understand and rebuild the product
 behavior even when the current code, language, framework, platform, or UI stack

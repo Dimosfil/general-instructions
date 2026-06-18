@@ -139,7 +139,7 @@ the listed commands.
 | `gi обновить`, `gi обновись` | Apply accepted instruction-kit updates and migrations. |
 | `gi init <source>`, `инит <source>`, `инит правила <source>` | Bootstrap or restore shared instructions from `general-instructions`. |
 | `gi start`, `gi старт`, `gi restore` | Restore minimal project context and ask for the current task. |
-| `gi summary`, `gi саммари` | Write a compact substance-focused handoff summary under `tools/summary/`. |
+| `gi summary`, `gi саммари` | Write a thematic thesis-based handoff summary under `tools/summary/`. |
 | `gi language`, `gi язык` | Configure project working-environment languages. |
 | `gi project language`, `gi проект язык`, `gi язык проекта` | Configure project-facing language preferences. |
 | `gi commit language`, `gi коммит язык`, `gi язык коммита` | Configure commit-message languages. |
@@ -645,7 +645,13 @@ gi саммари
 Создаёт `tools/summary/YYYY-MM-DD_HH-mm-ss_AGENT_WORK_SUMMARY.md` по
 структуре из `templates/SUMMARY.template.md`. Summary фиксирует смысл треда:
 намерение пользователя, решения, изменения кода/архитектуры/бизнес-логики,
-проверки, блокеры и следующий полезный контекст. Рутинные успешные `gi push`,
+проверки, блокеры и следующий полезный контекст. Summary строится как
+тематический handoff, а не короткий пересказ подряд: агент разбивает тред на
+смысловые темы, выделяет тезисы внутри каждой темы, кратко описывает тезисы и
+добавляет детали только там, где сложная тема потеряет контекст без них. Ссылки
+на кодовые файлы, URL, медиа, картинки, логи, скриншоты или точные артефакты
+оставляются только когда они нужны для понимания или проверки контекста.
+Рутинные успешные `gi push`,
 `gi commit`, staging counts, git directives, branch/push metadata и commit hash
 не записываются, если их можно восстановить из git logs или command history.
 Если нужен подробный протокол, он пишется отдельно как `Thread Timeline`, а не

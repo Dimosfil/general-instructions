@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Tightened `gi summary` / `gi саммари` handoff structure: summaries should
+  break the thread into meaningful topics, list and briefly describe key theses
+  under each topic, add details only when a complex topic needs them, and link
+  code files, URLs, media, images, logs, screenshots, or exact artifacts only
+  when those references are necessary to understand or verify the context.
+
 - Added resume/handoff reconciliation guidance: when the user asks where a
   previous thread stopped, agents must compare the handoff summary with the
   latest visible thread conclusion, screenshots, or direct quotes. The last

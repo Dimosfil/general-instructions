@@ -52,7 +52,14 @@ versions when known, and verify current local source files before editing.
 Follow `patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md`.
 
 Treat `tools/summary/` as compact handoff state for the current or recent chat.
-Handoff summaries should preserve the essence of the thread: user intent,
+Handoff summaries should preserve the essence of the thread as a thematic
+handoff, not as a short chronological retelling. Break the thread into
+meaningful topic sections, list the key theses under each topic, and briefly
+describe each thesis. Add more detail only when the topic is complex enough
+that a future agent would lose necessary context without it. Include links to
+code files, URLs, media, images, logs, screenshots, or exact artifacts only
+when those references are needed to understand or verify the context; omit
+incidental references that do not help the handoff. Preserve user intent,
 business or product logic, code or architecture changes, important decisions,
 verification evidence, blockers, and next useful context. Do not fill summaries
 with routine command bookkeeping such as `gi push`, `gi commit`, staging counts,
