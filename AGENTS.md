@@ -612,7 +612,9 @@ in this repository's live `AGENTS.md`.
   Render each option as a task-list bullet with the number inside the label,
   such as `- [x] 1. English`; do not use ordered-task syntax such as
   `1. [x] English`, because some chat renderers split the checkbox and label
-  onto separate lines.
+  onto separate lines. Keep the checkbox marker, number, and label on one
+  physical Markdown line; never emit a standalone checkbox line followed by a
+  separate numbered label line.
 - If the user selects `Cancel / Отмена`, replies `cancel` or `отмена`, or
   chooses only the cancel option during the language flow, stop the flow without
   changing any language preference files.

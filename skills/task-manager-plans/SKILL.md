@@ -131,7 +131,9 @@ When the user runs `gi tm`:
    checkbox items for available adapters plus `none`, and ask which to connect.
    Render each option as a task-list bullet with the number inside the label,
    such as `- [ ] 1. WorkNest`; do not use ordered-task syntax such as
-   `1. [ ] WorkNest`.
+   `1. [ ] WorkNest`. Keep the checkbox marker, number, and label on one
+   physical Markdown line; never emit a standalone checkbox line followed by a
+   separate numbered label line.
 5. After the user chooses managers, create or update
    `tools/project-memory/task-managers.json` from the shared template.
 6. Do not finish manager setup with required project fields left as `TODO`. Ask

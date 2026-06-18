@@ -92,7 +92,9 @@
   language names or numbers. Render each option as a task-list bullet with the
   number inside the label, such as `- [x] 1. English`; do not use
   `1. [x] English`, because some chat renderers split the checkbox and label
-  onto separate lines.
+  onto separate lines. Keep the checkbox marker, number, and label on one
+  physical Markdown line; never emit a standalone checkbox line followed by a
+  separate numbered label line.
 - When reporting this change, mention the plain
   `tools/project-memory/git-preferences.json` path instead of malformed or
   placeholder markdown links.

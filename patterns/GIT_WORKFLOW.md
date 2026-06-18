@@ -171,7 +171,9 @@ current additional languages as checked. Ask the user to reply with language
 names or numbers. Render each option as a task-list bullet with the number
 inside the label, such as `- [x] 1. English`; do not use ordered-task syntax
 such as `1. [x] English`, because some chat renderers split the checkbox and
-label onto separate lines.
+label onto separate lines. Keep the checkbox marker, number, and label on one
+physical Markdown line; never emit a standalone checkbox line followed by a
+separate numbered label line.
 
 Example:
 

@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Tightened numbered Markdown checkbox guidance for language and task-manager
+  prompts: every option must keep the checkbox marker, number, and label on one
+  physical Markdown line, preventing standalone checkbox rows with detached
+  numbered labels in chat renderers.
+
 - Added connected-projects register guidance. Projects that depend on, research,
   vendor, or regularly interact with external repositories, services,
   libraries, docs sites, upstream tools, cloned examples, or sibling workspaces
