@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Replaced Markdown task-list syntax for chat selection prompts with plain
+  inline checkbox markers such as `[x] 1. English` and `[ ] 2. Russian`, because
+  some chat clients render `- [x] 1. English` as a detached checkbox control
+  followed by a separate label row.
+
 - Tightened numbered Markdown checkbox guidance for language and task-manager
   prompts: every option must keep the checkbox marker, number, and label on one
   physical Markdown line, preventing standalone checkbox rows with detached

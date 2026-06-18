@@ -69,10 +69,10 @@ Use this JSON shape unless project-local instructions define a stricter one:
   check config-service before asking the user for host details.
 - If one matching FTP-capable service exists, use it after reading and verifying
   its contract.
-- If several matching services exist, ask the user to choose with the numbered
-  Markdown checkbox style used by `gi language`, for example
-  `- [ ] 1. Display name (service-id)`. Accept numeric replies against that
-  latest checklist.
+- If several matching services exist, ask the user to choose with the plain
+  inline numbered checkbox marker style used by `gi language`, for example
+  `[ ] 1. Display name (service-id)`. Accept numeric replies against that latest
+  checklist.
 - If no matching service exists, offer `gi ftp service` as the command to
   register one manually, then continue with project-local config only if the
   user provides details for this project.
@@ -89,8 +89,8 @@ Use this JSON shape unless project-local instructions define a stricter one:
   If the user provides a path, validate that it is a remote deploy folder and
   save it to the project-local FTP config. If the user asks to choose a folder,
   list remote directories through the configured FTP service or project-local
-  credentials when available, present a short numbered Markdown checkbox list,
-  and accept numeric replies against that latest checklist. Do not upload files
+  credentials when available, present a short plain inline numbered checkbox
+  marker list, and accept numeric replies against that latest checklist. Do not upload files
   during this command.
 - When writing config values, preserve existing fields unless the user asks to
   change them.

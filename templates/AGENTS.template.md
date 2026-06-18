@@ -397,8 +397,8 @@ Inspect logs:
   when this project needs FTP and local config does not name a target service,
   query config-service for FTP-capable services. If exactly one matching service
   exists, use it after verifying its contract; if several exist, ask the user to
-  choose with the same numbered Markdown checkbox style used by language
-  selection. Keep secrets out of config-service: store only discovery metadata
+  choose with the same plain inline numbered checkbox marker style used by
+  language selection. Keep secrets out of config-service: store only discovery metadata
   and secret references such as environment variable names. Keep project-specific
   deploy settings in the separate project-local config file rather than shared
   instructions or chat history. Prefer `tools/deploy/ftp.local.example.json`
@@ -591,15 +591,16 @@ Inspect logs:
   command.
 - If `gi язык` or an equivalent unified project-language command is sent
   without explicit languages, run a three-step chat flow instead of asking for
-  one free-form line. At each step, show the same numbered Markdown checklist of
+  one free-form line. At each step, show the same plain numbered selection checklist of
   available languages with the current selection checked, name the current
   surface, and tell the user they may reply with numbers or language names.
-  Render each option as a task-list bullet with the number inside the label,
-  such as `- [x] 1. English`; do not use ordered-task syntax such as
-  `1. [x] English`, because some chat renderers split the checkbox and label
-  onto separate lines. Keep the checkbox marker, number, and label on one
-  physical Markdown line; never emit a standalone checkbox line followed by a
-  separate numbered label line.
+  Render each option as a plain inline checkbox marker with the number and
+  label on the same physical line, such as `[x] 1. English` or
+  `[ ] 2. Russian`. Do not use Markdown task-list syntax such as
+  `- [x] 1. English` or ordered-task syntax such as `1. [x] English`, because
+  some chat renderers split the checkbox control and label onto separate lines.
+  Never emit a standalone checkbox line followed by a separate numbered label
+  line.
 - When the user replies to that flow with a numeric-only answer such as `1 2`,
   interpret the numbers against the most recent language checklist and apply the
   resulting ordered languages to the current step. Do not ask which languages the

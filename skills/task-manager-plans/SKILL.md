@@ -127,13 +127,14 @@ When the user runs `gi tm`:
 3. If enabled managers exist, update the project task-manager skill/config from
    the shared instruction kit when a newer migration is available, then report
    the connected managers and next available sync action.
-4. If no enabled manager exists, show a short numbered Markdown checklist with
-   checkbox items for available adapters plus `none`, and ask which to connect.
-   Render each option as a task-list bullet with the number inside the label,
-   such as `- [ ] 1. WorkNest`; do not use ordered-task syntax such as
-   `1. [ ] WorkNest`. Keep the checkbox marker, number, and label on one
-   physical Markdown line; never emit a standalone checkbox line followed by a
-   separate numbered label line.
+4. If no enabled manager exists, show a short plain inline numbered checkbox
+   marker checklist with available adapters plus `none`, and ask which to connect.
+   Render each option as a plain inline checkbox marker with the number and
+   label on the same physical line, such as `[ ] 1. WorkNest`. Do not use
+   Markdown task-list syntax such as `- [ ] 1. WorkNest` or ordered-task syntax
+   such as `1. [ ] WorkNest`, because some chat renderers split the checkbox
+   control and label onto separate lines. Never emit a standalone checkbox line
+   followed by a separate numbered label line.
 5. After the user chooses managers, create or update
    `tools/project-memory/task-managers.json` from the shared template.
 6. Do not finish manager setup with required project fields left as `TODO`. Ask
@@ -148,8 +149,8 @@ Example checklist:
 ```markdown
 Choose task-manager adapters for plan sync:
 
-- [ ] 1. WorkNest - send plans to WorkNest raw intake.
-- [ ] 2. none - do not connect a task manager now.
+[ ] 1. WorkNest - send plans to WorkNest raw intake.
+[ ] 2. none - do not connect a task manager now.
 ```
 
 ## `gi план` / `gi post plan`

@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.18.7",
+  "instruction_kit_version": "2026.06.18.8",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -104,7 +104,8 @@
     "2026.06.18.4__preserve_summary_intent_and_integration_mapping",
     "2026.06.18.5__add_rag_retrieval_eval_checks",
     "2026.06.18.6__add_connected_projects_register",
-    "2026.06.18.7__keep_checkboxes_and_labels_on_one_line"
+    "2026.06.18.7__keep_checkboxes_and_labels_on_one_line",
+    "2026.06.18.8__use_plain_inline_checkbox_markers"
   ],
   "copied_files": [
     "AGENTS.md",

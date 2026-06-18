@@ -442,8 +442,9 @@ in this repository's live `AGENTS.md`.
   `tools/deploy/ftp.local.json` first; when a project needs FTP and local config
   does not name a target service, query config-service for FTP-capable services.
   If exactly one matching service exists, use it after verifying its contract;
-  if several exist, ask the user to choose with the same numbered Markdown
-  checkbox style used by language selection. Keep secrets out of config-service:
+  if several exist, ask the user to choose with the same plain inline numbered
+  checkbox marker style used by language selection. Keep secrets out of
+  config-service:
   store only discovery metadata and secret references such as environment
   variable names. Keep project-specific deploy settings in the separate
   project-local config file rather than shared instructions or chat history.
@@ -605,16 +606,17 @@ in this repository's live `AGENTS.md`.
 - If `gi язык` or an equivalent unified project-language command is sent
   without explicit languages, run a three-step chat flow instead of asking for
   one free-form line. First show a compact `Current settings` block for all
-  three language surfaces. At each step, show the same numbered Markdown
-  checklist of available languages with the current selection checked, add a
-  final unchecked `Cancel / Отмена` option, name the current surface, and tell
-  the user they may reply with numbers, language names, or cancel/отмена.
-  Render each option as a task-list bullet with the number inside the label,
-  such as `- [x] 1. English`; do not use ordered-task syntax such as
-  `1. [x] English`, because some chat renderers split the checkbox and label
-  onto separate lines. Keep the checkbox marker, number, and label on one
-  physical Markdown line; never emit a standalone checkbox line followed by a
-  separate numbered label line.
+  three language surfaces. At each step, show the same plain numbered
+  selection checklist of available languages with the current selection checked,
+  add a final unchecked `Cancel / Отмена` option, name the current surface, and
+  tell the user they may reply with numbers, language names, or cancel/отмена.
+  Render each option as a plain inline checkbox marker with the number and
+  label on the same physical line, such as `[x] 1. English` or
+  `[ ] 2. Russian`. Do not use Markdown task-list syntax such as
+  `- [x] 1. English` or ordered-task syntax such as `1. [x] English`, because
+  some chat renderers split the checkbox control and label onto separate lines.
+  Never emit a standalone checkbox line followed by a separate numbered label
+  line.
 - If the user selects `Cancel / Отмена`, replies `cancel` or `отмена`, or
   chooses only the cancel option during the language flow, stop the flow without
   changing any language preference files.

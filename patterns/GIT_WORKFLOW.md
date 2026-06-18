@@ -164,16 +164,17 @@ message language. If the user says only "choose/select commit language" without
 naming languages, ask which additional languages to enable, or offer the
 supported list.
 
-For ambiguous commit-language selection, present a concise numbered Markdown
-checklist instead of a prose-only list. Show `English` as always selected,
+For ambiguous commit-language selection, present a concise plain numbered
+selection checklist instead of a prose-only list. Show `English` as always selected,
 explain that it is the required primary commit-message language, and mark
 current additional languages as checked. Ask the user to reply with language
-names or numbers. Render each option as a task-list bullet with the number
-inside the label, such as `- [x] 1. English`; do not use ordered-task syntax
-such as `1. [x] English`, because some chat renderers split the checkbox and
-label onto separate lines. Keep the checkbox marker, number, and label on one
-physical Markdown line; never emit a standalone checkbox line followed by a
-separate numbered label line.
+names or numbers. Render each option as a plain inline checkbox marker with the
+number and label on the same physical line, such as `[x] 1. English` or
+`[ ] 2. Russian`. Do not use Markdown task-list syntax such as
+`- [x] 1. English` or ordered-task syntax such as `1. [x] English`, because
+some chat renderers split the checkbox control and label onto separate lines.
+Never emit a standalone checkbox line followed by a separate numbered label
+line.
 
 Example:
 
@@ -183,11 +184,11 @@ Which additional commit-message languages should be enabled?
 English is the required primary commit-message language and cannot be disabled.
 Reply with numbers or language names for any additional languages to enable.
 
-- [x] 1. English (primary, required)
-- [x] 2. Russian
-- [ ] 3. Spanish
-- [ ] 4. German
-- [ ] 5. French
+[x] 1. English (primary, required)
+[x] 2. Russian
+[ ] 3. Spanish
+[ ] 4. German
+[ ] 5. French
 ```
 
 When reporting the change, mention the plain path

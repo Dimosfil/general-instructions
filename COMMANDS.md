@@ -495,7 +495,7 @@ git-синхронизацией проекта.
 
 Если после обновления впервые стал доступен task-manager plan sync, но
 `tools/project-memory/task-managers.json` отсутствует или не содержит
-включенных менеджеров, сразу предложить numbered Markdown checklist с
+включенных менеджеров, сразу предложить plain inline numbered checkbox marker checklist с
 доступными адаптерами и `none`. Не подключать WorkNest или другой менеджер
 автоматически.
 
@@ -538,7 +538,7 @@ gi язык проекта: Russian
 трёх поверхностей, пока пользователь не задаст отдельные значения.
 
 В чатовой форме каждый из трёх выборов показывается как короткий нумерованный
-Markdown checklist с одним и тем же списком языков и текущими отметками.
+plain inline numbered checkbox marker checklist с одним и тем же списком языков и текущими отметками.
 Пользователь может ответить номерами или названиями языков. Если пользователь
 отвечает только числами, например `1 2`, агент применяет их к последнему
 показанному списку и сохраняет этот порядок для текущего этапа, не уточняя
@@ -560,12 +560,12 @@ Current settings:
 
 Reply with numbers or language names in priority order, or choose cancel.
 
-- [ ] 1. English
-- [x] 2. Russian
-- [ ] 3. Spanish
-- [ ] 4. German
-- [ ] 5. French
-- [ ] 6. Cancel / Отмена
+[ ] 1. English
+[x] 2. Russian
+[ ] 3. Spanish
+[ ] 4. German
+[ ] 5. French
+[ ] 6. Cancel / Отмена
 ```
 
 Настройка не переводит уже существующий текст задач, код, команды, логи,
@@ -598,7 +598,7 @@ gi язык коммита: English only
 Это старая настройка языка commit-сообщений. По умолчанию `English` без
 дополнительных языков. Агент обновляет
 `tools/project-memory/git-preferences.json` сам и кратко подтверждает. Если
-пользователь не называет языки, агент показывает Markdown checklist с текущим
+пользователь не называет языки, агент показывает plain inline numbered checkbox marker checklist с текущим
 выбором и пояснением, что `English` обязателен.
 
 ### Настроить Системный Язык Агента
@@ -878,15 +878,15 @@ them non-secret.
 FTP/FTPS/SFTP service record in config-service without uploading. When a project
 needs FTP and no local `serviceId` is selected, agents query config-service for
 FTP-capable services first. If one exists, they verify its contract and use it;
-if several exist, they ask the user to choose with the same numbered Markdown
-checkbox style used by language selection. Store only non-secret discovery
+if several exist, they ask the user to choose with the same plain inline
+numbered checkbox marker style used by language selection. Store only non-secret discovery
 metadata and secret reference names in config-service, never raw credentials or
 private remote paths.
 
 `gi ftp folder` / `ги фтп папка` inspects, chooses, or updates the remote upload
 folder (`remotePath`) without uploading. If credentials and a selected FTP
 service are available, the agent may list remote directories and ask the user to
-choose with numbered Markdown checkboxes; otherwise it asks for the destination
+choose with plain inline numbered checkbox markers; otherwise it asks for the destination
 path and saves it in `tools/deploy/ftp.local.json`.
 
 `gi ftp push` / `ги фтп пуш` is the explicit upload command. `gi ftp` /

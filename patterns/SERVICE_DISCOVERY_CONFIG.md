@@ -254,9 +254,9 @@ When resolving FTP for a project:
 2. If no `serviceId` is selected, query config-service for FTP-capable services.
 3. If exactly one matching service exists, read and verify its contract, then
    use it.
-4. If several matching services exist, ask the user to choose with the numbered
-   Markdown checkbox style used by language selection, such as
-   `- [ ] 1. Display name (service-id)`, and accept numeric replies against the
+4. If several matching services exist, ask the user to choose with the plain
+   inline numbered checkbox marker style used by language selection, such as
+   `[ ] 1. Display name (service-id)`, and accept numeric replies against the
    latest checklist.
 5. If no matching service exists, offer `gi ftp service` as the command to
    register one manually, then fall back to project-local FTP config only when
