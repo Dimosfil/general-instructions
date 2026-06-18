@@ -330,13 +330,28 @@ YYYY-MM-DD_HH-mm-ss_AGENT_WORK_SUMMARY.md
 Include:
 
 - Current state.
-- What changed.
-- Commands run and results.
+- Thread essence: user intent, important decisions, and the problem being solved.
+- What changed in code, architecture, product behavior, or business logic.
+- Verification evidence and meaningful check results.
 - Known failures or caveats.
 - Next best steps.
-- Current git status snapshot.
+- Repository state only when it affects the next handoff, such as uncommitted
+  work, unresolved conflicts, failed pushes, or a required follow-up.
 
-Summaries are for handoff. Durable knowledge belongs in project memory notes.
+Do not fill handoff summaries with routine command bookkeeping such as
+successful `gi push`, `gi commit`, staging counts, git directives, branch names,
+push targets, or commit hashes when those facts are recoverable from git logs or
+command history. If a step-by-step protocol is useful, write it as a separate
+`Thread Timeline` section or file only when the user asks or the timeline
+materially helps the handoff. Summaries are for handoff. Durable knowledge
+belongs in project memory notes.
+
+When resuming from a handoff or answering where a thread stopped, reconcile the
+summary with the latest visible thread conclusion, user screenshots, or direct
+quotes. Prefer the last explicit architectural/product decision, open question,
+or agreed next direction over incidental caveats. Do not turn an unverified
+caveat, environment variable, skipped check, or old next-step bullet into the
+active task unless the user selects it or it blocks the stated goal.
 
 ## 8. Map The Architecture Early
 

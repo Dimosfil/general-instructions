@@ -116,7 +116,7 @@
     }
   },
   "rebuild": {
-    "full_command": "gi root rebuild",
+    "full_command": "gi tools rebuild",
     "requires_confirmation_for_full": true,
     "nodes": {
       "manifest": {

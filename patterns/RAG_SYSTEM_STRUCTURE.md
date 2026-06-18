@@ -204,11 +204,11 @@ retrieval.
 
 Expose RAG rebuilds as documented agent commands, not guessed shell snippets:
 
-- `gi root rebuild` / `gi rag rebuild` / `ги рут ребилд` rebuilds the entire
-  configured project-memory/RAG system from approved sources.
-- Node commands such as `gi root rebuild sql`, `gi root rebuild chunks`,
-  `gi root rebuild vector`, `gi root rebuild manifest`, and
-  `gi root rebuild evals` rebuild only one configured node.
+- `gi tools rebuild` / `gi rag rebuild` / `ги тулс ребилд` rebuilds the entire
+  configured GI/project-memory/RAG system from approved sources.
+- Node commands such as `gi tools rebuild sql`, `gi tools rebuild chunks`,
+  `gi tools rebuild vector`, `gi tools rebuild manifest`, and
+  `gi tools rebuild evals` rebuild only one configured node.
 
 Full rebuild is heavy. Require explicit user confirmation immediately before
 running it. Before confirmation, read `tools/project-memory/rag-system.json` and

@@ -2,7 +2,41 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.18
+
+- Added resume/handoff reconciliation guidance: when the user asks where a
+  previous thread stopped, agents must compare the handoff summary with the
+  latest visible thread conclusion, screenshots, or direct quotes. The last
+  explicit architectural/product decision, open question, or agreed next
+  direction takes priority over incidental summary caveats. Unverified
+  environment variables, skipped checks, and old next-step bullets must not
+  become the active task unless the user selects them or they block the stated
+  goal.
+
+- Tightened `gi summary` / `gi саммари` handoff rules and the summary template
+  so summaries preserve thread substance: user intent, decisions, code,
+  architecture or business-logic changes, verification evidence, blockers, and
+  next useful context. Routine command bookkeeping such as successful
+  `gi push`, staging counts, git directives, branch/push metadata, and commit
+  hashes should be omitted when git logs or command history can recover it. If
+  a step-by-step protocol is needed, it should be written separately as
+  `Thread Timeline`, not mixed into the ordinary handoff summary.
+
 ## 2026.06.17
+
+- Replaced the active RAG rebuild command surface: `gi rebuild` / `ги ребилд`
+  now means a current project/application rebuild only, such as producing a
+  documented build artifact or exe. `gi tools rebuild` / `gi rag rebuild` /
+  `ги тулс ребилд` / `ги раг ребилд` cover the separate GI/RAG-only rebuild flow
+  and scoped node rebuilds. The old `root rebuild` wording is no longer part of
+  the active command list.
+
+- Tightened `gi reboot` / `gi restart` so agents must verify a real startup
+  success signal after launch. A PID alone is not enough: agents should check
+  the expected process after a short wait, visible desktop window when
+  applicable, web/API health or discovery when applicable, and relevant startup
+  or crash logs when documented, then report failed or unverified startup with
+  concrete evidence.
 
 - Updated config-service startup guidance so web-facing services with
   self-registration enabled can create or refresh their own service record when

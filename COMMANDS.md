@@ -45,18 +45,32 @@ gi restore
 gi sql
 gi sqlite
 gi vector
-gi root rebuild
+gi rebuild
+gi tools rebuild
 gi rag rebuild
-gi root rebuild sql
-gi root rebuild chunks
-gi root rebuild vector
-gi root rebuild evals
-ги рут ребилд
+gi tools rebuild sql
+gi rag rebuild sql
+gi tools rebuild chunks
+gi rag rebuild chunks
+gi tools rebuild vector
+gi rag rebuild vector
+gi tools rebuild manifest
+gi rag rebuild manifest
+gi tools rebuild evals
+gi rag rebuild evals
+ги ребилд
+ги тулс ребилд
 ги раг ребилд
-ги рут ребилд sql
-ги рут ребилд чанки
-ги рут ребилд вектор
-ги рут ребилд тесты
+ги тулс ребилд sql
+ги раг ребилд sql
+ги тулс ребилд чанки
+ги раг ребилд чанки
+ги тулс ребилд вектор
+ги раг ребилд вектор
+ги тулс ребилд манифест
+ги раг ребилд манифест
+ги тулс ребилд тесты
+ги раг ребилд тесты
 gi config
 gi config service
 gi config service url=http://127.0.0.1:4100
@@ -125,19 +139,20 @@ the listed commands.
 | `gi обновить`, `gi обновись` | Apply accepted instruction-kit updates and migrations. |
 | `gi init <source>`, `инит <source>`, `инит правила <source>` | Bootstrap or restore shared instructions from `general-instructions`. |
 | `gi start`, `gi старт`, `gi restore` | Restore minimal project context and ask for the current task. |
-| `gi summary`, `gi саммари` | Write a compact handoff summary under `tools/summary/`. |
+| `gi summary`, `gi саммари` | Write a compact substance-focused handoff summary under `tools/summary/`. |
 | `gi language`, `gi язык` | Configure project working-environment languages. |
 | `gi project language`, `gi проект язык`, `gi язык проекта` | Configure project-facing language preferences. |
 | `gi commit language`, `gi коммит язык`, `gi язык коммита` | Configure commit-message languages. |
 | `gi system language`, `gi систем язык` | Configure agent working-response language. |
 | `gi sql`, `gi sqlite` | Inspect SQLite/FTS project-memory readiness and metrics. |
 | `gi vector` | Inspect semantic/vector retrieval readiness and metrics. |
-| `gi root rebuild`, `gi rag rebuild`, `ги рут ребилд` | Rebuild the full configured project-memory/RAG system after confirmation. |
-| `gi root rebuild sql` | Rebuild only the SQL/FTS structured-memory node. |
-| `gi root rebuild chunks` | Rebuild only semantic chunk exports. |
-| `gi root rebuild vector` | Rebuild only the vector retrieval node. |
-| `gi root rebuild manifest` | Rebuild only source manifest/inventory metadata. |
-| `gi root rebuild evals` | Run or rebuild retrieval eval artifacts only. |
+| `gi rebuild`, `ги ребилд` | Rebuild the current project/application only, such as producing a build artifact or exe. |
+| `gi tools rebuild`, `gi rag rebuild`, `ги тулс ребилд`, `ги раг ребилд` | Rebuild the full configured GI/project-memory/RAG system after confirmation. |
+| `gi tools rebuild sql`, `gi rag rebuild sql` | Rebuild only the SQL/FTS structured-memory node. |
+| `gi tools rebuild chunks`, `gi rag rebuild chunks` | Rebuild only semantic chunk exports. |
+| `gi tools rebuild vector`, `gi rag rebuild vector` | Rebuild only the vector retrieval node. |
+| `gi tools rebuild manifest`, `gi rag rebuild manifest` | Rebuild only source manifest/inventory metadata. |
+| `gi tools rebuild evals`, `gi rag rebuild evals` | Run or rebuild retrieval eval artifacts only. |
 | `gi config`, `gi config service` | Inspect config/discovery service settings. |
 | `gi config service url=<url>` | Set the config-service URL after validation. |
 | `gi config service on`, `gi config service off` | Toggle current app self-registration with config-service. |
@@ -256,28 +271,58 @@ These are inspection commands by default. They do not deploy external services,
 install heavy dependencies, upload data, or index private sources unless the
 user explicitly asks and project-local rules allow it.
 
-### Rebuild Project RAG
+### Rebuild Project
 
 ```text
-gi root rebuild
-gi rag rebuild
-ги рут ребилд
-ги раг ребилд
-
-gi root rebuild sql
-gi root rebuild chunks
-gi root rebuild vector
-gi root rebuild manifest
-gi root rebuild evals
-ги рут ребилд sql
-ги рут ребилд чанки
-ги рут ребилд вектор
-ги рут ребилд манифест
-ги рут ребилд тесты
+gi rebuild
+ги ребилд
 ```
 
-`gi root rebuild` / `gi rag rebuild` asks the agent to rebuild the whole
-configured project-memory/RAG retrieval system for the current project:
+`gi rebuild` asks the agent to rebuild the current project/application build
+output, such as an executable, package, or other
+documented artifact. The agent reads project-local build or rebuild
+instructions, manifests, scripts, and packaging metadata before running the
+documented command.
+
+This command does not mean dependency restore, tests-only verification, a
+RAG-only rebuild, or a combined project-plus-RAG rebuild. It does not rebuild
+GI/RAG indexes or tools. If no project rebuild contract exists, the agent asks
+one short clarification question instead of inventing a command. Use
+`gi tools rebuild` or `gi rag rebuild` when the GI/RAG layer itself must be
+rebuilt.
+
+### Rebuild GI/RAG Tools
+
+```text
+gi tools rebuild
+gi rag rebuild
+ги тулс ребилд
+ги раг ребилд
+
+gi tools rebuild sql
+gi rag rebuild sql
+gi tools rebuild chunks
+gi rag rebuild chunks
+gi tools rebuild vector
+gi rag rebuild vector
+gi tools rebuild manifest
+gi rag rebuild manifest
+gi tools rebuild evals
+gi rag rebuild evals
+ги тулс ребилд sql
+ги раг ребилд sql
+ги тулс ребилд чанки
+ги раг ребилд чанки
+ги тулс ребилд вектор
+ги раг ребилд вектор
+ги тулс ребилд манифест
+ги раг ребилд манифест
+ги тулс ребилд тесты
+ги раг ребилд тесты
+```
+
+`gi tools rebuild` / `gi rag rebuild` asks the agent to rebuild the whole
+configured GI/project-memory/RAG retrieval system for the current project:
 manifest/source inventory, SQLite/FTS or structured indexes, semantic chunk
 exports, vector indexes, adapter metadata, and retrieval status/eval checks.
 
@@ -287,9 +332,9 @@ lists configured rebuild nodes, generated paths that may be replaced, commands
 or adapters that will run, and privacy exclusions. It does not index secrets,
 private runtime data, ignored telemetry, or sources outside the project root.
 
-Node forms such as `gi root rebuild sql`, `gi root rebuild chunks`,
-`gi root rebuild vector`, `gi root rebuild manifest`, and
-`gi root rebuild evals` rebuild only that node through the command documented in
+Node forms such as `gi tools rebuild sql`, `gi rag rebuild chunks`,
+`gi tools rebuild vector`, `gi rag rebuild manifest`, and
+`gi tools rebuild evals` rebuild only that node through the command documented in
 `rag-system.json` or the project-local runbook, then run the matching status
 check. If the node is not configured, the agent asks one short clarification
 question instead of inventing a command.
@@ -598,7 +643,20 @@ gi саммари
 ```
 
 Создаёт `tools/summary/YYYY-MM-DD_HH-mm-ss_AGENT_WORK_SUMMARY.md` по
-структуре из `templates/SUMMARY.template.md`.
+структуре из `templates/SUMMARY.template.md`. Summary фиксирует смысл треда:
+намерение пользователя, решения, изменения кода/архитектуры/бизнес-логики,
+проверки, блокеры и следующий полезный контекст. Рутинные успешные `gi push`,
+`gi commit`, staging counts, git directives, branch/push metadata и commit hash
+не записываются, если их можно восстановить из git logs или command history.
+Если нужен подробный протокол, он пишется отдельно как `Thread Timeline`, а не
+подмешивается в обычный handoff summary.
+
+Когда пользователь спрашивает, на чём остановились в прошлом треде, агент
+сверяет handoff summary с последним видимым выводом треда, скриншотами или
+цитатами пользователя. Приоритет у последнего явного архитектурного/продуктового
+решения, открытого вопроса или согласованного направления, а не у случайного
+caveat из summary. Непроверенный env/config caveat, пропущенный check или
+старый next-step bullet не становятся текущей задачей сами по себе.
 
 ### Собрать Обзор Последнего Git-Коммита
 
@@ -848,7 +906,12 @@ or stopping the config-service process.
 
 `gi reboot` / `gi restart` starts or restarts the current application using
 project-local run instructions. If it is already running, restart it; otherwise
-start it in the background.
+start it in the background. After launch, wait briefly and verify the documented
+startup success signal: the expected process is still running, a visible desktop
+window exists when applicable, web/API health or discovery succeeds when
+applicable, and relevant startup or crash logs do not show a new failure. Do not
+report reboot success from a PID alone; report failed or unverified startup with
+the concrete evidence.
 
 `gi first test` / `gi первый тест` / `ги первый тест` resets only documented
 project-owned application cache, generated state, temporary first-run profiles,

@@ -52,6 +52,24 @@ versions when known, and verify current local source files before editing.
 Follow `patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md`.
 
 Treat `tools/summary/` as compact handoff state for the current or recent chat.
+Handoff summaries should preserve the essence of the thread: user intent,
+business or product logic, code or architecture changes, important decisions,
+verification evidence, blockers, and next useful context. Do not fill summaries
+with routine command bookkeeping such as `gi push`, `gi commit`, staging counts,
+git directives, branch names, push targets, or commit hashes when that
+information is recoverable from git logs or command history. Mention repository
+state only when it changes what the next agent must do, such as uncommitted
+work, unresolved conflicts, failed pushes, or a required follow-up. If a
+step-by-step protocol is useful, write it as a separate `Thread Timeline`
+section or file only when the user asks or the timeline materially helps the
+handoff.
+When the user asks where a previous thread stopped, compare the latest handoff
+summary with the most recent visible thread conclusion or user-provided
+evidence. Prefer the last explicit architectural/product decision, open
+question, or agreed next direction over incidental caveats in the summary. Do
+not promote an unverified caveat, environment variable, skipped check, or old
+`Next Best Steps` bullet into the current task unless the user selects it or it
+blocks the stated goal.
 Treat `tools/project-memory/` as durable product and project knowledge. For every
 non-trivial feature, business workflow, or architecture decision, keep
 platform-neutral project-memory specifications that describe the behavior,
@@ -413,6 +431,13 @@ in this repository's live `AGENTS.md`.
   start or restart the current application using project-local run instructions.
   If the app is running, restart it; if it is not running, start it. Launch in
   the background so focus does not jump away from the user's current window.
+  After launch, wait briefly and verify the documented startup success signal:
+  a still-running expected process, visible desktop window when applicable,
+  health/discovery endpoint for web/API apps, and relevant startup or crash
+  logs when documented. Do not report reboot success from a PID alone. If the
+  process exits, no expected window or health signal appears, or a new startup
+  traceback is present, report the reboot as failed or unverified with the
+  concrete evidence.
 - Treat `gi first test`, `gi первый тест`, and `ги первый тест` as requests to
   verify the current application's first-launch experience by resetting only
   documented project-owned app cache, generated state, temporary first-run
@@ -454,36 +479,53 @@ in this repository's live `AGENTS.md`.
   These are inspection commands by default; do not create external services,
   install heavy dependencies, upload data, or index private sources unless the
   user explicitly asks and project-local rules allow it.
-- Treat `gi root rebuild`, `gi rag rebuild`, `ги рут ребилд`,
-  `ги раг ребилд`, and equivalent full-RAG rebuild wording as requests to
-  rebuild the current project's entire configured RAG/project-memory retrieval
-  system from approved sources: source manifest, SQLite/FTS or structured
-  memory indexes, chunk exports, vector indexes, adapter metadata, and retrieval
-  eval/status checks. This is a heavy command and requires an explicit user
-  confirmation immediately before running the full rebuild, even if the user
-  requested the command by name. Before asking for confirmation, read
-  `tools/project-memory/rag-system.json`, list the configured rebuild nodes,
-  generated paths that may be replaced, expected local scripts or adapters, and
-  privacy exclusions. Do not include secrets, private runtime data, ignored
-  telemetry, or sources outside the current project root. After a successful
-  rebuild, run the configured stats/status/eval checks, update local rebuild
-  state such as `last_full_rebuild_migration` or per-node markers when present,
-  and report changed generated artifacts without committing rebuildable indexes.
-- Treat `gi root rebuild sql`, `gi rag rebuild sql`, `gi root rebuild vector`,
-  `gi rag rebuild vector`, `gi root rebuild chunks`,
-  `gi root rebuild manifest`, `gi root rebuild evals`, and Russian equivalents
-  such as `ги рут ребилд sql`, `ги рут ребилд вектор`,
-  `ги рут ребилд чанки`, `ги рут ребилд манифест`, and
-  `ги рут ребилд тесты` as requests to rebuild only the named RAG node. Read
-  `rag-system.json`, run only the documented node command or local helper, then
-  verify that node's status. Ask one short clarification question if the node is
-  not configured instead of guessing a command.
+- Treat `gi rebuild` and `ги ребилд` as requests to rebuild the current project
+  or application only, producing the documented build output such as an
+  executable, package, or other artifact. Read project-local build or rebuild
+  instructions, manifests, scripts, and packaging metadata before running the
+  documented command.
+  Do not treat `gi rebuild` as dependency restore, tests-only verification, or
+  any RAG/GI tooling rebuild, and do not combine it with a RAG rebuild unless
+  the user explicitly asks for both. If no project rebuild contract exists, ask
+  one short clarification question instead of inventing a command. Use
+  `gi tools rebuild` or `gi rag rebuild` when the GI/RAG layer itself must be
+  rebuilt.
+- Treat `gi tools rebuild`, `gi rag rebuild`, `ги тулс ребилд`,
+  `ги раг ребилд`, and equivalent full GI/RAG rebuild wording as requests to
+  rebuild the current project's entire configured GI/RAG project-memory
+  retrieval system from approved sources: source manifest, SQLite/FTS or
+  structured memory indexes, chunk exports, vector indexes, adapter metadata,
+  and retrieval eval/status checks. This is a heavy command and requires an
+  explicit user confirmation immediately before running the full rebuild, even
+  if the user requested the command by name. Before asking for confirmation,
+  read `tools/project-memory/rag-system.json`, list the configured rebuild
+  nodes, generated paths that may be replaced, expected local scripts or
+  adapters, and privacy exclusions. Do not include secrets, private runtime
+  data, ignored telemetry, or sources outside the current project root. After a
+  successful rebuild, run the configured stats/status/eval checks, update local
+  rebuild state such as `last_full_rebuild_migration` or per-node markers when
+  present, and report changed generated artifacts without committing
+  rebuildable indexes.
+- Treat `gi tools rebuild sql`, `gi rag rebuild sql`,
+  `gi tools rebuild vector`, `gi rag rebuild vector`,
+  `gi tools rebuild chunks`, `gi rag rebuild chunks`,
+  `gi tools rebuild manifest`, `gi rag rebuild manifest`,
+  `gi tools rebuild evals`, `gi rag rebuild evals`, and Russian equivalents
+  such as `ги тулс ребилд sql`, `ги раг ребилд sql`,
+  `ги тулс ребилд вектор`, `ги раг ребилд вектор`,
+  `ги тулс ребилд чанки`, `ги раг ребилд чанки`,
+  `ги тулс ребилд манифест`, `ги раг ребилд манифест`,
+  `ги тулс ребилд тесты`, and `ги раг ребилд тесты` as requests to rebuild only
+  the named GI/RAG node. Read `rag-system.json`, run only the documented node
+  command or local helper, then verify that node's status. Ask one short
+  clarification question if the node is not configured instead of guessing a
+  command.
 - During `gi обновить`, inspect each newly applied migration. If a migration
   changes RAG source rules, chunking, embedding metadata, SQLite/vector schemas,
   retrieval adapters, or project-memory index scripts, check the project's
   `rag-system.json` rebuild state. If the project has not rebuilt the affected
   RAG nodes for that migration, tell the user exactly which nodes are stale and
-  ask for confirmation before running the full `gi root rebuild`; for narrow
+  ask for confirmation before running the full `gi tools rebuild`; for narrow
   migrations, run or offer the smallest documented node rebuild that satisfies
   the migration. Do not mark RAG rebuild state current until the rebuild and
   readback/status checks succeed.

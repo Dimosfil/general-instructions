@@ -10,6 +10,13 @@ Treat `tools/summary/` and `tools/project-memory/` as different layers:
 - `tools/summary/` is a compact handoff for the current or recent chat.
 - `tools/project-memory/` is durable product and project knowledge.
 
+Handoff summaries should capture user intent, decisions, code or architecture
+changes, business logic, verification evidence, blockers, and next useful
+context. Do not use them as a routine command ledger for successful `gi push`,
+staging counts, git directives, branch names, push targets, or commit hashes
+that are already recoverable from git logs or command history. Keep any needed
+step-by-step protocol in a separate `Thread Timeline` section or file.
+
 Project memory should let a future agent understand and rebuild the product
 behavior even when the current code, language, framework, platform, or UI stack
 changes. Code is the current implementation. Project-memory specifications are

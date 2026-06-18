@@ -15,6 +15,10 @@ question, command, path, or error that needs project context.
 1. Read root `AGENTS.md`.
 2. Read only the latest handoff summary from `tools/summary/`, and read only
    its heading, current state, and next steps unless the current task needs more.
+   If the task is to answer "where did we stop?", also compare the summary with
+   the most recent visible thread conclusion or user-provided evidence. Prefer
+   the last explicit architectural/product decision, open question, or agreed
+   next direction over incidental caveats or old next-step bullets.
 3. Search `tools/project-memory/` by task terms, symbols, paths, errors, or
    feature names.
 4. Query SQLite memory only with targeted searches and small `LIMIT`s.
@@ -24,6 +28,10 @@ question, command, path, or error that needs project context.
 7. After meaningful work, write verified durable findings to project memory and
    update the relevant specification. Write a handoff summary separately when
    chat state needs to be carried to the next session.
+   Keep that summary focused on thread substance and omit routine command
+   bookkeeping that can be recovered from git logs or command history unless it
+   affects the next action. If a step-by-step protocol is useful, keep it in a
+   separate `Thread Timeline` section or file.
 
 For first-pass project study, read local instructions, README, manifests, and
 config entry points before building a file map. Use recursive scans only when a

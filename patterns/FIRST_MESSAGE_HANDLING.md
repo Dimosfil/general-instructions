@@ -126,6 +126,13 @@ Keep the response scoped to the `gi` command. After completing it, summarize onl
 that command's result and stop. Do not resume an older product task or previous
 conversation thread unless the user explicitly asks.
 
+When the user asks where a previous thread stopped or what the current handoff
+means, treat handoff summaries as evidence to reconcile with the latest visible
+thread conclusion and user-provided screenshots or quotes. Do not answer from
+the summary alone when the user supplies a newer or more specific thread ending.
+Do not promote incidental caveats, environment variables, skipped checks, or old
+next-step bullets into the active task unless they block the stated goal.
+
 Run `gi` commands against the current project root. Do not switch to another
 repository, the shared instruction library, or a path from an older task unless
 the user explicitly asks. The shared library is only a source of accepted

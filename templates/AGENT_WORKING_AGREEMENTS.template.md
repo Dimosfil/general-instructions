@@ -206,10 +206,13 @@ or:
   retrieval metrics and activation limits. Report current counts, readiness,
   staleness, and recommendations; do not deploy heavy databases or external
   services by default.
-- Use `gi root rebuild` / `gi rag rebuild` only for a confirmed full rebuild of
-  the current project's configured RAG/project-memory retrieval system. Use
-  node forms such as `gi root rebuild sql`, `gi root rebuild chunks`,
-  `gi root rebuild vector`, and `gi root rebuild evals` for scoped rebuilds.
+- Use `gi rebuild` for the current project/application rebuild only, such as
+  producing an executable, package, or documented build artifact. Use
+  `gi tools rebuild` /
+  `gi rag rebuild` only for a confirmed full rebuild of the current project's
+  configured GI/RAG project-memory retrieval system. Use node forms such as
+  `gi tools rebuild sql`, `gi tools rebuild chunks`, `gi tools rebuild vector`,
+  and `gi tools rebuild evals` for scoped GI/RAG rebuilds.
   During `gi обновить`, migrations that change RAG rules, indexers, chunking,
   embedding metadata, or retrieval adapters must leave affected rebuild state
   stale until the documented rebuild and status checks succeed.
@@ -226,6 +229,21 @@ or:
   checking or applying instruction-kit file updates.
 - Treat `gi саммари` and `gi summary` as requests to write a handoff summary
   file under `tools/summary/`, not only as requests to summarize in chat.
+- Keep handoff summaries focused on thread substance: user intent, business
+  logic, code or architecture changes, decisions, verification evidence,
+  blockers, and next useful context. Omit routine command bookkeeping such as
+  successful `gi push`, staging counts, git directives, branch names, push
+  targets, and commit hashes when git logs or command history can recover them.
+  Mention repository state only when it affects the next agent's action. If a
+  step-by-step protocol is needed, add a separate `Thread Timeline` section or
+  file only when the user asks or the timeline materially helps the handoff.
+- When asked where a previous thread stopped, compare the latest handoff summary
+  with the most recent visible thread conclusion or user-provided evidence.
+  Prefer the last explicit architectural/product decision, open question, or
+  agreed next direction over incidental caveats in the summary. Do not turn an
+  unverified caveat, environment variable, skipped check, or old `Next Best
+  Steps` bullet into the current task unless the user selects it or it blocks
+  the stated goal.
 - Treat `gi гит-обзор` and `gi git summary` as requests to summarize the latest
   git commit in the current project in chat. Include commit metadata, changed
   files, compact stats, inferred purpose, and notable risks or checks. Do not
