@@ -4,6 +4,15 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Added connected-projects register guidance. Projects that depend on, research,
+  vendor, or regularly interact with external repositories, services,
+  libraries, docs sites, upstream tools, cloned examples, or sibling workspaces
+  should record them in
+  `tools/project-memory/specs/integration-contracts/connected-projects.md` with
+  purpose, business/architecture role, local paths, Git/docs URLs, service or
+  contract endpoints, owners, update commands, privacy/access boundaries,
+  status, caveats, and the reason each dependency exists.
+
 - Added machine-checkable RAG retrieval eval guidance and a local eval runner
   contract. `gi tools rebuild evals` / `gi rag rebuild evals` should verify RAG
   health, generated-ignore rules, count consistency across enabled retrieval

@@ -141,28 +141,28 @@
       }
     },
     "state": {
-      "last_full_rebuild_migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
-      "last_full_rebuild_at": "2026-06-18T15:11:34+00:00",
+      "last_full_rebuild_migration": "2026.06.18.6__add_connected_projects_register",
+      "last_full_rebuild_at": "2026-06-18T16:12:37+00:00",
       "last_node_rebuilds": {
         "sql": {
-          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
-          "rebuilt_at": "2026-06-18T15:11:34+00:00",
-          "status": "Files: 183; Chunks: 1282; FTS5 enabled"
+          "migration": "2026.06.18.6__add_connected_projects_register",
+          "rebuilt_at": "2026-06-18T16:12:37+00:00",
+          "status": "Files: 183; Chunks: 1284; FTS5 enabled"
         },
         "chunks": {
-          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
-          "rebuilt_at": "2026-06-18T15:11:34+00:00",
-          "status": "Exported chunks: 1282"
+          "migration": "2026.06.18.6__add_connected_projects_register",
+          "rebuilt_at": "2026-06-18T16:12:37+00:00",
+          "status": "Exported chunks: 1284"
         },
         "vector": {
-          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
-          "rebuilt_at": "2026-06-18T15:11:34+00:00",
-          "status": "Collection: general-instructions-project-memory-v1; Records: 1282"
+          "migration": "2026.06.18.6__add_connected_projects_register",
+          "rebuilt_at": "2026-06-18T16:12:37+00:00",
+          "status": "Collection: general-instructions-project-memory-v1; Records: 1284"
         },
         "evals": {
-          "migration": "2026.06.18.5__add_rag_retrieval_eval_checks",
-          "rebuilt_at": "2026-06-18T15:11:34+00:00",
-          "status": "RAG health and 5 retrieval eval cases passed"
+          "migration": "2026.06.18.6__add_connected_projects_register",
+          "rebuilt_at": "2026-06-18T16:12:37+00:00",
+          "status": "RAG health and 6 retrieval eval cases passed"
         }
       }
     }

@@ -40,11 +40,28 @@ tools/project-memory/
     business-rules/
     data-model/
     integration-contracts/
+      connected-projects.md
 ```
 
 Split documents by meaning. Keep feature behavior, business logic, architecture
 history, and implementation mapping searchable as separate focused files instead
 of one giant document.
+
+Keep a connected-projects register when this project depends on, researches,
+vendors, or regularly interacts with external repositories, cloned examples,
+service projects, libraries, docs sites, upstream tools, or sibling workspaces:
+
+```text
+tools/project-memory/specs/integration-contracts/connected-projects.md
+```
+
+For each connected project, record its purpose, business or architectural role,
+local folder when applicable, canonical Git/package/docs URLs, service IDs or
+runtime endpoints, owner/source of truth, data or API contract, setup/update
+commands, privacy and access boundaries, status, caveats, and why this project
+needs it. Agents should read the register before touching integrations or
+external project folders, and update it when a connected project is added,
+removed, moved, replaced, or given a new role.
 
 For each non-trivial feature or workflow, record:
 
@@ -223,6 +240,8 @@ count, index path, freshness caveats, and readiness.
   framework replacements, and storage/service/routing migrations.
 - `specs/`: platform-neutral feature, business-rule, data-model, and
   integration-contract specifications.
+- `specs/integration-contracts/connected-projects.md`: register of external
+  repositories, services, libraries, docs, tools, and sibling workspaces.
 - `retrieval-evals.json` or `semantic-retrieval-evals.md`: small eval set for
   keyword, semantic, and hybrid retrieval quality.
 - `rag_check.py`: optional health and retrieval eval runner.

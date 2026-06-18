@@ -15,6 +15,11 @@ Use this when preparing a repository for AI-agent collaboration.
   non-trivial product behavior, for example `specs/features/`,
   `specs/business-rules/`, `specs/data-model/`, and
   `specs/integration-contracts/`.
+- [ ] If the project depends on external repositories, cloned examples,
+  services, libraries, docs sites, or upstream tools, create
+  `tools/project-memory/specs/integration-contracts/connected-projects.md` from
+  `templates/CONNECTED_PROJECTS.template.md` with their purpose, local path,
+  Git/docs URLs, contracts, owners, boundaries, and reason for use.
 - [ ] Add `tools/project-memory/STUDY_PLAN.md`.
 - [ ] Copy or adapt `templates/pending-tasks.template.md` into
   `tools/project-memory/pending-tasks.md`.

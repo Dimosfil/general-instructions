@@ -57,12 +57,48 @@ tools/project-memory/
     data-model/
       <entity-or-aggregate>.md
     integration-contracts/
+      connected-projects.md
       <service-or-boundary>.md
 ```
 
 Use the structure that fits the project, but keep feature behavior, business
 logic, architecture history, and implementation mapping separable and
 searchable.
+
+## Connected Projects Register
+
+When a project depends on, researches, vendors, or regularly interacts with
+external repositories, cloned examples, service projects, libraries, docs sites,
+upstream tools, or sibling workspaces, keep a connected-projects register in the
+business/integration layer:
+
+```text
+tools/project-memory/specs/integration-contracts/connected-projects.md
+```
+
+The register should let any future agent answer what each connected project is,
+where to find it, why it matters, and what boundaries apply before reading files
+or changing integration behavior.
+
+For each connected project, record:
+
+- stable project name and short description;
+- business or architectural role in the current project;
+- local folder path when it is an approved workspace dependency;
+- canonical Git, package, documentation, dashboard, or issue-tracker URLs;
+- service ID, contract endpoint, API base, or discovery record when applicable;
+- owner, source of truth, update cadence, and version or branch policy;
+- data exchanged, API contract, generated artifacts, and runtime dependencies;
+- setup, sync, build, test, or update commands that are safe to run;
+- privacy, secret, license, and cross-repository access boundaries;
+- current status, known caveats, and the reason the dependency still exists.
+
+Agents should read this register before touching integrations, nested
+repositories, cloned examples, or external project folders. Update it in the
+same scoped change when adding, removing, replacing, relocating, or materially
+changing the role of a connected project. Do not use the register as permission
+to inspect arbitrary external folders; project-local scope and explicit user
+requests still govern filesystem access.
 
 ## Feature Specification Content
 

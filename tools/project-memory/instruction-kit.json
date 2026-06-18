@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.18.5",
+  "instruction_kit_version": "2026.06.18.6",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -102,7 +102,8 @@
     "2026.06.18.2__reconcile_handoff_with_thread_conclusion",
     "2026.06.18.3__make_gi_summary_thematic_and_thesis_based",
     "2026.06.18.4__preserve_summary_intent_and_integration_mapping",
-    "2026.06.18.5__add_rag_retrieval_eval_checks"
+    "2026.06.18.5__add_rag_retrieval_eval_checks",
+    "2026.06.18.6__add_connected_projects_register"
   ],
   "copied_files": [
     "AGENTS.md",

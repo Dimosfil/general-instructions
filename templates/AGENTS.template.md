@@ -130,6 +130,17 @@ and current implementation map. Write them so another agent could rebuild the
 project on a different language, platform, or framework and preserve the same
 behavior. Split specifications by meaning instead of one giant file. Keep major
 rewrites in `tools/project-memory/architecture-migrations.md`.
+When a project depends on, researches, vendors, or regularly interacts with
+other local repositories, cloned examples, services, libraries, docs sites, or
+upstream tools, keep a connected-projects register in project memory, preferably
+`tools/project-memory/specs/integration-contracts/connected-projects.md`. Record
+each external project's purpose, business or architectural role, local folder
+when applicable, canonical Git or documentation URLs, service IDs or runtime
+endpoints, owner/source of truth, data or API contract, setup/update command,
+access and privacy boundaries, and why the current project needs it. Agents must
+read this register before touching integrations or external project folders, and
+must update it when adding, removing, replacing, or changing the role of a
+connected project.
 
 Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a

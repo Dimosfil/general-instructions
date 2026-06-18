@@ -92,6 +92,17 @@ project on a different language, platform, or framework and preserve the same
 behavior. Split specifications by meaning instead of one giant file. Keep major
 rewrites in `tools/project-memory/architecture-migrations.md`. Follow
 `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`.
+When a project depends on, researches, vendors, or regularly interacts with
+other local repositories, cloned examples, services, libraries, docs sites, or
+upstream tools, keep a connected-projects register in project memory, preferably
+`tools/project-memory/specs/integration-contracts/connected-projects.md`. Record
+each external project's purpose, business or architectural role, local folder
+when applicable, canonical Git or documentation URLs, service IDs or runtime
+endpoints, owner/source of truth, data or API contract, setup/update command,
+access and privacy boundaries, and why the current project needs it. Agents must
+read this register before touching integrations or external project folders, and
+must update it when adding, removing, replacing, or changing the role of a
+connected project.
 
 Treat `gi ...` and `ги ...` forms as chat commands for the agent, not as
 PowerShell commands. When the user wants a command that should be run literally

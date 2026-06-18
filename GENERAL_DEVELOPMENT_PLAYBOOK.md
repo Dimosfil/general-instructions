@@ -141,6 +141,17 @@ Split project-memory specifications by meaning. Prefer focused files such as
 large document. Keep major architecture rewrites and platform migrations in
 `tools/project-memory/architecture-migrations.md`.
 
+For projects that depend on, research, vendor, or regularly interact with other
+repositories, cloned examples, services, libraries, docs sites, or upstream
+tools, keep `tools/project-memory/specs/integration-contracts/connected-projects.md`
+as the register of connected projects. Record each project's purpose, business
+or architectural role, local folder when applicable, canonical Git or docs URLs,
+service IDs or runtime endpoints, owner/source of truth, data/API contract,
+setup/update commands, privacy and access boundaries, status, caveats, and why
+the current project needs it. Agents should read this register before touching
+integrations or external project folders and update it when a connected project
+is added, removed, replaced, moved, or given a new role.
+
 Do not blindly migrate all Markdown into SQLite. When Markdown memory becomes
 too large to read cheaply, introduce or rebuild the SQLite memory/index and keep
 Markdown as the concise reviewable export.

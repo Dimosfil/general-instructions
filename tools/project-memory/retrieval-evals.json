@@ -52,6 +52,18 @@
       "why": "Durable memory should preserve product behavior and verification, not only current code."
     },
     {
+      "id": "connected_projects_register",
+      "query": "where should an agent find external project folders git urls service roles and integration boundaries",
+      "mode": "hybrid",
+      "expected_paths_any": [
+        "patterns/PROJECT_MEMORY_SPECIFICATIONS.md",
+        "templates/CONNECTED_PROJECTS.template.md",
+        "tools/project-memory/specs/integration-contracts/connected-projects.md"
+      ],
+      "min_any_hits": 1,
+      "why": "Agents need a durable register for connected projects before touching integrations or external folders."
+    },
+    {
       "id": "config_service_runtime_discovery",
       "query": "resolve runtime service URLs through config service instead of guessing ports",
       "mode": "hybrid",

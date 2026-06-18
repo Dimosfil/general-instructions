@@ -72,7 +72,8 @@ Reusable instructions in this repository are grouped by job.
   and `gi ftp` upload workflow.
 - `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`: portable project-memory
   specifications for product behavior, feature algorithms, business logic,
-  architecture migrations, and SQL/vector activation limits.
+  connected-project registers, architecture migrations, and SQL/vector
+  activation limits.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure that separates
   source corpus, structured memory, retrieval adapters, context packets,
   tracing, evals, and writeback.
@@ -106,6 +107,8 @@ Reusable instructions in this repository are grouped by job.
   bootstrap override for the GI config service.
 - `templates/ARCHITECTURE_MIGRATIONS.template.md`: starter project-memory file
   for recording major architecture rewrites and platform migrations.
+- `templates/CONNECTED_PROJECTS.template.md`: starter connected-projects
+  register for external repositories, services, docs, and upstream tools.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/rag-system.template.json`: project-local RAG configuration shape
   for source groups, exclusions, structured memory, retrieval adapters, context
