@@ -32,10 +32,13 @@ question, command, path, or error that needs project context.
    the thread into meaningful topic sections, list and briefly describe key
    theses under each topic, and add detail only when a complex topic needs it.
    Link code files, URLs, media, images, logs, screenshots, or exact artifacts
-   only when they are needed to understand or verify the context. Omit routine
-   command bookkeeping that can be recovered from git logs or command history
-   unless it affects the next action. If a step-by-step protocol is useful, keep
-   it in a separate `Thread Timeline` section or file.
+   only when they are needed to understand or verify the context. For
+   architecture or research conversations about external projects, articles,
+   patterns, or tools, preserve the user's exploration intent, map external
+   concepts to current project components, and mark decisions separately from
+   hypotheses. Omit routine command bookkeeping that can be recovered from git
+   logs or command history unless it affects the next action. If a step-by-step
+   protocol is useful, keep it in a separate `Thread Timeline` section or file.
 
 For first-pass project study, read local instructions, README, manifests, and
 config entry points before building a file map. Use recursive scans only when a

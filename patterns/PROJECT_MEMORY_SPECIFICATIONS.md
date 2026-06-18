@@ -17,11 +17,18 @@ thread into meaningful topic sections, list the key theses under each topic,
 briefly describe each thesis, and add details only when a complex topic would
 lose necessary context without them. Include links to code files, URLs, media,
 images, logs, screenshots, or exact artifacts only when those references are
-needed to understand or verify the context. Do not use summaries as a routine
-command ledger for successful `gi push`, staging counts, git directives, branch
-names, push targets, or commit hashes that are already recoverable from git logs
-or command history. Keep any needed step-by-step protocol in a separate
-`Thread Timeline` section or file.
+needed to understand or verify the context. For architecture or research
+conversations, especially when the user evaluates an external project, article,
+pattern, or tool as a possible integration target, summaries must explicitly
+preserve the user's exploration intent and map external concepts to current
+project components. State whether the discussion was informational or
+preparation for implementation, what external item was considered, which local
+components it maps to, what a future agent must not miss, and which conclusions
+are decisions versus hypotheses. Do not use summaries as a routine command
+ledger for successful `gi push`, staging counts, git directives, branch names,
+push targets, or commit hashes that are already recoverable from git logs or
+command history. Keep any needed step-by-step protocol in a separate `Thread
+Timeline` section or file.
 
 Project memory should let a future agent understand and rebuild the product
 behavior even when the current code, language, framework, platform, or UI stack

@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.18
 
+- Added intent-preservation guidance for `gi summary` / `gi саммари`.
+  Architecture and research handoffs, especially when the user evaluates an
+  external project, article, pattern, or tool as a possible integration target,
+  must explicitly preserve the user's exploration intent, map external concepts
+  to current project components, and distinguish decisions from hypotheses.
+
 - Tightened `gi summary` / `gi саммари` handoff structure: summaries should
   break the thread into meaningful topics, list and briefly describe key theses
   under each topic, add details only when a complex topic needs them, and link

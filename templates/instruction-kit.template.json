@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.18.3",
+  "instruction_kit_version": "2026.06.18.4",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -100,7 +100,8 @@
     "2026.06.17.3__replace_root_rebuild_with_project_and_tools_rebuild",
     "2026.06.18.1__keep_handoff_summaries_substance_focused",
     "2026.06.18.2__reconcile_handoff_with_thread_conclusion",
-    "2026.06.18.3__make_gi_summary_thematic_and_thesis_based"
+    "2026.06.18.3__make_gi_summary_thematic_and_thesis_based",
+    "2026.06.18.4__preserve_summary_intent_and_integration_mapping"
   ],
   "copied_files": [
     "AGENTS.md",

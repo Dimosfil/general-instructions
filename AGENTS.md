@@ -61,15 +61,21 @@ code files, URLs, media, images, logs, screenshots, or exact artifacts only
 when those references are needed to understand or verify the context; omit
 incidental references that do not help the handoff. Preserve user intent,
 business or product logic, code or architecture changes, important decisions,
-verification evidence, blockers, and next useful context. Do not fill summaries
-with routine command bookkeeping such as `gi push`, `gi commit`, staging counts,
-git directives, branch names, push targets, or commit hashes when that
-information is recoverable from git logs or command history. Mention repository
-state only when it changes what the next agent must do, such as uncommitted
-work, unresolved conflicts, failed pushes, or a required follow-up. If a
-step-by-step protocol is useful, write it as a separate `Thread Timeline`
-section or file only when the user asks or the timeline materially helps the
-handoff.
+verification evidence, blockers, and next useful context. For architecture or
+research conversations, especially when the user evaluates an external project,
+article, pattern, or tool as a possible integration target, explicitly preserve
+the user's exploration intent and map the external concepts to current project
+components. State whether the discussion was informational or preparation for
+implementation, which external item was considered, which local components it
+could affect, what a future agent must not miss, and which conclusions are
+decisions versus hypotheses. Do not fill summaries with routine command
+bookkeeping such as `gi push`, `gi commit`, staging counts, git directives,
+branch names, push targets, or commit hashes when that information is
+recoverable from git logs or command history. Mention repository state only
+when it changes what the next agent must do, such as uncommitted work,
+unresolved conflicts, failed pushes, or a required follow-up. If a step-by-step
+protocol is useful, write it as a separate `Thread Timeline` section or file
+only when the user asks or the timeline materially helps the handoff.
 When the user asks where a previous thread stopped, compare the latest handoff
 summary with the most recent visible thread conclusion or user-provided
 evidence. Prefer the last explicit architectural/product decision, open

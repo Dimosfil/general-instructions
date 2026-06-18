@@ -235,7 +235,14 @@ or:
   thesis. Add more detail only when a complex topic would lose necessary
   context without it. Include links to code files, URLs, media, images, logs,
   screenshots, or exact artifacts only when those references are needed to
-  understand or verify the context. Omit routine command bookkeeping such as
+  understand or verify the context. For architecture or research conversations,
+  especially when the user evaluates an external project, article, pattern, or
+  tool as a possible integration target, explicitly preserve the user's
+  exploration intent and map the external concepts to current project
+  components. State whether the discussion was informational or preparation for
+  implementation, which external item was considered, which local components it
+  could affect, what a future agent must not miss, and which conclusions are
+  decisions versus hypotheses. Omit routine command bookkeeping such as
   successful `gi push`, staging counts, git directives, branch names, push
   targets, and commit hashes when git logs or command history can recover them.
   Mention repository state only when it affects the next agent's action. If a
