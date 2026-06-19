@@ -453,16 +453,19 @@ in this repository's live `AGENTS.md`.
   remote paths unless project policy explicitly marks them non-secret. Follow
   `patterns/PROJECT_FTP_DEPLOY.md`.
 - Treat `gi reboot`, `ги ребут`, `gi restart`, and `ги рестарт` as requests to
-  start or restart the current application using project-local run instructions.
-  If the app is running, restart it; if it is not running, start it. Launch in
-  the background so focus does not jump away from the user's current window.
-  After launch, wait briefly and verify the documented startup success signal:
-  a still-running expected process, visible desktop window when applicable,
-  health/discovery endpoint for web/API apps, and relevant startup or crash
-  logs when documented. Do not report reboot success from a PID alone. If the
-  process exits, no expected window or health signal appears, or a new startup
-  traceback is present, report the reboot as failed or unverified with the
-  concrete evidence.
+  start or restart all documented applications in the current project using
+  project-local run instructions. If local instructions define a preferred
+  start/restart command that launches the full app set, use it. Otherwise
+  enumerate every documented app or runtime, such as desktop app, web/API app,
+  and background workers, then restart each running app and start each missing
+  app. Launch in the background so focus does not jump away from the user's
+  current window. After launch, wait briefly and verify the documented startup
+  success signal for each app: still-running expected processes, visible
+  desktop windows when applicable, health/discovery endpoints for web/API apps,
+  and relevant startup or crash logs when documented. Do not report reboot
+  success from a PID alone. If any app exits, no expected window or health
+  signal appears, or a new startup traceback is present, report the reboot as
+  failed or partially unverified with the concrete evidence.
 - Treat `gi first test`, `gi первый тест`, and `ги первый тест` as requests to
   verify the current application's first-launch experience by resetting only
   documented project-owned app cache, generated state, temporary first-run

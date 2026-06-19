@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.19
+
+- Changed `gi reboot` / `gi restart` to start or restart all documented
+  applications in the current project, not only one current app. Agents should
+  use a local full-app-set start/restart command when documented; otherwise
+  they should enumerate documented desktop apps, web/API apps, background
+  workers, and similar runtimes, restart running ones, start missing ones, and
+  verify each documented startup signal before reporting success.
+
 ## 2026.06.18
 
 - Defaulted missing unified `gi language` / `gi язык` selections to `1 2`

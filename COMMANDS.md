@@ -156,7 +156,7 @@ the listed commands.
 | `gi config`, `gi config service` | Inspect config/discovery service settings. |
 | `gi config service url=<url>` | Set the config-service URL after validation. |
 | `gi config service on`, `gi config service off` | Toggle current app self-registration with config-service. |
-| `gi reboot`, `gi restart`, `ги ребут`, `ги рестарт` | Start or restart the current app using local run instructions. |
+| `gi reboot`, `gi restart`, `ги ребут`, `ги рестарт` | Start or restart all documented project apps using local run instructions. |
 | `gi first test`, `gi первый тест` | Reset documented first-run state and verify first-launch experience. |
 | `gi install`, `gi инсталл`, `ги инсталл` | Build/package the current project and verify an installer artifact. |
 | `gi ftp config`, `gi ftp service`, `gi ftp folder` | Inspect or configure FTP/SFTP deployment settings without uploading. |
@@ -918,14 +918,17 @@ explicitly define a discoverable web/API runtime. If the flag is being set to
 `gi config service url=<url>` first. Do not reinterpret `on`/`off` as starting
 or stopping the config-service process.
 
-`gi reboot` / `gi restart` starts or restarts the current application using
-project-local run instructions. If it is already running, restart it; otherwise
-start it in the background. After launch, wait briefly and verify the documented
-startup success signal: the expected process is still running, a visible desktop
-window exists when applicable, web/API health or discovery succeeds when
-applicable, and relevant startup or crash logs do not show a new failure. Do not
-report reboot success from a PID alone; report failed or unverified startup with
-the concrete evidence.
+`gi reboot` / `gi restart` starts or restarts all documented applications in the
+current project using project-local run instructions. If local instructions
+define a preferred start/restart command that launches the full app set, use it.
+Otherwise enumerate every documented app or runtime, such as desktop app,
+web/API app, and background workers, then restart each running app and start
+each missing app in the background. After launch, wait briefly and verify the
+documented startup success signal for each app: expected processes are still
+running, visible desktop windows exist when applicable, web/API health or
+discovery succeeds when applicable, and relevant startup or crash logs do not
+show a new failure. Do not report reboot success from a PID alone; report failed
+or partially unverified startup with the concrete evidence.
 
 `gi first test` / `gi первый тест` / `ги первый тест` resets only documented
 project-owned application cache, generated state, temporary first-run profiles,
