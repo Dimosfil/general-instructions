@@ -166,7 +166,7 @@ the listed commands.
 | `gi active task`, `gi next task`, `gi get task` | Get executable work from the configured task manager. |
 | `gi add sprint`, `gi create sprint`, `gi добавить спринт` | Create a visible Sprint/Cycle through the configured task manager. |
 | `gi plan`, `gi план`, `gi post plan` | Send the current plan to the configured task manager. |
-| `gi start sprint`, `gi старт спринт` | Take the active Sprint/Cycle into work. |
+| `gi start sprint`, `gi старт спринт` | Take the active Sprint/Cycle into work through the configured task manager. |
 | `gi test plan`, `gi тест-план` | Build a verification plan from current project contracts. |
 | `gi git summary`, `gi гит-обзор` | Summarize the latest git commit without printing a full diff. |
 | `gi commit`, `gi коммит` | Commit scoped changes. |
@@ -474,6 +474,8 @@ gi старт спринт
 Before starting sprint workflow, verify that the configured manager API endpoint
 supports active sprint lookup, next-task lookup, and task completion for the
 selected workflow. If only generic health works, stop before executing tasks.
+This command is more specific than plain `gi start`; do not answer it with only
+generic startup restore when a configured task-manager workflow is available.
 
 ### Проверить Обновления Инструкций
 

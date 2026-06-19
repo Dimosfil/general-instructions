@@ -31,6 +31,10 @@ specific terms, and query SQLite memory only with small `LIMIT`s. For `gi start`
 the next turn; do not read full summaries, runbooks, memory notes, logs, or diffs
 unless a concrete task needs them.
 
+Treat `gi start sprint`, `gi sprint start`, and equivalent active-sprint wording
+as more specific than plain `gi start`: route them through the configured
+task-manager workflow, not generic startup restore.
+
 During `gi start` or `gi restore`, do not treat remembered plans, stale task
 notes, old refactoring phases, or local commits ahead of a remote as the next
 action. Mention them only as compact context when relevant, then ask for the
@@ -354,6 +358,14 @@ Inspect logs:
   config-service is unavailable, no matching service record exists, or the
   guide/contract lacks the requested capability. Do not fall back to `base_url`,
   stale task-manager memory, port scans, sibling projects, or guessed endpoints.
+- Treat `gi start sprint`, `gi sprint start`, and equivalent active-sprint
+  wording as requests to take the active Sprint/Cycle into work through the
+  configured task manager. Resolve the manager through config-service, read the
+  guide and contract, request the active sprint/cycle or next task through the
+  documented operation, move work through the documented lifecycle states, and
+  submit completion through the manager contract. Stop with the exact blocker
+  instead of falling back to generic `gi start`, local task notes, raw intake,
+  guessed endpoints, or filesystem task edits.
 - Treat `gi config service on`, `gi config service off`, `ги конфиг сервис on`,
   and `ги конфиг сервис off` as requests to set the current application's
   project-local config-service self-registration flag. `on` means the app

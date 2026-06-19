@@ -55,6 +55,9 @@ targeted search fails or the task clearly requires repository-wide inventory.
 - For `gi start`, `gi restore`, or title-only first messages, restore the
   minimum state needed to orient the next turn; do not read full summaries,
   runbooks, memory notes, logs, or diffs unless a concrete task needs them.
+- Treat `gi start sprint`, `gi sprint start`, and equivalent active-sprint
+  wording as a task-manager workflow with startup context, not as generic
+  `gi start`.
 - Do not load the whole repository by default.
 - Do not read all summaries, all notes, all logs, or the full SQLite database.
 - Do not print full `git diff`; use `git diff --stat` and targeted searches.

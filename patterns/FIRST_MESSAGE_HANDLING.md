@@ -105,6 +105,9 @@ Examples:
 - `gi старт` or `gi restore`: restore project context from `AGENTS.md`, the
   latest handoff summary, and `tools/agent-start.ps1`, then stop and ask what
   to do next.
+- `gi start sprint`, `gi sprint start`, or equivalent active-sprint wording:
+  restore only the startup context required for task-manager work, then use the
+  configured manager contract to take the active Sprint/Cycle into work.
 - `gi sql`, `gi sqlite`, or `gi vector`: inspect project-memory retrieval
   readiness, current metrics, configured activation limits, and stale index
   caveats without deploying external services by default.

@@ -11,6 +11,14 @@ Accepted changes for the shared instruction library.
   workers, and similar runtimes, restart running ones, start missing ones, and
   verify each documented startup signal before reporting success.
 
+- Clarified that `gi start sprint`, `gi sprint start`, and equivalent
+  active-sprint wording are more specific than plain `gi start`. Agents must
+  route them through the configured task-manager workflow, resolve the manager
+  through config-service, follow the guide/contract, move work through documented
+  lifecycle states, and stop with an exact blocker instead of returning only
+  generic startup context or falling back to local notes, raw intake, guessed
+  endpoints, or filesystem task edits.
+
 ## 2026.06.18
 
 - Defaulted missing unified `gi language` / `gi язык` selections to `1 2`

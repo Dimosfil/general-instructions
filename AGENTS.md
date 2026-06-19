@@ -271,6 +271,9 @@ in this repository's live `AGENTS.md`.
   summary metadata or relevant sections, and compact git state. Do not read full
   summaries, runbooks, memory notes, logs, or diffs unless a concrete task needs
   them.
+- Treat `gi start sprint`, `gi sprint start`, and equivalent active-sprint
+  wording as more specific than plain `gi start`: route them through the
+  configured task-manager workflow, not generic startup restore.
 - Do not treat remembered plans, old refactoring phases, stale task notes, or
   local commits ahead of a remote as the next action during `gi start` or
   `gi restore`. Mention them only as compact context when relevant, then ask for
@@ -395,6 +398,14 @@ in this repository's live `AGENTS.md`.
   missing or mismatched. Do not create raw intake receipts, local checklist
   notes, or a different manager object type as a substitute for the requested
   task, sprint, or cycle.
+- Treat `gi start sprint`, `gi sprint start`, and equivalent active-sprint
+  wording as requests to take the active Sprint/Cycle into work through the
+  configured task manager. Resolve the manager through config-service, read the
+  guide and contract, request the active sprint/cycle or next task through the
+  documented operation, move work through the documented lifecycle states, and
+  submit completion through the manager contract. Stop with the exact blocker
+  instead of falling back to generic `gi start`, local task notes, raw intake,
+  guessed endpoints, or filesystem task edits.
 - Treat task-manager sync commands as routine execution steps, similar in
   certainty to `gi commit`, `gi push`, or FTP deploy commands after the user has
   supplied the content or selected workflow. A fast or weaker model may execute

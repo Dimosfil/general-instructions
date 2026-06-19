@@ -277,25 +277,28 @@ When the user runs `gi старт спринт`, `gi start sprint`, or an equiva
 start-active-sprint command:
 
 1. Restore project context as for `gi старт`.
-2. Read configured task managers from
+2. Treat this command as more specific than plain `gi старт` / `gi start`;
+   continue through the configured task-manager workflow instead of stopping
+   after generic startup restore.
+3. Read configured task managers from
    `tools/project-memory/task-managers.json`.
-3. Use the enabled manager's sprint workflow to find the active sprint.
-4. Verify the manager supports active sprint lookup and task completion for the
+4. Use the enabled manager's sprint workflow to find the active sprint.
+5. Verify the manager supports active sprint lookup and task completion for the
    requested workflow. If those capabilities are missing, report the endpoint
    mismatch and stop.
-5. When a manager endpoint returns an unexpected method, parameter, or routing
+6. When a manager endpoint returns an unexpected method, parameter, or routing
    error, re-read the adapter's endpoint contract before trying a workaround.
-6. If an intake receipt lacks the identifiers required for next-task,
+7. If an intake receipt lacks the identifiers required for next-task,
    task-completed, archive, or close flows, report the task-manager contract gap
    and stop instead of inventing a replacement plan.
-7. If exactly one active sprint exists, the agent takes it in work through the
+8. If exactly one active sprint exists, the agent takes it in work through the
    manager. If none or many exist, ask the user to choose.
-8. Execute sprint tasks in manager-defined order until no `todo` or `ready`
+9. Execute sprint tasks in manager-defined order until no `todo` or `ready`
    tasks remain or a blocker requires user input.
-9. Update task status, progress, blocker notes, and completion notes according
+10. Update task status, progress, blocker notes, and completion notes according
    to the manager adapter after each task.
-10. Keep normal safety rules: ask before destructive actions, credential changes,
-    broad rewrites, or irreversible external changes.
+11. Keep normal safety rules: ask before destructive actions, credential changes,
+   broad rewrites, or irreversible external changes.
 
 ## Task-Manager Role
 
