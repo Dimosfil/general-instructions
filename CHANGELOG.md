@@ -19,6 +19,12 @@ Accepted changes for the shared instruction library.
   generic startup context or falling back to local notes, raw intake, guessed
   endpoints, or filesystem task edits.
 
+- Tightened `gi reboot` / `gi restart` reporting so agents must identify the
+  full documented app set before startup, account for each app by name or role,
+  and verify each expected process, desktop window, web/API health endpoint, or
+  worker signal. A web health check alone no longer permits a success report
+  when an expected desktop app or other runtime was not launched or verified.
+
 ## 2026.06.18
 
 - Defaulted missing unified `gi language` / `gi язык` selections to `1 2`

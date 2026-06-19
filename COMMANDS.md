@@ -921,16 +921,23 @@ explicitly define a discoverable web/API runtime. If the flag is being set to
 or stopping the config-service process.
 
 `gi reboot` / `gi restart` starts or restarts all documented applications in the
-current project using project-local run instructions. If local instructions
-define a preferred start/restart command that launches the full app set, use it.
+current project using project-local run instructions. Before starting anything,
+identify the full app set from local run instructions, manifests, service
+records, desktop packaging metadata, or project memory; do not assume a
+successful web/API start covers the project. If local instructions define a
+preferred start/restart command that launches the full app set, use it.
 Otherwise enumerate every documented app or runtime, such as desktop app,
 web/API app, and background workers, then restart each running app and start
 each missing app in the background. After launch, wait briefly and verify the
 documented startup success signal for each app: expected processes are still
 running, visible desktop windows exist when applicable, web/API health or
 discovery succeeds when applicable, and relevant startup or crash logs do not
-show a new failure. Do not report reboot success from a PID alone; report failed
-or partially unverified startup with the concrete evidence.
+show a new failure. The final report must account for each app by name or role
+with started/restarted/skipped status and verification evidence. Do not report
+reboot success from a PID alone, from a web health check alone, or while any
+expected desktop app, web/API app, or worker is unlaunched or unverified. If a
+documented desktop app lacks a launch command or window verification signal,
+report that as a blocker or partial failure instead of success.
 
 `gi first test` / `gi первый тест` / `ги первый тест` resets only documented
 project-owned application cache, generated state, temporary first-run profiles,

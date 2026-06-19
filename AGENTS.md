@@ -465,7 +465,10 @@ in this repository's live `AGENTS.md`.
   `patterns/PROJECT_FTP_DEPLOY.md`.
 - Treat `gi reboot`, `ги ребут`, `gi restart`, and `ги рестарт` as requests to
   start or restart all documented applications in the current project using
-  project-local run instructions. If local instructions define a preferred
+  project-local run instructions. Before starting anything, identify the full
+  app set from local run instructions, manifests, service records, desktop
+  packaging metadata, or project memory; do not assume a successful web/API
+  start covers the project. If local instructions define a preferred
   start/restart command that launches the full app set, use it. Otherwise
   enumerate every documented app or runtime, such as desktop app, web/API app,
   and background workers, then restart each running app and start each missing
@@ -473,10 +476,15 @@ in this repository's live `AGENTS.md`.
   current window. After launch, wait briefly and verify the documented startup
   success signal for each app: still-running expected processes, visible
   desktop windows when applicable, health/discovery endpoints for web/API apps,
-  and relevant startup or crash logs when documented. Do not report reboot
-  success from a PID alone. If any app exits, no expected window or health
-  signal appears, or a new startup traceback is present, report the reboot as
-  failed or partially unverified with the concrete evidence.
+  and relevant startup or crash logs when documented. The final report must
+  account for each app by name or role with started/restarted/skipped status and
+  verification evidence. Do not report reboot success from a PID alone, from a
+  web health check alone, or while any expected desktop app, web/API app, or
+  worker is unlaunched or unverified. If a documented desktop app lacks a
+  launch command or window verification signal, report that as a blocker or
+  partial failure instead of success. If any app exits, no expected window or
+  health signal appears, or a new startup traceback is present, report the
+  reboot as failed or partially unverified with the concrete evidence.
 - Treat `gi first test`, `gi первый тест`, and `ги первый тест` as requests to
   verify the current application's first-launch experience by resetting only
   documented project-owned app cache, generated state, temporary first-run
