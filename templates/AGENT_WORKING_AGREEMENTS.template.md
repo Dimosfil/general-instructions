@@ -283,6 +283,16 @@ or:
   system caches, sibling projects, or arbitrary user-home folders. If exact
   reset paths or commands are missing, ask one concise question instead of
   guessing.
+- Treat `gi default`, `gi defaults`, and `ги дефолт` as default-state reset
+  requests. Restore only documented project-owned app state, generated caches,
+  local settings, onboarding flags, temporary profiles, and other rebuildable
+  first-run/default state. Read local reset, cleanup, first-run, backup, run,
+  and test instructions before clearing anything. Do not delete source files,
+  project memory, instruction-kit files, user documents, production data,
+  secrets, credentials, shared system caches, sibling projects, or arbitrary
+  user-home folders. If reset targets are undocumented, ask one concise question;
+  if reset could be irreversible or user-owned data is involved, require
+  explicit confirmation and prefer backup or rename when local rules allow it.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
 - Treat `init <source>`, `инит <source>`, `инициализируй <source>`, and

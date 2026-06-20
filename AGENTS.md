@@ -496,6 +496,21 @@ in this repository's live `AGENTS.md`.
   question instead of guessing. After reset, start the app, run the documented
   first-launch smoke/onboarding checks, and report what was cleared, what
   passed, and what was intentionally left untouched.
+- Treat `gi default`, `gi defaults`, and `ги дефолт` as requests to restore the
+  current project to its documented first-run/default state. Read project-local
+  reset, cleanup, first-run, run, backup, and test instructions first. Use only
+  documented reset scripts, paths, keys, or contracts for project-owned app
+  state, generated caches, local settings, onboarding flags, temporary profiles,
+  and other rebuildable state. Do not delete source files, project-memory
+  specifications, instruction-kit files, user documents, production data,
+  secrets, credentials, external service data, shared system caches, sibling
+  projects, or arbitrary user-home folders. If reset targets are not documented,
+  ask one short clarification question instead of guessing. If a reset could be
+  irreversible or remove user-owned data, stop for explicit confirmation and
+  prefer a backup or rename step when local rules allow it. After reset, start
+  the project through documented run instructions, verify the default or
+  first-launch success signals, and report what was reset, what was left
+  untouched, what passed, and any blocker.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and obvious typo variants
   such as `gi иснтлл` as requests to build the current project and produce an
   installer. Use Inno Setup by default when no installer tool is named. If the

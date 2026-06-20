@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.19.3",
+  "instruction_kit_version": "2026.06.21.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -109,7 +109,8 @@
     "2026.06.18.9__default_unified_language_to_english_russian",
     "2026.06.19.1__restart_all_project_apps",
     "2026.06.19.2__prioritize_gi_start_sprint_manager_workflow",
-    "2026.06.19.3__require_gi_reboot_per_app_accounting"
+    "2026.06.19.3__require_gi_reboot_per_app_accounting",
+    "2026.06.21.1__add_gi_default_command"
   ],
   "copied_files": [
     "AGENTS.md",

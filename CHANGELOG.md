@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.21
+
+- Added `gi default` / `gi defaults` / `ги дефолт` as a documented clean-slate
+  reset command. Agents must restore only documented project-owned first-run or
+  default state, use local reset/cleanup/backup/run/test instructions, avoid
+  deleting source files, project memory, instruction-kit files, user documents,
+  production data, secrets, external service data, shared caches, sibling
+  projects, or arbitrary user-home folders, and require explicit confirmation
+  for irreversible or user-data-affecting resets.
+
 ## 2026.06.19
 
 - Changed `gi reboot` / `gi restart` to start or restart all documented
