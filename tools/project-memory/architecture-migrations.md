@@ -10,6 +10,21 @@ patterns, templates, and accepted migrations.
 
 ## Entries
 
+### 2026-06-21: Modular Agents Runtime Entrypoint
+
+Previous architecture: root `AGENTS.md` and the copied project template carried
+large inline runtime rule sets. Agents had to load broad guidance even when a
+task needed only one command family or policy area.
+
+New architecture: root and copied `AGENTS.md` files are compact entrypoints with
+a routing table. Detailed reusable runtime rules live in
+`patterns/AGENTS_RUNTIME/` modules by topic, and instruction-kit metadata copies
+those modules alongside the entrypoint.
+
+Reason: preserve accepted behavior while reducing startup context, making
+project onboarding faster, and giving agents an explicit map for task-specific
+rule retrieval.
+
 ### 2026-06-21: Coherent Batch Verification Pattern
 
 Previous architecture: batch-completion expectations were spread across

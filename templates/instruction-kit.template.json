@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.21.12",
+  "instruction_kit_version": "2026.06.21.13",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -121,7 +121,8 @@
     "2026.06.21.9__add_coherent_batch_verification",
     "2026.06.21.10__add_technology_stack_inventory",
     "2026.06.21.11__split_project_documentation_and_memory_layers",
-    "2026.06.21.12__abstract_concrete_examples_before_shared_rules"
+    "2026.06.21.12__abstract_concrete_examples_before_shared_rules",
+    "2026.06.21.13__modularize_agents_runtime_entrypoint"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -154,6 +155,22 @@
     "tools/check-instruction-kit-updates.ps1",
     "templates/TECHNOLOGY_STACK.template.md",
     "skills/TODO-skill-name/SKILL.md",
-    ".gitignore"
+    ".gitignore",
+    "patterns/AGENTS_RUNTIME/01-purpose.md",
+    "patterns/AGENTS_RUNTIME/02-repository-map.md",
+    "patterns/AGENTS_RUNTIME/03-rule-precedence.md",
+    "patterns/AGENTS_RUNTIME/04-content-and-authoring.md",
+    "patterns/AGENTS_RUNTIME/05-windows-command-policy.md",
+    "patterns/AGENTS_RUNTIME/06-tool-usage-and-token-economy.md",
+    "patterns/AGENTS_RUNTIME/07-startup-and-scope.md",
+    "patterns/AGENTS_RUNTIME/08-config-service-and-task-manager.md",
+    "patterns/AGENTS_RUNTIME/09-project-operation-commands.md",
+    "patterns/AGENTS_RUNTIME/10-private-scope-and-missing-context.md",
+    "patterns/AGENTS_RUNTIME/11-language-preferences.md",
+    "patterns/AGENTS_RUNTIME/12-ui-and-focus.md",
+    "patterns/AGENTS_RUNTIME/13-progress-updates.md",
+    "patterns/AGENTS_RUNTIME/14-update-intake.md",
+    "patterns/AGENTS_RUNTIME/15-verification.md",
+    "patterns/AGENTS_RUNTIME/16-git-policy.md"
   ]
 }

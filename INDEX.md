@@ -38,6 +38,12 @@ Reusable instructions in this repository are grouped by job.
 
 ## Patterns
 
+- `patterns/AGENTS_RUNTIME/`: task-routed runtime modules used by compact root
+  and copied `AGENTS.md` entrypoints. The modules cover project purpose, rule
+  precedence, authoring, Windows commands, token economy, startup/scope,
+  config-service and task-manager flows, operations commands, private scope,
+  language preferences, UI focus, progress updates, update intake,
+  verification, and git policy.
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
   AI-agent experience, with Markdown export for review.
 - `patterns/AGENT_HARNESS_RUNTIME.md`: runtime pattern for building or auditing

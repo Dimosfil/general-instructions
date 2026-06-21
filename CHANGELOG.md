@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Modularized the runtime instruction entrypoint. Root and copied
+  `AGENTS.md` files now stay compact and route agents to focused modules under
+  `patterns/AGENTS_RUNTIME/`, preserving the previous behavior while reducing
+  startup context and making task-specific rule retrieval faster.
+
 - Added concrete-example abstraction guidance. Agents should extract the
   portable principle from a request, bug, screenshot, demo, or implementation
   detail before adding shared rules, and must not turn incidental entities,

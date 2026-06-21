@@ -11,6 +11,8 @@ Start with:
 
 - `VERSION.md` and `CHANGELOG.md`: current accepted instruction-kit version and
   release notes for copied project instruction kits.
+- `AGENTS.md`: compact runtime entrypoint for this repository; use its routing
+  table to open only the relevant modules under `patterns/AGENTS_RUNTIME/`.
 - `COMMANDS.md`: common commands for using and maintaining the instruction kit.
 - `USER_GUIDE.md`: short user-facing overview of the main rules.
 - `INDEX.md`: catalog of available instructions and templates.
