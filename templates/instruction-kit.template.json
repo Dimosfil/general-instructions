@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.21.8",
+  "instruction_kit_version": "2026.06.21.9",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -117,7 +117,8 @@
     "2026.06.21.5__clarify_interpretation_translation_modules",
     "2026.06.21.6__add_code_quality_baseline",
     "2026.06.21.7__add_gi_refactor_command",
-    "2026.06.21.8__extract_architecture_code_quality_pattern"
+    "2026.06.21.8__extract_architecture_code_quality_pattern",
+    "2026.06.21.9__add_coherent_batch_verification"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -137,6 +138,7 @@
     "tools/project-memory/rag-system.json",
     "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
+    "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md",
     "patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md",
     "tools/select-project-language.ps1",

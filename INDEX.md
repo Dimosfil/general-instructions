@@ -48,6 +48,9 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
   baseline for OOP, SOLID, DRY, clean-code, separation of concerns,
   interfaces/adapters/contracts, abstraction discipline, and verification.
+- `patterns/COHERENT_BATCH_VERIFICATION.md`: batch-completion rules for
+  source-of-truth consistency, durable memory writeback, scoped diffs, and
+  evidence-backed checks.
 - `patterns/CONFIGURATION_BOUNDARIES.md`: configuration-boundary rules for
   keeping deploy, user, runtime, machine, service, credential, path,
   feature-flag, and operational values out of application logic.

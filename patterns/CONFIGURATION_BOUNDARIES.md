@@ -35,6 +35,11 @@ variables, service discovery, or deployment metadata.
 - Keep internal constants in code only when they are true invariants of the
   algorithm or protocol and are not expected to differ by deployment, user,
   environment, or operations.
+- When moving a changeable value to configuration or an adapter, check every
+  layer that can still carry an old copy of the value, including frontend
+  defaults, templates, fixtures, demos, generated examples, tests, build
+  metadata, documentation, and project-memory specs. A backend config source is
+  not authoritative if another runtime layer still owns an independent default.
 
 ## Refactoring Existing Projects
 
@@ -60,3 +65,5 @@ as a refactoring task, not only a documentation update:
   folders, tokens, or machine-specific absolute paths.
 - Confirm path values from config are resolved to absolute paths before use and
   rejected when outside the allowed project or data boundary.
+- Confirm old independent defaults were removed, generated from the same source,
+  or recorded as explicit follow-up drift with an owner and verification path.

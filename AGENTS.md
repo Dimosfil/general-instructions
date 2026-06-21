@@ -216,6 +216,14 @@ in this repository's live `AGENTS.md`.
   persistence, filesystem, external services, and configuration in separate
   layers with explicit contracts. Follow
   `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
+- After any meaningful implementation, refactor, migration, or configuration
+  cleanup batch, verify the batch at the right abstraction level. Check all
+  touched layers for duplicated defaults, policies, workflows, contracts, or
+  interpretation rules; keep one authoritative source where possible; update
+  durable project-memory specs when behavior or architecture changes; inspect
+  the changed-file list for unrelated edits or generated noise; and separate
+  harmless line-ending warnings from real whitespace errors in `git diff
+  --check`. Follow `patterns/COHERENT_BATCH_VERIFICATION.md`.
 
 ## Windows Command Policy
 
@@ -296,6 +304,11 @@ in this repository's live `AGENTS.md`.
 - After meaningful work on a feature, workflow, business rule, data model, or
   architecture, update the relevant project-memory specification in the same
   scoped change. A handoff summary does not replace durable project memory.
+- After a meaningful code or configuration batch, verify source-of-truth
+  consistency across backend, frontend, tests, docs, generated examples, build
+  metadata, and project-memory specs that can carry the same default, policy,
+  workflow, or contract. Do not finish with duplicate independent defaults or
+  stale specs unless the remaining drift is recorded as an explicit follow-up.
 - Do not print large logs. Prefer tails and targeted error searches.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.

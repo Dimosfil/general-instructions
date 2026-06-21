@@ -46,6 +46,13 @@
   work, update the relevant project-memory specification in the same scoped
   change. Write it so another agent could rebuild the behavior on a different
   language, framework, or platform. A handoff summary is not a substitute.
+- After any meaningful implementation, refactor, migration, or configuration
+  cleanup batch, verify that every touched layer uses the intended
+  source-of-truth for changed defaults, policies, workflows, contracts, or
+  interpretation rules. Check backend, frontend, tests, docs, generated
+  examples, build metadata, and project-memory specs as relevant; keep unrelated
+  files and generated noise out of the batch; and distinguish harmless
+  line-ending warnings from real `git diff --check` whitespace errors.
 
 ## Git
 
@@ -218,9 +225,10 @@ or:
   user explicitly changes it. Cover architecture boundaries, configuration
   boundaries, hard-code removal, development-tool/product separation,
   SOLID/DRY/clean-code concerns, duplicated business logic, contracts, tests,
-  and project-memory updates. Ask before destructive operations, data
-  migrations, public API or storage contract changes, dependency replacements,
-  formatting-only churn, or private/external paths.
+  project-memory updates, and cross-layer source-of-truth consistency. Ask
+  before destructive operations, data migrations, public API or storage
+  contract changes, dependency replacements, formatting-only churn, or
+  private/external paths.
 - Use `gi rebuild` for the current project/application rebuild only, such as
   producing an executable, package, or documented build artifact. Use
   `gi tools rebuild` /

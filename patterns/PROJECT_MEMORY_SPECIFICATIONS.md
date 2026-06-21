@@ -219,3 +219,14 @@ After meaningful work on a feature, workflow, business rule, or architecture,
 update the relevant project-memory specification in the same scoped change.
 Also write a handoff summary when the chat state itself needs to be handed to a
 future session. A summary does not replace project memory.
+
+Do not treat `pending-tasks.md`, task-manager notes, commit messages, or chat
+summaries as the durable record for changed behavior or architecture. They may
+track execution status, but the portable specification should describe the rule,
+workflow, state transition, data contract, failure behavior, verification
+guarantee, and current implementation map.
+
+When a batch intentionally does not update project memory, the final report
+should say why at the behavior level, for example because the change only
+renamed private helpers, refreshed tests, or removed dead code without changing
+an agreed contract.

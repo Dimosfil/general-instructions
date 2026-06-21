@@ -184,6 +184,15 @@ they fit the stack. Keep domain/product logic, orchestration, UI, persistence,
 filesystem, external services, and configuration in separate layers with
 explicit contracts. Follow `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 
+After any meaningful implementation, refactor, migration, or configuration
+cleanup batch, verify the batch at the right abstraction level. Check all
+touched layers for duplicated defaults, policies, workflows, contracts, or
+interpretation rules; keep one authoritative source where possible; update
+durable project-memory specs when behavior or architecture changes; inspect the
+changed-file list for unrelated edits or generated noise; and separate harmless
+line-ending warnings from real whitespace errors in `git diff --check`. Follow
+`patterns/COHERENT_BATCH_VERIFICATION.md`.
+
 Treat `cached input` as a symptom, not the main optimization target. Keep total
 live context small by starting new sessions for unrelated tasks, using compact
 handoff summaries instead of long investigation history, and splitting multi-step
@@ -305,6 +314,11 @@ Inspect logs:
 - After meaningful work on a feature, workflow, business rule, data model, or
   architecture, update the relevant project-memory specification in the same
   scoped change. A handoff summary does not replace durable project memory.
+- After a meaningful code or configuration batch, verify source-of-truth
+  consistency across backend, frontend, tests, docs, generated examples, build
+  metadata, and project-memory specs that can carry the same default, policy,
+  workflow, or contract. Do not finish with duplicate independent defaults or
+  stale specs unless the remaining drift is recorded as an explicit follow-up.
 - When preparing this project for a repository, publishing to GitHub, or
   removing "unneeded" files, do not classify `AGENTS.md`, `tools/`,
   `tools/project-memory/`, `skills/`, bootstrap scripts, update scripts, deploy

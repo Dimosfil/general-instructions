@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added coherent batch verification guidance. Meaningful implementation,
+  refactor, migration, and configuration cleanup batches must check
+  source-of-truth consistency across touched layers, update durable
+  project-memory specs when behavior or architecture changes, keep diffs scoped,
+  and distinguish harmless line-ending warnings from real `git diff --check`
+  errors.
+
 - Extracted the accepted architecture and code-quality baseline into
   `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`, with concise references from the
   live instructions and templates so consuming projects can copy the reusable
