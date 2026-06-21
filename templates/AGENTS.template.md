@@ -150,6 +150,13 @@ Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a
 Codex-specific tool, folder, permission model, app surface, or workflow.
 
+When explaining, documenting, or adding a shared GI rule, keep the explanation
+project-agnostic. Do not anchor the rule in the current project, a recent bug,
+one demo, one product name, or one repository unless the user explicitly asks
+for that concrete comparison. Use neutral terms such as "a development tool",
+"a generated product", "a selected run", or "a service"; if an example is
+necessary, mark it as illustrative and keep it replaceable.
+
 Keep developer tools, orchestrators, task managers, agent harnesses, and code
 generators separate from the products they build. Never hard-code one demo,
 customer, project type, workflow run, product name, UI label, folder slug,

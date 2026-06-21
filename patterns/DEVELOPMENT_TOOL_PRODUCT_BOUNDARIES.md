@@ -9,6 +9,11 @@ task input, generated source, a selected workflow run, a build artifact, or a
 project-local repository. Do not let one demo or test product become the
 runtime's identity.
 
+When explaining this rule, do not use the current project as the default
+example. This pattern exists for any project that builds, coordinates, tests, or
+manages other artifacts. Use neutral terms unless the user explicitly requests a
+comparison to a named repository or product.
+
 ## Core Rule
 
 - Treat every product, demo, customer, project type, task, workflow run, and

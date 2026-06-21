@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added project-agnostic explanation guidance for shared rules. Agents should
+  not explain reusable GI rules by anchoring them to the current project, recent
+  bug, demo, product name, or repository unless the user explicitly asks for
+  that comparison; examples must be clearly illustrative and replaceable.
+
 - Added development-tool/product boundary guidance. Orchestrators, task
   managers, agent harnesses, generators, scaffolding tools, and workflow logs
   must stay product-agnostic, treat generated products and selected runs as data,

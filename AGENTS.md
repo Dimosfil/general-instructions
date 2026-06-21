@@ -171,6 +171,12 @@ in this repository's live `AGENTS.md`.
 - If a feature workflow applies only to one project, keep it in that project's
   local docs or project memory. Use shared instructions only for the reusable
   rule that such contracts should exist and be respected.
+- When explaining, documenting, or adding a shared GI rule, keep the explanation
+  project-agnostic. Do not anchor the rule in the current project, a recent bug,
+  one demo, one product name, or one repository unless the user explicitly asks
+  for that concrete comparison. Use neutral terms such as "a development tool",
+  "a generated product", "a selected run", or "a service"; if an example is
+  necessary, mark it as illustrative and keep it replaceable.
 - Prefer small, focused documents over one giant policy file.
 - When adding a new instruction file, also add it to `INDEX.md`.
 - Write instruction documents in imperative voice, with one rule per bullet when
