@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.21.4",
+  "instruction_kit_version": "2026.06.21.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -113,7 +113,8 @@
     "2026.06.21.1__add_gi_default_command",
     "2026.06.21.2__add_development_tool_product_boundaries",
     "2026.06.21.3__keep_shared_rule_explanations_project_agnostic",
-    "2026.06.21.4__add_query_prompt_normalization_boundaries"
+    "2026.06.21.4__add_query_prompt_normalization_boundaries",
+    "2026.06.21.5__clarify_interpretation_translation_modules"
   ],
   "copied_files": [
     "AGENTS.md",

@@ -170,11 +170,13 @@ Do not hard-code values that can change by deployment, user choice, runtime
 environment, host machine, service discovery, credentials, filesystem layout,
 feature flags, product names, demo data, workflow labels, generated artifact
 names, UI copy that names a specific project, language translation maps,
-synonym dictionaries, query-normalization rules, model-specific prompt
-expansions, ranking thresholds, or operational policy. Keep those values in
-documented project-local configuration, environment variables, service discovery
-records, manifests, task payloads, resource files, adapters, or user-selected
-state.
+synonym dictionaries, intent-interpretation rules, query-normalization rules,
+model-specific prompt expansions, ranking thresholds, or operational policy.
+Keep those values in documented project-local configuration, environment
+variables, service discovery records, manifests, task payloads, resource files,
+adapters, interpretation/translation modules, or user-selected state. Such
+modules may be deterministic resources, local algorithms, retrieval-backed
+components, or provider-swappable LLM adapters.
 
 Build applications with clear architecture boundaries. Prefer SOLID design,
 cohesive domain models, explicit interfaces at integration boundaries,

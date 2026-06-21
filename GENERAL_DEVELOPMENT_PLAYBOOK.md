@@ -28,10 +28,11 @@ It should contain:
   values in application logic; keep them in documented project-local config,
   environment variables, or service discovery, and validate config-derived paths
   as absolute paths at startup or I/O boundaries. For search, ranking,
-  retrieval, and model-facing features, treat translation maps, synonym
-  dictionaries, prompt templates, query expansion rules, scoring thresholds, and
-  model-specific normalization as configurable resources or adapters, not inline
-  application logic.
+  retrieval, and model-facing features, treat intent interpretation,
+  translation, synonym handling, prompt templates, query expansion rules,
+  scoring thresholds, and model-specific normalization as configurable
+  resources, dedicated modules, pipeline components, or provider-swappable
+  adapters, not inline application logic.
 - Development-tool/product boundary rules: orchestrators, task managers, agent
   harnesses, generators, and scaffolding systems must not bind themselves to one
   generated product, demo, task, customer, folder slug, stack, workflow run, or

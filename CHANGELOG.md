@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Clarified query/prompt normalization guidance as an
+  interpretation/translation capability. Implementations may use deterministic
+  resources, local algorithms, retrieval, services, or provider-swappable LLM
+  adapters, but provider-specific calls and intent heuristics must stay behind
+  interfaces rather than inside product/UI logic.
+
 - Added query/prompt normalization boundary guidance. Translation maps, synonym
   dictionaries, prompt expansions, multilingual query handling, ranking
   thresholds, and model-specific search behavior should live in documented

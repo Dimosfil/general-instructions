@@ -7,8 +7,9 @@ variables, service discovery, or deployment metadata.
 ## Rule
 
 - Do not hard-code deploy, user, runtime, host-machine, service, credential,
-  filesystem-layout, feature-flag, model-behavior, query-normalization, prompt,
-  ranking, or operational-policy values in source code.
+  filesystem-layout, feature-flag, model-behavior, intent-interpretation,
+  translation, query-normalization, prompt, ranking, or operational-policy
+  values in source code.
 - Keep project-local config in documented files such as `config/*.json`,
   `.env.example`, `tools/deploy/*.example.json`, or the platform-native config
   location for the stack.
@@ -25,11 +26,12 @@ variables, service discovery, or deployment metadata.
   At minimum, validate required keys, path shape, URL shape, numeric ranges, and
   enum values before using the config.
 - Keep language translation maps, synonym dictionaries, stemming/normalization
-  rules, prompt templates, query expansions, ranking thresholds, and
-  model-specific compatibility rules in resource files, documented config,
-  model adapter modules, or curated data assets. Application code may load,
-  validate, compose, and apply them, but should not grow ad hoc per-query
-  dictionaries inside request handlers or UI glue.
+  rules, prompt templates, query expansions, ranking thresholds,
+  intent-interpretation behavior, and model-specific compatibility rules in
+  resource files, documented config, interpretation/translation modules, model
+  adapter modules, provider-swappable LLM adapters, or curated data assets.
+  Application code may load, validate, compose, and apply them, but should not
+  grow ad hoc per-query dictionaries inside request handlers or UI glue.
 - Keep internal constants in code only when they are true invariants of the
   algorithm or protocol and are not expected to differ by deployment, user,
   environment, or operations.
@@ -41,8 +43,8 @@ as a refactoring task, not only a documentation update:
 
 - Search targeted code paths for hard-coded ports, URLs, hostnames, credentials,
   private paths, user names, feature toggles, limits, model names, prompt text,
-  query expansions, synonym maps, language translations, scoring thresholds,
-  deployment folders, and environment-specific switches.
+  query expansions, synonym maps, language translations, intent interpretation,
+  scoring thresholds, deployment folders, and environment-specific switches.
 - Move scoped findings into existing config files, environment variables, or
   service discovery records that match the project architecture.
 - Add or update redacted example config files and docs so a new environment can

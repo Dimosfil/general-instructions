@@ -196,17 +196,19 @@ in this repository's live `AGENTS.md`.
   environment, host machine, service discovery, credentials, filesystem layout,
   feature flags, product names, demo data, workflow labels, generated artifact
   names, UI copy that names a specific project, language translation maps,
-  synonym dictionaries, query-normalization rules, model-specific prompt
-  expansions, ranking thresholds, or operational policy. Keep application code
-  focused on logic, constants, and internal defaults; move
+  synonym dictionaries, intent-interpretation rules, query-normalization rules,
+  model-specific prompt expansions, ranking thresholds, or operational policy.
+  Keep application code focused on logic, constants, and internal defaults; move
   deploy/user/environment/system/product-selection/model-behavior values into
   documented project-local configuration, environment variables, service
-  discovery records, manifests, task payloads, resource files, adapters, or
-  user-selected state. Avoid embedding machine-specific absolute paths in source
-  or shared instructions; when paths are accepted from config, resolve and
-  validate them as absolute paths at the application boundary. When applying
-  this rule to existing projects, audit and refactor relevant hard-coded values
-  instead of only adding the rule text. Follow
+  discovery records, manifests, task payloads, resource files, adapters,
+  interpretation/translation modules, or user-selected state. Such modules may
+  be deterministic resources, local algorithms, retrieval-backed components, or
+  provider-swappable LLM adapters. Avoid embedding machine-specific absolute
+  paths in source or shared instructions; when paths are accepted from config,
+  resolve and validate them as absolute paths at the application boundary. When
+  applying this rule to existing projects, audit and refactor relevant
+  hard-coded values instead of only adding the rule text. Follow
   `patterns/CONFIGURATION_BOUNDARIES.md`.
 - Build applications with clear architecture boundaries. Prefer SOLID design,
   cohesive domain models, explicit interfaces at integration boundaries,
