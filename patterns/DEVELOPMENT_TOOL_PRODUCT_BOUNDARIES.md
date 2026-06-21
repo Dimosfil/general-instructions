@@ -48,6 +48,10 @@ comparison to a named repository or product.
 
 ## Architecture Requirements
 
+Use `patterns/ARCHITECTURE_AND_CODE_QUALITY.md` as the general architecture and
+code-quality baseline. For development tools and generators, apply that baseline
+with these additional product-boundary constraints:
+
 - Follow OOP, SOLID, DRY, clean-code, maintainability, and extensibility
   principles where they fit the stack. In object-oriented code, prefer
   single-purpose classes, open extension points, substitutable implementations,

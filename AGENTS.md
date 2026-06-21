@@ -210,18 +210,12 @@ in this repository's live `AGENTS.md`.
   applying this rule to existing projects, audit and refactor relevant
   hard-coded values instead of only adding the rule text. Follow
   `patterns/CONFIGURATION_BOUNDARIES.md`.
-- Build applications with clear architecture and code-quality boundaries.
-  Understand and apply OOP, SOLID, DRY, clean-code, maintainability, and
-  extensibility principles where they fit the stack. Prefer cohesive domain
-  models, explicit interfaces at integration boundaries, dependency inversion
-  for infrastructure, small composable modules, typed or validated contracts,
-  low duplication, clear names, focused functions/classes, and established
-  framework patterns. Do not let UI, orchestration, persistence, external APIs,
-  and product/domain logic collapse into one layer. If a stack is not
-  object-oriented, apply the same separation of responsibilities through
-  modules, functions, services, protocols, and data contracts. Apply DRY to
-  repeated knowledge and behavior, but do not create premature abstractions
-  before the duplication has a clear shared meaning.
+- Build applications with clear architecture and code-quality boundaries. Apply
+  OOP, SOLID, DRY, clean-code, maintainability, and extensibility principles
+  where they fit the stack. Keep domain/product logic, orchestration, UI,
+  persistence, filesystem, external services, and configuration in separate
+  layers with explicit contracts. Follow
+  `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 
 ## Windows Command Policy
 

@@ -45,6 +45,9 @@ Reusable instructions in this repository are grouped by job.
   and production agent harnesses.
 - `patterns/AI_ENGINEERING_BENCHMARKS.md`: benchmark pattern for proving AI
   engineering cost reduction while preserving task quality.
+- `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
+  baseline for OOP, SOLID, DRY, clean-code, separation of concerns,
+  interfaces/adapters/contracts, abstraction discipline, and verification.
 - `patterns/CONFIGURATION_BOUNDARIES.md`: configuration-boundary rules for
   keeping deploy, user, runtime, machine, service, credential, path,
   feature-flag, and operational values out of application logic.

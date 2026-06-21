@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Extracted the accepted architecture and code-quality baseline into
+  `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`, with concise references from the
+  live instructions and templates so consuming projects can copy the reusable
+  module instead of carrying only inline guidance.
+
 - Added `gi refactor` / `gi рефактор` / `ги рефактор` as a documented full
   project refactor command. Agents must refactor the current project according
   to all applicable GI rules, preserve user-visible behavior unless explicitly
