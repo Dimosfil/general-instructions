@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added development-tool/product boundary guidance. Orchestrators, task
+  managers, agent harnesses, generators, scaffolding tools, and workflow logs
+  must stay product-agnostic, treat generated products and selected runs as data,
+  avoid demo/product hard-code, keep completed run logs compact, and follow
+  SOLID or equivalent architecture boundaries with explicit contracts.
+
 - Added `gi default` / `gi defaults` / `ги дефолт` as a documented clean-slate
   reset command. Agents must restore only documented project-owned first-run or
   default state, use local reset/cleanup/backup/run/test instructions, avoid

@@ -28,6 +28,15 @@ It should contain:
   values in application logic; keep them in documented project-local config,
   environment variables, or service discovery, and validate config-derived paths
   as absolute paths at startup or I/O boundaries.
+- Development-tool/product boundary rules: orchestrators, task managers, agent
+  harnesses, generators, and scaffolding systems must not bind themselves to one
+  generated product, demo, task, customer, folder slug, stack, workflow run, or
+  UI label. Treat those as task data, selected run state, fixtures, manifests,
+  or project-local config, not as the runtime identity.
+- Application architecture rules: follow SOLID and established architecture
+  patterns for the stack; keep domain/product logic, orchestration, UI,
+  persistence, filesystem, external services, and configuration in separate
+  layers with explicit contracts.
 - Feature workflow contracts: when a feature has an agreed runtime workflow,
   loading order, branching state flow, background work, or user-visible
   guarantee, record it in project-local docs and require agents to read it
@@ -386,6 +395,22 @@ configuration-boundary rule as a prompt to audit existing code for hard-coded
 deployment, user, environment, host, service, credential, path, feature-flag,
 and operational values, then refactor scoped findings into config as part of the
 migration when it is safe.
+
+Use `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md` when building or changing
+orchestrators, task managers, agent harnesses, generators, scaffolding tools, or
+workflow UIs. Verify that no sample product, demo domain, customer name, folder
+slug, stack, or test task is treated as a built-in runtime concept. Detailed
+workflow logs should describe only the selected or active run; completed runs
+should collapse by default or render as compact final status unless the user is
+debugging them.
+
+Before meaningful implementation, choose an architecture shape that fits the
+stack and keep it visible in code: ports/adapters, layered architecture, clean
+architecture, MVC/MVVM, feature modules, service contracts, or another
+established pattern. Apply SOLID where OOP exists, and use equivalent module and
+contract boundaries in functional or scripting stacks. Do not mix orchestration,
+domain logic, UI rendering, persistence, external service calls, and config
+loading in one unstructured layer.
 
 ## 9. Establish Quality Gates
 

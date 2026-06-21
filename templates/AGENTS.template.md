@@ -150,6 +150,31 @@ Keep GI agent-runtime neutral. These instructions are for any compatible AI
 agent or assistant, not only Codex. Mention Codex only when a rule is about a
 Codex-specific tool, folder, permission model, app surface, or workflow.
 
+Keep developer tools, orchestrators, task managers, agent harnesses, and code
+generators separate from the products they build. Never hard-code one demo,
+customer, project type, workflow run, product name, UI label, folder slug,
+stack, or task contract as if it were part of the development runtime. Generated
+applications, sites, bots, dashboards, libraries, and other artifacts are task
+data or output, not the tool's identity. Model selected or active workflow state
+as data, show debug/progress logs only for the selected run, and keep completed
+runs compact. Follow `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md`.
+
+Do not hard-code values that can change by deployment, user choice, runtime
+environment, host machine, service discovery, credentials, filesystem layout,
+feature flags, product names, demo data, workflow labels, generated artifact
+names, UI copy that names a specific project, or operational policy. Keep those
+values in documented project-local configuration, environment variables,
+service discovery records, manifests, task payloads, or user-selected state.
+
+Build applications with clear architecture boundaries. Prefer SOLID design,
+cohesive domain models, explicit interfaces at integration boundaries,
+dependency inversion for infrastructure, small composable modules, typed or
+validated contracts, and established framework patterns. Do not let UI,
+orchestration, persistence, external APIs, and product/domain logic collapse
+into one layer. If a stack is not object-oriented, apply the same separation of
+responsibilities through modules, functions, services, protocols, and data
+contracts.
+
 Treat `cached input` as a symptom, not the main optimization target. Keep total
 live context small by starting new sessions for unrelated tasks, using compact
 handoff summaries instead of long investigation history, and splitting multi-step

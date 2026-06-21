@@ -22,6 +22,9 @@ Start with:
   copied project instruction kits.
 - `patterns/FEATURE_WORKFLOW_CONTRACTS.md`: project-local contracts for agreed
   feature workflows, branching states, background work, and behavior guarantees.
+- `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md`: rules for keeping
+  orchestrators, task managers, agent harnesses, generators, and workflow logs
+  separate from the products they build.
 - `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`: durable, platform-neutral
   project-memory specifications for features, business logic, architecture
   migrations, and retrieval activation limits.

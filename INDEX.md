@@ -48,6 +48,10 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/CONFIGURATION_BOUNDARIES.md`: configuration-boundary rules for
   keeping deploy, user, runtime, machine, service, credential, path,
   feature-flag, and operational values out of application logic.
+- `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md`: rules for keeping
+  orchestrators, task managers, agent harnesses, generators, workflow logs, and
+  scaffolding tools product-agnostic, free of demo hard-code, and architected
+  with clear SOLID/module boundaries.
 - `patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md`: rules for using Context7 or
   similar external current-docs retrieval tools without leaking private project
   data or replacing project memory and official sources.

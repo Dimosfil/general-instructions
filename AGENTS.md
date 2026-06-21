@@ -177,16 +177,36 @@ in this repository's live `AGENTS.md`.
   practical.
 - Avoid long nested conditionals, filler, narration, and non-actionable prose.
 - Use clear Markdown headings and copy-pasteable examples.
+- Keep developer tools, orchestrators, task managers, agent harnesses, and code
+  generators separate from the products they build. Never hard-code one demo,
+  customer, project type, workflow run, product name, UI label, folder slug,
+  stack, or task contract as if it were part of the development runtime.
+  Generated applications, sites, bots, dashboards, libraries, and other
+  artifacts are input/output of the tool, not the tool's identity. Model
+  selected or active workflow state as data, show debug/progress logs only for
+  the selected run, and keep completed runs compact. Follow
+  `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md`.
 - Do not hard-code values that can change by deployment, user choice, runtime
   environment, host machine, service discovery, credentials, filesystem layout,
-  feature flags, or operational policy. Keep application code focused on logic,
-  constants, and internal defaults; move deploy/user/environment/system values
-  into documented project-local configuration, environment variables, or
-  service discovery records. Avoid embedding machine-specific absolute paths in
-  source or shared instructions; when paths are accepted from config, resolve
-  and validate them as absolute paths at the application boundary. When applying
-  this rule to existing projects, audit and refactor relevant hard-coded values
-  instead of only adding the rule text. Follow `patterns/CONFIGURATION_BOUNDARIES.md`.
+  feature flags, product names, demo data, workflow labels, generated artifact
+  names, UI copy that names a specific project, or operational policy. Keep
+  application code focused on logic, constants, and internal defaults; move
+  deploy/user/environment/system/product-selection values into documented
+  project-local configuration, environment variables, service discovery records,
+  manifests, task payloads, or user-selected state. Avoid embedding
+  machine-specific absolute paths in source or shared instructions; when paths
+  are accepted from config, resolve and validate them as absolute paths at the
+  application boundary. When applying this rule to existing projects, audit and
+  refactor relevant hard-coded values instead of only adding the rule text.
+  Follow `patterns/CONFIGURATION_BOUNDARIES.md`.
+- Build applications with clear architecture boundaries. Prefer SOLID design,
+  cohesive domain models, explicit interfaces at integration boundaries,
+  dependency inversion for infrastructure, small composable modules, typed or
+  validated contracts, and established framework patterns. Do not let UI,
+  orchestration, persistence, external APIs, and product/domain logic collapse
+  into one layer. If a stack is not object-oriented, apply the same separation
+  of responsibilities through modules, functions, services, protocols, and
+  data contracts.
 
 ## Windows Command Policy
 
