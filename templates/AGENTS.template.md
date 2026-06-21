@@ -126,14 +126,19 @@ question, or agreed next direction over incidental caveats in the summary. Do
 not promote an unverified caveat, environment variable, skipped check, or old
 `Next Best Steps` bullet into the current task unless the user selects it or it
 blocks the stated goal.
-Treat `tools/project-memory/` as durable product and project knowledge. For every
+Keep project documentation and project memory as separate layers. Use
+`README.md`, `docs/`, and `tools/AGENT_RUNBOOK.md` for the human-facing overview,
+functionality, stack, commands, operations, and troubleshooting. Use
+`tools/project-memory/` for implementation-driving knowledge: business rules,
+algorithms, workflow contracts, state transitions, invariants, failure handling,
+verification, architecture decisions, and current implementation maps. For every
 non-trivial feature, business workflow, or architecture decision, keep
-platform-neutral project-memory specifications that describe the behavior,
-business rules, algorithms, state transitions, failure handling, verification,
-and current implementation map. Write them so another agent could rebuild the
-project on a different language, platform, or framework and preserve the same
-behavior. Split specifications by meaning instead of one giant file. Keep major
-rewrites in `tools/project-memory/architecture-migrations.md`.
+platform-neutral project-memory specifications so another agent could rebuild
+the behavior on a different language, platform, or framework. Split
+specifications by meaning instead of one giant file. Keep major rewrites in
+`tools/project-memory/architecture-migrations.md`. Follow
+`patterns/PROJECT_DOCUMENTATION_LAYERS.md` and
+`patterns/PROJECT_MEMORY_SPECIFICATIONS.md`.
 When a project depends on, researches, vendors, or regularly interacts with
 other local repositories, cloned examples, services, libraries, docs sites, or
 upstream tools, keep a connected-projects register in project memory, preferably
@@ -217,6 +222,11 @@ tools/project-memory/
 Durable product behavior, business rules, feature algorithms, architecture
 decisions, and verified findings should be written there, not only in chat or in
 a handoff summary.
+
+General project documentation lives in `README.md`, `docs/`, and the runbook.
+Keep overview, visible functionality, stack, commands, operations, and
+troubleshooting there. Project memory should drive implementation; user/project
+documentation should orient people and agents.
 
 For analysis, refactoring, migration, or multi-step implementation tasks, create
 or update a concise checklist in `tools/project-memory/pending-tasks.md` or a

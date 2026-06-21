@@ -2,6 +2,10 @@
 
 Last reviewed: TODO
 
+This is project documentation. Keep business rules, feature algorithms, workflow
+contracts, state machines, and verification guarantees in project memory; keep
+stack facts, commands, runtime assumptions, and operational notes here.
+
 ## Summary
 
 - Primary stack: TODO

@@ -1,15 +1,20 @@
 # Project Memory
 
-This folder stores concise, durable project knowledge for AI agents.
+This folder stores concise, implementation-driving project knowledge for AI
+agents.
 
 Use Markdown and JSON files here for human-reviewable memory. Use the local
 SQLite database only as a generated search index that can be rebuilt from git
 tracked files.
 
-## Summary Versus Project Memory
+## Documentation Versus Summary Versus Project Memory
 
+`README.md`, `docs/`, and runbooks are project documentation: overview,
+functionality, stack, commands, operations, troubleshooting, and examples.
 `tools/summary/` is compact handoff state for the current or recent chat.
-`tools/project-memory/` is long-lived product and project knowledge.
+`tools/project-memory/` is long-lived implementation-driving knowledge:
+algorithms, business rules, workflow contracts, state machines, invariants,
+architecture decisions, and verification guarantees.
 
 Write project-memory documents so another agent could rebuild the project on a
 different language, framework, platform, or UI stack and preserve the same
@@ -22,8 +27,6 @@ Recommended specification structure:
 tools/project-memory/
   architecture-migrations.md
   specs/
-    product-overview.md
-    glossary.md
     features/
     business-rules/
     data-model/
@@ -31,9 +34,11 @@ tools/project-memory/
       connected-projects.md
 ```
 
-Split documents by meaning. Keep feature behavior, business logic, architecture
-history, and implementation mapping searchable as separate focused files instead
-of one giant document.
+Split documents by meaning. Keep feature algorithms, business logic,
+architecture contracts, and implementation mapping searchable as separate
+focused files instead of one giant document. Keep user-facing functionality,
+stack, commands, and operations in project documentation unless a compatibility
+path is explicitly linked.
 
 Keep a connected-projects register when this project depends on, researches,
 vendors, or regularly interacts with external repositories, cloned examples,

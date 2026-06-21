@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Split project documentation from project memory. `README.md`, `docs/`, and
+  runbooks should hold overview, user-visible functionality, stack, commands,
+  operations, and troubleshooting; `tools/project-memory/` should hold
+  implementation-driving algorithms, business rules, workflow contracts, state
+  machines, invariants, architecture decisions, and verification guarantees.
+
 - Added technology stack inventory guidance. GI-enabled projects should keep
   `tools/project-memory/specs/technology-stack.md` current with verified
   languages, runtimes, frameworks, package managers, build/test tools, storage,

@@ -46,6 +46,11 @@
   work, update the relevant project-memory specification in the same scoped
   change. Write it so another agent could rebuild the behavior on a different
   language, framework, or platform. A handoff summary is not a substitute.
+- Keep project documentation separate from project memory. Put overview,
+  user-visible functionality, stack, commands, operations, and troubleshooting
+  in `README.md`, `docs/`, or the runbook. Put algorithms, business rules,
+  workflow contracts, state machines, invariants, and verification guarantees in
+  project memory.
 - After any meaningful implementation, refactor, migration, or configuration
   cleanup batch, verify that every touched layer uses the intended
   source-of-truth for changed defaults, policies, workflows, contracts, or

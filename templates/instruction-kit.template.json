@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.21.10",
+  "instruction_kit_version": "2026.06.21.11",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -119,7 +119,8 @@
     "2026.06.21.7__add_gi_refactor_command",
     "2026.06.21.8__extract_architecture_code_quality_pattern",
     "2026.06.21.9__add_coherent_batch_verification",
-    "2026.06.21.10__add_technology_stack_inventory"
+    "2026.06.21.10__add_technology_stack_inventory",
+    "2026.06.21.11__split_project_documentation_and_memory_layers"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -142,6 +143,7 @@
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/TECHNOLOGY_STACK_INVENTORY.md",
+    "patterns/PROJECT_DOCUMENTATION_LAYERS.md",
     "patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md",
     "patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md",
     "tools/select-project-language.ps1",

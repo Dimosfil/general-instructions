@@ -22,6 +22,10 @@ Start with:
   copied project instruction kits.
 - `patterns/FEATURE_WORKFLOW_CONTRACTS.md`: project-local contracts for agreed
   feature workflows, branching states, background work, and behavior guarantees.
+- `patterns/PROJECT_DOCUMENTATION_LAYERS.md`: separation between user/project
+  documentation for overview, functionality, stack, and operations, and
+  project-memory specifications for algorithms, business rules, workflows, and
+  code-driving contracts.
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
   baseline for OOP, SOLID, DRY, clean-code, separation of concerns, contracts,
   abstraction discipline, and verification.

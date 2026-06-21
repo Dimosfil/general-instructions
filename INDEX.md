@@ -84,6 +84,9 @@ Reusable instructions in this repository are grouped by job.
   new features, bug fixes, smoke checks, and release confidence.
 - `patterns/PROJECT_FTP_DEPLOY.md`: project-local FTP/FTPS/SFTP deploy config
   and `gi ftp` upload workflow.
+- `patterns/PROJECT_DOCUMENTATION_LAYERS.md`: rules for keeping
+  human-facing project documentation separate from implementation-driving
+  project memory.
 - `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`: portable project-memory
   specifications for product behavior, feature algorithms, business logic,
   connected-project registers, architecture migrations, and SQL/vector

@@ -1,6 +1,7 @@
 # Technology Stack Inventory
 
-Keep each GI-enabled project technology stack visible in durable project memory.
+Keep each GI-enabled project technology stack visible in durable project
+documentation.
 
 ## Purpose
 
@@ -9,19 +10,24 @@ build tools, test tools, external services, and deployment assumptions on every
 session. Maintain a concise stack inventory so refactors, dependency changes,
 verification plans, and migration work start from a shared source of truth.
 
+The technology stack is project documentation: it explains how to understand,
+run, test, build, and operate the project. It is not the source of business
+rules or feature algorithms.
+
 ## Required File
 
-Use this project-memory file unless local instructions define a more specific
-path:
+Use this compatibility path unless local instructions define a more specific
+documentation path:
 
 ```text
 tools/project-memory/specs/technology-stack.md
 ```
 
 Create it when a project adopts GI or when `gi обновить` introduces this rule.
-If the project already has an equivalent stack ADR or architecture note, keep
-that note and either link it from `technology-stack.md` or migrate its current
-facts into this file without losing decisions.
+If the project already has an equivalent `docs/technology-stack.md`, stack ADR,
+or architecture note, keep that note and either link it from
+`technology-stack.md` or migrate its current facts into one canonical file
+without losing decisions. Do not maintain two independent stack inventories.
 
 ## What To Record
 
@@ -36,8 +42,9 @@ Record verified current facts, not guesses:
 - local development entry points, ports, and health checks when stable;
 - generated artifacts and rebuildable indexes;
 - deprecated, legacy, or transitional stack components;
-- evidence paths such as manifests, config files, lockfiles, runbooks, and
-  project-memory specs;
+- evidence paths such as manifests, config files, lockfiles, runbooks,
+  documentation, and project-memory specs when they are evidence for
+  behavior-sensitive stack choices;
 - open verification gaps when the stack cannot be identified from current
   files.
 

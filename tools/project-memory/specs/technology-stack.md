@@ -2,6 +2,10 @@
 
 Last reviewed: 2026-06-21
 
+This file is the repository's canonical project documentation for stack facts.
+Business rules, feature algorithms, workflow contracts, and verification
+guarantees belong in project memory specs, not in this stack inventory.
+
 ## Summary
 
 - Primary stack: Markdown instruction library with PowerShell and Python helper

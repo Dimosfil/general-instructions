@@ -4,11 +4,17 @@ Use this when preparing a repository for AI-agent collaboration.
 
 - [ ] Add root `AGENTS.md` from `templates/AGENTS.template.md`.
 - [ ] Add `README.md` note: `For AI agents: read AGENTS.md first.`
+- [ ] Decide the project documentation layer: use `README.md` and `docs/` for
+  overview, visible functionality, stack, setup, commands, operations,
+  troubleshooting, examples, screenshots, and release notes.
 - [ ] Add `.github/copilot-instructions.md`, `CLAUDE.md`, or `GEMINI.md` only
   as small redirects when needed.
 - [ ] Add `tools/AGENT_WORKING_AGREEMENTS.md`.
 - [ ] Add `tools/AGENT_RUNBOOK.md`.
 - [ ] Add `tools/project-memory/README.md`.
+- [ ] Keep `tools/project-memory/` for implementation-driving algorithms,
+  business rules, workflow contracts, state machines, invariants, architecture
+  decisions, integration contracts, and verification guarantees.
 - [ ] Add `tools/project-memory/architecture-migrations.md` from
   `templates/ARCHITECTURE_MIGRATIONS.template.md`.
 - [ ] Create focused project-memory spec folders when the project has
