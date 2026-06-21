@@ -211,6 +211,16 @@ or:
   retrieval metrics and activation limits. Report current counts, readiness,
   staleness, and recommendations; do not deploy heavy databases or external
   services by default.
+- Use `gi refactor`, `gi рефактор`, or `ги рефактор` for a full current-project
+  refactor under all applicable GI rules. Read local instructions, contracts,
+  manifests, project memory, and tests first; create a concise plan; then work
+  in small verifiable batches that preserve user-visible behavior unless the
+  user explicitly changes it. Cover architecture boundaries, configuration
+  boundaries, hard-code removal, development-tool/product separation,
+  SOLID/DRY/clean-code concerns, duplicated business logic, contracts, tests,
+  and project-memory updates. Ask before destructive operations, data
+  migrations, public API or storage contract changes, dependency replacements,
+  formatting-only churn, or private/external paths.
 - Use `gi rebuild` for the current project/application rebuild only, such as
   producing an executable, package, or documented build artifact. Use
   `gi tools rebuild` /

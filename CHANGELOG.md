@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added `gi refactor` / `gi рефактор` / `ги рефактор` as a documented full
+  project refactor command. Agents must refactor the current project according
+  to all applicable GI rules, preserve user-visible behavior unless explicitly
+  changed, plan and execute the work in verifiable batches, update durable
+  project memory for meaningful architecture or workflow changes, and verify
+  each affected area with documented checks.
+
 - Added a code-quality baseline requiring agents to understand and apply OOP,
   SOLID, DRY, clean-code, maintainability, and extensibility principles where
   they fit the stack, while avoiding premature abstractions when duplication

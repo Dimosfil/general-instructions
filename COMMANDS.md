@@ -58,6 +58,10 @@ gi tools rebuild manifest
 gi rag rebuild manifest
 gi tools rebuild evals
 gi rag rebuild evals
+gi refactor
+gi рефактор
+ги рефактор
+gi full refactor
 ги ребилд
 ги тулс ребилд
 ги раг ребилд
@@ -156,6 +160,7 @@ the listed commands.
 | `gi tools rebuild vector`, `gi rag rebuild vector` | Rebuild only the vector retrieval node. |
 | `gi tools rebuild manifest`, `gi rag rebuild manifest` | Rebuild only source manifest/inventory metadata. |
 | `gi tools rebuild evals`, `gi rag rebuild evals` | Run configured RAG health and retrieval eval checks only. |
+| `gi refactor`, `gi рефактор`, `ги рефактор` | Refactor the entire current project according to all applicable GI rules, in verified batches. |
 | `gi config`, `gi config service` | Inspect config/discovery service settings. |
 | `gi config service url=<url>` | Set the config-service URL after validation. |
 | `gi config service on`, `gi config service off` | Toggle current app self-registration with config-service. |
@@ -743,6 +748,34 @@ authoritative command contract.
 
 Для новой фичи: expected behavior, failure paths, edge cases, rollback, что
 проверено, что требует ручной проверки.
+
+### Full Project Refactor
+
+```text
+gi refactor
+gi рефактор
+ги рефактор
+gi full refactor
+```
+
+The agent treats this as approval to refactor the entire current project
+according to all applicable GI rules, not as a proposal-only request. Before
+editing, it reads project-local instructions, README, manifests, architecture or
+runbooks, project-memory specifications, connected-project registers, and
+relevant test/build contracts. It creates a concise refactor plan covering
+architecture boundaries, configuration boundaries, hard-coded deploy/user/runtime
+values, development-tool versus generated-product boundaries, SOLID/DRY/clean
+code, duplicated business logic, oversized modules, dependency direction, typed
+or validated contracts, tests, and project-memory updates.
+
+The agent works in small verifiable batches and preserves user-visible behavior
+unless the user explicitly changes it. It asks before destructive operations,
+data migrations, public API or storage contract changes, dependency
+replacements, broad formatting-only churn, or private/external paths. After
+meaningful batches, it runs documented checks for affected areas, updates
+durable project-memory specs for behavior or architecture changes, avoids
+committing generated/rebuildable artifacts unless local rules require them, and
+reports remaining risks or continuation batches.
 
 ### Настроить Task-Manager Plan Sync
 

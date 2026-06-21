@@ -526,6 +526,26 @@ Inspect logs:
   are inspection commands by default; do not create external services, install
   heavy dependencies, upload data, or index private sources unless the user
   explicitly asks and project-local rules allow it.
+- Treat `gi refactor`, `gi рефактор`, `ги рефактор`, and equivalent full-project
+  refactor wording as requests to refactor the entire current project according
+  to all applicable GI rules. This is a broad implementation command, not a
+  request for a proposal only. First read project-local instructions, README,
+  manifests, architecture/runbooks, project-memory specifications, connected
+  project registers, and relevant tests or build contracts. Build a concise
+  refactor plan covering architecture boundaries, configuration boundaries,
+  hard-coded deploy/user/runtime/model/product values, development-tool versus
+  generated-product boundaries, SOLID/DRY/clean-code issues, duplicated
+  business logic, oversized modules, dependency direction, typed or validated
+  contracts, tests, and project-memory updates. Execute in small verifiable
+  batches, preserving user-visible behavior unless the user explicitly changes
+  it. Ask before destructive operations, data migrations, public API or storage
+  contract changes, dependency replacements, broad formatting-only churn, or
+  touching private/external paths. After each meaningful batch, run documented
+  checks for the affected area, update durable project-memory specs for
+  behavior or architecture changes, keep generated/rebuildable artifacts out of
+  commits unless project rules say otherwise, and report remaining risks or
+  follow-up batches. If the project is too large to complete safely in one turn,
+  complete the first coherent batch and leave an executable continuation plan.
 - Treat `gi rebuild` and `ги ребилд` as requests to rebuild the current project
   or application only, producing the documented build output such as an
   executable, package, or other artifact. Read project-local build or rebuild
