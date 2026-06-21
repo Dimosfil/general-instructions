@@ -78,6 +78,10 @@ Reusable instructions in this repository are grouped by job.
   specifications for product behavior, feature algorithms, business logic,
   connected-project registers, architecture migrations, and SQL/vector
   activation limits.
+- `patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md`: rules for keeping
+  translation maps, synonym dictionaries, query expansion, prompt templates,
+  ranking thresholds, and model-specific search behavior in resources, config,
+  adapters, or retrieval pipelines instead of inline hard-code.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure that separates
   source corpus, structured memory, retrieval adapters, context packets,
   tracing, evals, and writeback.

@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added query/prompt normalization boundary guidance. Translation maps, synonym
+  dictionaries, prompt expansions, multilingual query handling, ranking
+  thresholds, and model-specific search behavior should live in documented
+  resources, config, adapters, or retrieval pipelines instead of inline
+  application hard-code.
+
 - Added project-agnostic explanation guidance for shared rules. Agents should
   not explain reusable GI rules by anchoring them to the current project, recent
   bug, demo, product name, or repository unless the user explicitly asks for

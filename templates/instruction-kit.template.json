@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.21.3",
+  "instruction_kit_version": "2026.06.21.4",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -112,7 +112,8 @@
     "2026.06.19.3__require_gi_reboot_per_app_accounting",
     "2026.06.21.1__add_gi_default_command",
     "2026.06.21.2__add_development_tool_product_boundaries",
-    "2026.06.21.3__keep_shared_rule_explanations_project_agnostic"
+    "2026.06.21.3__keep_shared_rule_explanations_project_agnostic",
+    "2026.06.21.4__add_query_prompt_normalization_boundaries"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -132,6 +133,7 @@
     "tools/project-memory/rag-system.json",
     "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
     "patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md",
+    "patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md",
     "tools/select-project-language.ps1",
     "tools/select-git-commit-languages.ps1",
     "tools/select-system-language.ps1",

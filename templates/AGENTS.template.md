@@ -169,9 +169,12 @@ runs compact. Follow `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md`.
 Do not hard-code values that can change by deployment, user choice, runtime
 environment, host machine, service discovery, credentials, filesystem layout,
 feature flags, product names, demo data, workflow labels, generated artifact
-names, UI copy that names a specific project, or operational policy. Keep those
-values in documented project-local configuration, environment variables,
-service discovery records, manifests, task payloads, or user-selected state.
+names, UI copy that names a specific project, language translation maps,
+synonym dictionaries, query-normalization rules, model-specific prompt
+expansions, ranking thresholds, or operational policy. Keep those values in
+documented project-local configuration, environment variables, service discovery
+records, manifests, task payloads, resource files, adapters, or user-selected
+state.
 
 Build applications with clear architecture boundaries. Prefer SOLID design,
 cohesive domain models, explicit interfaces at integration boundaries,

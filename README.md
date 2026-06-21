@@ -28,6 +28,9 @@ Start with:
 - `patterns/PROJECT_MEMORY_SPECIFICATIONS.md`: durable, platform-neutral
   project-memory specifications for features, business logic, architecture
   migrations, and retrieval activation limits.
+- `patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md`: rules for keeping
+  translation maps, synonym dictionaries, prompt expansions, and model-specific
+  query/ranking behavior out of inline application hard-code.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure for project
   memory, source indexing, retrieval adapters, context packets, and writeback.
 - `patterns/SEMANTIC_RAG_RETRIEVAL.md`: embedding and semantic retrieval rules
