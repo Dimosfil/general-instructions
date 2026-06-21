@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added concrete-example abstraction guidance. Agents should extract the
+  portable principle from a request, bug, screenshot, demo, or implementation
+  detail before adding shared rules, and must not turn incidental entities,
+  filenames, paths, years, queries, model names, UI labels, or selected runs
+  into generic defaults, policies, architecture, or examples.
+
 - Split project documentation from project memory. `README.md`, `docs/`, and
   runbooks should hold overview, user-visible functionality, stack, commands,
   operations, and troubleshooting; `tools/project-memory/` should hold

@@ -181,6 +181,14 @@ in this repository's live `AGENTS.md`.
   for that concrete comparison. Use neutral terms such as "a development tool",
   "a generated product", "a selected run", or "a service"; if an example is
   necessary, mark it as illustrative and keep it replaceable.
+- When deriving a reusable rule from a concrete request, bug, screenshot, demo,
+  or implementation detail, extract the portable principle before writing the
+  rule. Do not promote incidental entities, object types, years, filenames,
+  local paths, data partitions, model names, UI labels, query text, or one
+  selected workflow into shared defaults, policies, architecture, or examples.
+  Treat the concrete case as evidence, then restate it in neutral terms and map
+  the principle to configuration, contracts, adapters, manifests,
+  user-selected state, or project-local memory as appropriate.
 - Prefer small, focused documents over one giant policy file.
 - When adding a new instruction file, also add it to `INDEX.md`.
 - Write instruction documents in imperative voice, with one rule per bullet when

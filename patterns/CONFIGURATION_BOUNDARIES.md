@@ -10,6 +10,12 @@ variables, service discovery, or deployment metadata.
   filesystem-layout, feature-flag, model-behavior, intent-interpretation,
   translation, query-normalization, prompt, ranking, or operational-policy
   values in source code.
+- Do not turn one observed request, selected object, date range, filename,
+  local folder, model, index partition, UI label, test case, or screenshot into
+  a default configuration value or product policy. Treat concrete incidents as
+  evidence for a portable rule; express the rule in neutral terms and store
+  changeable selections in config, manifests, adapters, contracts,
+  user-selected state, task payloads, or project-local memory.
 - Keep project-local config in documented files such as `config/*.json`,
   `.env.example`, `tools/deploy/*.example.json`, or the platform-native config
   location for the stack.

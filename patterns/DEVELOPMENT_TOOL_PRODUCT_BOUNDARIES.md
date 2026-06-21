@@ -18,6 +18,10 @@ comparison to a named repository or product.
 
 - Treat every product, demo, customer, project type, task, workflow run, and
   generated artifact as replaceable input or output.
+- Do not let one selected request, run, generated artifact, or debugging
+  example define the generic runtime contract. Extract the reusable behavior and
+  keep the concrete case as replaceable task data, fixture data, or documented
+  example evidence.
 - Do not hard-code product names, demo domains, customer names, task titles,
   folder slugs, repository names, UI labels, agent profiles, stacks, routes,
   ports, or workflow contracts into the development runtime unless they are true
