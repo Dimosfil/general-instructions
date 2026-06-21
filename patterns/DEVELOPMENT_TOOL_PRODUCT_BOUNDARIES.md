@@ -48,11 +48,14 @@ comparison to a named repository or product.
 
 ## Architecture Requirements
 
-- Follow SOLID design when the stack supports object-oriented structure:
+- Follow OOP, SOLID, DRY, clean-code, maintainability, and extensibility
+  principles where they fit the stack. In object-oriented code, prefer
   single-purpose classes, open extension points, substitutable implementations,
   small interfaces, and dependencies inverted behind ports/adapters.
 - In non-OOP stacks, preserve the same boundaries with cohesive modules,
   functions, services, protocols, and typed or validated data contracts.
+- Apply DRY to repeated knowledge and behavior, but avoid premature abstractions
+  when similar code does not yet share a stable meaning.
 - Keep orchestration logic separate from product/domain logic, UI rendering,
   persistence, external service adapters, filesystem layout, and generated
   artifact content.

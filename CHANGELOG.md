@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added a code-quality baseline requiring agents to understand and apply OOP,
+  SOLID, DRY, clean-code, maintainability, and extensibility principles where
+  they fit the stack, while avoiding premature abstractions when duplication
+  does not yet have a clear shared meaning.
+
 - Clarified query/prompt normalization guidance as an
   interpretation/translation capability. Implementations may use deterministic
   resources, local algorithms, retrieval, services, or provider-swappable LLM

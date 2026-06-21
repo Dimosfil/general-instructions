@@ -38,10 +38,12 @@ It should contain:
   generated product, demo, task, customer, folder slug, stack, workflow run, or
   UI label. Treat those as task data, selected run state, fixtures, manifests,
   or project-local config, not as the runtime identity.
-- Application architecture rules: follow SOLID and established architecture
-  patterns for the stack; keep domain/product logic, orchestration, UI,
-  persistence, filesystem, external services, and configuration in separate
-  layers with explicit contracts.
+- Application architecture and code-quality rules: follow OOP, SOLID, DRY,
+  clean-code, maintainability, extensibility, and established architecture
+  patterns where they fit the stack; keep domain/product logic, orchestration,
+  UI, persistence, filesystem, external services, and configuration in separate
+  layers with explicit contracts. Reduce duplicated knowledge and behavior, but
+  avoid premature abstractions before the shared meaning is clear.
 - Feature workflow contracts: when a feature has an agreed runtime workflow,
   loading order, branching state flow, background work, or user-visible
   guarantee, record it in project-local docs and require agents to read it
@@ -412,7 +414,8 @@ debugging them.
 Before meaningful implementation, choose an architecture shape that fits the
 stack and keep it visible in code: ports/adapters, layered architecture, clean
 architecture, MVC/MVVM, feature modules, service contracts, or another
-established pattern. Apply SOLID where OOP exists, and use equivalent module and
+established pattern. Apply SOLID where OOP exists, DRY where duplicated
+knowledge or behavior has a clear shared meaning, and equivalent module and
 contract boundaries in functional or scripting stacks. Do not mix orchestration,
 domain logic, UI rendering, persistence, external service calls, and config
 loading in one unstructured layer.
