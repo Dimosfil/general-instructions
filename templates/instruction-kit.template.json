@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.21.9",
+  "instruction_kit_version": "2026.06.21.10",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -118,7 +118,8 @@
     "2026.06.21.6__add_code_quality_baseline",
     "2026.06.21.7__add_gi_refactor_command",
     "2026.06.21.8__extract_architecture_code_quality_pattern",
-    "2026.06.21.9__add_coherent_batch_verification"
+    "2026.06.21.9__add_coherent_batch_verification",
+    "2026.06.21.10__add_technology_stack_inventory"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -136,15 +137,18 @@
     "tools/project-memory/git-preferences.json",
     "tools/project-memory/system-preferences.json",
     "tools/project-memory/rag-system.json",
+    "tools/project-memory/specs/technology-stack.md",
     "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
+    "patterns/TECHNOLOGY_STACK_INVENTORY.md",
     "patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md",
     "patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md",
     "tools/select-project-language.ps1",
     "tools/select-git-commit-languages.ps1",
     "tools/select-system-language.ps1",
     "tools/check-instruction-kit-updates.ps1",
+    "templates/TECHNOLOGY_STACK.template.md",
     "skills/TODO-skill-name/SKILL.md",
     ".gitignore"
   ]

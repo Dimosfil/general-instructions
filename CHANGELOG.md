@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.21
 
+- Added technology stack inventory guidance. GI-enabled projects should keep
+  `tools/project-memory/specs/technology-stack.md` current with verified
+  languages, runtimes, frameworks, package managers, build/test tools, storage,
+  external services, commands, evidence paths, and open verification gaps.
+
 - Added coherent batch verification guidance. Meaningful implementation,
   refactor, migration, and configuration cleanup batches must check
   source-of-truth consistency across touched layers, update durable

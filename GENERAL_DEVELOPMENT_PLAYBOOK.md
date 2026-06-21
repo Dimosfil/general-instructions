@@ -44,6 +44,11 @@ It should contain:
   UI, persistence, filesystem, external services, and configuration in separate
   layers with explicit contracts. Reduce duplicated knowledge and behavior, but
   avoid premature abstractions before the shared meaning is clear.
+- Technology stack inventory: keep
+  `tools/project-memory/specs/technology-stack.md` current for GI-enabled
+  projects, with verified runtimes, frameworks, package managers, build/test
+  tools, storage, services, commands, evidence, and gaps. Follow
+  `patterns/TECHNOLOGY_STACK_INVENTORY.md`.
 - Feature workflow contracts: when a feature has an agreed runtime workflow,
   loading order, branching state flow, background work, or user-visible
   guarantee, record it in project-local docs and require agents to read it

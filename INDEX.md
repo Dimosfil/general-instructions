@@ -51,6 +51,10 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/COHERENT_BATCH_VERIFICATION.md`: batch-completion rules for
   source-of-truth consistency, durable memory writeback, scoped diffs, and
   evidence-backed checks.
+- `patterns/TECHNOLOGY_STACK_INVENTORY.md`: project-memory rules for keeping a
+  verified technology stack inventory with languages, runtimes, frameworks,
+  package managers, build/test tools, storage, services, commands, evidence,
+  and gaps.
 - `patterns/CONFIGURATION_BOUNDARIES.md`: configuration-boundary rules for
   keeping deploy, user, runtime, machine, service, credential, path,
   feature-flag, and operational values out of application logic.
@@ -159,6 +163,8 @@ Reusable instructions in this repository are grouped by job.
 - `templates/SUMMARY.template.md`: handoff summary template.
 - `templates/task-managers.template.json`: starter project-local task-manager
   configuration for optional plan sync skills.
+- `templates/TECHNOLOGY_STACK.template.md`: starter project-memory technology
+  stack inventory.
 
 ## Update Intake
 

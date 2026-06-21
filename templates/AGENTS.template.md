@@ -184,6 +184,14 @@ they fit the stack. Keep domain/product logic, orchestration, UI, persistence,
 filesystem, external services, and configuration in separate layers with
 explicit contracts. Follow `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 
+Keep the current technology stack visible in durable project memory. For
+GI-enabled projects, maintain `tools/project-memory/specs/technology-stack.md`
+or an equivalent linked stack inventory with verified languages, runtimes,
+frameworks, package managers, build/test tools, storage, external services,
+commands, evidence paths, and open verification gaps. Update it when stack
+components are added, removed, upgraded, replaced, or materially reconfigured.
+Follow `patterns/TECHNOLOGY_STACK_INVENTORY.md`.
+
 After any meaningful implementation, refactor, migration, or configuration
 cleanup batch, verify the batch at the right abstraction level. Check all
 touched layers for duplicated defaults, policies, workflows, contracts, or

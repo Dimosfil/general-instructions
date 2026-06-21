@@ -25,6 +25,9 @@ Start with:
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
   baseline for OOP, SOLID, DRY, clean-code, separation of concerns, contracts,
   abstraction discipline, and verification.
+- `patterns/TECHNOLOGY_STACK_INVENTORY.md`: durable project-memory inventory
+  for languages, runtimes, frameworks, build/test tools, storage, services, and
+  stack evidence.
 - `patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md`: rules for keeping
   orchestrators, task managers, agent harnesses, generators, and workflow logs
   separate from the products they build.

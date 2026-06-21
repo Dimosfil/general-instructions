@@ -34,6 +34,7 @@ Recommended specification structure:
 tools/project-memory/
   architecture-migrations.md
   specs/
+    technology-stack.md
     product-overview.md
     glossary.md
     features/
@@ -46,6 +47,17 @@ tools/project-memory/
 Split documents by meaning. Keep feature behavior, business logic, architecture
 history, and implementation mapping searchable as separate focused files instead
 of one giant document.
+
+Keep the current technology stack in:
+
+```text
+tools/project-memory/specs/technology-stack.md
+```
+
+Record verified languages, runtimes, frameworks, package managers, build/test
+tools, storage, external services, commands, evidence paths, and open gaps.
+Update it when stack components are added, removed, upgraded, replaced, or
+materially reconfigured.
 
 Keep a connected-projects register when this project depends on, researches,
 vendors, or regularly interacts with external repositories, cloned examples,
