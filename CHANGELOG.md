@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.23
+
+- Added `gi stack` / `ги стек` as a documented command for finding or building
+  the current project's technology stack inventory. Agents first look for a
+  visible canonical stack link or inventory in project-local instructions,
+  README/docs/runbooks, or `tools/project-memory/specs/technology-stack.md`;
+  when it is missing, they gather verified stack facts from current project
+  evidence and add or request a top-level pointer according to local docs
+  policy.
+
 ## 2026.06.21
 
 - Modularized the runtime instruction entrypoint. Root and copied

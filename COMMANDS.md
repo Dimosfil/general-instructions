@@ -45,6 +45,8 @@ gi restore
 gi sql
 gi sqlite
 gi vector
+gi stack
+ги стек
 gi rebuild
 gi tools rebuild
 gi rag rebuild
@@ -153,6 +155,7 @@ the listed commands.
 | `gi system language`, `gi систем язык` | Configure agent working-response language. |
 | `gi sql`, `gi sqlite` | Inspect SQLite/FTS project-memory readiness and metrics. |
 | `gi vector` | Inspect semantic/vector retrieval readiness and metrics. |
+| `gi stack`, `ги стек` | Find or build the current project's verified technology stack inventory. |
 | `gi rebuild`, `ги ребилд` | Rebuild the current project/application only, such as producing a build artifact or exe. |
 | `gi tools rebuild`, `gi rag rebuild`, `ги тулс ребилд`, `ги раг ребилд` | Rebuild the full configured GI/project-memory/RAG system after confirmation. |
 | `gi tools rebuild sql`, `gi rag rebuild sql` | Rebuild only the SQL/FTS structured-memory node. |
@@ -279,6 +282,37 @@ index path, freshness caveats, and readiness.
 These are inspection commands by default. They do not deploy external services,
 install heavy dependencies, upload data, or index private sources unless the
 user explicitly asks and project-local rules allow it.
+
+### Собрать Стек Технологий Проекта
+
+```text
+gi stack
+ги стек
+```
+
+`gi stack` / `ги стек` asks the agent to find or build the current project's
+technology stack inventory. The agent first looks for a visible project-local
+stack source of truth: a top-level README/docs/runbook link near the beginning
+of the file, `tools/project-memory/specs/technology-stack.md`, or an equivalent
+linked architecture/stack note. If a current inventory exists, the agent reads
+it, verifies the key facts against current manifests, lockfiles, config, run
+instructions, and source entry points, then reports the stack and any gaps.
+
+If no stack link or inventory exists, the agent creates or updates the canonical
+inventory from current project evidence. Use
+`tools/project-memory/specs/technology-stack.md` unless local instructions name
+a different canonical docs path. Record languages, runtimes, frameworks,
+package managers, build/test tools, storage, external services, commands,
+evidence paths, and unknowns. For external agents starting outside the project,
+the first pass should be able to find the stack pointer in the first relevant
+project instructions or docs; when it is missing, add a concise link to the
+canonical stack inventory in the appropriate top-level project doc if local
+rules allow documentation edits.
+
+This command is an inventory/documentation command. It must not install
+dependencies, start services, rebuild indexes, call external APIs, read secrets,
+or inspect private paths outside the project root unless the user explicitly
+approves that scope.
 
 ### Rebuild Project
 
