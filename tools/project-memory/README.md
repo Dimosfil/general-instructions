@@ -16,6 +16,13 @@ functionality, stack, commands, operations, troubleshooting, and examples.
 algorithms, business rules, workflow contracts, state machines, invariants,
 architecture decisions, and verification guarantees.
 
+Do not store raw work results, generated product outputs, screenshots, photos,
+crawled/downloaded files, large logs, model outputs, build artifacts, export
+bundles, or run datasets in this folder. Put those files in a project-local
+artifact, evidence, output, data, or docs-asset location and keep only compact
+summaries, manifests, checksums, or links here when they are needed for a
+decision, behavior contract, failure, or verification result.
+
 Write project-memory documents so another agent could rebuild the project on a
 different language, framework, platform, or UI stack and preserve the same
 behavior. Code is the current implementation; project-memory specifications are

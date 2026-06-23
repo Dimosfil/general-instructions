@@ -162,6 +162,13 @@ Split project-memory specifications by meaning. Prefer focused files such as
 large document. Keep major architecture rewrites and platform migrations in
 `tools/project-memory/architecture-migrations.md`.
 
+Do not use `tools/project-memory/` as a dumping ground for raw work results,
+generated product outputs, screenshots, photos, crawled/downloaded files, large
+logs, model outputs, build artifacts, export bundles, or run datasets. Store
+those files in a project-local artifact/evidence/output/data/docs-asset location
+and keep only compact manifests, summaries, checksums, or links in project
+memory when needed for a decision, contract, failure, or verification result.
+
 For projects that depend on, research, vendor, or regularly interact with other
 repositories, cloned examples, services, libraries, docs sites, or upstream
 tools, keep `tools/project-memory/specs/integration-contracts/connected-projects.md`

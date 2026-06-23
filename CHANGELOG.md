@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.23
 
+- Clarified that `tools/project-memory/` is for durable specifications and
+  compact evidence references, not raw work results. Generated outputs,
+  screenshots, photos, crawled/downloaded files, logs, model outputs, build
+  artifacts, export bundles, and run datasets should live in project-local
+  artifact/evidence/output/data locations, with only manifests, summaries,
+  checksums, or links kept in project memory when needed.
+
 - Clarified `gi push` / `gi пуш` as a commit-then-push finish command. Agents
   must not reinterpret it as raw `git push`, a retry of a previous terminal
   push, or push-only behavior; if there are no scoped changes to commit, they

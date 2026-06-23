@@ -15,6 +15,11 @@ Use this when preparing a repository for AI-agent collaboration.
 - [ ] Keep `tools/project-memory/` for implementation-driving algorithms,
   business rules, workflow contracts, state machines, invariants, architecture
   decisions, integration contracts, and verification guarantees.
+- [ ] Keep raw work results, generated product outputs, screenshots, photos,
+  crawled/downloaded files, large logs, model outputs, build artifacts, export
+  bundles, and run datasets out of `tools/project-memory/`; store them in a
+  project-local artifact/evidence/output/data/docs-asset location and reference
+  them from memory only with compact manifests, summaries, checksums, or links.
 - [ ] Add `tools/project-memory/architecture-migrations.md` from
   `templates/ARCHITECTURE_MIGRATIONS.template.md`.
 - [ ] Create focused project-memory spec folders when the project has
