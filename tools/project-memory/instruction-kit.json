@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.23.5",
+  "instruction_kit_version": "2026.06.23.6",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -127,7 +127,8 @@
     "2026.06.23.2__add_gi_full_test_task_commands",
     "2026.06.23.3__retire_dry_run_for_gi_test",
     "2026.06.23.4__clarify_gi_push_requires_commit",
-    "2026.06.23.5__keep_raw_artifacts_out_of_project_memory"
+    "2026.06.23.5__keep_raw_artifacts_out_of_project_memory",
+    "2026.06.23.6__ask_before_boundary_violating_hardcode"
   ],
   "copied_files": [
     "AGENTS.md",

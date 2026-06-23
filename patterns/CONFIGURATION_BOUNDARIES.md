@@ -38,6 +38,13 @@ variables, service discovery, or deployment metadata.
   adapter modules, provider-swappable LLM adapters, or curated data assets.
   Application code may load, validate, compose, and apply them, but should not
   grow ad hoc per-query dictionaries inside request handlers or UI glue.
+- If a quick fix, legacy compatibility path, test expectation, or observed
+  sample would require hard-coding changeable behavior that this rule sends to
+  config, resources, adapters, or project-local memory, do not silently add the
+  hard-code. First implement the compliant boundary. Ask one concise
+  clarification question only when the correct source of truth, config location,
+  or temporary compatibility layer is not documented; name the boundary conflict
+  and the exact scoped exception or config choice needed.
 - Keep internal constants in code only when they are true invariants of the
   algorithm or protocol and are not expected to differ by deployment, user,
   environment, or operations.

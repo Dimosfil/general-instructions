@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.23
 
+- Added a configuration-boundary guardrail for quick fixes and legacy
+  compatibility. Agents must not silently hard-code changeable product,
+  language, prompt, synonym, intent, or model-behavior values to satisfy tests
+  or observed samples; they must first use the compliant config/resource/adapter
+  path, and ask only when the source of truth or temporary compatibility layer
+  is undocumented.
+
 - Clarified that `tools/project-memory/` is for durable specifications and
   compact evidence references, not raw work results. Generated outputs,
   screenshots, photos, crawled/downloaded files, logs, model outputs, build
