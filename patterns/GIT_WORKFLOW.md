@@ -18,6 +18,9 @@ language preferences.
 - `gi коммит пуш` means the same as `gi пуш`.
 - `gi только пуш` means push existing local commits only; do not create a new
   commit for this command.
+- Do not reinterpret `gi пуш` as a raw `git push`, a retry of a previous
+  terminal push, or a push-only command. Push-only behavior is reserved for
+  `gi только пуш`.
 - `gi пул` means fetch and pull the current branch only; do not switch branches,
   rewrite history, or pull from a different remote unless the user explicitly
   asks.
@@ -68,6 +71,8 @@ For `gi пуш` and `gi коммит пуш`:
 
 - stage only scoped task changes;
 - create one commit using the configured commit-message language preferences;
+- if there are no scoped changes to commit, report that clearly instead of
+  running a push-only fallback;
 - push the current branch to its configured upstream.
 
 For `gi только пуш`:

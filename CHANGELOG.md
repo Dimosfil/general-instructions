@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.23
 
+- Clarified `gi push` / `gi пуш` as a commit-then-push finish command. Agents
+  must not reinterpret it as raw `git push`, a retry of a previous terminal
+  push, or push-only behavior; if there are no scoped changes to commit, they
+  report that instead. Push-only behavior is reserved for `gi only push` /
+  `gi только пуш`.
+
 - Hardened `gi test` as a live full-system verification command. Dry-runs,
   simulations, dispatcher-only runs, log replays, mock-only checks, and
   compile/unit-only checks must not be run for `gi test` unless the user
