@@ -144,3 +144,32 @@ produce a project-aware verification plan in the current project root.
 By default, this command plans checks and does not run them automatically. Run
 checks only when the user explicitly asks, or when the current implementation
 task already requires verification.
+
+Treat `gi test task`, `gi testing task`, `gi тест таск`, `ги тест таск`,
+`gi задача теста`, and equivalent wording as requests to set the active
+release/full-system verification workload for the current project. The supplied
+task text is the user-selected test scenario for the next `gi test`; it is not
+evidence that the scenario already passed. Record it in the project-local test
+task location when local instructions define one, otherwise keep it as current
+chat context and report where it is tracked.
+
+Treat `gi test`, `ги тест`, `gi full test`, `gi release test`,
+`gi system test`, and equivalent full-project test wording as requests to run,
+not merely plan, the current project's documented verification flow against the
+active test task. Do not confuse this with `gi test plan`, which remains
+plan-only by default.
+
+For `gi test`, first load the active test task from the current message or
+project-local memory. If no active task exists, ask one short question for the
+test task before running. Then reread project-local instructions, README,
+manifests, runbooks, test configs, and source entry points needed to identify
+the current commands, services, app set, ports, routes, payloads, environment,
+storage, auth, queues, workers, and health checks. Start or restart documented
+apps when needed, run the appropriate ladder through the broadest documented
+suite justified by the command, and report the task used, commands run,
+results, blockers, and unverified areas.
+
+Old handoff summaries, screenshots, completed demo artifacts, previous task
+statuses, and old chat snippets are evidence only. They may explain what was
+tested before, but they do not satisfy a fresh `gi test` request. Rerun the
+current documented checks or report the exact blocker that prevents a rerun.

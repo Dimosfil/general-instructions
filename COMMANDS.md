@@ -107,6 +107,10 @@ gi гит-обзор
 gi git summary
 gi тест-план
 gi test plan
+gi test task
+ги тест таск
+gi test
+ги тест
 gi tm
 gi active task
 gi next task
@@ -180,6 +184,8 @@ the listed commands.
 | `gi plan`, `gi план`, `gi post plan` | Send the current plan to the configured task manager. |
 | `gi start sprint`, `gi старт спринт` | Take the active Sprint/Cycle into work through the configured task manager. |
 | `gi test plan`, `gi тест-план` | Build a verification plan from current project contracts. |
+| `gi test task`, `ги тест таск` | Set the active release/full-system verification task for the current project. |
+| `gi test`, `ги тест` | Run the documented full project verification flow against the active test task. |
 | `gi git summary`, `gi гит-обзор` | Summarize the latest git commit without printing a full diff. |
 | `gi commit`, `gi коммит` | Commit scoped changes. |
 | `gi push`, `gi пуш` | Commit and push scoped changes. |
@@ -782,6 +788,32 @@ authoritative command contract.
 
 Для новой фичи: expected behavior, failure paths, edge cases, rollback, что
 проверено, что требует ручной проверки.
+
+### Full Project Test
+
+```text
+gi test task <release/full-system test task>
+ги тест таск <release/full-system test task>
+gi test
+ги тест
+```
+
+`gi test task` sets the active verification workload for the current project.
+The task text is the selected scenario for the next `gi test`, not proof that
+the scenario has already passed. Use the project-local test-task location when
+local instructions define one; otherwise keep the task in current chat context
+and say where it is tracked.
+
+`gi test` runs the documented full verification flow against the active test
+task. It is different from `gi test plan`: `gi test plan` plans by default,
+while `gi test` runs. Before running, the agent rereads current local
+instructions, README, manifests, runbooks, test configs, and source entry
+points needed to verify exact commands, services, app set, ports, routes,
+payloads, environment, storage, auth, queues, workers, and health checks.
+
+Old summaries, screenshots, completed demo artifacts, previous task statuses,
+and old chat snippets are evidence only. They do not satisfy a fresh `gi test`
+request; rerun the current documented checks or report the exact blocker.
 
 ### Full Project Refactor
 
