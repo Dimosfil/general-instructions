@@ -811,6 +811,16 @@ instructions, README, manifests, runbooks, test configs, and source entry
 points needed to verify exact commands, services, app set, ports, routes,
 payloads, environment, storage, auth, queues, workers, and health checks.
 
+For `gi test`, dry-run mode is not a valid result. Do not report `--dry-run`,
+simulation mode, dispatcher-only execution, replayed logs, mock-only runs, or
+compile/unit-only checks as a passed `gi test`, and do not run dry-run mode at
+all unless the user explicitly asks for that diagnostic mode. A full test must
+exercise the documented live runtime surface for the selected task: apps,
+backend/API, storage, queues/workers, UI/auth, service discovery, orchestrator
+or agent handoff loops, and health/contract endpoints when the project defines
+them. If the live system cannot be started or reached, report the full test as
+blocked or not checked.
+
 Old summaries, screenshots, completed demo artifacts, previous task statuses,
 and old chat snippets are evidence only. They do not satisfy a fresh `gi test`
 request; rerun the current documented checks or report the exact blocker.

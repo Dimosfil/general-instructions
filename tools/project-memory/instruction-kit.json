@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.23.2",
+  "instruction_kit_version": "2026.06.23.3",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -124,7 +124,8 @@
     "2026.06.21.12__abstract_concrete_examples_before_shared_rules",
     "2026.06.21.13__modularize_agents_runtime_entrypoint",
     "2026.06.23.1__add_gi_stack_command",
-    "2026.06.23.2__add_gi_full_test_task_commands"
+    "2026.06.23.2__add_gi_full_test_task_commands",
+    "2026.06.23.3__retire_dry_run_for_gi_test"
   ],
   "copied_files": [
     "AGENTS.md",

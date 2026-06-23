@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.23
 
+- Hardened `gi test` as a live full-system verification command. Dry-runs,
+  simulations, dispatcher-only runs, log replays, mock-only checks, and
+  compile/unit-only checks must not be run for `gi test` unless the user
+  explicitly asks for that diagnostic mode; they must never be reported as a
+  passed `gi test`. If the documented live app/service/worker/UI system cannot
+  be started or reached, agents must report the full test as blocked or not
+  checked instead of substituting a dry-run.
+
 - Added `gi test task` / `gi test` as release/full-system verification
   commands. `gi test task` records the user-selected workload for the next full
   project test, while `gi test` runs the current project's documented
