@@ -118,6 +118,10 @@ gi первый тест
 ги рестарт
 ги конфиг сервис урл=http://127.0.0.1:4100
 gi install
+gi local sprint
+gi sprint local
+gi локальный спринт
+gi спринт локально
 gi инсталл
 ги инсталл
 gi старт спринт
@@ -203,6 +207,7 @@ the listed commands.
 | `gi add sprint`, `gi create sprint`, `gi добавить спринт` | Create a visible Sprint/Cycle through the configured task manager. |
 | `gi plan`, `gi план`, `gi post plan` | Send the current plan to the configured task manager. |
 | `gi start sprint`, `gi старт спринт` | Take the active Sprint/Cycle into work through the configured task manager. |
+| `gi local sprint`, `gi sprint local`, `gi локальный спринт`, `gi спринт локально` | Run a local sprint checklist without task manager or config-service sync. |
 | `gi test plan`, `gi тест-план` | Build a verification plan from current project contracts. |
 | `gi test task`, `ги тест таск` | Set the active release/full-system verification task for the current project. |
 | `gi test`, `ги тест` | Run the documented full project verification flow against the active test task. |
@@ -648,6 +653,27 @@ supports active sprint lookup, next-task lookup, and task completion for the
 selected workflow. If only generic health works, stop before executing tasks.
 This command is more specific than plain `gi start`; do not answer it with only
 generic startup restore when a configured task-manager workflow is available.
+
+### Run Local Sprint Checklist
+
+```text
+gi local sprint
+gi sprint local
+gi локальный спринт
+gi спринт локально
+```
+
+Use this when the user wants sprint-shaped work without a configured task
+manager or config-service. The agent uses sprint content from the current
+message, current chat context, or a project-local checklist file explicitly
+named by local instructions. If no sprint content is available, ask one short
+question for the sprint goal and task list.
+
+This command is not a task-manager workflow. Do not resolve config-service,
+create raw manager intake, edit task-manager internals, or claim that a visible
+Sprint/Cycle was created, started, completed, or synchronized. If the user asks
+for `gi start sprint` and the manager/config-service setup is missing, report
+that blocker and mention `gi local sprint` as the explicit local alternative.
 
 ### Проверить Обновления Инструкций
 

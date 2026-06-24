@@ -58,6 +58,12 @@ targeted search fails or the task clearly requires repository-wide inventory.
 - Treat `gi start sprint`, `gi sprint start`, and equivalent active-sprint
   wording as a task-manager workflow with startup context, not as generic
   `gi start`.
+- Treat `gi local sprint`, `gi sprint local`, `gi локальный спринт`,
+  `gi спринт локально`, and equivalent explicitly local sprint wording as a
+  local checklist workflow. Retrieve only the current sprint plan, relevant
+  project instructions, and documented local checklist location; do not load
+  task-manager adapters or config-service records unless the local instructions
+  explicitly require them for a non-local follow-up.
 - Do not load the whole repository by default.
 - Do not read all summaries, all notes, all logs, or the full SQLite database.
 - Do not print full `git diff`; use `git diff --stat` and targeted searches.

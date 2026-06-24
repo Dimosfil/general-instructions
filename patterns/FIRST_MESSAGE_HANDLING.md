@@ -108,6 +108,11 @@ Examples:
 - `gi start sprint`, `gi sprint start`, or equivalent active-sprint wording:
   restore only the startup context required for task-manager work, then use the
   configured manager contract to take the active Sprint/Cycle into work.
+- `gi local sprint`, `gi sprint local`, `gi локальный спринт`,
+  `gi спринт локально`, or equivalent explicitly local sprint wording: run a
+  local sprint checklist from supplied context or a documented project-local
+  checklist location without resolving config-service or changing task-manager
+  state.
 - `gi sql`, `gi sqlite`, or `gi vector`: inspect project-memory retrieval
   readiness, current metrics, configured activation limits, and stale index
   caveats without deploying external services by default.

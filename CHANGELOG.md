@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Added `gi local sprint` / `gi sprint local` / `gi локальный спринт` as the
+  explicit local checklist alternative for sprint-shaped work without task
+  manager or config-service sync. `gi start sprint` remains manager-backed and
+  must still stop with a manager/config-service blocker when that setup is
+  missing.
+
 - Tightened config-service port ownership rules. Agents and apps must treat a
   recorded local service port as an exclusive runtime contract, verify the
   current port owner before reuse or restart, and stop with a port-conflict
