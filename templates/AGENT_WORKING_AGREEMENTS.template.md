@@ -332,7 +332,11 @@ or:
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and clear typo variants as
   build-and-installer requests. The task is complete only after the packaging
   command runs and a current installer artifact is produced or explicitly
-  verified; restore/build/test alone are preliminary checks.
+  verified; restore/build/test alone are preliminary checks. Default to a
+  Windows installer when no platform is named. If the user or local packaging
+  contract names macOS, iOS, Android, Linux, or another platform, use that
+  platform's documented packaging contract and ask one concise question when it
+  is missing or ambiguous.
 - Treat `gi first test`, `gi первый тест`, and `ги первый тест` as first-launch
   verification requests. Reset only documented project-owned app cache,
   generated state, temporary first-run profiles, and rebuildable local settings;

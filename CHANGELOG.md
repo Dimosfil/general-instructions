@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Clarified `gi install` target-platform selection. Agents now default to a
+  Windows installer when no platform is named, keep Inno Setup as the default
+  Windows installer tool, and follow project-local packaging contracts when the
+  user or project names macOS, iOS, Android, Linux, or another target.
+
 - Clarified that `gi info` / `ги инфо` is idempotent. If verified project facts
   already match current documentation and the canonical stack inventory, agents
   should report that everything is current and avoid rewriting files. If only

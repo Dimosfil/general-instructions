@@ -145,11 +145,18 @@
   untouched, what passed, and any blocker.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and obvious typo variants
   such as `gi иснтлл` as requests to build the current project and produce an
-  installer. Use Inno Setup by default when no installer tool is named. If the
+  installer. Use Windows as the default target platform when the user and the
+  project-local packaging contract do not name a different platform. For
+  Windows, use Inno Setup by default when no installer tool is named. If the
   user writes a program after `gi install` / `gi инсталл`, use that program as
-  the preferred packaging tool. Read project-local build and packaging
-  instructions, scripts, manifests, and installer configs first. Resolve the
-  application version from project-local metadata such as manifests, package
+  the preferred packaging tool. If the user names macOS, iOS, Android, Linux,
+  or another platform, or the project-local packaging contract selects one,
+  follow that platform's local build, signing, packaging, and artifact
+  verification contract instead of falling back to Windows. Ask a short
+  clarification question if the named platform is supported by the project but
+  its packaging contract is missing or ambiguous. Read project-local build and
+  packaging instructions, scripts, manifests, and installer configs first.
+  Resolve the application version from project-local metadata such as manifests, package
   files, assembly attributes, release files, or installer configs before
   packaging; update the version in build output, installer metadata, and the
   installer filename or artifact name when the local tooling supports it.

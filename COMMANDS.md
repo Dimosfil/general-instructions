@@ -194,7 +194,7 @@ the listed commands.
 | `gi reboot`, `gi restart`, `ги ребут`, `ги рестарт` | Start or restart all documented project apps using local run instructions. |
 | `gi first test`, `gi первый тест` | Reset documented first-run state and verify first-launch experience. |
 | `gi default`, `gi defaults`, `ги дефолт` | Restore the current project to documented first-run/default state. |
-| `gi install`, `gi инсталл`, `ги инсталл` | Build/package the current project and verify an installer artifact. |
+| `gi install`, `gi инсталл`, `ги инсталл` | Build/package the current project and verify an installer artifact; default target is Windows unless another platform is named. |
 | `gi ftp config`, `gi ftp service`, `gi ftp folder` | Inspect or configure FTP/SFTP deployment settings without uploading. |
 | `gi ftp`, `gi ftp push`, `gi deploy ftp`, `gi upload ftp` | Upload configured build output to the configured FTP/SFTP target. |
 | `gi tm`, `gi manager` | Inspect the configured task manager through config-service. |
@@ -583,16 +583,25 @@ gi инсталл
 gi install Inno Setup
 gi инсталл Inno Setup
 gi инсталл <программа>
+gi install macOS
+gi install Android
 ```
 
 Также распознавать очевидные опечатки вроде `gi иснтлл`, если намерение
 собрать installer ясно из контекста.
 
 Агент собирает production build и установочный файл для текущего проекта.
-Если программа не указана, по умолчанию использовать Inno Setup: найти
-project-local build/package инструкции, скрипты и `.iss` файл, затем собрать
-приложение и installer. Если после команды указана программа, использовать её
-как предпочитаемый packaging/installer tool вместо Inno Setup.
+Если целевая платформа не указана, по умолчанию собирать Windows installer.
+Для Windows, если программа не указана, по умолчанию использовать Inno Setup:
+найти project-local build/package инструкции, скрипты и `.iss` файл, затем
+собрать приложение и installer. Если после команды указана программа,
+использовать её как предпочитаемый packaging/installer tool вместо Inno Setup.
+Если пользователь явно называет macOS, iOS, Android, Linux или другую
+платформу, либо такая платформа задана project-local packaging contract,
+следовать соответствующему локальному контракту сборки/подписи/пакетирования.
+Если указанная платформа поддерживается проектом, но нужный packaging contract
+не найден или неоднозначен, задать один короткий уточняющий вопрос вместо
+переключения на Windows по умолчанию.
 
 Перед packaging агент определяет версию приложения из project-local metadata:
 manifests, package files, assembly attributes, release files или installer
