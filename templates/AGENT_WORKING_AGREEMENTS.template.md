@@ -336,7 +336,9 @@ or:
   Windows installer when no platform is named. If the user or local packaging
   contract names macOS, iOS, Android, Linux, or another platform, use that
   platform's documented packaging contract and ask one concise question when it
-  is missing or ambiguous.
+  is missing or ambiguous. Keep platform-specific build instructions, packaging
+  configs, signing notes, verification notes, and installer artifacts in
+  separate project-local platform folders or per-platform artifact manifests.
 - Treat `gi first test`, `gi первый тест`, and `ги первый тест` as first-launch
   verification requests. Reset only documented project-owned app cache,
   generated state, temporary first-run profiles, and rebuildable local settings;

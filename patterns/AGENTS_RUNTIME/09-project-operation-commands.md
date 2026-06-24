@@ -156,10 +156,19 @@
   clarification question if the named platform is supported by the project but
   its packaging contract is missing or ambiguous. Read project-local build and
   packaging instructions, scripts, manifests, and installer configs first.
-  Resolve the application version from project-local metadata such as manifests, package
-  files, assembly attributes, release files, or installer configs before
-  packaging; update the version in build output, installer metadata, and the
-  installer filename or artifact name when the local tooling supports it.
+  Keep build instructions, packaging configs, signing/notarization/provisioning
+  notes, verification notes, and produced installer artifacts separated by
+  target platform in project-local folders or per-platform artifact manifests.
+  Follow the project's existing packaging layout when it has one; when creating
+  or repairing a layout, use platform-specific folders such as
+  `packaging/windows/`, `packaging/macos/`, `packaging/ios/`,
+  `packaging/android/`, `packaging/linux/`, or equivalent project-local names.
+  Do not mix artifacts for different platforms in one unscoped output folder.
+  Resolve the application version from project-local metadata such as
+  manifests, package files, assembly attributes, release files, or installer
+  configs before packaging; update the version in build output, installer
+  metadata, and the installer filename or artifact name when the local tooling
+  supports it.
   `restore`, dependency install, build, and test checks are prerequisites only:
   they do not complete `gi install` unless the packaging command also runs and
   a current installer artifact is produced or explicitly verified. Do not report

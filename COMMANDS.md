@@ -603,6 +603,16 @@ gi install Android
 не найден или неоднозначен, задать один короткий уточняющий вопрос вместо
 переключения на Windows по умолчанию.
 
+Для каждой целевой платформы держать отдельную project-local папку. В ней
+должны лежать или быть явно связаны инструкции сборки, packaging configs,
+signing/notarization/provisioning notes, verification notes и текущие installer
+artifacts для этой платформы. Если проект уже задаёт свой layout, следовать
+ему; если агент создаёт или исправляет packaging layout, использовать
+платформенные подпапки вроде `packaging/windows/`, `packaging/macos/`,
+`packaging/ios/`, `packaging/android/`, `packaging/linux/` или эквивалентные
+project-local имена. Не смешивать artifacts разных платформ в одной общей
+папке без per-platform manifest.
+
 Перед packaging агент определяет версию приложения из project-local metadata:
 manifests, package files, assembly attributes, release files или installer
 configs. Агент обновляет версию в production build, installer metadata и имени

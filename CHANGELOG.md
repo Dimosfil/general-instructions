@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Added platform-folder discipline for `gi install`: platform-specific build
+  instructions, packaging configs, signing notes, verification notes, and
+  produced installer artifacts must live in separate per-platform folders or be
+  referenced from a per-platform artifact manifest.
+
 - Clarified `gi install` target-platform selection. Agents now default to a
   Windows installer when no platform is named, keep Inno Setup as the default
   Windows installer tool, and follow project-local packaging contracts when the
