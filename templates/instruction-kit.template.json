@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.24.4",
+  "instruction_kit_version": "2026.06.24.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -132,7 +132,8 @@
     "2026.06.24.1__harden_routed_gi_command_loading",
     "2026.06.24.2__add_gi_prod_online_service_publication",
     "2026.06.24.3__add_gi_info_command",
-    "2026.06.24.4__gi_info_uses_project_languages"
+    "2026.06.24.4__gi_info_uses_project_languages",
+    "2026.06.24.5__make_gi_info_idempotent"
   ],
   "copied_files": [
     "AGENTS.md",

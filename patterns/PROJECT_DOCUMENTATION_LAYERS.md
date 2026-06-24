@@ -125,6 +125,14 @@ or stale, document:
 - setup, run, test, build, operation, and troubleshooting pointers when present;
 - open gaps where evidence is missing or contradictory.
 
+Before editing, compare the verified facts with the existing overview and stack
+inventory. If purpose, functionality, workflows, commands, operations,
+troubleshooting pointers, and stack facts are already current, report that no
+documentation update is needed. If only some facts changed, update the smallest
+affected sections and preserve unchanged sections. Do not rewrite the whole
+overview, retranslate unchanged content, or reformat unrelated documentation
+just because `gi info` was invoked.
+
 The command should write the human-facing overview to `README.md`, `docs/`, or
 the runbook in the configured project working-environment languages from
 `gi язык` / `gi language`, preserving the selected order with the first language

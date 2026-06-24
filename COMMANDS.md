@@ -325,6 +325,14 @@ canonical stack inventory when present. It verifies facts against current
 manifests, config, run instructions, source entry points, and tests before
 writing or reporting them.
 
+If the collected facts already match the current documentation and canonical
+stack inventory, the agent reports that the project information is already
+current and does not rewrite files. If only part of the inventory changed, such
+as the purpose, visible functionality, common workflows, commands, or stack,
+update only the affected sections and leave current unchanged sections intact.
+Avoid broad reformatting, wording churn, and whole-file rewrites when a scoped
+section update is enough.
+
 Write new or updated project information in the configured project working
 environment languages from `gi язык` / `gi language`
 (`tools/project-memory/system-preferences.json`). Preserve the selected order:

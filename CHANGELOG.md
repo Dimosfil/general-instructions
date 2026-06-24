@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Clarified that `gi info` / `ги инфо` is idempotent. If verified project facts
+  already match current documentation and the canonical stack inventory, agents
+  should report that everything is current and avoid rewriting files. If only
+  part of the inventory changed, agents should update only the affected
+  sections and avoid unrelated formatting, wording, or translation churn.
+
 - Clarified that `gi info` / `ги инфо` writes new or updated project information
   in the configured project working-environment languages from `gi язык` /
   `gi language`, preserving the selected order with the first language as

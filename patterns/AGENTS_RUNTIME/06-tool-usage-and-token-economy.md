@@ -60,10 +60,15 @@
   source entry points, and tests. If the inventory is missing or stale, update
   durable project documentation and the canonical stack inventory as needed;
   keep implementation-driving contracts in project memory and link to them
-  instead of duplicating them into the overview. Write new or updated project
-  information in the configured project working-environment languages from
-  `tools/project-memory/system-preferences.json`, preserving the selected order
-  from `gi язык` / `gi language`: the first language is primary, and each
+  instead of duplicating them into the overview. If the verified facts already
+  match the existing documentation and stack inventory, report that the project
+  information is current and do not rewrite files. If only part of the inventory
+  changed, update only the affected purpose, visible functionality, workflow,
+  command, operation, troubleshooting, or stack sections; avoid unrelated
+  reformatting, translation churn, and whole-file rewrites. Write new or updated
+  project information in the configured project working-environment languages
+  from `tools/project-memory/system-preferences.json`, preserving the selected
+  order from `gi язык` / `gi language`: the first language is primary, and each
   additional configured language gets one clear translation. Do not install
   dependencies, start services, rebuild indexes, call external APIs, read
   secrets, or inspect private paths outside the project root for this command
