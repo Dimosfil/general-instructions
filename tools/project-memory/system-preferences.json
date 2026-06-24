@@ -1,11 +1,8 @@
 {
   "agent_response_language": {
-    "mode": "fixed",
-    "language": "English",
-    "languages": [
-      "English",
-      "Russian"
-    ],
+    "mode": "match_user",
+    "language": "",
+    "languages": [],
     "project_environment_languages": [
       "English",
       "Russian"
