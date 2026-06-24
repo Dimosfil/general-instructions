@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Tightened config-service port ownership rules. Agents and apps must treat a
+  recorded local service port as an exclusive runtime contract, verify the
+  current port owner before reuse or restart, and stop with a port-conflict
+  blocker instead of silently choosing a neighboring port, overwriting the
+  service record, or stopping an unverified process.
+
 - Added platform-folder discipline for `gi install`: platform-specific build
   instructions, packaging configs, signing notes, verification notes, and
   produced installer artifacts must live in separate per-platform folders or be

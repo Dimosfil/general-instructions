@@ -56,7 +56,14 @@
   start covers the project. For local web/API services, resolve the service id,
   port, URL, and neighboring endpoints through config-service before running a
   start command; fixed ports in local runbooks or examples do not authorize a
-  fallback bind. If a config-service record is missing, use only the documented
+  fallback bind. If the resolved port is occupied, verify whether the owner is
+  the same documented service instance using project-local identity signals
+  such as service id, command, cwd, health endpoint, or process metadata. If the
+  port belongs to another service or ownership is unclear, stop and report the
+  port-conflict blocker; do not stop the owner without explicit user approval
+  and do not move the requested app to another port. If the owner is the same
+  service, restart or reuse it only through the documented run contract. If a
+  config-service record is missing, use only the documented
   config-service registration workflow from `08-config-service-and-task-manager`
   to create or update it before startup, or stop with the exact missing
   contract. If local instructions define a preferred start/restart command that

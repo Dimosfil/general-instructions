@@ -63,15 +63,24 @@ process startup before binding or reserving any port. The startup sequence is:
 3. Query the app's own configured `service_id` service/startup record.
 4. If the record exists, read the port the app should bind and the endpoints of
    neighboring services from config-service records.
-5. If the record is missing and the app's self-registration flag is `on`, read
+5. Before starting a new process, check whether the recorded port is already
+   occupied. If the owner is the same documented service instance, restart or
+   reuse it only as the local run contract allows. If the owner is another
+   service, unknown, or cannot be verified from documented identity signals such
+   as service id, command, cwd, health endpoint, or process metadata, stop with
+   a port-conflict blocker. Do not kill the owner without explicit user approval
+   and verified ownership. Do not bind an alternate port just because the
+   recorded port is busy; changing the port changes browser origin and can hide
+   browser-owned state such as localStorage, cookies, and IndexedDB.
+6. If the record is missing and the app's self-registration flag is `on`, read
    the config-service guide and contract, list existing service records, select
    or request a local development port only through the documented
    config-service registration operation, create or update the app's service
    record, start the app using the recorded value, and verify the app's local
    health endpoint.
-6. If the record is missing and self-registration is `off`, stop startup and
+7. If the record is missing and self-registration is `off`, stop startup and
    report that the service is not registered.
-7. If documented endpoints changed, refresh the app's service record only after
+8. If documented endpoints changed, refresh the app's service record only after
    the live config-service check succeeds and through the documented
    registration/update operation.
 
@@ -169,8 +178,10 @@ development port only through that contract, after reading current
 config-service records and checking local host availability when the contract
 requires the service to propose a value. It must start with the value recorded
 by config-service. If startup cannot bind the recorded port, the service must
-stop, reread config-service, and retry only through the documented conflict
-policy or report a clear blocker.
+stop, reread config-service, verify the current port owner, and retry only
+through the documented conflict policy or report a clear blocker. The service
+must not silently select another free port, overwrite its record to escape the
+conflict, or stop an unverified process.
 
 Do not store endpoint catalogs, schemas, authentication details, workflow logic,
 or secrets in config-service. After discovery, ask an agent-facing target

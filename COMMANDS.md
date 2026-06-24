@@ -1176,7 +1176,14 @@ local config area as its config-service URL. `on` is for web-facing apps that
 expose a port, HTTP API, web UI, task-manager service, or local daemon endpoint:
 on startup they must contact config-service and read their own `service_id`
 startup/service record before binding any port. The port to bind and neighboring
-service endpoints come from config-service. If config-service is missing,
+service endpoints come from config-service. If the recorded port is already
+occupied, the app or agent must verify whether the owner is the same documented
+service instance. A same-service owner may be reused or restarted only through
+the local run contract. A different, unknown, or unverifiable owner is a
+port-conflict blocker: do not stop it without explicit approval, do not rewrite
+the service record, and do not bind a neighboring fallback port. Changing ports
+changes browser origin and can make browser-owned state such as localStorage,
+cookies, and IndexedDB appear missing. If config-service is missing,
 unreachable, has no record for the app, or returns incomplete startup config,
 startup reports the blocker and waits for config-service to be configured,
 repaired, or started; it does not guess, scan, or use stale fallback ports.
@@ -1195,9 +1202,12 @@ records, desktop packaging metadata, or project memory; do not assume a
 successful web/API start covers the project. For local web/API services,
 resolve the service id, port, URL, and neighboring endpoints through
 config-service before running a start command; fixed ports in local runbooks or
-examples do not authorize a fallback bind. If a config-service record is
-missing, use only the documented config-service registration workflow to create
-or update it before startup, or stop with the exact missing contract. If local
+examples do not authorize a fallback bind. If the resolved port is occupied,
+verify whether the owner is the same documented service; otherwise report a
+port-conflict blocker and do not move the app to another port. If a
+config-service record is missing, use only the documented config-service
+registration workflow to create or update it before startup, or stop with the
+exact missing contract. If local
 instructions define a preferred start/restart command that launches the full
 app set, use it only with the config-service-resolved local runtime values for
 web/API apps. Otherwise enumerate every documented app or runtime, such as

@@ -81,7 +81,16 @@
   startup, read the configured config-service URL, verify the config service is
   reachable, and query the app's own `service_id` startup/service record. If
   the record exists, bind only the recorded port and use config-service records
-  for neighboring service endpoints. Treat ports and URLs in README files,
+  for neighboring service endpoints. Before starting a new process, check
+  whether the recorded port is already occupied. If it is occupied by the same
+  documented service instance, restart or reuse it only as the local run
+  contract allows. If the owner is another service, unknown, or cannot be
+  verified from documented identity signals such as service id, command, cwd,
+  health endpoint, or process metadata, stop with a port-conflict blocker. Do
+  not kill the owner without explicit user approval and verified ownership, and
+  do not bind an alternate port just because the recorded one is busy. Changing
+  the port changes the browser origin and can hide browser-owned state such as
+  localStorage, cookies, and IndexedDB. Treat ports and URLs in README files,
   runbooks, old logs, screenshots, package metadata, and examples as hints for
   documentation drift only; they are not runtime authority until reflected in a
   config-service record. If the record is missing and project-local
