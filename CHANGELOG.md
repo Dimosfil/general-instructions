@@ -2,6 +2,24 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.24
+
+- Added `gi prod` / `gi production` / `gi прод` / `ги прод` for publishing a
+  development version into a separate production service folder for online
+  services connected to real remote APIs. Agents must keep normal development,
+  tests, cleanup, formatting, and restarts on the development checkout/service,
+  preserve production-local secrets and runtime state, and ask when the
+  production folder, sync rules, health check, or rollback path is undocumented.
+
+- Hardened routed GI command loading after the modular runtime split. Agents
+  must treat `gi ...` / `ги ...` chat commands as concrete tasks, read
+  `COMMANDS.md` when present, and load the routed runtime module before acting.
+  State-changing GI commands may not run from memory or old chat examples, and
+  `gi restart` / `gi reboot` specifically require the project-operation command
+  module before process changes or success reports. The shared command index is
+  now copied with project instruction kits and includes the same execution
+  guard.
+
 ## 2026.06.23
 
 - Added a configuration-boundary guardrail for quick fixes and legacy

@@ -64,10 +64,11 @@ process startup before binding or reserving any port. The startup sequence is:
 4. If the record exists, read the port the app should bind and the endpoints of
    neighboring services from config-service records.
 5. If the record is missing and the app's self-registration flag is `on`, read
-   the config-service guide and contract, list existing service records, choose
-   a port that is both free on the local host and absent from config-service,
-   bind that port, verify the app's local health endpoint, and create the app's
-   service record through the documented config-service registration operation.
+   the config-service guide and contract, list existing service records, select
+   or request a local development port only through the documented
+   config-service registration operation, create or update the app's service
+   record, start the app using the recorded value, and verify the app's local
+   health endpoint.
 6. If the record is missing and self-registration is `off`, stop startup and
    report that the service is not registered.
 7. If documented endpoints changed, refresh the app's service record only after
@@ -163,12 +164,13 @@ records, conflict handling, validation errors, and optimistic concurrency if
 supported.
 
 Service self-registration is allowed only through the documented config-service
-contract. A self-registering service may choose a new port only after reading
-current config-service records and checking local host availability. It must
-publish the port it actually bound, not a preferred port that failed. If record
-creation conflicts because another service claimed the id or port first, the
-service must release the port it just bound, reread config-service, and retry
-only through the documented conflict policy or stop with a clear blocker.
+contract. A self-registering service may select or request a new local
+development port only through that contract, after reading current
+config-service records and checking local host availability when the contract
+requires the service to propose a value. It must start with the value recorded
+by config-service. If startup cannot bind the recorded port, the service must
+stop, reread config-service, and retry only through the documented conflict
+policy or report a clear blocker.
 
 Do not store endpoint catalogs, schemas, authentication details, workflow logic,
 or secrets in config-service. After discovery, ask an agent-facing target
