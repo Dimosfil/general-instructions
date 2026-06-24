@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Clarified that `gi info` / `ги инфо` writes new or updated project information
+  in the configured project working-environment languages from `gi язык` /
+  `gi language`, preserving the selected order with the first language as
+  primary. It must not use commit-message or task-manager language preferences
+  for project documentation.
+
 - Added `gi info` / `ги инфо` as a documented command for finding or building
   the current project's orientation inventory: purpose, target users,
   user-visible functionality, common workflows, technology stack, and

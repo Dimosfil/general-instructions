@@ -126,10 +126,12 @@ or stale, document:
 - open gaps where evidence is missing or contradictory.
 
 The command should write the human-facing overview to `README.md`, `docs/`, or
-the runbook, and keep the stack in the canonical stack inventory. It should not
-make `tools/project-memory/` the only source for purpose or visible
-functionality, and it should not duplicate detailed behavior contracts out of
-project memory into the overview.
+the runbook in the configured project working-environment languages from
+`gi язык` / `gi language`, preserving the selected order with the first language
+as primary. It should keep the stack in the canonical stack inventory, avoid
+making `tools/project-memory/` the only source for purpose or visible
+functionality, and avoid duplicating detailed behavior contracts out of project
+memory into the overview.
 
 ## Verification
 

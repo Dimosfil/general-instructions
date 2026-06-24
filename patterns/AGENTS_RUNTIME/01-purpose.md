@@ -134,7 +134,9 @@ stack pointers, while keeping implementation-driving business rules, workflow
 contracts, algorithms, invariants, and architecture decisions in project memory.
 The command should update or create durable documentation when the inventory is
 missing or stale, and mark unknowns as evidence-backed gaps instead of inventing
-facts.
+facts. New or updated project information must follow the configured project
+working-environment language order from `gi язык` / `gi language`; do not use
+commit-message or task-manager language preferences for this documentation.
 
 Treat connected projects as experience sources for `gi`. When a project reveals
 a reusable workflow, failure pattern, token-saving tactic, or agent instruction

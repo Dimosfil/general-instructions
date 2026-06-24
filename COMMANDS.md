@@ -325,6 +325,15 @@ canonical stack inventory when present. It verifies facts against current
 manifests, config, run instructions, source entry points, and tests before
 writing or reporting them.
 
+Write new or updated project information in the configured project working
+environment languages from `gi язык` / `gi language`
+(`tools/project-memory/system-preferences.json`). Preserve the selected order:
+the first configured language is primary. If one language is configured, write
+only that language; if multiple languages are configured, write the primary
+language first and add one clear translation per additional configured language.
+Do not use commit-message or task-manager language preferences for this project
+documentation.
+
 If the overview is missing or stale, the agent creates or updates the canonical
 project documentation rather than storing the only description in chat or raw
 project memory. Prefer `README.md`, `docs/`, and `tools/AGENT_RUNBOOK.md` for
