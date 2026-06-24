@@ -559,8 +559,11 @@ gi defaults
 The agent restores the current project to its documented first-run/default
 state. This is broader than `gi first test`: it may clear project-owned app
 state, generated caches, local settings, onboarding flags, temporary profiles,
-and other rebuildable state that local instructions explicitly define as safe to
-reset.
+runtime logs, queues, worker state, generated test databases, browser storage
+for the app origin, and other rebuildable state that local instructions
+explicitly define as safe to reset. Preserve only exclusions explicitly
+documented by the current project; old chat, screenshots, previous run
+artifacts, and browser state do not create reset exceptions.
 
 Before clearing anything, the agent reads project-local reset, cleanup,
 first-run, run, backup, and test instructions. If the project provides a reset
@@ -928,6 +931,18 @@ while `gi test` runs. Before running, the agent rereads current local
 instructions, README, manifests, runbooks, test configs, and source entry
 points needed to verify exact commands, services, app set, ports, routes,
 payloads, environment, storage, auth, queues, workers, and health checks.
+Before the live checks, the agent must reset project-owned runtime state to the
+documented default/factory baseline, preserving only exclusions explicitly
+documented by the current project. Browser storage, generated databases, logs,
+queues, temporary workers, app caches, and similar rebuildable state are cleared
+unless the project-local reset contract lists them as exceptions. If reset
+targets or safe exceptions are undocumented, report that blocker instead of
+running a dirty-state test.
+
+After reset, selected chain/preset/execution mode, ports, task, and service
+endpoints must be read from the project-local source of truth such as config
+files, backend state, service discovery, or database metadata. Browser
+`localStorage` is only UI cache; it cannot be the source of truth for `gi test`.
 
 For `gi test`, dry-run mode is not a valid result. Do not report `--dry-run`,
 simulation mode, dispatcher-only execution, replayed logs, mock-only runs, or

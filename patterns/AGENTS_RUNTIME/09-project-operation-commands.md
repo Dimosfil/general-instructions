@@ -117,6 +117,23 @@
   manifests, runbooks, test configs, and source entry points needed to identify
   exact current commands, services, app set, ports, routes, payloads,
   environment variables, storage, auth, queues, workers, and health checks.
+  Before executing the verification ladder, restore the project-owned runtime
+  state to the documented default/factory baseline using the same reset contract
+  as `gi default`, while preserving only project-local exclusions that are
+  explicitly documented for the current project. Examples of exclusions may
+  include secrets, production-local state, user data, configured external
+  service credentials, or named persistent fixtures; browser `localStorage`,
+  cookies, IndexedDB, generated test databases, runtime logs, queues, temporary
+  worker state, and app caches are not exclusions unless the current project's
+  reset contract says so. If the project has no documented reset targets or the
+  reset would touch ambiguous user-owned data, stop with that blocker instead
+  of running a dirty-state test. After reset, read back the effective runtime
+  configuration from the project-local source of truth, such as config files,
+  backend state, service discovery, or database metadata. UI-only browser state
+  is not a valid source of truth for selected chain, preset, execution mode,
+  ports, task, or service endpoints; if the live test depends on such a value,
+  persist it through the documented backend or project-local config first, or
+  report the missing contract as the blocker.
   Start or restart documented apps when needed, run the verification ladder
   through the broadest documented suite justified by the command, and report
   the task used, commands run, results, blockers, and unverified areas. For
@@ -140,15 +157,18 @@
   reset, cleanup, first-run, run, backup, and test instructions first. Use only
   documented reset scripts, paths, keys, or contracts for project-owned app
   state, generated caches, local settings, onboarding flags, temporary profiles,
-  and other rebuildable state. Do not delete source files, project-memory
-  specifications, instruction-kit files, user documents, production data,
-  secrets, credentials, external service data, shared system caches, sibling
-  projects, or arbitrary user-home folders. If reset targets are not documented,
-  ask one short clarification question instead of guessing. If a reset could be
-  irreversible or remove user-owned data, stop for explicit confirmation and
-  prefer a backup or rename step when local rules allow it. After reset, start
-  the project through documented run instructions, verify the default or
-  first-launch success signals, and report what was reset, what was left
+  runtime logs, queues, worker state, generated test databases, browser storage
+  for the app origin, and other rebuildable state. Preserve only exclusions
+  explicitly documented by the current project; do not infer exclusions from old
+  chat, screenshots, stale run artifacts, or browser state. Do not delete source
+  files, project-memory specifications, instruction-kit files, user documents,
+  production data, secrets, credentials, external service data, shared system
+  caches, sibling projects, or arbitrary user-home folders. If reset targets are
+  not documented, ask one short clarification question instead of guessing. If a
+  reset could be irreversible or remove user-owned data, stop for explicit
+  confirmation and prefer a backup or rename step when local rules allow it.
+  After reset, start the project through documented run instructions, verify the
+  default or first-launch success signals, and report what was reset, what was left
   untouched, what passed, and any blocker.
 - Treat `gi install`, `gi инсталл`, `ги инсталл`, and obvious typo variants
   such as `gi иснтлл` as requests to build the current project and produce an
