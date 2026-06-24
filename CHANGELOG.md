@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.24
 
+- Added `gi info` / `ги инфо` as a documented command for finding or building
+  the current project's orientation inventory: purpose, target users,
+  user-visible functionality, common workflows, technology stack, and
+  documentation gaps. Agents must keep the overview in project documentation,
+  keep stack facts in the canonical stack inventory, preserve detailed behavior
+  contracts in project memory, and mark unknowns with evidence instead of
+  guessing.
+
 - Added `gi prod` / `gi production` / `gi прод` / `ги прод` for publishing a
   development version into a separate production service folder for online
   services connected to real remote APIs. Agents must keep normal development,

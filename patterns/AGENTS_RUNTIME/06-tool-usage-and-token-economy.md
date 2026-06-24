@@ -51,6 +51,19 @@
   rebuild indexes, call external APIs, read secrets, or inspect private paths
   outside the project root for this command unless the user explicitly approves
   that scope.
+- Treat `gi info` and `ги инфо` as requests to find or build the current
+  project's orientation inventory: purpose, target users or stakeholders,
+  visible functionality, common workflows, technology stack, and documentation
+  gaps. First read project-local instructions, README, docs indexes, runbooks,
+  existing project-memory specs, and the canonical stack inventory before broad
+  scans. Verify facts against current manifests, config, run instructions,
+  source entry points, and tests. If the inventory is missing or stale, update
+  durable project documentation and the canonical stack inventory as needed;
+  keep implementation-driving contracts in project memory and link to them
+  instead of duplicating them into the overview. Do not install dependencies,
+  start services, rebuild indexes, call external APIs, read secrets, or inspect
+  private paths outside the project root for this command unless the user
+  explicitly approves that scope.
 - Do not read large files in full by default, including large `index.html`,
   bundled JS/CSS, logs, lockfiles, generated files, and build artifacts. Prefer
   targeted searches, heads, tails, or small line ranges, such as

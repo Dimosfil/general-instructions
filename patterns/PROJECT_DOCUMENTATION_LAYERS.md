@@ -113,6 +113,24 @@ RAG and SQLite indexes may include both layers, but should preserve source
 metadata so retrieval can distinguish documentation evidence from behavioral
 specification evidence.
 
+## GI Info Command
+
+Treat `gi info` and `ги инфо` as the command to find or build a compact project
+orientation inventory across these layers. It should answer and, when missing
+or stale, document:
+
+- project purpose, audience, and product/runtime surface;
+- user-visible functionality and common workflows;
+- technology stack pointer and summary;
+- setup, run, test, build, operation, and troubleshooting pointers when present;
+- open gaps where evidence is missing or contradictory.
+
+The command should write the human-facing overview to `README.md`, `docs/`, or
+the runbook, and keep the stack in the canonical stack inventory. It should not
+make `tools/project-memory/` the only source for purpose or visible
+functionality, and it should not duplicate detailed behavior contracts out of
+project memory into the overview.
+
 ## Verification
 
 After documentation or memory changes:

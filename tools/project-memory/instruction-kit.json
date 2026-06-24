@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.06.24.2",
+  "instruction_kit_version": "2026.06.24.3",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -130,7 +130,8 @@
     "2026.06.23.5__keep_raw_artifacts_out_of_project_memory",
     "2026.06.23.6__ask_before_boundary_violating_hardcode",
     "2026.06.24.1__harden_routed_gi_command_loading",
-    "2026.06.24.2__add_gi_prod_online_service_publication"
+    "2026.06.24.2__add_gi_prod_online_service_publication",
+    "2026.06.24.3__add_gi_info_command"
   ],
   "copied_files": [
     "AGENTS.md",
