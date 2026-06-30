@@ -56,8 +56,10 @@ Use `patterns/ARCHITECTURE_AND_CODE_QUALITY.md` as the general architecture and
 code-quality baseline. For development tools and generators, apply that baseline
 with these additional product-boundary constraints:
 
-- Follow OOP, SOLID, DRY, clean-code, maintainability, and extensibility
-  principles where they fit the stack. In object-oriented code, prefer
+- Follow OOP, SOLID, DRY, clean-code, maintainability, extensibility, and
+  established architecture-pattern principles where they fit the stack,
+  including clean architecture, microservices, DDD, and equivalent
+  stack-appropriate patterns. In object-oriented code, prefer
   single-purpose classes, open extension points, substitutable implementations,
   small interfaces, and dependencies inverted behind ports/adapters.
 - In non-OOP stacks, preserve the same boundaries with cohesive modules,
@@ -69,8 +71,8 @@ with these additional product-boundary constraints:
   artifact content.
 - Prefer established architecture patterns that fit the stack, such as
   layered architecture, hexagonal/ports-and-adapters, clean architecture,
-  feature modules, MVC/MVVM, repository adapters, command handlers, and explicit
-  service contracts.
+  domain-driven design, microservices, feature modules, MVC/MVVM, repository
+  adapters, command handlers, and explicit service contracts.
 - Inject or configure product-specific behavior through task payloads,
   manifests, plugins, adapters, or project-local configuration instead of
   branching on a concrete product name.

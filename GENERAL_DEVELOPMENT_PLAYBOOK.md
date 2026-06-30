@@ -40,10 +40,12 @@ It should contain:
   or project-local config, not as the runtime identity.
 - Application architecture and code-quality rules: follow OOP, SOLID, DRY,
   clean-code, maintainability, extensibility, and established architecture
-  patterns where they fit the stack; keep domain/product logic, orchestration,
-  UI, persistence, filesystem, external services, and configuration in separate
-  layers with explicit contracts. Reduce duplicated knowledge and behavior, but
-  avoid premature abstractions before the shared meaning is clear.
+  patterns such as clean architecture, microservices, DDD, and equivalent
+  stack-appropriate patterns where they fit the stack; keep domain/product
+  logic, orchestration, UI, persistence, filesystem, external services, and
+  configuration in separate layers with explicit contracts. Reduce duplicated
+  knowledge and behavior, but avoid premature abstractions before the shared
+  meaning is clear.
 - Technology stack inventory: keep
   `tools/project-memory/specs/technology-stack.md` current for GI-enabled
   projects, with verified runtimes, frameworks, package managers, build/test

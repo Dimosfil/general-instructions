@@ -7,8 +7,10 @@ across stacks.
 ## Core Rule
 
 - Build applications with clear architecture and code-quality boundaries.
-- Understand and apply OOP, SOLID, DRY, clean-code, maintainability, and
-  extensibility principles where they fit the stack.
+- Understand and apply OOP, SOLID, DRY, clean-code, maintainability,
+  extensibility, and established architecture-pattern principles where they fit
+  the stack, including clean architecture, microservices, DDD, and equivalent
+  stack-appropriate patterns.
 - Prefer cohesive domain models, explicit interfaces at integration boundaries,
   dependency inversion for infrastructure, small composable modules, typed or
   validated contracts, low duplication, clear names, focused functions/classes,
@@ -34,9 +36,9 @@ across stacks.
 - Keep configuration loading and validation at startup or I/O boundaries. Pass
   validated settings inward through explicit objects or dependency injection.
 - Prefer established architecture patterns that fit the stack, such as layered
-  architecture, hexagonal/ports-and-adapters, clean architecture, feature
-  modules, MVC/MVVM, repository adapters, command handlers, and explicit service
-  contracts.
+  architecture, hexagonal/ports-and-adapters, clean architecture,
+  domain-driven design, microservices, feature modules, MVC/MVVM, repository
+  adapters, command handlers, and explicit service contracts.
 - Preserve user-visible behavior during refactors unless the user explicitly
   changes the agreement.
 
