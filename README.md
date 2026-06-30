@@ -31,6 +31,9 @@ Start with:
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
   baseline for OOP, SOLID, DRY, clean-code, separation of concerns, contracts,
   abstraction discipline, and verification.
+- `patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md`: compact senior-agent
+  execution standard that ties context loading, architecture, configuration,
+  verification, risk escalation, and durable project memory into one checklist.
 - `patterns/TECHNOLOGY_STACK_INVENTORY.md`: durable project-memory inventory
   for languages, runtimes, frameworks, build/test tools, storage, services, and
   stack evidence.

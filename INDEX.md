@@ -113,6 +113,10 @@ Reusable instructions in this repository are grouped by job.
   for chunk export, model metadata, hybrid search, evals, and safety.
 - `patterns/SERVICE_DISCOVERY_CONFIG.md`: config-service bootstrap,
   service-identity verification, mismatch handling, and local override rules.
+- `patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md`: compact senior-engineering
+  execution standard that connects context loading, architecture boundaries,
+  configuration discipline, coherent batches, verification, project-memory
+  updates, and runtime enforcement.
 - `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`: how to deploy local project
   instruction files from this shared library when the user provides its path.
 - `patterns/SKILL_MODULES.md`: when to use rules, patterns, templates, or

@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.06.30
+
+- Added `patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md` as a compact senior
+  engineering execution standard for agents writing, reviewing, or refactoring
+  code. The standard connects existing GI rules for context loading,
+  architecture boundaries, configuration discipline, coherent batches,
+  verification, durable project-memory updates, risk escalation, and runtime
+  enforcement without replacing the detailed patterns.
+
 ## 2026.06.24
 
 - Added `gi local sprint` / `gi sprint local` / `gi локальный спринт` as the

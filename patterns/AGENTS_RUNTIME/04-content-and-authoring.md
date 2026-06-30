@@ -64,6 +64,13 @@
   persistence, filesystem, external services, and configuration in separate
   layers with explicit contracts. Follow
   `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
+- Treat senior agent behavior as a compact engineering execution standard, not
+  as a separate personality label. Before code changes, agents should load
+  relevant local context, preserve intended behavior, keep architecture and
+  configuration boundaries clear, work in coherent verified batches, update
+  durable project memory when behavior or architecture changes, and escalate
+  high-risk actions through the documented approval path. Follow
+  `patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md`.
 - Keep the current technology stack visible in durable project memory. For
   GI-enabled projects, maintain `tools/project-memory/specs/technology-stack.md`
   or an equivalent linked stack inventory with verified languages, runtimes,
