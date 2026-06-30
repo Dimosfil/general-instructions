@@ -58,6 +58,13 @@
   source of truth or temporary compatibility layer is genuinely undocumented.
   Follow
   `patterns/CONFIGURATION_BOUNDARIES.md`.
+- Treat API keys and external-service tokens as secret boundaries, not ordinary
+  config values. Keep them out of source, client bundles, public frontend env
+  vars, logs, traces, chat, generated artifacts, and project memory; prefer
+  per-person or per-service credentials, separate dev/staging/prod secrets,
+  managed production secret stores, scoped permissions, usage monitoring,
+  rotation, and network restrictions where supported. Follow
+  `patterns/API_KEY_SECRET_SAFETY.md`.
 - Build applications with clear architecture and code-quality boundaries. Apply
   OOP, SOLID, DRY, clean-code, maintainability, and extensibility principles
   where they fit the stack. Keep domain/product logic, orchestration, UI,

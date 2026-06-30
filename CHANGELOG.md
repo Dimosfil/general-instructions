@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.06.30
 
+- Added `patterns/API_KEY_SECRET_SAFETY.md` as a reusable API-key and
+  credential safety pattern. The rule keeps long-lived credentials out of
+  source, client bundles, public frontend environment variables, logs, traces,
+  generated artifacts, chat, and project memory; recommends separate
+  per-person/per-service and dev/staging/prod credentials; prefers managed
+  production secret stores; and calls out scoped permissions, monitoring,
+  rotation, and provider-supported network restrictions.
+
 - Added `patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md` as a compact senior
   engineering execution standard for agents writing, reviewing, or refactoring
   code. The standard connects existing GI rules for context loading,
