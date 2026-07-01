@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.01
+
+- Clarified development versus refactor classification. Agents must treat
+  refactoring as structural work that preserves user-visible and documented
+  contracts, classify new behavior, validation, observability, integrations,
+  runtime flows, and new public contracts as development, and keep verification
+  or service operations labeled separately. Refactor batches now need explicit
+  contract boundaries, appropriate before/after checks for mechanical moves, and
+  clear rollback scope.
+
 ## 2026.06.30
 
 - Added `patterns/API_KEY_SECRET_SAFETY.md` as a reusable API-key and

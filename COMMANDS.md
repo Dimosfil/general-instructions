@@ -978,7 +978,10 @@ code, duplicated business logic, oversized modules, dependency direction, typed
 or validated contracts, tests, and project-memory updates.
 
 The agent works in small verifiable batches and preserves user-visible behavior
-unless the user explicitly changes it. It asks before destructive operations,
+unless the user explicitly changes it. It separates structural refactor work
+from development work such as new behavior, validation, observability,
+integrations, runtime flows, or new public contracts; verification and service
+operations stay labeled separately too. It asks before destructive operations,
 data migrations, public API or storage contract changes, dependency
 replacements, broad formatting-only churn, or private/external paths. After
 meaningful batches, it runs documented checks for affected areas, updates

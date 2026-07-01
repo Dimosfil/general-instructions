@@ -57,7 +57,11 @@
   interpretation rules. Check backend, frontend, tests, docs, generated
   examples, build metadata, and project-memory specs as relevant; keep unrelated
   files and generated noise out of the batch; and distinguish harmless
-  line-ending warnings from real `git diff --check` whitespace errors.
+  line-ending warnings from real `git diff --check` whitespace errors. Classify
+  the batch as refactor, development, verification, operation, migration,
+  configuration cleanup, or a named mix; do not hide behavior changes,
+  public-contract changes, service operations, or data migrations inside a
+  "refactor" label.
 
 ## Git
 
@@ -236,7 +240,10 @@ or:
   project-memory updates, and cross-layer source-of-truth consistency. Ask
   before destructive operations, data migrations, public API or storage
   contract changes, dependency replacements, formatting-only churn, or
-  private/external paths.
+  private/external paths. Keep structural refactor work separate from
+  development work such as new behavior, validation, observability,
+  integrations, runtime flows, or new public contracts; label verification and
+  service operations separately too.
 - Use `gi rebuild` for the current project/application rebuild only, such as
   producing an executable, package, or documented build artifact. Use
   `gi tools rebuild` /
