@@ -109,6 +109,26 @@ Use this JSON shape unless project-local instructions define a stricter one:
 - If no deploy script exists, use an available standard tool appropriate to the
   protocol, such as WinSCP, `sftp`, `scp`, `lftp`, or `curl`, without printing
   secrets.
+- Treat an upload stall, hang, repeated timeout, or failed stream open as a
+  failed FTP/FTPS transfer. Do not keep extending the same FTP attempt or cycle
+  through passive/active/FTPS variants as a substitute for the documented
+  fallback.
+- When FTP or FTPS connects but uploads fail, stall, or repeatedly time out,
+  immediately inspect the project-local config, selected service contract, and
+  current user-provided deployment details for an SSH-based SFTP route. If they
+  supply the SSH host, port, user, credential reference, and same documented
+  remote deploy folder, switch to SFTP over SSH before trying more FTP/FTPS
+  upload variants. Treat SFTP over SSH as a valid fulfillment of `gi ftp`.
+  Report that SFTP over SSH was used as the fallback.
+- If the SFTP route is missing required connection details, stop and report the
+  exact missing fields or ask one short question for them. Do not invent SSH
+  credentials, private-key paths, or remote paths, and do not keep retrying the
+  same failing FTP transfer when an authorized SFTP route is available.
+- Do not disable TLS certificate validation, accept an invalid FTPS certificate,
+  or treat an invalid-certificate FTPS connection as the routine fallback for a
+  failing FTP upload unless the project-local deploy contract or the current
+  user message explicitly authorizes that risk. Report any such exception as a
+  degraded security path.
 - Do not delete or replace remote files unless `cleanRemote` is true and the
   project-local instructions or user request clearly allow that behavior.
 - After upload, report the protocol, host, remote path, local artifact path, and

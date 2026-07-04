@@ -2,6 +2,32 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.04
+
+- Tightened FTP deploy fallback behavior. Agents must treat upload stalls,
+  stream-open failures, and repeated timeouts as failed FTP/FTPS transfers,
+  immediately check for an authorized SFTP-over-SSH route to the same remote
+  deploy folder, switch to it when complete SFTP details exist, and otherwise
+  report the missing SFTP details instead of retrying the same failing FTP path
+  or bypassing invalid FTPS certificates as a routine fallback.
+
+## 2026.07.03
+
+- Added `gi docker` / `ги докер` as a Docker/Compose runtime command. Agents
+  must read the current project's Docker contract, report when Docker is not
+  configured or unavailable, decide whether a rebuild is needed before restart,
+  avoid touching unrelated containers or destructive Docker state, and verify
+  container health before reporting success.
+
+## 2026.07.02
+
+- Added a project-identity write guard. Before filesystem writes, agents must
+  verify the active project root and target identity from local instructions,
+  README, manifests, service id, git remote, or project memory. If the request
+  appears to target a different product, repository, or external path, agents
+  must stop and warn unless the current user message explicitly authorizes that
+  exact external path and action.
+
 ## 2026.07.01
 
 - Clarified development versus refactor classification. Agents must treat
