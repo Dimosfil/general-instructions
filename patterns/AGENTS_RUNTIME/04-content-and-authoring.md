@@ -86,6 +86,13 @@
   durable project memory when behavior or architecture changes, and escalate
   high-risk actions through the documented approval path. Follow
   `patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md`.
+- Use an agent role office when specialist judgment improves the work. Select
+  the smallest useful set of professional role lenses, such as product owner,
+  tech lead, C#/.NET backend, frontend, UI/UX design, visual art, QA,
+  DevOps/release, security, or documentation, then synthesize their input into
+  one accountable plan, implementation, or review. Add new reusable roles only
+  when repeated work shows a real specialty gap. Follow
+  `patterns/AGENT_ROLE_OFFICE.md`.
 - Keep the current technology stack visible in durable project memory. For
   GI-enabled projects, maintain `tools/project-memory/specs/technology-stack.md`
   or an equivalent linked stack inventory with verified languages, runtimes,

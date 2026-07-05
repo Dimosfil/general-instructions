@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.07.05.1",
+  "instruction_kit_version": "2026.07.05.2",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -134,6 +134,7 @@
     "2026.06.24.3__add_gi_info_command",
     "2026.06.24.4__gi_info_uses_project_languages",
     "2026.06.24.5__make_gi_info_idempotent",
+    "2026.06.24.6__add_local_sprint_command",
     "2026.06.30.1__add_senior_agent_engineering_standard",
     "2026.06.30.2__add_api_key_secret_safety",
     "2026.07.01.1__classify_development_vs_refactor",
@@ -152,7 +153,8 @@
     "2026.07.04.11__continue_artifact_upload_for_pending_gateway_entry",
     "2026.07.04.12__attempt_gateway_provisioning_after_stale_error",
     "2026.07.04.13__derive_project_scoped_gateway_subdomain",
-    "2026.07.05.1__report_zero_pending_startup_migrations"
+    "2026.07.05.1__report_zero_pending_startup_migrations",
+    "2026.07.05.2__add_agent_role_office"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -174,6 +176,7 @@
     "tools/project-memory/specs/technology-stack.md",
     "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
+    "patterns/AGENT_ROLE_OFFICE.md",
     "patterns/API_KEY_SECRET_SAFETY.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/TECHNOLOGY_STACK_INVENTORY.md",
@@ -204,6 +207,7 @@
     "patterns/AGENTS_RUNTIME/13-progress-updates.md",
     "patterns/AGENTS_RUNTIME/14-update-intake.md",
     "patterns/AGENTS_RUNTIME/15-verification.md",
-    "patterns/AGENTS_RUNTIME/16-git-policy.md"
+    "patterns/AGENTS_RUNTIME/16-git-policy.md",
+    "patterns/AGENTS_RUNTIME/17-agent-role-office.md"
   ]
 }

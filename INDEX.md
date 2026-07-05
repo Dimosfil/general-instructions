@@ -49,6 +49,10 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/AGENT_HARNESS_RUNTIME.md`: runtime pattern for building or auditing
   model-tool-observation loops, tool permissions, compaction, connectors, evals,
   and production agent harnesses.
+- `patterns/AGENT_ROLE_OFFICE.md`: extensible specialist-role office pattern
+  for routing work through narrow professional lenses such as product owner,
+  tech lead, C#/.NET backend, frontend, UI/UX design, visual art, QA,
+  DevOps/release, security, and documentation.
 - `patterns/AI_ENGINEERING_BENCHMARKS.md`: benchmark pattern for proving AI
   engineering cost reduction while preserving task quality.
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality

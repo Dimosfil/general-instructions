@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.07.05
 
+- Added the agent role office pattern. Agents can now route broad or
+  specialist-heavy work through narrow professional lenses such as product
+  owner, tech lead, C#/.NET backend engineer, frontend engineer, UI/UX designer,
+  visual artist, QA/test engineer, DevOps/release engineer, security reviewer,
+  and documentation writer while keeping one accountable response.
+
 - Clarified first-concrete-message GI update check reporting. The compact
   startup status must now explicitly include the pending migration count,
   including `0` when there are no pending migrations, so users can distinguish a

@@ -97,6 +97,8 @@ checklists, and migration metadata for projects that copy this kit.
 - Update intake and `updates/` handling: `patterns/AGENTS_RUNTIME/14-update-intake.md`
 - Verification policy: `patterns/AGENTS_RUNTIME/15-verification.md`
 - Git policy: `patterns/AGENTS_RUNTIME/16-git-policy.md`
+- Agent role office, specialist role routing, and narrow professional scopes:
+  `patterns/AGENTS_RUNTIME/17-agent-role-office.md`
 
 ## Library Entrypoints
 
