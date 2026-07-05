@@ -15,12 +15,18 @@ checklists, and migration metadata for projects that copy this kit.
 - Read only the modules needed for the current request.
 - Before acting on a concrete task, select and read the matching module(s);
   this entrypoint alone is enough only for greetings or status-neutral replies.
+- On the first concrete task in a new chat/session, before task-specific work,
+  run a quiet GI update check: read local instruction-kit metadata and accepted
+  source `VERSION.md`/`migrations/`, apply pending accepted migrations when the
+  project update contract allows it, and report only a compact result or
+  blocker. Do not read `updates/` for this startup check.
 - If the request contains a GI chat command such as `gi ...`, `ги ...`, or a
   known mojibake form such as `РіРё ...`, treat it as a concrete task even when
   the message is short. First read `COMMANDS.md` when present, then read every
   runtime module routed to that command before acting.
-- For state-changing GI commands that start, stop, restart, rebuild, deploy,
-  test, install, reset, update, commit, push, or manage task-manager state, do
+- For state-changing GI commands that start, stop, restart, build, rebuild,
+  deploy, test, install, reset, update, commit, push, or manage task-manager
+  state, do
   not execute from memory, old chat examples, or a command name alone. If the
   command's routed module is unavailable, stop and report the missing path.
 - For `gi restart`, `gi reboot`, `gi docker`, `ги рестарт`, `ги ребут`,
@@ -47,6 +53,10 @@ checklists, and migration metadata for projects that copy this kit.
   current message explicitly authorizes that exact external path and action.
 - Do not add secrets, private project data, generated noise, or unrelated dirty
   worktree changes to shared instructions.
+- Keep `tools/` for durable development and agent tooling; do not use it as the
+  default destination for generated product outputs, selected-run artifacts,
+  screenshots, raw exports, build bundles, downloaded datasets, or one-off work
+  results.
 - Keep reusable guidance project-agnostic; project-specific behavior belongs in
   that project's local instructions, docs, runbook, or project memory.
 
@@ -69,7 +79,8 @@ checklists, and migration metadata for projects that copy this kit.
 - Config-service, service guide/contract lookup, task manager commands,
   manager-backed and local sprint commands, and web-service port registration:
   `patterns/AGENTS_RUNTIME/08-config-service-and-task-manager.md`
-- Dev/prod online service publication, FTP deploy, restart/reboot,
+- Dev/prod online service publication, FTP deploy, project build/rebuild,
+  restart/reboot,
   Docker/Compose restart, first test, full test, default reset, installer
   packaging, SQL/vector inspection, and project/RAG rebuild commands:
   `patterns/AGENTS_RUNTIME/09-project-operation-commands.md`

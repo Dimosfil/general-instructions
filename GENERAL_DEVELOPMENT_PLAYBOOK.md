@@ -171,6 +171,13 @@ those files in a project-local artifact/evidence/output/data/docs-asset location
 and keep only compact manifests, summaries, checksums, or links in project
 memory when needed for a decision, contract, failure, or verification result.
 
+Do not use `tools/` as the default destination for generated product output,
+selected-run artifacts, uploaded site contents, screenshots, raw exports, build
+bundles, downloaded datasets, or one-off work results. Keep `tools/` for durable
+development and agent tooling such as scripts, adapters, bootstrap commands,
+deployment helpers, and redacted examples or manifests. Document the project's
+artifact, evidence, output, data, docs-asset, build, or release locations.
+
 For projects that depend on, research, vendor, or regularly interact with other
 repositories, cloned examples, services, libraries, docs sites, or upstream
 tools, keep `tools/project-memory/specs/integration-contracts/connected-projects.md`

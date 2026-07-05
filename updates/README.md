@@ -10,10 +10,17 @@ Files should be named with a date/time prefix, for example:
 YYYY-MM-DD_HH-mm-ss_AGENT_RECOMMENDED_GENERAL_INSTRUCTIONS_UPDATES.md
 ```
 
+`USER_REPORTED_AGENT_BUG_LOG.md` is the one exception to the dated-file pattern:
+it is a compact rolling log for recurring agent-rule failures reported directly
+by the user.
+
 ## Rules
 
 - Treat update files as incoming recommendations, not automatically accepted
   instructions.
+- Append user-reported recurring agent-rule failures to
+  `USER_REPORTED_AGENT_BUG_LOG.md` with date, symptom, likely rule gap, evidence
+  summary, privacy review, and status.
 - This folder is maintenance-only for `general-instructions`. External projects
   that consume the shared instructions must not read it during startup or
   bootstrap.

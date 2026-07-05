@@ -4,6 +4,87 @@ Accepted changes for the shared instruction library.
 
 ## 2026.07.04
 
+- Clarified deploy-gateway subdomain targeting for unmapped projects. Automatic
+  registration should derive a project-scoped hostname, normally from a
+  sanitized project id under the gateway base domain, and must not target the
+  apex/root domain, shared hub hostname, or another project's hostname unless an
+  explicit existing mapping says so.
+
+- Clarified deploy-gateway provisioning attempts after stale host-limit or
+  errored inbox evidence. Agents should warn that provisioning may fail, then
+  run the gateway's documented safe create/refresh/provisioning attempt instead
+  of stopping on old screenshots, cached quota checks, or indirect host-limit
+  claims. They stop only on a fresh current rejection or when no documented
+  attempt path exists.
+
+- Clarified pending deploy-gateway inbox behavior. A pending domain/hosting
+  request no longer stops artifact upload by itself: when the gateway provides a
+  documented pending, staging, queue, or handoff upload target, the project agent
+  should build and upload the artifact there while devops/hosting completes
+  publication. Only errored/rejected requests or missing documented handoff
+  targets stop the flow, and they must be reported as explicit deploy errors.
+
+- Replaced vague deploy-gateway blocker outcomes with a pending-or-error
+  contract. New domain/site deploy requests now either remain in a documented
+  pending/provisioning state, or return an explicit deploy error with failed
+  step, evidence, responsible system or owner, next required action, and the
+  artifact/source state already recorded.
+
+- Tightened deploy-gateway pending-state handling. Before reporting an unknown
+  deploy project or missing target mapping, agents now check the gateway
+  registry plus documented inbox, pending queue, hub-card queue, or
+  domain/hosting request list. Existing pending or blocked entries become the
+  active deploy state: agents refresh allowed metadata, report the concrete
+  hosting/domain blocker, and wait for the gateway/devops/hosting follow-up
+  instead of creating duplicate mappings or uploading to a gateway root.
+
+- Added `gi set devops` / `gi devops` / `ги девопс` to mark the current project
+  as the deploy-infrastructure owner. Ordinary projects now route deploy/FTP
+  through a selected gateway and remove or stop relying on personal direct
+  deploy scripts/config, while devops-marked gateway projects keep that
+  infrastructure.
+
+- Added GI rule-error intake and fix commands. `gi ошибка` records available
+  evidence for suspected GI rule bugs without changing rules, while
+  `gi ошибка фикс` repairs the logged or supplied rule gap through live rules,
+  templates, migrations, version, changelog, verification, and bug-log status.
+
+- Added a first-concrete-message GI update check for new chats/sessions. Agents
+  should quietly inspect accepted instruction-kit version and migrations before
+  task-specific work, apply pending accepted migrations when allowed, avoid
+  `updates/` and broad reads, and report only a compact status or blocker.
+
+- Added automatic project registration rules for `gi ftp <deploy-hub-path>` when
+  a deploy gateway defines deterministic target naming. Unmapped projects should
+  use the current project folder name as the default id, let the gateway derive
+  the destination, register gateway-owned deploy/index metadata, and stop on
+  registration or artifact blockers instead of falling back to a root target.
+
+- Added saved project deploy gateway behavior. After the user runs a command
+  such as `gi deploy <path>` or `gi ftp <path>`, agents should record that
+  deploy gateway in ignored project-local config and let later short commands
+  such as `gi deploy`, `ги деплой`, `gi ftp`, or `ги фтп` reuse it.
+
+- Added `gi deploy <method-or-path>` / `ги деплой <способ-или-путь>` as an
+  explicit deploy-through-method-or-gateway command. When the argument is a
+  deploy hub path, agents now read the hub's own instructions and run only its
+  documented entrypoint, passing the current project as the source while keeping
+  hub secrets and local config private.
+
+- Added a maintenance-only user-reported agent bug log at
+  `updates/USER_REPORTED_AGENT_BUG_LOG.md`. Recurring agent-rule failures should
+  now be logged with symptom, evidence summary, privacy review, status, and any
+  accepted migration. Also clarified that `tools/` is for durable development
+  and agent tooling, not the default destination for generated product outputs,
+  selected-run artifacts, uploaded site contents, raw exports, build bundles, or
+  one-off work results.
+
+- Added `gi build` / `gi собрать` / `ги билд` / `ги собрать` as project build
+  command aliases for producing a release/upload-ready project artifact such as
+  `dist/`, a bundle, package, executable, or other documented output. The
+  command reads project-local build contracts and stays distinct from FTP/SFTP
+  upload, production publication, installer packaging, and GI/RAG rebuilds.
+
 - Tightened FTP deploy fallback behavior. Agents must treat upload stalls,
   stream-open failures, and repeated timeouts as failed FTP/FTPS transfers,
   immediately check for an authorized SFTP-over-SSH route to the same remote
