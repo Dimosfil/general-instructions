@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.07.04.13",
+  "instruction_kit_version": "2026.07.05.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -151,7 +151,8 @@
     "2026.07.04.10__report_deploy_pending_or_explicit_error",
     "2026.07.04.11__continue_artifact_upload_for_pending_gateway_entry",
     "2026.07.04.12__attempt_gateway_provisioning_after_stale_error",
-    "2026.07.04.13__derive_project_scoped_gateway_subdomain"
+    "2026.07.04.13__derive_project_scoped_gateway_subdomain",
+    "2026.07.05.1__report_zero_pending_startup_migrations"
   ],
   "copied_files": [
     "AGENTS.md",

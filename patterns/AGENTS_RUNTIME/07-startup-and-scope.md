@@ -15,7 +15,8 @@
   explicitly requested `gi обновить`. Do not read `updates/`, old chat examples,
   broad project files, or unrelated source repositories for this startup check.
   Keep the user-facing output to one compact status line or include it in the
-  first substantive reply.
+  first substantive reply. That compact status must explicitly include the
+  pending migration count, including `0` when no migrations are pending.
 - For each new project session, require a clear, measurable project goal before
   implementation begins.
   - If no explicit project goal exists in startup artifacts or user text,

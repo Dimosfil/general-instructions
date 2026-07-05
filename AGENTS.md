@@ -19,7 +19,9 @@ checklists, and migration metadata for projects that copy this kit.
   run a quiet GI update check: read local instruction-kit metadata and accepted
   source `VERSION.md`/`migrations/`, apply pending accepted migrations when the
   project update contract allows it, and report only a compact result or
-  blocker. Do not read `updates/` for this startup check.
+  blocker. The compact result must explicitly include the pending migration
+  count, including `0` when no migrations are pending. Do not read `updates/`
+  for this startup check.
 - If the request contains a GI chat command such as `gi ...`, `ги ...`, or a
   known mojibake form such as `РіРё ...`, treat it as a concrete task even when
   the message is short. First read `COMMANDS.md` when present, then read every

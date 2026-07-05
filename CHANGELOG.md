@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.05
+
+- Clarified first-concrete-message GI update check reporting. The compact
+  startup status must now explicitly include the pending migration count,
+  including `0` when there are no pending migrations, so users can distinguish a
+  completed check from an omitted one.
+
 ## 2026.07.04
 
 - Clarified deploy-gateway subdomain targeting for unmapped projects. Automatic

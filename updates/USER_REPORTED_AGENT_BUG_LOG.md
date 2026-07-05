@@ -11,6 +11,22 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-05: Startup GI update check should report zero pending migrations
+
+- Symptom: user reports that first-request startup/update-check responses can
+  say the instruction kit is current without explicitly saying whether pending
+  migrations were checked and how many were found.
+- Evidence summary: user-provided screenshot of a `gi обновить` style response
+  shows version status and "new pending migrations нет" wording; user asked the
+  rule to require reporting `0` migrations when none are pending.
+- Likely rule gap: the quiet startup GI update-check rule required a compact
+  status or blocker, but did not require an explicit pending migration count in
+  the success status.
+- Privacy review: no secrets, credentials, private data, raw logs, or external
+  project files were copied into this log.
+- Status: accepted as shared-rule improvement in
+  `2026.07.05.1__report_zero_pending_startup_migrations`.
+
 ### 2026-07-04: GI rule bugs need command-based intake and repair
 
 - Symptom: user wants to report logical GI rule errors through a short command
