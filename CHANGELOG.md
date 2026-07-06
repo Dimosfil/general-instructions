@@ -10,6 +10,11 @@ Accepted changes for the shared instruction library.
   plus verification as completion gates for meaningful behavior, workflow,
   data-model, integration, observability, or architecture changes.
 
+- Clarified post-update instruction activation. After a successful
+  `gi обновить`, updated local instructions are active immediately, and the
+  current chat/session must reread the updated local `AGENTS.md` plus routed
+  runtime modules before the next concrete task.
+
 - Added startup product engineering guidance. Agents should deliver working
   product outcomes in startup-style environments by prioritizing business
   requirements, deadlines, pragmatic design, C#/.NET async and concurrency

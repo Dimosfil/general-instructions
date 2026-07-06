@@ -77,11 +77,15 @@ the agent should:
 10. Merge project-owned files carefully; do not overwrite project-specific
    content without review.
 11. Update `instruction-kit.json` only after successful application.
-12. Summarize changed files, skipped files, conflicts, and checks.
-13. If migrations were applied successfully and the current project is a git
+12. Treat successfully applied local instructions as active immediately. Before
+    the next concrete task in the same chat/session, reread the updated local
+    `AGENTS.md` and every routed runtime module needed for that task instead of
+    continuing from pre-update context.
+13. Summarize changed files, skipped files, conflicts, and checks.
+14. If migrations were applied successfully and the current project is a git
     repository with a configured remote, commit and push only the instruction-kit
     update changes.
-14. If unrelated/user changes are present, no git repository or remote exists,
+15. If unrelated/user changes are present, no git repository or remote exists,
     push fails, or a conflict remains, do not force it; stop and explain the
     blocker.
 
