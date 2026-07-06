@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.07.06
 
+- Added strict GI compliance wording. User phrases such as "do by GI" now mean
+  loaded GI rules are mandatory execution constraints unless the user explicitly
+  overrides a specific rule, and strict GI work treats project-memory writeback
+  plus verification as completion gates for meaningful behavior, workflow,
+  data-model, integration, observability, or architecture changes.
+
 - Added startup product engineering guidance. Agents should deliver working
   product outcomes in startup-style environments by prioritizing business
   requirements, deadlines, pragmatic design, C#/.NET async and concurrency

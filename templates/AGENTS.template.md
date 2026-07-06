@@ -29,6 +29,10 @@ implemented against each goal criterion and list remaining gaps as blockers.
 - Read only the modules needed for the current request.
 - Before acting on a concrete task, select and read the matching module(s);
   this entrypoint alone is enough only for greetings or status-neutral replies.
+- Treat user wording such as "do by GI", "follow GI", "strictly by GI", and
+  equivalent local-language forms as a request for strict compliance with all
+  loaded GI rules. If an applicable rule cannot be followed, stop and report the
+  concrete blocker or explicit deferral instead of silently continuing.
 - On the first concrete task in a new chat/session, before task-specific work,
   run a quiet GI update check: read local instruction-kit metadata and accepted
   source `VERSION.md`/`migrations/`, apply pending accepted migrations when the

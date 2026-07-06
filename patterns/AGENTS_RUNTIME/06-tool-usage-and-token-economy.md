@@ -95,6 +95,12 @@
   contract and preserve its user-visible sequence, branches, background work,
   loading/error states, and verification guarantees unless the user explicitly
   changes the agreement.
+- When the user explicitly asks to work "by GI" or with equivalent strict
+  wording, treat project-memory writeback and verification as completion gates,
+  not optional cleanup. If meaningful behavior, workflow, data-model,
+  integration, observability, or architecture changes occur, update the relevant
+  durable project-memory specification in the same scoped batch before
+  finishing unless the user explicitly defers that update.
 - For non-trivial feature work, keep the feature idea, functional description,
   workflow contract, implementation plan, sprint breakdown, task breakdown,
   definitions of done, and verification linked together. Tasks do not replace
