@@ -93,6 +93,13 @@
   one accountable plan, implementation, or review. Add new reusable roles only
   when repeated work shows a real specialty gap. Follow
   `patterns/AGENT_ROLE_OFFICE.md`.
+- Treat startup-style product engineering as delivery of a working business
+  outcome, not isolated code snippets. Agents should clarify business value,
+  deadline pressure, acceptance criteria, and risk; choose the smallest
+  reliable implementation path; apply pragmatic design principles; respect
+  C#/.NET async and concurrency boundaries; follow frontend framework
+  conventions; and communicate professionally when English is the expected
+  working language. Follow `patterns/STARTUP_PRODUCT_ENGINEERING.md`.
 - Keep the current technology stack visible in durable project memory. For
   GI-enabled projects, maintain `tools/project-memory/specs/technology-stack.md`
   or an equivalent linked stack inventory with verified languages, runtimes,

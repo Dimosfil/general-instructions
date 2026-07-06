@@ -131,6 +131,10 @@ Reusable instructions in this repository are grouped by job.
   instruction files from this shared library when the user provides its path.
 - `patterns/SKILL_MODULES.md`: when to use rules, patterns, templates, or
   self-contained skill modules.
+- `patterns/STARTUP_PRODUCT_ENGINEERING.md`: startup-oriented delivery pattern
+  for business-first product outcomes, deadline-aware implementation,
+  pragmatic design, C#/.NET async and concurrency expectations, frontend
+  framework discipline, professional English communication, and review focus.
 
 ## Skills
 

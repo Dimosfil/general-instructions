@@ -99,6 +99,9 @@ checklists, and migration metadata for projects that copy this kit.
 - Git policy: `patterns/AGENTS_RUNTIME/16-git-policy.md`
 - Agent role office, specialist role routing, and narrow professional scopes:
   `patterns/AGENTS_RUNTIME/17-agent-role-office.md`
+- Startup product engineering, business-first delivery, .NET/frontend
+  expectations, and professional communication:
+  `patterns/AGENTS_RUNTIME/18-startup-product-engineering.md`
 
 ## Library Entrypoints
 

@@ -2,6 +2,14 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.06
+
+- Added startup product engineering guidance. Agents should deliver working
+  product outcomes in startup-style environments by prioritizing business
+  requirements, deadlines, pragmatic design, C#/.NET async and concurrency
+  correctness, frontend framework discipline, professional English
+  communication, and risk-focused review.
+
 ## 2026.07.05
 
 - Added the agent role office pattern. Agents can now route broad or

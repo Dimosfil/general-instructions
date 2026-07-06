@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.07.05.2",
+  "instruction_kit_version": "2026.07.06.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -154,7 +154,8 @@
     "2026.07.04.12__attempt_gateway_provisioning_after_stale_error",
     "2026.07.04.13__derive_project_scoped_gateway_subdomain",
     "2026.07.05.1__report_zero_pending_startup_migrations",
-    "2026.07.05.2__add_agent_role_office"
+    "2026.07.05.2__add_agent_role_office",
+    "2026.07.06.1__add_startup_product_engineering"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -177,6 +178,7 @@
     "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
     "patterns/AGENT_ROLE_OFFICE.md",
+    "patterns/STARTUP_PRODUCT_ENGINEERING.md",
     "patterns/API_KEY_SECRET_SAFETY.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/TECHNOLOGY_STACK_INVENTORY.md",
@@ -208,6 +210,7 @@
     "patterns/AGENTS_RUNTIME/14-update-intake.md",
     "patterns/AGENTS_RUNTIME/15-verification.md",
     "patterns/AGENTS_RUNTIME/16-git-policy.md",
-    "patterns/AGENTS_RUNTIME/17-agent-role-office.md"
+    "patterns/AGENTS_RUNTIME/17-agent-role-office.md",
+    "patterns/AGENTS_RUNTIME/18-startup-product-engineering.md"
   ]
 }
