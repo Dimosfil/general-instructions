@@ -59,10 +59,16 @@ checklists, and migration metadata for projects that copy this kit.
   current message explicitly authorizes that exact external path and action.
 - Do not add secrets, private project data, generated noise, or unrelated dirty
   worktree changes to shared instructions.
-- Keep `tools/` for durable development and agent tooling; do not use it as the
-  default destination for generated product outputs, selected-run artifacts,
-  screenshots, raw exports, build bundles, downloaded datasets, or one-off work
-  results.
+- Keep `tools/` for durable development and agent tooling only. Before writing
+  under `tools/`, classify the file. Allow scripts, adapters, bootstrap
+  commands, deploy/test helpers, agent-memory tooling, and small redacted
+  manifests. Do not put product runtime/source packages, product plugin
+  implementations, product tests, full product documentation, generated product
+  outputs, selected-run artifacts, screenshots, raw exports, build bundles,
+  downloaded datasets, or one-off work results there. `tools/project-memory/`
+  may hold compact implementation-driving specifications and evidence
+  references, but it is not a replacement for `src/`, `tests/`, `docs/`,
+  artifact/output/data/build/release folders, or product package directories.
 - Keep reusable guidance project-agnostic; project-specific behavior belongs in
   that project's local instructions, docs, runbook, or project memory.
 

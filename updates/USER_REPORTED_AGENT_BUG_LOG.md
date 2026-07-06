@@ -11,6 +11,24 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-06: Product source and logging architecture placed under `tools/`
+
+- Symptom: user reports that a requested universal logging system was again
+  partly placed in tooling/project-memory locations and asks for a strict rule
+  defining what belongs in `tools/`.
+- Evidence summary: user-provided chat excerpt says the previous work added a
+  runtime logging package, plugins, tests, documentation, and an architecture
+  contract, then also wrote logging-related project files under
+  `tools/project-memory/`.
+- Likely rule gap: existing `tools/` guidance banned generated outputs and
+  one-off artifacts, but did not explicitly forbid product runtime/source
+  packages, product plugin implementations, product tests, or full product docs
+  from being placed under `tools/`.
+- Privacy review: no secrets, credentials, private logs, production data, or
+  external project file contents were copied into this log.
+- Status: accepted as shared-rule improvement in
+  `2026.07.06.4__strict_tools_product_boundary`.
+
 ### 2026-07-05: Startup GI update check should report zero pending migrations
 
 - Symptom: user reports that first-request startup/update-check responses can

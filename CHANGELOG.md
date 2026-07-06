@@ -4,6 +4,15 @@ Accepted changes for the shared instruction library.
 
 ## 2026.07.06
 
+- Made the `tools/` boundary strict. Agents must classify any file before
+  writing under `tools/`: durable development and agent tooling may live there,
+  but product runtime/source packages, product plugin implementations, product
+  tests, full product documentation, generated outputs, selected-run artifacts,
+  and one-off work results must use source, test, docs, artifact, evidence,
+  output, data, build, release, or docs-asset locations. `tools/project-memory/`
+  remains limited to compact implementation-driving specifications, decisions,
+  contracts, implementation maps, and evidence references.
+
 - Added strict GI compliance wording. User phrases such as "do by GI" now mean
   loaded GI rules are mandatory execution constraints unless the user explicitly
   overrides a specific rule, and strict GI work treats project-memory writeback
