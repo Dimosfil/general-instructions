@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.07.06
 
+- Tightened `gi start` / `gi restore` summary restoration. Agents must read the
+  latest handoff summary as the primary continuation artifact for a new chat
+  and recover the current topic, key theses or decisions, blockers, and next
+  useful direction; seeing only the summary filename, timestamp, or metadata is
+  no longer sufficient.
+
 - Made the `tools/` boundary strict. Agents must classify any file before
   writing under `tools/`: durable development and agent tooling may live there,
   but product runtime/source packages, product plugin implementations, product

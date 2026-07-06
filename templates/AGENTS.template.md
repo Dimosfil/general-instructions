@@ -77,7 +77,9 @@ Start here when a concrete restore/start task exists:
 If the startup script is unavailable, read only the smallest useful slices of:
 
 - `AGENTS.md`
-- latest relevant file in `tools/summary/`
+- latest handoff summary in `tools/summary/`; read its substantive sections
+  enough to recover the current topic, key theses or decisions, blockers, and
+  next useful direction, not only its filename or timestamp
 - `tools/AGENT_WORKING_AGREEMENTS.md`
 - `tools/AGENT_RUNBOOK.md`
 - relevant notes in `tools/project-memory/`
