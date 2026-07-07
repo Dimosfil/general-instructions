@@ -5,6 +5,8 @@ shared-instruction Git repository or a local checkout/cache, for example:
 
 ```text
 Connect shared instructions: https://github.com/Dimosfil/general-instructions.git
+gi init https://github.com/Dimosfil/general-instructions.git
+gi init Dimosfil/general-instructions.git
 ```
 
 Also use this when the user asks to update from a shared instruction library but
@@ -19,7 +21,9 @@ for example:
 
 This command means: read the canonical shared instruction source repo, using a
 local checkout/cache when needed, and deploy a local instruction kit into the
-current project.
+current project. The source may be the full GitHub URL, the shorter
+`Dimosfil/general-instructions.git` repo form, a Markdown link to either form,
+or an existing local checkout/cache.
 
 It does not mean:
 
@@ -29,6 +33,8 @@ It does not mean:
 - create a symlink
 - create a runtime reference
 - create only a thin `AGENTS.md` that points back to the shared source
+- run ordinary `git init`
+- replace, add, or reconfigure the current project's git remote
 
 ## Required Behavior
 

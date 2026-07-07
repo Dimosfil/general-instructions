@@ -36,12 +36,13 @@ If the first user message is the canonical shared-instruction Git repository
 URL, a path to a shared instruction checkout/cache, or a request to connect
 shared instructions, treat it as an instruction bootstrap.
 
-Also treat `init <source>`, `инит <source>`, and `инициализируй <source>` as an
-instruction bootstrap when the source points to the canonical repo
-`https://github.com/Dimosfil/general-instructions.git`, the current
+Also treat `gi init <source>`, `init <source>`, `инит <source>`, and
+`инициализируй <source>` as an instruction bootstrap when the source points to
+the canonical repo `https://github.com/Dimosfil/general-instructions.git`, the
+shorter GitHub repo form `Dimosfil/general-instructions.git`, the current
 shared-instruction checkout/cache, `GENERAL_INSTRUCTIONS_HOME`, or another known
-shared-instruction source, even when the message does not include the `gi`
-prefix.
+shared-instruction source, even when the source is provided as a Markdown link
+and even when the message does not include the `gi` prefix.
 
 Treat `инит правила <source>` the same way when `<source>` points to
 `general-instructions`. This means "load or initialize instruction rules from
@@ -83,6 +84,9 @@ Examples:
 - `gi обновись`: check or apply accepted instruction-kit updates.
 - `gi init https://github.com/Dimosfil/general-instructions.git`:
   bootstrap/init from the canonical shared-instruction source repo.
+- `gi init Dimosfil/general-instructions.git` or a Markdown link to that repo:
+  same bootstrap/init behavior; never replace the current project's git remote
+  or run ordinary `git init`.
 - `инит https://github.com/Dimosfil/general-instructions.git` or
   `init https://github.com/Dimosfil/general-instructions.git`: same
   bootstrap/startup behavior for the shared instruction source, without

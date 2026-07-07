@@ -374,11 +374,15 @@ or:
   explicit confirmation and prefer backup or rename when local rules allow it.
 - Treat a first message that points to a shared instruction library as an
   instruction bootstrap, not as a request to add that library as a dependency.
-- Treat `init <source>`, `инит <source>`, `инициализируй <source>`, and
-  `инит правила <source>` as shared-instruction bootstrap/startup requests when
-  `<source>` points to a known `general-instructions` source. Never reinterpret
-  these forms as `git init`, folder creation, OpenCode setup, project creation,
-  `npm init`, or `python -m venv` unless the user explicitly names that action.
+- Treat `gi init <source>`, `init <source>`, `инит <source>`,
+  `инициализируй <source>`, and `инит правила <source>` as shared-instruction
+  bootstrap/startup requests when `<source>` points to the canonical
+  `https://github.com/Dimosfil/general-instructions.git` repo, the shorter
+  `Dimosfil/general-instructions.git` GitHub form, a Markdown link to either
+  form, a local checkout/cache, or another known `general-instructions` source.
+  Never reinterpret these forms as `git init`, git remote replacement, folder
+  creation, OpenCode setup, project creation, `npm init`, or `python -m venv`
+  unless the user explicitly names that action.
 - If the user asks to update from a shared instruction library and this project
   has no `tools/project-memory/instruction-kit.json`, treat that as first-time
   instruction bootstrap/init.

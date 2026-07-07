@@ -2,6 +2,14 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.07
+
+- Clarified `gi init` from GitHub source links. Agents must treat
+  `gi init https://github.com/Dimosfil/general-instructions.git`,
+  `gi init Dimosfil/general-instructions.git`, and Markdown links to that repo
+  as shared-instruction bootstrap requests, not as ordinary `git init` or
+  current-project remote replacement.
+
 ## 2026.07.06
 
 - Tightened `gi start` / `gi restore` summary restoration. Agents must read the
