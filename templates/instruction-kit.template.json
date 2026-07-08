@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.07.07.2",
+  "instruction_kit_version": "2026.07.08.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "update_check": {
@@ -161,7 +161,8 @@
     "2026.07.06.4__strict_tools_product_boundary",
     "2026.07.06.5__require_latest_summary_for_gi_start",
     "2026.07.07.1__clarify_gi_init_github_source",
-    "2026.07.07.2__add_gi_logic_command"
+    "2026.07.07.2__add_gi_logic_command",
+    "2026.07.08.1__add_answer_first_response_style"
   ],
   "copied_files": [
     "AGENTS.md",

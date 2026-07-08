@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.08
+
+- Added answer-first response style. Agents should start final answers and
+  direct user-facing explanations with the concrete answer, decision, main
+  conclusion, or requested status before caveats, evidence, and detailed
+  context, so users can see the actionable answer immediately.
+
 ## 2026.07.07
 
 - Added `gi logic` / `ги логика` for project-logic recovery and adoption. With

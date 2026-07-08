@@ -143,6 +143,12 @@ or:
 - Apply the configured system or project language to progress updates, final
   answers, clarifying questions, user-facing explanations, agent-created task
   titles, task descriptions, task-manager updates, plans, and checklists.
+- Start final answers and direct user-facing explanations with the concrete
+  answer or decision whenever the user asked a question or needs an outcome.
+  Lead with `Yes`, `No`, `Exactly`, `Not yet`, the main conclusion, or the
+  requested status before caveats, evidence, context, or implementation
+  details. Put nuance and supporting detail after the direct answer so the user
+  can decide whether to keep reading.
 - For task titles, descriptions, and task-manager updates, treat the first
   configured task language as the main language. If exactly one task language is
   configured, write task text only in that language. If multiple task languages
