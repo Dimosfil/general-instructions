@@ -98,8 +98,13 @@
   the smallest useful set of professional role lenses, such as product owner,
   tech lead, C#/.NET backend, frontend, UI/UX design, visual art, QA,
   DevOps/release, security, or documentation, then synthesize their input into
-  one accountable plan, implementation, or review. Add new reusable roles only
-  when repeated work shows a real specialty gap. Follow
+  one accountable plan, implementation, or review. When development begins,
+  infer and briefly propose the most useful lead role or smallest role set from
+  the project context after initial context loading; continue on an obvious
+  low-risk assumption and ask only when the role choice would materially change
+  scope, architecture, external systems, cost, data safety, or user-visible
+  behavior. Add new reusable roles only when repeated work shows a real
+  specialty gap. Follow
   `patterns/AGENT_ROLE_OFFICE.md`.
 - Treat startup-style product engineering as delivery of a working business
   outcome, not isolated code snippets. Agents should clarify business value,

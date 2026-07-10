@@ -126,6 +126,8 @@ Use the RAG startup flow and retrieve only task-relevant context.
 - Startup product engineering, business-first delivery, .NET/frontend
   expectations, and professional communication:
   `patterns/AGENTS_RUNTIME/18-startup-product-engineering.md`
+- Game modding projects, `gi mod`, and selected game install path handling:
+  `patterns/AGENTS_RUNTIME/19-game-modding.md`
 
 ## Durable Memory
 

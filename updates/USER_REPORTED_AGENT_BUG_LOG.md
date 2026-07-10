@@ -11,6 +11,24 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-10: Canonical GI init link misclassified as Git repository replacement
+
+- Symptom: an agent treated `инит` with the canonical shared-instruction
+  repository link as a possible project replacement or additional Git remote,
+  then reported the rules active in chat without deploying the local
+  instruction kit into the current project.
+- Evidence summary: user-provided screenshots showed the incorrect Git/remote
+  clarification and a later activation claim; the target project still lacked
+  the required local `AGENTS.md` and instruction-kit metadata.
+- Likely rule gap: the correct behavior existed in routed bootstrap documents,
+  but the repository landing page did not expose it before request
+  classification, and no deterministic installer or cross-form regression test
+  enforced the workflow.
+- Privacy review: no screenshots, machine-specific paths, private project
+  contents, secrets, credentials, or raw logs were copied into this entry.
+- Status: accepted and repaired in
+  `2026.07.10.1__harden_gi_init_bootstrap_entrypoint`.
+
 ### 2026-07-06: Product source and logging architecture placed under `tools/`
 
 - Symptom: user reports that a requested universal logging system was again

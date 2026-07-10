@@ -2,7 +2,33 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.10
+
+- Hardened the GI bootstrap entrypoint for canonical GitHub URLs, Markdown
+  links, short repository names, and local checkouts. The root README and new
+  `BOOTSTRAP.md` now expose the contract before Git classification, and a
+  portable PowerShell installer plus regression checks create the local kit
+  without changing Git configuration or requiring a machine-specific drive.
+
 ## 2026.07.08
+
+- Added `gi mod` / `ги мод` game-modding path handling. Agents must distinguish
+  the mod project root, selected game install root, mod install folder, and
+  logs folder; record machine-local game paths only in ignored local config; and
+  ask for the game install root with a concrete save location when it cannot be
+  proven locally.
+
+- Added development role suggestion behavior. After initial project context
+  loading for a development effort, agents should infer and briefly propose the
+  most useful lead role or smallest role set from the project goal, stack,
+  docs, memory, manifests, and requested work, while continuing on obvious
+  low-risk assumptions and revisiting roles only after meaningful pivots.
+
+- Expanded startup product engineering expectations for senior backend/product
+  work. Agents should treat C#/.NET concurrency, LLM/RAG integration,
+  PostgreSQL persistence, GoF/GRASP design-pattern use, and GitLab-style CI/CD
+  as architecture-sensitive areas that require current project context,
+  explicit contracts, proportional design, and focused verification.
 
 - Added answer-first response style. Agents should start final answers and
   direct user-facing explanations with the concrete answer, decision, main

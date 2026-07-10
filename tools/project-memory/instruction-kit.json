@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.07.08.1",
+  "instruction_kit_version": "2026.07.10.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -162,7 +162,11 @@
     "2026.07.06.5__require_latest_summary_for_gi_start",
     "2026.07.07.1__clarify_gi_init_github_source",
     "2026.07.07.2__add_gi_logic_command",
-    "2026.07.08.1__add_answer_first_response_style"
+    "2026.07.08.1__add_answer_first_response_style",
+    "2026.07.08.2__expand_startup_engineering_stack_expectations",
+    "2026.07.08.3__suggest_development_roles_from_project_context",
+    "2026.07.08.4__add_gi_mod_game_path_command",
+    "2026.07.10.1__harden_gi_init_bootstrap_entrypoint"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -218,6 +222,7 @@
     "patterns/AGENTS_RUNTIME/15-verification.md",
     "patterns/AGENTS_RUNTIME/16-git-policy.md",
     "patterns/AGENTS_RUNTIME/17-agent-role-office.md",
-    "patterns/AGENTS_RUNTIME/18-startup-product-engineering.md"
+    "patterns/AGENTS_RUNTIME/18-startup-product-engineering.md",
+    "patterns/AGENTS_RUNTIME/19-game-modding.md"
   ]
 }

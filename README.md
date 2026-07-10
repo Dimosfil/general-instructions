@@ -1,5 +1,24 @@
 # General Instructions Library
 
+## Agent Bootstrap Entrypoint
+
+When a user sends any of these forms, treat the request as GI instruction-kit
+bootstrap into the current active project:
+
+```text
+инит [Dimosfil/general-instructions.git](https://github.com/Dimosfil/general-instructions.git)
+инит https://github.com/Dimosfil/general-instructions.git
+gi init Dimosfil/general-instructions.git
+init <local-general-instructions-checkout>
+```
+
+Resolve a Markdown link target before classifying the request. Read
+`BOOTSTRAP.md` first, then follow
+`patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md`. Do not interpret these forms as
+ordinary `git init`, project replacement, Git remote replacement/addition, a
+dependency, submodule, or symlink. The source is portable; the target defaults
+to the current project root and must not depend on a particular drive letter.
+
 Reusable instructions, templates, and playbooks for AI-agent collaboration live
 here.
 

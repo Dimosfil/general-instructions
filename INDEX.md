@@ -4,6 +4,9 @@ Reusable instructions in this repository are grouped by job.
 
 ## User Documents
 
+- `BOOTSTRAP.md`: canonical first-read contract for installing this instruction
+  kit from a Markdown link, GitHub URL, short repository name, or local checkout
+  into the current active project.
 - `CHANGELOG.md`: accepted instruction-kit changes by version.
 - `config/gi-main.json`: bootstrap pointer to the local GI config service.
 - `COMMANDS.md`: user-facing agent prompts and helper commands for
@@ -29,6 +32,14 @@ Reusable instructions in this repository are grouped by job.
 - `tools/project-memory/architecture-migrations.md`: durable history of major
   architecture rewrites and platform migrations for this repository.
 
+## Bootstrap Tools
+
+- `tools/install-instruction-kit.ps1`: portable deterministic installer that
+  resolves supported GI sources and creates missing project-local instruction
+  files without changing Git configuration.
+- `tools/test-instruction-kit-bootstrap.ps1`: regression checks for full URL,
+  short repository, Markdown-link, and local-checkout bootstrap forms.
+
 ## Core Playbooks
 
 - `DEVELOPMENT_PLAN.md`: planned improvements for this shared instruction
@@ -43,7 +54,8 @@ Reusable instructions in this repository are grouped by job.
   precedence, authoring, Windows commands, token economy, startup/scope,
   config-service and task-manager flows, operations commands, private scope,
   language preferences, UI focus, progress updates, update intake,
-  verification, and git policy.
+  verification, git policy, role routing, product engineering, and game
+  modding path handling.
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
   AI-agent experience, with Markdown export for review.
 - `patterns/AGENT_HARNESS_RUNTIME.md`: runtime pattern for building or auditing

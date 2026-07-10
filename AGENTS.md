@@ -12,6 +12,11 @@ checklists, and migration metadata for projects that copy this kit.
 ## Loading Contract
 
 - Start with this file.
+- If the user points to this repository with `gi init`, `init`, `инит`, a
+  canonical URL, short repository name, Markdown link, or local checkout, read
+  root `BOOTSTRAP.md` before proposing any Git or project operation. This is
+  instruction-kit bootstrap into the active project, not repository replacement
+  or remote management.
 - Read only the modules needed for the current request.
 - Before acting on a concrete task, select and read the matching module(s);
   this entrypoint alone is enough only for greetings or status-neutral replies.
@@ -112,6 +117,8 @@ checklists, and migration metadata for projects that copy this kit.
 - Startup product engineering, business-first delivery, .NET/frontend
   expectations, and professional communication:
   `patterns/AGENTS_RUNTIME/18-startup-product-engineering.md`
+- Game modding projects, `gi mod`, and selected game install path handling:
+  `patterns/AGENTS_RUNTIME/19-game-modding.md`
 
 ## Library Entrypoints
 

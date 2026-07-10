@@ -37,16 +37,19 @@ Planned changes:
 Goal: make a new project bootstrap from either a local shared-instruction folder
 or a Git repository URL.
 
-Status: local folder bootstrap is covered. Git URL bootstrap is still pending.
+Status: completed by migrations `2026.07.07.1__clarify_gi_init_github_source`
+and `2026.07.10.1__harden_gi_init_bootstrap_entrypoint`.
 
 Planned changes:
 
-- [ ] Update `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md` with explicit source
+- [x] Update `patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md` with explicit source
   handling for Git repository URLs.
-- [ ] Update `patterns/FIRST_MESSAGE_HANDLING.md` so a first message containing
+- [x] Update `patterns/FIRST_MESSAGE_HANDLING.md` so a first message containing
   a Git URL triggers bootstrap behavior.
-- [ ] Document that Git URL access may require user approval before clone/fetch.
-- [ ] Run documentation checks.
+- [x] Document source resolution, deterministic checkout/install behavior, and
+  environment permission handling.
+- [x] Add executable regression checks for URL, short repo, Markdown link, and
+  local checkout forms.
 
 ### GI Service Discovery Standard
 
