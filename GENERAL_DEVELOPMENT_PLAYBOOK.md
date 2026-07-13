@@ -178,6 +178,15 @@ development and agent tooling such as scripts, adapters, bootstrap commands,
 deployment helpers, and redacted examples or manifests. Document the project's
 artifact, evidence, output, data, docs-asset, build, or release locations.
 
+Do not classify a file as durable tooling from its executable extension. A
+single-task Python/PowerShell/shell research probe, exploratory scraper, data
+inspection script, or throwaway diagnostic must not go under `tools/` or a new
+`tools/research`, `tools/probes`, or `tools/scratch` subtree. Prefer an inline
+command. If a file is required, use a documented ignored scratch/temp location
+outside `tools/`, remove it after use, and store only necessary results in the
+documented evidence or artifact location. Put a script in `tools/` only when it
+has a stable reusable contract and an expected future caller.
+
 For projects that depend on, research, vendor, or regularly interact with other
 repositories, cloned examples, services, libraries, docs sites, or upstream
 tools, keep `tools/project-memory/specs/integration-contracts/connected-projects.md`

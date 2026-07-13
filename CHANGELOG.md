@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.07.13
 
+- Clarified that executable file type does not make a script durable tooling.
+  Single-task research probes, exploratory scripts, ad hoc collectors, scrapers,
+  and throwaway diagnostics must stay out of `tools/` and its convenient-looking
+  research/probe/scratch subtrees; agents should prefer inline execution or a
+  documented ignored temporary location outside `tools/`.
+
 - Added a Git finalization boundary: agents must complete task-scoped tracked
   writes before staging, recheck the worktree after the last mutation and
   commit/push, and must not infer a clean finish from matching local and remote

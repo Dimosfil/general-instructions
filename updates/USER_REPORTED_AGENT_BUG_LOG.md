@@ -11,6 +11,21 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-13: One-off research probe placed under `tools/`
+
+- Symptom: an agent created a single-task Python research/probe script under a
+  `tools/` research subtree and left it local after the main operation.
+- Evidence summary: a user-provided screenshot explicitly identified a one-off
+  Python probe below `tools/` as intentionally uncommitted.
+- Likely rule gap: existing guidance said `tools/` was for durable scripts and
+  excluded one-off work results, but did not explicitly say that an executable
+  extension or research label does not make a single-task probe durable tooling.
+- Privacy review: the concrete script name, project subject, screenshot, local
+  path, commit identifier, private content, secrets, credentials, and raw logs
+  were not copied into this entry.
+- Status: accepted and repaired in
+  `2026.07.13.2__keep_one_off_probes_out_of_tools`.
+
 ### 2026-07-13: Tracked handoff file changed after a reported successful push
 
 - Symptom: an agent reported that local and remote HEAD matched and that the

@@ -156,6 +156,17 @@ or docs-asset locations. `tools/project-memory/` may contain compact
 implementation-driving specifications and evidence references, but it is not a
 replacement for source, tests, docs, or artifact folders.
 
+Do not classify a script as durable tooling merely because it is Python,
+PowerShell, shell, or another executable. Single-task research probes,
+exploratory scripts, ad hoc collectors, scrapers, and throwaway diagnostics do
+not belong in `tools/`, including new `tools/research`, `tools/probes`, or
+`tools/scratch` subtrees. Prefer an inline command. If a file is required, use
+the documented ignored scratch/temp location outside `tools/`, remove it after
+use, and retain only necessary results in the documented evidence or artifact
+location. Promote a script into `tools/` only when it has a reusable
+project-owned purpose, stable invocation contract, documentation, and an
+expected future caller.
+
 General project documentation lives in `README.md`, `docs/`, and the runbook.
 Keep overview, visible functionality, stack, commands, operations, and
 troubleshooting there.

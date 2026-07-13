@@ -52,6 +52,17 @@
   compact implementation-driving specifications and evidence references, but
   it must not become the only product documentation layer or a home for source,
   tests, runtime packages, generated outputs, or bulky evidence.
+- Classify scripts by lifecycle and reuse, not by extension. A Python,
+  PowerShell, shell, or other executable created only to answer the current
+  research question, probe one environment, scrape one source, inspect one data
+  case, or run a throwaway diagnostic is one-off work, not durable tooling. Do
+  not place it in `tools/`, `tools/research/`, `tools/probes/`, or a similarly
+  named tooling subtree. Prefer an inline command; if a file is necessary, use
+  a documented ignored project scratch/temp location outside `tools/`, remove
+  it after use, and store only required outputs in the documented evidence or
+  artifact location. Promote a script into `tools/` only when it has a
+  project-owned reusable purpose, stable interface, documentation, and an
+  expected future caller.
 - Do not hard-code values that can change by deployment, user choice, runtime
   environment, host machine, service discovery, credentials, filesystem layout,
   feature flags, product names, demo data, workflow labels, generated artifact

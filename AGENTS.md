@@ -74,6 +74,14 @@ checklists, and migration metadata for projects that copy this kit.
   may hold compact implementation-driving specifications and evidence
   references, but it is not a replacement for `src/`, `tests/`, `docs/`,
   artifact/output/data/build/release folders, or product package directories.
+- A script is not durable tooling merely because it is Python, PowerShell, or
+  another executable file. Do not put single-task research probes, exploratory
+  scripts, scratch programs, ad hoc data collectors, or throwaway diagnostics
+  under `tools/` or create `tools/research`, `tools/probes`, or similar folders
+  for them. Prefer an inline command; when a file is genuinely needed, use the
+  project's documented ignored scratch/temp location outside `tools/`, remove
+  it after use, and preserve only necessary results in the documented evidence
+  or artifact location.
 - Keep reusable guidance project-agnostic; project-specific behavior belongs in
   that project's local instructions, docs, runbook, or project memory.
 
