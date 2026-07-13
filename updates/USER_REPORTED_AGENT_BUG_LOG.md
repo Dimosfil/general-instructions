@@ -11,6 +11,23 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-13: Tracked handoff file changed after a reported successful push
+
+- Symptom: an agent reported that local and remote HEAD matched and that the
+  operation had completed, while the response still exposed a newly modified
+  tracked handoff-summary file.
+- Evidence summary: a user-provided screenshot showed successful checks and
+  matching HEAD claims together with a post-operation modified-file card.
+- Likely rule gap: the Git finish workflow required pre-commit inspection but
+  did not require all task writes to finish before staging or a final worktree
+  check after the last mutation; matching HEAD was therefore mistaken for a
+  clean worktree.
+- Privacy review: no screenshot, machine-specific path, project name, commit
+  identifier, private content, secrets, credentials, or raw logs were copied
+  into this entry.
+- Status: accepted and repaired in
+  `2026.07.13.1__enforce_git_finalization_boundary`.
+
 ### 2026-07-10: Canonical GI init link misclassified as Git repository replacement
 
 - Symptom: an agent treated `инит` with the canonical shared-instruction

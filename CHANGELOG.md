@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.13
+
+- Added a Git finalization boundary: agents must complete task-scoped tracked
+  writes before staging, recheck the worktree after the last mutation and
+  commit/push, and must not infer a clean finish from matching local and remote
+  HEAD values while an uncommitted task diff remains.
+
 ## 2026.07.10
 
 - Hardened the GI bootstrap entrypoint for canonical GitHub URLs, Markdown

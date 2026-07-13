@@ -1094,6 +1094,12 @@ changes, remote и ветку. Коммитит только изменения 
 предыдущего terminal push или push-only действием; если scoped изменений для
 commit нет, агент сообщает это вместо push-only fallback. Push без нового
 commit выполняется только по `gi только пуш`. При блокерах — кратко объясняет.
+Все task-scoped записи, включая handoff и generated metadata, завершаются до
+staging. После последнего commit/push и последней записи агент снова
+проверяет `git status --short`, а для push — и совпадение с upstream. Совпадение HEAD
+не доказывает чистое working tree: при новом task-scoped diff нельзя сообщать о
+полном успехе. После final status check tracked task-файлы не меняются без повтора
+разрешённого finish workflow и проверки.
 
 Для `gi пул` агент проверяет состояние рабочей копии, текущую ветку и upstream,
 затем делает `git fetch` и подтягивает текущую ветку. Если появляются
