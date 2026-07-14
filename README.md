@@ -1,5 +1,59 @@
 # General Instructions Library
 
+## Project Overview
+
+The General Instructions Library is a portable, project-agnostic toolkit for
+setting up and operating AI coding agents in software repositories. It helps
+teams keep agent behavior consistent while leaving product-specific rules,
+architecture, and operational details in each project's own documentation.
+
+### Main Capabilities
+
+- Provides a lightweight `AGENTS.md` entrypoint that routes agents to only the
+  instructions relevant to the current task.
+- Supplies reusable policies for safety, repository scope, secrets, Git,
+  verification, Windows tooling, documentation, and project startup.
+- Includes `gi` chat commands for common workflows such as bootstrap, project
+  orientation, updates, testing, builds, deployment, and Git operations.
+- Offers templates, checklists, playbooks, and migration metadata so projects
+  can adopt and update the instruction kit consistently.
+- Separates human-facing project documentation from durable agent project memory
+  for architecture decisions, workflow contracts, and implementation context.
+- Documents architecture patterns for relational databases, including schema and
+  migration design, transaction boundaries, indexing, query shape, persistence
+  contracts, and operational safety.
+- Defines RAG architecture patterns for structured project memory, semantic
+  retrieval, chunking, embeddings, retrieval adapters, context assembly,
+  evaluation, and provider-independent integration.
+
+## Обзор проекта
+
+General Instructions Library - переносимый, независимый от конкретного проекта
+набор правил для настройки и работы AI-агентов в репозиториях. Библиотека
+поддерживает единый подход к поведению агентов, а правила продукта, архитектуру
+и эксплуатационные детали оставляет в документации каждого проекта.
+
+### Основные возможности
+
+- Даёт компактный входной файл `AGENTS.md`, направляющий агента только к
+  инструкциям, нужным для текущей задачи.
+- Содержит переиспользуемые правила по безопасности, границам репозитория,
+  секретам, Git, проверкам, Windows-инструментам, документации и запуску
+  проекта.
+- Предоставляет чат-команды `gi` для типовых операций: инициализации,
+  ориентации в проекте, обновлений, тестов, сборки, развёртывания и Git.
+- Включает шаблоны, чек-листы, playbook-документы и данные миграций для
+  согласованного внедрения и обновления набора инструкций.
+- Разделяет пользовательскую документацию проекта и долговременную память
+  агента с архитектурными решениями, контрактами процессов и контекстом
+  реализации.
+- Описывает архитектурные паттерны для реляционных БД: проектирование схем и
+  миграций, границы транзакций, индексы, форма запросов, контракты хранения и
+  эксплуатационная безопасность.
+- Определяет паттерны RAG-архитектуры для структурированной памяти проекта,
+  семантического поиска, чанкинга, эмбеддингов, адаптеров поиска, сборки
+  контекста, оценок качества и независимой от провайдера интеграции.
+
 ## Agent Bootstrap Entrypoint
 
 When a user sends any of these forms, treat the request as GI instruction-kit
