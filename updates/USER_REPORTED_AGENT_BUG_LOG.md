@@ -11,6 +11,21 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-14: Startup check reported an update without applying it
+
+- Symptom: a first-task startup check detected a newer accepted GI version but
+  explicitly left the installed instruction kit unchanged.
+- Evidence summary: a user-provided screenshot showed an available accepted
+  version and an older installed version together with a statement that the
+  update was not applied automatically.
+- Likely rule gap: the rule said to apply migrations “when the local update
+  contract allows it” but did not define enabled update metadata as sufficient
+  authorization, so an agent treated ambiguity as a reason to defer.
+- Privacy review: no screenshot, machine-specific path, project name, private
+  content, secrets, credentials, or raw logs were copied into this entry.
+- Status: accepted and repaired in
+  `2026.07.14.1__require_startup_migration_auto_apply`.
+
 ### 2026-07-13: One-off research probe placed under `tools/`
 
 - Symptom: an agent created a single-task Python research/probe script under a

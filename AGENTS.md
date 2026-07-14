@@ -26,10 +26,14 @@ checklists, and migration metadata for projects that copy this kit.
   concrete blocker or explicit deferral instead of silently continuing.
 - On the first concrete task in a new chat/session, before task-specific work,
   run a quiet GI update check: read local instruction-kit metadata and accepted
-  source `VERSION.md`/`migrations/`, apply pending accepted migrations when the
-  project update contract allows it, and report only a compact result or
-  blocker. The compact result must explicitly include the pending migration
-  count, including `0` when no migrations are pending. Do not read `updates/`
+  source `VERSION.md`/`migrations/`, and apply pending accepted migrations.
+  Treat `update_check.enabled: true` as authorization to check and apply; when
+  `auto_apply_pending_migrations` is absent, default it to `true` for backward
+  compatibility. Do not stop at “update available” or defer to `gi update`.
+  Skip application only for an explicit `false` setting or a concrete blocker
+  such as unavailable source, read-only files, unsafe scope, or merge conflict,
+  and name that blocker. The compact result must explicitly include the pending
+  migration count, including `0` when none are pending. Do not read `updates/`
   for this startup check.
 - If the request contains a GI chat command such as `gi ...`, `ги ...`, or a
   known mojibake form such as `РіРё ...`, treat it as a concrete task even when

@@ -59,6 +59,27 @@ try {
         if ($metadata.update_check.source_repo -ne "https://github.com/Dimosfil/general-instructions.git") {
             throw "Bootstrap form '$($forms[$index])' did not record the canonical source repository."
         }
+        if ($metadata.update_check.auto_apply_pending_migrations -ne $true) {
+            throw "Bootstrap form '$($forms[$index])' did not enable startup migration auto-application."
+        }
+
+        $startupRuleText = [System.IO.File]::ReadAllText(
+            (Join-Path $target "patterns/AGENTS_RUNTIME/07-startup-and-scope.md")
+        )
+        foreach ($needle in @(
+            'update_check.enabled: true',
+            'auto_apply_pending_migrations',
+            'Finding a newer version is not a completed startup'
+        )) {
+            if (-not $startupRuleText.Contains($needle)) {
+                throw "Bootstrap form '$($forms[$index])' is missing startup auto-application rule text: $needle"
+            }
+        }
+
+        $agentStartText = [System.IO.File]::ReadAllText((Join-Path $target "tools/agent-start.ps1"))
+        if (-not $agentStartText.Contains("must apply pending migrations before task work")) {
+            throw "Bootstrap form '$($forms[$index])' retained an availability-only startup notice."
+        }
 
         $gitIgnorePath = Join-Path $target ".gitignore"
         $gitIgnoreBefore = [System.IO.File]::ReadAllText($gitIgnorePath)

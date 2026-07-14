@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.14
+
+- Made first-task GI migration application explicit: an enabled update check
+  authorizes applying pending accepted migrations, missing auto-apply metadata
+  defaults to enabled for older installations, and agents may not stop at an
+  “update available” notice without applying or naming a concrete blocker.
+
 ## 2026.07.13
 
 - Clarified that executable file type does not make a script durable tooling.
