@@ -1,3 +1,5 @@
+![General Instructions Library](assets/logos/general-instructions-banner.png)
+
 # General Instructions Library
 
 ## Project Overview
