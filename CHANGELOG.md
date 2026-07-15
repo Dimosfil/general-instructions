@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.07.15
+
+- Prevented pasted credentials from blocking an entire development task. Agents
+  now warn once without repeating the value, recommend rotation, continue all
+  independent safe work, and limit any blocker or unverified status to the
+  specific authenticated operation that lacks a safe credential path.
+
 ## 2026.07.14
 
 - Made first-task GI migration application explicit: an enabled update check

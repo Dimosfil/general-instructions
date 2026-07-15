@@ -66,6 +66,14 @@ implemented against each goal criterion and list remaining gaps as blockers.
 - Prefer project-local instructions, runbooks, contracts, project memory, and
   service guides over shared defaults when they are more specific.
 
+## Core Safety
+
+- Do not treat a credential pasted into chat as an automatic blocker for the
+  whole task. Warn once without repeating the value, recommend rotation, and
+  continue every safe task step that does not require exposing or unsafely
+  persisting it. If one operation has no safe credential path, mark only that
+  operation blocked or unverified and continue the independent work.
+
 ## Restore Context
 
 If the user only sends a short greeting, thanks, acknowledgement, or

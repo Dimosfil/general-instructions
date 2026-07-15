@@ -11,6 +11,22 @@ or edit that project.
 
 ## Entries
 
+### 2026-07-15: Pasted credential blocked the entire development task
+
+- Symptom: an agent stopped development after credentials appeared in chat and
+  made credential rotation a prerequisite for continuing unrelated work.
+- Evidence summary: a user-provided screenshot showed a credential warning that
+  refused further handling and deferred the requested development until the
+  user revoked, replaced, and locally configured new values.
+- Likely rule gap: secret-safety guidance required immediate rotation but did
+  not distinguish that recommendation from a whole-task blocker or require
+  unaffected development steps to continue.
+- Privacy review: no screenshot, provider name, credential value, account data,
+  machine-specific path, private project content, or raw chat excerpt was copied
+  into this entry.
+- Status: accepted and repaired in
+  `2026.07.15.1__continue_development_after_chat_secret_exposure`.
+
 ### 2026-07-14: Startup check reported an update without applying it
 
 - Symptom: a first-task startup check detected a newer accepted GI version but

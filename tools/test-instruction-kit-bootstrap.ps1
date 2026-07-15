@@ -81,6 +81,24 @@ try {
             throw "Bootstrap form '$($forms[$index])' retained an availability-only startup notice."
         }
 
+        $secretRuleText = [System.IO.File]::ReadAllText(
+            (Join-Path $target "patterns/API_KEY_SECRET_SAFETY.md")
+        )
+        $workingAgreementsText = [System.IO.File]::ReadAllText(
+            (Join-Path $target "tools/AGENT_WORKING_AGREEMENTS.md")
+        )
+        foreach ($needle in @(
+            'but do not treat that fact',
+            'mark only the affected authenticated operation blocked or unverified'
+        )) {
+            if (-not $secretRuleText.Contains($needle)) {
+                throw "Bootstrap form '$($forms[$index])' is missing non-blocking secret rule text: $needle"
+            }
+        }
+        if (-not $workingAgreementsText.Contains('Do not treat a credential pasted into chat as an automatic blocker')) {
+            throw "Bootstrap form '$($forms[$index])' is missing the working-agreement secret rule."
+        }
+
         $gitIgnorePath = Join-Path $target ".gitignore"
         $gitIgnoreBefore = [System.IO.File]::ReadAllText($gitIgnorePath)
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null

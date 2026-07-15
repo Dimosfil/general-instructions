@@ -61,6 +61,11 @@ checklists, and migration metadata for projects that copy this kit.
 
 - Treat safety, secrets, destructive operations, and repository scope as highest
   priority.
+- Do not treat a credential pasted into chat as an automatic blocker for the
+  whole task. Warn once without repeating the value, recommend rotation, and
+  continue every safe task step that does not require exposing or unsafely
+  persisting it. If one operation has no safe credential path, mark only that
+  operation blocked or unverified and continue the independent work.
 - Before filesystem writes, verify the active project root and target identity
   from local instructions, README, manifests, git remote, service id, or project
   memory. If the task appears to target a different product, repository, or
