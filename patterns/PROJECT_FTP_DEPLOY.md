@@ -138,15 +138,18 @@ Use this JSON shape unless project-local instructions define a stricter one:
   path. Direct project-local FTP/SFTP upload config is allowed only in a devops
   project or through explicit gateway delegation.
 - For `gi ftp service` / `ги фтп сервис`, read the configured
-  `configServiceUrl` only in a devops project or documented gateway delegation,
+  `configServiceUrl` only when project config-service integration is enabled and
+  only in a devops project or documented gateway delegation,
   query config-service for services whose contract declares FTP, FTPS, or SFTP
   capability, and either register the user-provided service metadata or write
   the selected `serviceId` into the gateway-owned or devops FTP config. In
   ordinary non-devops projects, service selection belongs to the saved or
   supplied deploy gateway. Do not upload during this command.
-- If a devops project or delegated gateway flow needs FTP and
-  `tools/deploy/ftp.local.json` has no `serviceId`, check config-service before
-  asking the user for host details.
+- If a devops project or delegated gateway flow needs FTP,
+  `tools/deploy/ftp.local.json` has no `serviceId`, and project config-service
+  integration is enabled, check config-service before asking the user for host
+  details. When integration is disabled, use only documented local or gateway
+  config.
 - If one matching FTP-capable service exists, use it after reading and verifying
   its contract.
 - If several matching services exist, ask the user to choose with the plain

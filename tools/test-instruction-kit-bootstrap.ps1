@@ -62,6 +62,27 @@ try {
         if ($metadata.update_check.auto_apply_pending_migrations -ne $true) {
             throw "Bootstrap form '$($forms[$index])' did not enable startup migration auto-application."
         }
+        if ($metadata.config_service.enabled -ne $false) {
+            throw "Bootstrap form '$($forms[$index])' did not default config-service integration to off."
+        }
+        if ($metadata.applied_migrations -notcontains '2026.08.02.2__disambiguate_short_config_toggle_aliases') {
+            throw "Bootstrap form '$($forms[$index])' did not include the config-toggle alias migration."
+        }
+
+        $configRuleText = [System.IO.File]::ReadAllText(
+            (Join-Path $target "patterns/AGENTS_RUNTIME/08-config-service-and-task-manager.md")
+        )
+        $commandsText = [System.IO.File]::ReadAllText((Join-Path $target "COMMANDS.md"))
+        foreach ($needle in @(
+            'config_service.enabled',
+            'Fresh GI bootstraps must create',
+            'gi config on',
+            'gi config off'
+        )) {
+            if (-not (($configRuleText + "`n" + $commandsText).Contains($needle))) {
+                throw "Bootstrap form '$($forms[$index])' is missing config-service toggle rule text: $needle"
+            }
+        }
 
         $startupRuleText = [System.IO.File]::ReadAllText(
             (Join-Path $target "patterns/AGENTS_RUNTIME/07-startup-and-scope.md")
@@ -101,10 +122,21 @@ try {
 
         $gitIgnorePath = Join-Path $target ".gitignore"
         $gitIgnoreBefore = [System.IO.File]::ReadAllText($gitIgnorePath)
+        $metadata.PSObject.Properties.Remove("config_service")
+        $metadataJson = $metadata | ConvertTo-Json -Depth 100
+        [System.IO.File]::WriteAllText(
+            (Join-Path $target "tools/project-memory/instruction-kit.json"),
+            $metadataJson + [Environment]::NewLine,
+            [System.Text.UTF8Encoding]::new($false)
+        )
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
         $gitIgnoreAfter = [System.IO.File]::ReadAllText($gitIgnorePath)
         if ($gitIgnoreAfter -ne $gitIgnoreBefore) {
             throw "Bootstrap form '$($forms[$index])' is not idempotent for .gitignore."
+        }
+        $legacyMetadata = Get-Content -Raw -LiteralPath (Join-Path $target "tools/project-memory/instruction-kit.json") | ConvertFrom-Json
+        if ($legacyMetadata.PSObject.Properties.Name -contains "config_service") {
+            throw "Bootstrap form '$($forms[$index])' changed a legacy project's absent config-service toggle."
         }
     }
 

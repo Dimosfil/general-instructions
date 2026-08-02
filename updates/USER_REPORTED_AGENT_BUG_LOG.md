@@ -11,6 +11,23 @@ or edit that project.
 
 ## Entries
 
+### 2026-08-02: Short config-off alias changed only app self-registration
+
+- Symptom: after a user sent the short `ги конфиг офф` command, an agent
+  disabled only app self-registration and then blocked ordinary startup because
+  config-service remained unavailable.
+- Evidence summary: a user-provided screenshot showed the short toggle being
+  interpreted as the legacy self-registration command, followed by a required
+  config-service availability check during application startup.
+- Likely rule gap: the accepted project-integration toggle listed `off` and
+  `выкл`, but omitted the natural `офф` alias and did not explicitly give short
+  forms precedence over `ги конфиг сервис <toggle>`.
+- Privacy review: no screenshot, machine-specific path, project name, service
+  id, port, private project content, or raw chat excerpt was copied into this
+  entry.
+- Status: accepted and repaired in
+  `2026.08.02.2__disambiguate_short_config_toggle_aliases`.
+
 ### 2026-07-15: Pasted credential blocked the entire development task
 
 - Symptom: an agent stopped development after credentials appeared in chat and

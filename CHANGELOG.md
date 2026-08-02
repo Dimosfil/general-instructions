@@ -2,6 +2,20 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.08.02
+
+- Added the project-level `gi config on/off`, `ги конфиг вкл/выкл`, and
+  `ги конфиг он/офф` toggle aliases, with short forms explicitly taking
+  precedence over the app self-registration command.
+  Fresh GI projects now keep config-service integration disabled by default,
+  while existing projects without the new field retain their legacy enabled
+  behavior. The existing `gi config service on/off` command remains the
+  separate application self-registration toggle.
+
+- Added a follow-up compatibility migration so projects that already observed
+  or applied version `2026.08.02.1` still receive the `он/офф` aliases and the
+  unambiguous short-form precedence rule.
+
 ## 2026.07.15
 
 - Prevented pasted credentials from blocking an entire development task. Agents
