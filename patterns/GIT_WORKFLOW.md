@@ -47,6 +47,14 @@ language preferences.
 - Keep changes scoped to the current task.
 - Do not commit secrets, credentials, local databases, logs, or generated
   caches.
+- Never add, stage, commit, or push content payloads such as LLM or other model
+  weights/checkpoints, photos, video, audio, datasets, archives, or similar
+  large binary artifacts. Keep them in project-approved artifact or object
+  storage outside Git. Commit only compact manifests, source URLs, checksums,
+  or retrieval instructions, and add project-local ignore rules that prevent
+  the prohibited content from being staged again. An exception requires the
+  user's explicit approval of the exact content and Git storage approach for
+  the current project.
 - Prefer `git diff --stat` and targeted file checks over full diff dumps.
 
 ## Finish Workflow
@@ -57,6 +65,8 @@ Before any `gi коммит`, `gi пуш`, `gi коммит пуш`, or `gi то
   handoff, generated metadata, formatting, and verification-driven corrections;
   do not create or update a tracked task artifact after staging or committing;
 - inspect `git status --short`;
+- inspect untracked and unusually large files before staging, exclude prohibited
+  model/media/content payloads, and add appropriate project-local ignore rules;
 - inspect staged and unstaged changes with compact stats or targeted checks;
 - identify the current branch and configured remote;
 - keep user/unrelated changes out of the commit;

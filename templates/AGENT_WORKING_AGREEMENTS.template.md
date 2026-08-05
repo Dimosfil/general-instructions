@@ -120,6 +120,13 @@
 - Branch naming: `TODO`.
 - Generated files policy: `TODO`.
 - Never commit secrets, credentials, local databases, logs, or caches.
+- Never add, stage, commit, or push content payloads such as LLM or other model
+  weights/checkpoints, photos, video, audio, datasets, archives, or similar
+  large binary artifacts. Keep them outside Git in project-approved artifact or
+  object storage; commit only compact manifests, source URLs, checksums, or
+  retrieval instructions. Inspect untracked and unusually large files before
+  staging and add project-local ignore rules for prohibited content. Require
+  explicit user approval for any exact project-specific exception.
 - Follow `tools/project-memory/git-preferences.json` for commit-message
   languages. English is primary; selected additional languages are included when
   the user explicitly asks the agent to commit.

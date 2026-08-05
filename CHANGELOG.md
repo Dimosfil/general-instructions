@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.08.05
+
+- Prohibited adding, staging, committing, or pushing LLM/model weights and
+  checkpoints, photos, video, audio, datasets, archives, and similar large
+  binary content payloads. Projects must keep such content in artifact or
+  object storage outside Git, track only compact manifests, URLs, checksums, or
+  retrieval instructions, inspect new and unusually large files before staging,
+  and require explicit user approval for any exact project-specific exception.
+
 ## 2026.08.02
 
 - Added the project-level `gi config on/off`, `ги конфиг вкл/выкл`, and

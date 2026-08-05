@@ -73,6 +73,14 @@ implemented against each goal criterion and list remaining gaps as blockers.
   continue every safe task step that does not require exposing or unsafely
   persisting it. If one operation has no safe credential path, mark only that
   operation blocked or unverified and continue the independent work.
+- Never add, stage, commit, or push content payloads such as LLM or other model
+  weights/checkpoints, photos, video, audio, datasets, archives, or similar
+  large binary artifacts. Keep them outside Git in project-approved artifact or
+  object storage, and commit only compact manifests, source URLs, checksums, or
+  retrieval instructions. Before staging, inspect new and unusually large files
+  and update project-local ignore rules for prohibited content. Allow an
+  exception only when the user explicitly approves that exact content and Git
+  storage approach for the current project.
 
 ## Restore Context
 

@@ -73,6 +73,14 @@ checklists, and migration metadata for projects that copy this kit.
   current message explicitly authorizes that exact external path and action.
 - Do not add secrets, private project data, generated noise, or unrelated dirty
   worktree changes to shared instructions.
+- Never add, stage, commit, or push content payloads such as LLM or other model
+  weights/checkpoints, photos, video, audio, datasets, archives, or similar
+  large binary artifacts. Keep them outside Git in project-approved artifact or
+  object storage, and commit only compact manifests, source URLs, checksums, or
+  retrieval instructions. Before staging, inspect new and unusually large files
+  and update project-local ignore rules for prohibited content. Allow an
+  exception only when the user explicitly approves that exact content and Git
+  storage approach for the current project.
 - Keep `tools/` for durable development and agent tooling only. Before writing
   under `tools/`, classify the file. Allow scripts, adapters, bootstrap
   commands, deploy/test helpers, agent-memory tooling, and small redacted
