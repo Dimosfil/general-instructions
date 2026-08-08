@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.08.05.1",
+  "instruction_kit_version": "2026.08.06.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -177,7 +177,8 @@
     "2026.07.15.1__continue_development_after_chat_secret_exposure",
     "2026.08.02.1__default_config_service_off_for_new_projects",
     "2026.08.02.2__disambiguate_short_config_toggle_aliases",
-    "2026.08.05.1__keep_model_and_media_content_out_of_git"
+    "2026.08.05.1__keep_model_and_media_content_out_of_git",
+    "2026.08.06.1__add_code_intelligence_adapters"
   ],
   "copied_files": [
     "AGENTS.md",
@@ -189,6 +190,7 @@
     "tools/project-memory/build_project_memory_index.py",
     "tools/project-memory/build_chroma_index.py",
     "tools/project-memory/rag_check.py",
+    "tools/project-memory/code_intelligence.py",
     "tools/project-memory/retrieval-evals.json",
     "tools/project-memory/architecture-migrations.md",
     "tools/project-memory/STUDY_PLAN.md",
@@ -203,6 +205,7 @@
     "patterns/STARTUP_PRODUCT_ENGINEERING.md",
     "patterns/API_KEY_SECRET_SAFETY.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
+    "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/TECHNOLOGY_STACK_INVENTORY.md",
     "patterns/PROJECT_DOCUMENTATION_LAYERS.md",
     "patterns/DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md",

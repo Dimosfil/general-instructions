@@ -126,10 +126,15 @@ Start with:
   query/ranking behavior out of inline application hard-code.
 - `patterns/RAG_SYSTEM_STRUCTURE.md`: expandable RAG structure for project
   memory, source indexing, retrieval adapters, context packets, and writeback.
+- `patterns/CODE_INTELLIGENCE_ADAPTERS.md`: optional provider-neutral layer for
+  symbols, call/dependency graphs, Git risk, and code health without replacing
+  project memory; Repowise is the first tested adapter.
 - `patterns/SEMANTIC_RAG_RETRIEVAL.md`: embedding and semantic retrieval rules
   for chunk export, hybrid search, evals, and safety.
 - `tools/project-memory/build_chroma_index.py`: optional local Chroma adapter
   for semantic retrieval from exported chunks.
+- `tools/project-memory/code_intelligence.py`: stdlib-only local MCP bridge with
+  tool allowlists and Git freshness reporting.
 - `patterns/SKILL_MODULES.md`: guidance for reusable agent skill modules.
 - `migrations/`: accepted ordered migrations for updating copied instruction
   kits.

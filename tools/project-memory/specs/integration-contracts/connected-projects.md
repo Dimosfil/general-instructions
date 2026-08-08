@@ -56,3 +56,30 @@ or cross-project integration guidance.
 - Reason this dependency still exists: reusable GI guidance is valuable only if
   consuming projects can find and apply accepted changes safely.
 
+## Repowise
+
+- Purpose: optional external code-intelligence provider and evaluation source.
+- Business or architectural role: supplies symbol context, call/dependency
+  relationships, Git-aware change risk, and code-health findings behind GI's
+  provider-neutral adapter.
+- Local folder: none in this repository; consuming projects keep their generated
+  indexes in their own ignored `.repowise/` folder.
+- Canonical Git URL: `https://github.com/repowise-dev/repowise`.
+- Service ID or runtime endpoints: local MCP over stdio when explicitly enabled.
+- Owner or source of truth: Repowise upstream owns the provider; current source
+  code and GI project memory remain authoritative for project work.
+- Data/API contract: GI invokes only project-allowlisted MCP tools and preserves
+  provider results with commit/dirty-worktree freshness metadata.
+- Setup, sync, build, test, or update commands: project-specific; GI never
+  installs or indexes Repowise automatically.
+- Version, branch, or update cadence: pin or review the provider version in the
+  consuming project's setup instructions when reproducibility matters.
+- Privacy, secret, license, and access boundaries: review AGPL-3.0 obligations;
+  keep generated indexes ignored; do not send private source to an unapproved
+  remote service; do not expose code-generation or mutation tools by default.
+- Status and caveats: first tested adapter. Context, symbol, risk, and health
+  queries are useful evidence; inferred wiki/decision text and broad dead-code
+  findings require source verification.
+- Reason this dependency still exists: it provided evidence for the neutral
+  adapter contract and is a usable opt-in implementation without becoming a GI
+  hard dependency.

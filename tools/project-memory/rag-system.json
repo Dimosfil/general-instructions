@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "project_id": "general-instructions",
   "mode": "hybrid-ready",
   "source_groups": [
@@ -91,6 +91,129 @@
     "service_id": "",
     "collection": "general-instructions-project-memory-v1"
   },
+  "code_intelligence": {
+    "enabled": false,
+    "provider": "repowise",
+    "project_path": ".",
+    "allow_external_project_path": false,
+    "transport": {
+      "kind": "mcp-stdio",
+      "command": "repowise",
+      "args": [
+        "mcp",
+        "{project_path}",
+        "--transport",
+        "stdio"
+      ],
+      "environment_variables": [],
+      "protocol_version": "2025-06-18"
+    },
+    "allowed_tools": [
+      "get_context",
+      "get_symbol",
+      "get_risk",
+      "get_health"
+    ],
+    "capabilities": {
+      "context": {
+        "tool": "get_context",
+        "argument": "targets",
+        "argument_type": "array"
+      },
+      "symbol": {
+        "tool": "get_symbol",
+        "argument": "query"
+      },
+      "risk": {
+        "tool": "get_risk",
+        "argument": "targets",
+        "argument_type": "array"
+      },
+      "health": {
+        "tool": "get_health",
+        "argument": "targets",
+        "argument_type": "array"
+      }
+    },
+    "routing": {
+      "default_route": "project_memory",
+      "combined_route": "federated",
+      "fallback_sources": [
+        "project_memory",
+        "source_files"
+      ],
+      "routes": [
+        {
+          "id": "project_memory",
+          "sources": [
+            "project_memory"
+          ],
+          "terms": [
+            "requirement",
+            "business rule",
+            "workflow",
+            "decision",
+            "specification",
+            "policy",
+            "runbook",
+            "требование",
+            "бизнес-правило",
+            "процесс",
+            "решение",
+            "спецификация"
+          ],
+          "path_extensions": [
+            ".md",
+            ".json"
+          ]
+        },
+        {
+          "id": "code_intelligence",
+          "sources": [
+            "code_intelligence"
+          ],
+          "terms": [
+            "symbol",
+            "caller",
+            "callee",
+            "call graph",
+            "dependency",
+            "blast radius",
+            "code health",
+            "dead code",
+            "символ",
+            "вызывает",
+            "зависимость",
+            "риск изменения",
+            "здоровье кода"
+          ],
+          "path_extensions": [
+            ".cs",
+            ".py",
+            ".js",
+            ".ts",
+            ".tsx",
+            ".java",
+            ".go",
+            ".rs",
+            ".cpp",
+            ".h"
+          ]
+        }
+      ]
+    },
+    "freshness": {
+      "require_indexed_commit": true,
+      "warn_on_dirty_worktree": true,
+      "reject_stale": false
+    },
+    "timeouts": {
+      "request_seconds": 30
+    },
+    "generated_paths": [
+      ".repowise/"
+    ]
+  },
   "context_packet": {
     "max_chunks": 8,
     "max_estimated_tokens": 4000,
@@ -135,6 +258,10 @@
         "command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py rebuild",
         "status_command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py status"
       },
+      "code_intelligence": {
+        "command": "",
+        "status_command": "python .\\tools\\project-memory\\code_intelligence.py status"
+      },
       "evals": {
         "command": "uv run --with chromadb python .\\tools\\project-memory\\rag_check.py run",
         "status_command": "uv run --with chromadb python .\\tools\\project-memory\\rag_check.py health"
@@ -145,24 +272,29 @@
       "last_full_rebuild_at": "2026-06-18T16:12:37+00:00",
       "last_node_rebuilds": {
         "sql": {
-          "migration": "2026.06.18.6__add_connected_projects_register",
-          "rebuilt_at": "2026-06-18T16:12:37+00:00",
-          "status": "Files: 183; Chunks: 1284; FTS5 enabled"
+          "migration": "2026.08.06.1__add_code_intelligence_adapters",
+          "rebuilt_at": "2026-08-06T13:44:33.3986599+00:00",
+          "status": "SQLite/FTS rebuild passed after code-intelligence migration"
         },
         "chunks": {
-          "migration": "2026.06.18.6__add_connected_projects_register",
-          "rebuilt_at": "2026-06-18T16:12:37+00:00",
-          "status": "Exported chunks: 1284"
+          "migration": "2026.08.06.1__add_code_intelligence_adapters",
+          "rebuilt_at": "2026-08-06T13:44:33.3986599+00:00",
+          "status": "Semantic corpus export passed after code-intelligence migration"
         },
         "vector": {
-          "migration": "2026.06.18.6__add_connected_projects_register",
-          "rebuilt_at": "2026-06-18T16:12:37+00:00",
-          "status": "Collection: general-instructions-project-memory-v1; Records: 1284"
+          "migration": "2026.08.06.1__add_code_intelligence_adapters",
+          "rebuilt_at": "2026-08-06T13:44:33.3986599+00:00",
+          "status": "Chroma rebuild passed after code-intelligence migration"
         },
         "evals": {
-          "migration": "2026.06.18.6__add_connected_projects_register",
-          "rebuilt_at": "2026-06-18T16:12:37+00:00",
-          "status": "RAG health and 6 retrieval eval cases passed"
+          "migration": "2026.08.06.1__add_code_intelligence_adapters",
+          "rebuilt_at": "2026-08-06T13:44:33.3986599+00:00",
+          "status": "RAG health and 7 retrieval eval cases passed with vector checks enabled"
+        },
+        "code_intelligence": {
+          "migration": "2026.08.06.1__add_code_intelligence_adapters",
+          "rebuilt_at": "2026-08-06T13:44:33.3986599+00:00",
+          "status": "Configuration valid; provider disabled by default; real Repowise MCP smoke passed on an external authorized corpus"
         }
       }
     }

@@ -193,3 +193,22 @@ count, index path, freshness caveats, and readiness.
 Use `gi tools rebuild evals` or `gi rag rebuild evals` to run the configured
 RAG checks without rebuilding source indexes. A failing eval means retrieval may
 still be structurally present but not yet trustworthy for that kind of question.
+
+## Optional Code Intelligence
+
+Project memory remains authoritative for requirements, workflows, decisions,
+business rules, exact project metadata, and durable notes. When implementation
+topology needs deeper analysis, configure the optional `code_intelligence`
+section in `rag-system.json` and use the provider-neutral local bridge:
+
+```powershell
+python .\tools\project-memory\code_intelligence.py status
+python .\tools\project-memory\code_intelligence.py route "who calls this symbol?"
+python .\tools\project-memory\code_intelligence.py invoke context MySymbol
+```
+
+The layer is disabled by default. It only calls allowlisted MCP tools, keeps
+provider indexes ignored, reports commit and dirty-worktree freshness, and
+falls back to project memory plus current source inspection. Repowise is the
+first tested provider, not a required dependency. Follow
+`patterns/CODE_INTELLIGENCE_ADAPTERS.md`.

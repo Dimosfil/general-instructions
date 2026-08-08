@@ -8,7 +8,9 @@ tools/project-memory/chroma/
 tools/project-memory/embedding-cache/
 tools/project-memory/semantic-corpus*.jsonl
 tools/project-memory/__pycache__/
+__pycache__/
 tools/project-memory/devops.local.json
 tools/project-memory/game-modding.local.json
+.repowise/
 tools/summary/*.tmp
 *.log

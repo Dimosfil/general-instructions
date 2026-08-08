@@ -27,6 +27,9 @@ Reusable instructions in this repository are grouped by job.
   builds and queries a generated local vector index from exported chunks.
 - `tools/project-memory/rag_check.py`: local RAG health and retrieval eval
   runner for SQLite, semantic corpus, and Chroma consistency checks.
+- `tools/project-memory/code_intelligence.py`: provider-neutral local MCP bridge
+  for allowlisted code context, dependency, risk, and health tools with Git
+  freshness reporting.
 - `tools/project-memory/retrieval-evals.json`: reviewable retrieval eval cases
   for recurring keyword, semantic, and hybrid lookup expectations.
 - `tools/project-memory/architecture-migrations.md`: durable history of major
@@ -78,6 +81,9 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/COHERENT_BATCH_VERIFICATION.md`: batch-completion rules for
   source-of-truth consistency, durable memory writeback, scoped diffs, and
   evidence-backed checks.
+- `patterns/CODE_INTELLIGENCE_ADAPTERS.md`: optional federation contract for
+  symbol/call graphs, Git risk, and code health while project memory remains
+  authoritative for specifications and decisions.
 - `patterns/TECHNOLOGY_STACK_INVENTORY.md`: project-memory rules for keeping a
   verified technology stack inventory with languages, runtimes, frameworks,
   package managers, build/test tools, storage, services, commands, evidence,
@@ -172,7 +178,7 @@ Reusable instructions in this repository are grouped by job.
 - `templates/project-memory-README.template.md`: starter memory folder README.
 - `templates/rag-system.template.json`: project-local RAG configuration shape
   for source groups, exclusions, structured memory, retrieval adapters, context
-  packets, and writeback.
+  packets, optional code intelligence, and writeback.
 - `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
 - `templates/agent-start.template.ps1`: compact startup script template with

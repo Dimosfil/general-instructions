@@ -64,6 +64,19 @@
       "why": "Agents need a durable register for connected projects before touching integrations or external folders."
     },
     {
+      "id": "code_intelligence_complements_project_memory",
+      "query": "optional code intelligence MCP allowlisted tools freshness",
+      "mode": "keyword",
+      "expected_paths_any": [
+        "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
+        "tools/project-memory/specs/integration-contracts/code-intelligence.md",
+        "patterns/RAG_SYSTEM_STRUCTURE.md",
+        "tools/project-memory/rag-system.json"
+      ],
+      "min_any_hits": 1,
+      "why": "The optional provider boundary and authority split must be directly retrievable."
+    },
+    {
       "id": "config_service_runtime_discovery",
       "query": "resolve runtime service URLs through config service instead of guessing ports",
       "mode": "hybrid",

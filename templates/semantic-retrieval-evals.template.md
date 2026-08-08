@@ -11,6 +11,7 @@ without replacing exact keyword search.
 | How should we add semantic search without locking into one vector database? | semantic | `patterns/RAG_SYSTEM_STRUCTURE.md`, `patterns/SEMANTIC_RAG_RETRIEVAL.md` | Vector stores must stay behind adapters. | Treating Chroma/Qdrant as the whole RAG system. |
 | What should be indexed for embeddings? | hybrid | `patterns/SEMANTIC_RAG_RETRIEVAL.md`, `tools/project-memory/README.md` | Chunks and metadata should be embedded, not whole repos. | Secrets, generated artifacts, app telemetry. |
 | How can another agent rebuild this feature on a new framework? | semantic | `tools/project-memory/specs/features/`, `patterns/PROJECT_MEMORY_SPECIFICATIONS.md` | Feature specs should describe portable behavior, business rules, states, failures, verification, and implementation maps. | Only current source files or handoff summaries. |
+| How do code graphs and Git risk fit with project memory? | keyword | `patterns/CODE_INTELLIGENCE_ADAPTERS.md`, `tools/project-memory/rag-system.json` | Code intelligence is optional implementation evidence; project memory remains authoritative for intent and durable facts. | Replacing specifications with provider-generated wiki or inferred decisions. |
 
 ## Review Notes
 

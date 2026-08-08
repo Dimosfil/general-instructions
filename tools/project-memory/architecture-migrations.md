@@ -10,6 +10,25 @@ patterns, templates, and accepted migrations.
 
 ## Entries
 
+### 2026-08-06: Optional Code Intelligence Federation
+
+Previous architecture: GI project memory could index exact source facts and
+semantic documentation, but it had no shared contract for deeper symbol/call
+graphs, Git-aware change risk, or provider code-health evidence. Integrations
+would have been provider-specific and easy to confuse with durable project
+knowledge.
+
+New architecture: `rag-system.json` has an optional, disabled-by-default
+`code_intelligence` layer. A stdlib MCP bridge routes only configured
+capabilities to allowlisted tools, preserves raw provider output, attaches Git
+freshness metadata, and leaves project memory authoritative for specifications,
+decisions, workflows, and exact project facts. Repowise is the first tested
+adapter but remains independently installed and indexed.
+
+Reason: gain code-topology and risk evidence without replacing GI's existing
+database, coupling agent workflows to one vendor, or allowing external tooling
+to mutate repositories and editor configuration implicitly.
+
 ### 2026-06-21: Modular Agents Runtime Entrypoint
 
 Previous architecture: root `AGENTS.md` and the copied project template carried

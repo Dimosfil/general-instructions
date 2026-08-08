@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.08.06
+
+- Added a provider-neutral, optional code-intelligence layer for symbol context,
+  call/dependency graphs, Git-aware risk, and code-health evidence. Project
+  memory remains authoritative for requirements, decisions, workflows, and
+  durable project facts. The stdlib MCP bridge is disabled by default, enforces
+  a read-only tool allowlist, reports index/HEAD/dirty-worktree freshness, keeps
+  generated indexes ignored, and uses Repowise only as the first tested adapter
+  rather than a hard dependency.
+
 ## 2026.08.05
 
 - Prohibited adding, staging, committing, or pushing LLM/model weights and

@@ -20,6 +20,9 @@ $requiredFiles = @(
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
     "tools/project-memory/instruction-kit.json",
+    "tools/project-memory/rag-system.json",
+    "tools/project-memory/code_intelligence.py",
+    "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/AGENTS_RUNTIME/07-startup-and-scope.md"
 )
 
@@ -67,6 +70,14 @@ try {
         }
         if ($metadata.applied_migrations -notcontains '2026.08.02.2__disambiguate_short_config_toggle_aliases') {
             throw "Bootstrap form '$($forms[$index])' did not include the config-toggle alias migration."
+        }
+        if ($metadata.applied_migrations -notcontains '2026.08.06.1__add_code_intelligence_adapters') {
+            throw "Bootstrap form '$($forms[$index])' did not include the code-intelligence migration."
+        }
+
+        $ragConfig = Get-Content -Raw -LiteralPath (Join-Path $target "tools/project-memory/rag-system.json") | ConvertFrom-Json
+        if ($ragConfig.code_intelligence.enabled -ne $false) {
+            throw "Bootstrap form '$($forms[$index])' did not default code intelligence to off."
         }
 
         $configRuleText = [System.IO.File]::ReadAllText(
