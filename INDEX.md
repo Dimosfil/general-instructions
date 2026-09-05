@@ -19,6 +19,9 @@ Reusable instructions in this repository are grouped by job.
 
 ## Project Memory
 
+- `tools/project-memory/specs/authorization-and-verification.md`: authorization,
+  scoped blockers, and proportionate verification contract with decision cases.
+
 - `tools/project-memory/README.md`: local project-memory usage, including the
   generated SQLite index workflow.
 - `tools/project-memory/build_project_memory_index.py`: stdlib-only SQLite

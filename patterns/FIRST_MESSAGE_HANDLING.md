@@ -141,8 +141,10 @@ Examples:
 - `gi пул`, `gi pull`, or `ги пул`: fetch and pull the current branch, resolving
   only clear low-risk conflicts and asking the user when judgment is needed.
 
-If a `gi` command is missing a needed parameter, ask one short clarification
-question instead of guessing.
+Resolve needed `gi` parameters from the current request, established session
+choices, and documented project defaults. If a required value remains unknown,
+ask one focused question instead of guessing. Do not ask again for an unchanged
+value already established for the same target and scope.
 
 Keep the response scoped to the `gi` command. After completing it, summarize only
 that command's result and stop. Do not resume an older product task or previous

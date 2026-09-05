@@ -2,6 +2,17 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.09.05
+
+- Removed unconditional goal-confirmation pauses for clear bounded tasks.
+  Reuse authorization for the same action, target, and scope; clarify only
+  material unknowns, prepare authorized work before approval, and limit blockers
+  to affected operations. Preserve explicit safety and approval requirements.
+- Calibrated verification to affected behavior, risk, and required project gates.
+  After sufficient checks pass, repeat or broaden only for new changes, failures,
+  unresolved concerns, or mandatory gates. Updated live rules, copied templates,
+  and migration `2026.09.05.1__scope_approval_and_verification_gates`.
+
 ## 2026.08.06
 
 - Added a provider-neutral, optional code-intelligence layer for symbol context,
