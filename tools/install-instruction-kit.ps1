@@ -151,6 +151,7 @@ try {
     $created = [System.Collections.Generic.List[string]]::new()
     $preserved = [System.Collections.Generic.List[string]]::new()
     $mappings = @(
+        @{ Source = "BOOTSTRAP.md"; Target = "BOOTSTRAP.md" },
         @{ Source = "templates/AGENTS.template.md"; Target = "AGENTS.md" },
         @{ Source = "COMMANDS.md"; Target = "COMMANDS.md" },
         @{ Source = "config/gi-command-routes.json"; Target = "config/gi-command-routes.json" },

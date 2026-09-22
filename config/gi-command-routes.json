@@ -439,14 +439,30 @@
       ]
     },
     {
+      "id": "test-task",
+      "aliases": [
+        "gi testing task",
+        "gi test task",
+        "gi тест таск",
+        "ги тест таск",
+        "gi задача теста"
+      ],
+      "contract": "Set the active release/full-system verification workload for the next documented gi test run.",
+      "context_files": [
+        "patterns/AGENTS_RUNTIME/09-testing.md",
+        "patterns/AGENTS_RUNTIME/15-verification.md"
+      ]
+    },
+    {
       "id": "test",
       "aliases": [
-        "gi test task",
-        "ги тест таск",
+        "gi full test",
+        "gi release test",
+        "gi system test",
         "gi test",
         "ги тест"
       ],
-      "contract": "Set or execute the documented release/full-system verification task against live required surfaces and report exact gaps.",
+      "contract": "Execute the documented release/full-system verification task against live required surfaces and report exact gaps.",
       "context_files": [
         "patterns/AGENTS_RUNTIME/09-testing.md",
         "patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md",
@@ -477,7 +493,9 @@
         "gi manager test",
         "gi tm test",
         "gi манагер тест",
-        "gi менеджер тест"
+        "gi менеджер тест",
+        "ги манагер тест",
+        "ги менеджер тест"
       ],
       "contract": "Test the configured task-manager discovery and lifecycle contract without unrelated repository mutation.",
       "context_files": [
@@ -520,6 +538,7 @@
       "id": "task-plan",
       "aliases": [
         "gi post plan",
+        "gi plan",
         "gi план",
         "ги план"
       ],
@@ -534,7 +553,9 @@
       "id": "task-manager",
       "aliases": [
         "gi manager",
-        "gi tm"
+        "gi tm",
+        "ги менеджер",
+        "ги манагер"
       ],
       "contract": "Inspect the configured task manager through config-service and report its supported lifecycle capabilities.",
       "context_files": [

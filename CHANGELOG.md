@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.22
 
+- Hardened the lazy GI context pipeline after regression review. Startup output
+  now enforces per-section and total character ceilings, propagates update-check
+  failures, preserves clean CRLF Git state, and includes `BOOTSTRAP.md` in fresh
+  installs. Migration comparison is semantic, equal-version checks honor
+  explicit skips, and all documented plan/test/task-manager aliases resolve.
 - Restored the accumulated startup/restore behavior inside the one-call context
   builder. `gi start` now lazily includes bounded project instructions and
   working agreements, language preferences, the newest canonical handoff,

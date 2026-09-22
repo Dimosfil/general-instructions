@@ -17,8 +17,9 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
   operation. This means kit bootstrap into the active project, not repository
   replacement or remote management.
 - On the first concrete task in a session, perform the staged update check even
-  without a GI command. Equal versions mean `pending migrations: 0` without
-  reading migration filenames, bodies, `CHANGELOG.md`, or `INDEX.md`. When the
+  without a GI command. Equal versions with no explicit skipped migrations mean
+  `pending migrations: 0` without reading migration filenames, bodies,
+  `CHANGELOG.md`, or `INDEX.md`. When the
   accepted source is newer, enumerate and apply pending accepted migrations if
   `update_check.enabled` and `auto_apply_pending_migrations` permit it; a missing
   auto-apply setting defaults to `true`. Skip only for explicit `false` or a

@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.22.3",
+  "instruction_kit_version": "2026.09.22.4",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -15,6 +15,7 @@
   "copied_files": [
     ".gitignore",
     "AGENTS.md",
+    "BOOTSTRAP.md",
     "COMMANDS.md",
     "config/gi-command-routes.json",
     "config/gi-context-budgets.json",
@@ -90,7 +91,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.09.22.3__restore_lazy_startup_context",
+    "applied_through": "2026.09.22.4__harden_lazy_context_and_routing",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

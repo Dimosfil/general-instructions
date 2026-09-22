@@ -46,8 +46,9 @@ Reusable instructions in this repository are grouped by job.
   resolves supported GI sources and creates missing project-local instruction
   files without changing Git configuration.
 - `tools/get-gi-context.ps1`: one-call context builder for staged update status,
-  lazy command routing, and bounded `gi start` restoration of project rules,
-  preferences, canonical handoff, Git state, runbook hints, and memory search.
+  lazy command routing, and hard-capped `gi start` restoration of project rules,
+  preferences, canonical handoff, Git state, runbook hints, and memory search;
+  update-check failures stop packet assembly.
 - `tools/resolve-gi-command.ps1`: returns one selected GI command contract and
   its mandatory context files as a bounded context packet.
 - `tools/test-instruction-kit-bootstrap.ps1`: regression checks for full URL,

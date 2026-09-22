@@ -91,9 +91,13 @@ the agent should:
    `CHANGELOG.md`, `INDEX.md`, and relevant files under `migrations/`.
 7. Do not read `updates/`.
 8. Identify migrations after `migration_state.applied_through`, plus explicit
-   skipped items, excluding explicit additional applied IDs. When schema v2 is
-   absent, continue reading the legacy `applied_migrations` array.
-9. Apply pending migrations in filename order.
+   skipped items, excluding explicit additional applied IDs. Equal installed
+   and accepted versions may use the zero-pending fast path only when the
+   explicit skipped list is empty. When schema v2 is absent, continue reading
+   the legacy `applied_migrations` array.
+9. Compare and order migration IDs by their numeric version prefix, then by the
+   full ID as an ordinal tie-breaker; do not use plain lexical comparison for
+   versions such as `.9` and `.10`. Apply pending migrations in that order.
 10. Merge project-owned files carefully; do not overwrite project-specific
    content without review.
 11. Update `instruction-kit.json` only after successful application.

@@ -22,7 +22,10 @@ the old combined paths are compatibility indexes. `tools/get-gi-context.ps1`
 assembles update status, one routed packet, and bounded start evidence in one
 call. Metadata schema v2 stores an `applied_through` checkpoint with explicit
 addition/skip exceptions, and `config/gi-context-budgets.json` makes context
-ceilings executable regression gates.
+ceilings executable regression gates. The builder enforces those ceilings at
+runtime, keeps Git inspection neutral to checkout line-ending policy, and stops
+packet assembly when the staged update check fails. Migration checkpoints use
+numeric version ordering and preserve explicit skipped exceptions.
 
 Reason: reduce fixed input tokens and repeated tool-loop amplification while
 preserving accepted behavior, legacy metadata compatibility, deterministic

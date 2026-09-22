@@ -32,6 +32,9 @@ Planned changes:
   and enforce byte/packet budgets in regression tests.
 - [x] Restore the previous startup diagnostics as lazy, bounded sections of the
   one-call context builder and add behavior-equivalence regression coverage.
+- [x] Harden lazy context and routing regressions: enforce hard caps, propagate
+  update failures, preserve CRLF Git cleanliness, copy `BOOTSTRAP.md`, compare
+  migration IDs semantically, honor explicit skips, and restore documented aliases.
 - [x] Update `DEVELOPMENT_PLAN.md` with current planned items.
 - [ ] Audit remaining templates (`AGENT_RUNBOOK.template.md`,
   `AGENT_WORKING_AGREEMENTS.template.md`) for similar duplication.

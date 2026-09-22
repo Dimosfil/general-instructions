@@ -19,8 +19,9 @@ architecture, and operational details in each project's own documentation.
   orientation, updates, testing, builds, deployment, and Git operations.
 - Resolves a specific GI command through a compact route manifest so the agent
   loads only that command's contract and mandatory policy modules.
-- Builds update status, routed context, and bounded `gi start` evidence in one
-  helper invocation. Startup-only sections restore project instructions,
+- Builds update status, routed context, and hard-capped `gi start` evidence in
+  one helper invocation, failing the startup packet when its update check fails.
+  Startup-only sections restore project instructions,
   working agreements, language preferences, the canonical handoff, compact Git
   state, runbook hints, and memory search under regression-tested budgets.
 - Offers templates, checklists, playbooks, and migration metadata so projects

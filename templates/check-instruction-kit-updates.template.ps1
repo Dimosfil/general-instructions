@@ -145,6 +145,28 @@ function Write-Detail {
     }
 }
 
+function Get-MigrationVersion {
+    param([Parameter(Mandatory = $true)][string]$MigrationId)
+
+    $match = [regex]::Match($MigrationId, '^(?<version>[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}(?:\.[0-9]+)?)__')
+    if (-not $match.Success) { return [version]"0.0" }
+    try { return [version]$match.Groups['version'].Value }
+    catch { return [version]"0.0" }
+}
+
+function Compare-MigrationId {
+    param(
+        [Parameter(Mandatory = $true)][string]$Left,
+        [Parameter(Mandatory = $true)][string]$Right
+    )
+
+    $versionComparison = (Get-MigrationVersion -MigrationId $Left).CompareTo(
+        (Get-MigrationVersion -MigrationId $Right)
+    )
+    if ($versionComparison -ne 0) { return $versionComparison }
+    return [string]::CompareOrdinal($Left, $Right)
+}
+
 if (-not (Test-Path -LiteralPath $InstructionKitPath)) {
     Write-Host "No instruction kit metadata found at $InstructionKitPath."
     Write-Host "Bootstrap this project from the shared instruction library first."
@@ -201,7 +223,7 @@ function Test-MigrationApplied {
     }
     if ([string]::IsNullOrWhiteSpace($appliedThrough)) { return $false }
 
-    return [string]::CompareOrdinal($MigrationId, $appliedThrough) -le 0
+    return (Compare-MigrationId -Left $MigrationId -Right $appliedThrough) -le 0
 }
 
 Write-Host "Instruction kit: installed=$installedVersion available=$latestVersion"
@@ -218,7 +240,7 @@ if ($installedVersion) {
     }
 }
 
-if ($versionComparison -eq 0) {
+if ($versionComparison -eq 0 -and $skippedMigrations.Count -eq 0) {
     Write-Host "Pending instruction migrations: 0"
     exit 0
 }
@@ -236,11 +258,13 @@ if (-not (Test-Path -LiteralPath $migrationsPath)) {
 
 $pending = @(Get-ChildItem -LiteralPath $migrationsPath -Filter "*.md" |
     Where-Object { $_.Name -ne "README.md" } |
-    Sort-Object Name |
     Where-Object {
         $migrationId = [System.IO.Path]::GetFileNameWithoutExtension($_.Name)
         -not (Test-MigrationApplied -MigrationId $migrationId)
-    })
+    } |
+    Sort-Object `
+        @{ Expression = { Get-MigrationVersion -MigrationId $_.BaseName } }, `
+        @{ Expression = { $_.BaseName } })
 
 if (-not $pending) {
     Write-Host "Pending instruction migrations: 0"
@@ -273,7 +297,9 @@ Write-Detail "If file changes are not complete, stop now and do not record migra
 $allMigrationIds = @(Get-ChildItem -LiteralPath $migrationsPath -Filter "*.md" |
     Where-Object { $_.Name -ne "README.md" } |
     ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) } |
-    Sort-Object)
+    Sort-Object `
+        @{ Expression = { Get-MigrationVersion -MigrationId $_ } }, `
+        @{ Expression = { $_ } })
 $latestMigrationId = if ($allMigrationIds.Count -gt 0) { $allMigrationIds[-1] } else { "" }
 
 $kit.instruction_kit_version = $latestVersion

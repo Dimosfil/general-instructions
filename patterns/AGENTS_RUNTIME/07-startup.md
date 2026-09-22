@@ -12,9 +12,11 @@
   enter model context. Resolve the accepted shared-instruction source and
   first compare only the installed version in
   `tools/project-memory/instruction-kit.json` with accepted-source `VERSION.md`.
-  If the versions are equal, report `pending migrations: 0` and stop the update
-  check without reading `CHANGELOG.md`, `INDEX.md`, migration directory entries,
-  or migration bodies. If the accepted version is newer, enumerate unapplied
+  If the versions are equal and there are no explicit skipped migrations,
+  report `pending migrations: 0` and stop the update check without reading
+  `CHANGELOG.md`, `INDEX.md`, migration directory entries, or migration bodies.
+  Explicit skipped migrations remain pending even at equal versions. If the
+  accepted version is newer, enumerate unapplied
   migration IDs, then read and apply only those pending migration files before
   task-specific work. `CHANGELOG.md` and `INDEX.md` are optional maintenance
   references, not normal startup inputs. In instruction-kit

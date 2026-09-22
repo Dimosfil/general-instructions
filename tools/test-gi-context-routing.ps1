@@ -107,6 +107,15 @@ try {
     $routeCases = @(
         @{ Command = "ги старт оптимизация подумать"; Route = "start" },
         @{ Command = "gi start sprint"; Route = "start-sprint" },
+        @{ Command = "gi plan"; Route = "task-plan" },
+        @{ Command = "gi full test"; Route = "test" },
+        @{ Command = "gi release test"; Route = "test" },
+        @{ Command = "gi system test"; Route = "test" },
+        @{ Command = "gi testing task"; Route = "test-task" },
+        @{ Command = "gi задача теста"; Route = "test-task" },
+        @{ Command = "ги менеджер"; Route = "task-manager" },
+        @{ Command = "ги манагер"; Route = "task-manager" },
+        @{ Command = "ги менеджер тест"; Route = "task-manager-test" },
         @{ Command = "gi config service off"; Route = "config-self-registration" },
         @{ Command = "gi restart"; Route = "restart" },
         @{ Command = "gi error fix"; Route = "error-fix" },
@@ -177,6 +186,36 @@ try {
     Assert-Contains $exceptionOutput "- 2026.09.22.1__already" "Explicit skipped migration was not returned as pending."
     if ($exceptionOutput.Contains("- 2026.09.22.2__pending")) {
         throw "Explicit additional applied migration was returned as pending."
+    }
+
+    $equalSkipped = New-UpdateFixture -Name "equal-skipped" -MetadataJson `
+        '{"instruction_kit_version":"2026.09.22.2","migration_state":{"schema_version":2,"applied_through":"2026.09.22.2__pending","additional_applied_migrations":[],"skipped_migrations":["2026.09.22.2__pending"]},"update_check":{"enabled":true}}'
+    $equalSkippedOutput = (& $updaterTemplate -InstructionKitPath (Join-Path $equalSkipped.Project "tools/project-memory/instruction-kit.json") -SharedLibraryPath $equalSkipped.Source *>&1 | Out-String)
+    Assert-Contains $equalSkippedOutput "Pending instruction migrations: 1" "Equal-version fast path ignored an explicit skipped migration."
+    Assert-Contains $equalSkippedOutput "2026.09.22.2__pending" "Equal-version skipped migration id was omitted."
+
+    $semanticSource = Join-Path $testRoot "semantic-source"
+    $semanticProject = Join-Path $testRoot "semantic-project"
+    [void](New-Item -ItemType Directory -Path (Join-Path $semanticSource "migrations") -Force)
+    [void](New-Item -ItemType Directory -Path (Join-Path $semanticProject "tools/project-memory") -Force)
+    [System.IO.File]::WriteAllText((Join-Path $semanticSource "VERSION.md"), 'Current accepted version: `2026.09.22.10`', [System.Text.UTF8Encoding]::new($false))
+    foreach ($id in @("2026.09.22.9__old", "2026.09.22.10__new")) {
+        [System.IO.File]::WriteAllText((Join-Path $semanticSource "migrations/$id.md"), "# $id", [System.Text.UTF8Encoding]::new($false))
+    }
+    $semanticMetadataPath = Join-Path $semanticProject "tools/project-memory/instruction-kit.json"
+    [System.IO.File]::WriteAllText(
+        $semanticMetadataPath,
+        '{"instruction_kit_version":"2026.09.22.9","migration_state":{"schema_version":2,"applied_through":"2026.09.22.9__old","additional_applied_migrations":[],"skipped_migrations":[]},"update_check":{"enabled":true}}',
+        [System.Text.UTF8Encoding]::new($false)
+    )
+    $semanticOutput = (& $updaterTemplate -InstructionKitPath $semanticMetadataPath -SharedLibraryPath $semanticSource *>&1 | Out-String)
+    Assert-Contains $semanticOutput "Pending instruction migrations: 1" "Migration ids were not compared by semantic version."
+    Assert-Contains $semanticOutput "2026.09.22.10__new" "Semantic migration ordering omitted version .10."
+    if ($semanticOutput.Contains("- 2026.09.22.9__old")) { throw "Semantic migration ordering returned version .9 after checkpoint .9." }
+    & $updaterTemplate -InstructionKitPath $semanticMetadataPath -SharedLibraryPath $semanticSource -RecordApplied *>&1 | Out-Null
+    $semanticRecorded = Get-Content -LiteralPath $semanticMetadataPath -Raw | ConvertFrom-Json
+    if ($semanticRecorded.migration_state.applied_through -ne "2026.09.22.10__new") {
+        throw "Recording did not select the semantically latest migration id."
     }
 
     $legacy = New-UpdateFixture -Name "legacy" -MetadataJson `

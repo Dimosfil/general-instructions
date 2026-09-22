@@ -15,6 +15,7 @@ $forms = @(
 )
 $requiredFiles = @(
     "AGENTS.md",
+    "BOOTSTRAP.md",
     "COMMANDS.md",
     "config/gi-command-routes.json",
     "config/gi-context-budgets.json",
@@ -87,7 +88,7 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.22.3__restore_lazy_startup_context') {
+        if ($metadata.migration_state.applied_through -ne '2026.09.22.4__harden_lazy_context_and_routing') {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
@@ -122,7 +123,7 @@ try {
             'auto_apply_pending_migrations',
             'Finding a newer version is not a completed startup',
             'If the versions are equal',
-            'without reading `CHANGELOG.md`'
+            'stop the update check without reading'
         )) {
             if (-not $startupRuleText.Contains($needle)) {
                 throw "Bootstrap form '$($forms[$index])' is missing startup auto-application rule text: $needle"
@@ -139,13 +140,21 @@ try {
         if (-not $resolverOutput.Contains("GI route: start-sprint")) {
             throw "Bootstrap form '$($forms[$index])' did not install a working longest-prefix GI resolver."
         }
+        $installedManifest = Get-Content -Raw -LiteralPath (Join-Path $target "config/gi-command-routes.json") | ConvertFrom-Json
+        foreach ($route in $installedManifest.routes) {
+            $routeOutput = (& (Join-Path $target "tools/resolve-gi-command.ps1") `
+                -CommandText ([string]$route.aliases[0]) -PathsOnly | Out-String)
+            if (-not $routeOutput.Contains("GI route: $($route.id)")) {
+                throw "Bootstrap form '$($forms[$index])' could not resolve installed route '$($route.id)'."
+            }
+        }
 
         $summaryDirectory = Join-Path $target "tools/summary"
         $olderSummaryPath = Join-Path $summaryDirectory "2026-09-20_OLDER_AGENT_WORK_SUMMARY.md"
         $newerSummaryPath = Join-Path $summaryDirectory "2026-09-21_NEWER_AGENT_WORK_SUMMARY.md"
         $ignoredSummaryPath = Join-Path $summaryDirectory "9999-12-31_IGNORED.md"
         [System.IO.File]::WriteAllText($olderSummaryPath, "OLDER SUMMARY", [System.Text.UTF8Encoding]::new($false))
-        [System.IO.File]::WriteAllText($newerSummaryPath, "NEWER SUMMARY", [System.Text.UTF8Encoding]::new($false))
+        [System.IO.File]::WriteAllText($newerSummaryPath, ("NEWER SUMMARY " + ("x" * 50000)), [System.Text.UTF8Encoding]::new($false))
         [System.IO.File]::WriteAllText($ignoredSummaryPath, "IGNORED SUMMARY", [System.Text.UTF8Encoding]::new($false))
         (Get-Item -LiteralPath $olderSummaryPath).LastWriteTime = (Get-Date).AddHours(-2)
         (Get-Item -LiteralPath $newerSummaryPath).LastWriteTime = (Get-Date).AddHours(-1)
@@ -188,6 +197,72 @@ try {
         $contextBudgets = Get-Content -LiteralPath (Join-Path $target "config/gi-context-budgets.json") -Raw | ConvertFrom-Json
         if ($contextOutput.Length -gt [int]$contextBudgets.start_packet_max_chars) {
             throw "Bootstrap form '$($forms[$index])' exceeded the installed start-packet budget: $($contextOutput.Length) chars."
+        }
+        if (-not $contextOutput.Contains("context truncated:")) {
+            throw "Bootstrap form '$($forms[$index])' did not mark truncated oversized startup context."
+        }
+
+        if ($index -eq 0) {
+            $budgetFile = Join-Path $target "config/gi-context-budgets.json"
+            $budgetText = [System.IO.File]::ReadAllText($budgetFile)
+            $tightBudgets = $budgetText | ConvertFrom-Json
+            $tightBudgets.start_packet_max_chars = 5000
+            [System.IO.File]::WriteAllText(
+                $budgetFile,
+                (($tightBudgets | ConvertTo-Json -Depth 100) + [Environment]::NewLine),
+                [System.Text.UTF8Encoding]::new($false)
+            )
+            try {
+                $tightContext = (& (Join-Path $target "tools/get-gi-context.ps1") -CommandText "gi start" -SkipUpdateCheck | Out-String)
+            }
+            finally {
+                [System.IO.File]::WriteAllText($budgetFile, $budgetText, [System.Text.UTF8Encoding]::new($false))
+            }
+            if ($tightContext.Length -gt 5000) { throw "Final startup packet hard cap was not enforced." }
+            if (-not $tightContext.Contains("context packet truncated:") -or -not $tightContext.Contains("Startup restore complete.")) {
+                throw "Hard-capped startup packet omitted its truncation or completion marker."
+            }
+
+            & git -C $target init --quiet
+            & git -C $target config core.autocrlf true
+            $crlfFixture = Join-Path $target "crlf-fixture.txt"
+            [System.IO.File]::WriteAllText($crlfFixture, "first`r`nsecond`r`n", [System.Text.UTF8Encoding]::new($false))
+            & git -C $target add -- crlf-fixture.txt
+            & git -C $target -c user.name="GI Test" -c user.email="gi-test@example.invalid" commit --quiet -m "Add CRLF fixture"
+            $crlfContext = (& (Join-Path $target "tools/get-gi-context.ps1") -CommandText "gi start" -SkipUpdateCheck | Out-String)
+            if ($crlfContext.Contains(" M crlf-fixture.txt") -or $crlfContext.Contains("crlf-fixture.txt |")) {
+                throw "Context builder reported a clean CRLF file as modified."
+            }
+
+            $metadataPath = Join-Path $target "tools/project-memory/instruction-kit.json"
+            $metadataBeforeFailureTest = [System.IO.File]::ReadAllText($metadataPath)
+            $brokenSource = Join-Path $testRoot "broken-update-source"
+            [void](New-Item -ItemType Directory -Path $brokenSource -Force)
+            $failureMetadata = $metadataBeforeFailureTest | ConvertFrom-Json
+            $failureMetadata.update_check.shared_library_path = $brokenSource
+            $failureMetadata.update_check.source_repo = ""
+            [System.IO.File]::WriteAllText(
+                $metadataPath,
+                (($failureMetadata | ConvertTo-Json -Depth 100) + [Environment]::NewLine),
+                [System.Text.UTF8Encoding]::new($false)
+            )
+            $failureText = ""
+            try {
+                $failureText = (& (Join-Path $target "tools/get-gi-context.ps1") -CommandText "gi start" *>&1 | Out-String)
+                throw "Context builder did not fail when the update check failed."
+            }
+            catch {
+                $failureText = ($failureText + "`n" + $_.Exception.Message)
+            }
+            finally {
+                [System.IO.File]::WriteAllText($metadataPath, $metadataBeforeFailureTest, [System.Text.UTF8Encoding]::new($false))
+            }
+            if (-not $failureText.Contains("Instruction update check failed")) {
+                throw "Context builder did not propagate the update-check failure."
+            }
+            if ($failureText.Contains("Startup restore complete.")) {
+                throw "Context builder reported startup completion after a failed update check."
+            }
         }
 
         $secretRuleText = [System.IO.File]::ReadAllText(
