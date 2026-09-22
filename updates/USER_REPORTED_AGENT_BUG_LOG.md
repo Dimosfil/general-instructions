@@ -11,6 +11,22 @@ or edit that project.
 
 ## Entries
 
+### 2026-09-22: Git finish expanded into application repair and runtime work
+
+- Symptom: an agent handling `ги пуш` treated a mixed dirty worktree as one
+  application package, then changed ignore rules and tests, deleted runtime
+  state, and repeatedly rebuilt/restarted services before committing.
+- Evidence summary: the user supplied the agent's progress transcript showing
+  scope inference from apparent file similarity followed by implementation and
+  runtime mutations performed only to satisfy finish-time checks.
+- Likely rule gap: the workflow required stopping on ambiguous scope but also
+  mentioned verification-driven corrections without explicitly limiting them to
+  failures caused by already scoped work and covered by the original task.
+- Privacy review: no project name, machine path, source contents, runtime data,
+  commit identifiers, secrets, credentials, or raw private logs were retained.
+- Status: accepted and repaired in
+  `2026.09.22.6__keep_git_finish_within_established_scope`.
+
 ### 2026-08-02: Short config-off alias changed only app self-registration
 
 - Symptom: after a user sent the short `ги конфиг офф` command, an agent

@@ -137,6 +137,23 @@ try {
         Assert-Contains $output ("GI route: {0}" -f $case.Route) "Command '$($case.Command)' resolved incorrectly."
     }
 
+    $gitFinishPacket = (& $resolverPath -CommandText "ги пуш" | Out-String)
+    foreach ($needle in @(
+        "already established scoped change set",
+        "never classify the whole dirty",
+        "does not by itself authorize product fixes"
+    )) {
+        Assert-Contains $gitFinishPacket $needle "Git-finish route is missing scope boundary text: $needle"
+    }
+    $gitWorkflowText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/GIT_WORKFLOW.md"))
+    foreach ($needle in @(
+        "Never infer that all dirty files",
+        "do not repair unrelated code or tests",
+        "rebuild/restart services solely because"
+    )) {
+        Assert-Contains $gitWorkflowText $needle "Git workflow is missing finish-only guard text: $needle"
+    }
+
     Assert-FileBudget "AGENTS.md" ([long]$budgets.entrypoint_max_bytes)
     Assert-FileBudget "templates/AGENTS.template.md" ([long]$budgets.template_entrypoint_max_bytes)
     Assert-FileBudget "COMMANDS.md" ([long]$budgets.command_index_max_bytes)

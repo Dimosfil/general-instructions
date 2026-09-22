@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.22
 
+- Restricted Git-finish commands to finalizing an already established task
+  scope. Agents may no longer infer that an entire dirty worktree is one package
+  from apparent similarity or turn `gi пуш` into implementation, test rewrites,
+  runtime cleanup, or service restart/rebuild work merely to make checks pass.
+  Ambiguous scope and unrelated verification failures now stop the finish before
+  staging or writes.
 - Completed Cyrillic-prefix parity for every Russian-language GI route alias,
   including `ги пуш`, and added a manifest-wide regression check so future
   `gi <Russian command>` aliases require the matching `ги` form.
