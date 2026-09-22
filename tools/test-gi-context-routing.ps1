@@ -85,6 +85,15 @@ try {
             }
             $aliases[$alias] = [string]$route.id
         }
+        $routeAliases = @($route.aliases | ForEach-Object { ([string]$_).Trim().ToLowerInvariant() })
+        foreach ($alias in $routeAliases) {
+            if ($alias -match '^gi (?<tail>.*[А-Яа-яЁё].*)$') {
+                $cyrillicPrefixAlias = "ги $($Matches.tail)"
+                if ($routeAliases -notcontains $cyrillicPrefixAlias) {
+                    throw "Route '$($route.id)' is missing Cyrillic-prefix alias '$cyrillicPrefixAlias' for '$alias'."
+                }
+            }
+        }
         foreach ($relativePathValue in $route.context_files) {
             $relativePath = [string]$relativePathValue
             if ($compatibilityModules -contains $relativePath) {
@@ -120,7 +129,8 @@ try {
         @{ Command = "gi restart"; Route = "restart" },
         @{ Command = "gi error fix"; Route = "error-fix" },
         @{ Command = "gi tools rebuild vector"; Route = "rag-rebuild" },
-        @{ Command = "gi only push"; Route = "git-finish" }
+        @{ Command = "gi only push"; Route = "git-finish" },
+        @{ Command = "ги пуш"; Route = "git-finish" }
     )
     foreach ($case in $routeCases) {
         $output = (& $resolverPath -CommandText $case.Command -PathsOnly | Out-String)

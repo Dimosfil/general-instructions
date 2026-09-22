@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.22.4",
+  "instruction_kit_version": "2026.09.22.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -88,7 +88,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.09.22.4__harden_lazy_context_and_routing",
+    "applied_through": "2026.09.22.5__complete_cyrillic_alias_parity",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

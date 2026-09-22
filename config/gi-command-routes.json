@@ -71,6 +71,7 @@
         "gi старт спринт",
         "ги старт спринт",
         "gi активный спринт",
+        "ги активный спринт",
         "gi work sprint"
       ],
       "contract": "Resolve the configured task manager, select the single active Sprint/Cycle, and execute its tasks through the documented lifecycle.",
@@ -86,7 +87,9 @@
       "id": "start",
       "aliases": [
         "gi восстановить контекст",
+        "ги восстановить контекст",
         "gi восстанови",
+        "ги восстанови",
         "gi restore",
         "gi start",
         "gi старт",
@@ -384,12 +387,16 @@
       "aliases": [
         "gi commit push",
         "gi коммит пуш",
+        "ги коммит пуш",
         "gi only push",
         "gi только пуш",
+        "ги только пуш",
         "gi push",
         "gi пуш",
+        "ги пуш",
         "gi commit",
         "gi коммит",
+        "ги коммит",
         "gi pull",
         "gi пул",
         "ги пул"
@@ -445,7 +452,8 @@
         "gi test task",
         "gi тест таск",
         "ги тест таск",
-        "gi задача теста"
+        "gi задача теста",
+        "ги задача теста"
       ],
       "contract": "Set the active release/full-system verification workload for the next documented gi test run.",
       "context_files": [
@@ -524,7 +532,8 @@
       "aliases": [
         "gi add sprint",
         "gi create sprint",
-        "gi добавить спринт"
+        "gi добавить спринт",
+        "ги добавить спринт"
       ],
       "contract": "Create a visible Sprint/Cycle through the configured manager after validating its supported contract.",
       "context_files": [
@@ -615,6 +624,7 @@
         "gi deploy ftp",
         "gi zaley na ftp",
         "gi залей на фтп",
+        "ги залей на фтп",
         "gi ftp",
         "ги фтп"
       ],

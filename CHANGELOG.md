@@ -4,6 +4,9 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.22
 
+- Completed Cyrillic-prefix parity for every Russian-language GI route alias,
+  including `ги пуш`, and added a manifest-wide regression check so future
+  `gi <Russian command>` aliases require the matching `ги` form.
 - Hardened the lazy GI context pipeline after regression review. Startup output
   now enforces per-section and total character ceilings, propagates update-check
   failures, preserves clean CRLF Git state, and includes `BOOTSTRAP.md` in fresh

@@ -88,7 +88,7 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.22.4__harden_lazy_context_and_routing') {
+        if ($metadata.migration_state.applied_through -ne '2026.09.22.5__complete_cyrillic_alias_parity') {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
