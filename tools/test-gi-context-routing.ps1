@@ -132,10 +132,20 @@ try {
     $startPacket = (& $builderPath -CommandText "gi start" -SkipUpdateCheck | Out-String)
     Assert-Contains $startPacket "Instruction update check: skipped by caller" "Context builder omitted update status."
     Assert-Contains $startPacket "GI route: start" "Context builder omitted the start route."
+    Assert-Contains $startPacket "===== PROJECT ENTRYPOINT =====" "Context builder omitted the project entrypoint."
+    Assert-Contains $startPacket "===== GIT COMMIT PREFERENCES =====" "Context builder omitted commit preferences."
+    Assert-Contains $startPacket "===== AGENT SYSTEM LANGUAGE =====" "Context builder omitted system-language preferences."
     Assert-Contains $startPacket "===== LATEST HANDOFF SUMMARY =====" "Context builder omitted summary state."
     Assert-Contains $startPacket "===== GIT SNAPSHOT =====" "Context builder omitted Git state."
+    Assert-Contains $startPacket "Startup restore complete." "Context builder omitted the restore completion marker."
     if ($startPacket.Length -gt [int]$budgets.start_packet_max_chars) {
         throw "gi start context packet exceeded budget: $($startPacket.Length) chars."
+    }
+    $nonStartPacket = (& $builderPath -CommandText "gi stack" -SkipUpdateCheck | Out-String)
+    if ($nonStartPacket.Contains("===== PROJECT ENTRYPOINT =====") -or
+        $nonStartPacket.Contains("===== LATEST HANDOFF SUMMARY =====") -or
+        $nonStartPacket.Contains("===== RUNBOOK COMMAND HINTS =====")) {
+        throw "Non-start route received startup-only context sections."
     }
 
     [void](New-Item -ItemType Directory -Path $testRoot)

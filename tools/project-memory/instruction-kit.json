@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.22.2",
+  "instruction_kit_version": "2026.09.22.3",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -87,7 +87,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.09.22.2__compact_runtime_context_pipeline",
+    "applied_through": "2026.09.22.3__restore_lazy_startup_context",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

@@ -87,7 +87,7 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.22.2__compact_runtime_context_pipeline') {
+        if ($metadata.migration_state.applied_through -ne '2026.09.22.3__restore_lazy_startup_context') {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
@@ -139,10 +139,55 @@ try {
         if (-not $resolverOutput.Contains("GI route: start-sprint")) {
             throw "Bootstrap form '$($forms[$index])' did not install a working longest-prefix GI resolver."
         }
-        $contextOutput = (& (Join-Path $target "tools/get-gi-context.ps1") `
-            -CommandText "gi start" -SkipUpdateCheck | Out-String)
-        if (-not $contextOutput.Contains("GI route: start") -or -not $contextOutput.Contains("===== GIT SNAPSHOT =====")) {
-            throw "Bootstrap form '$($forms[$index])' did not install a working one-call context builder."
+
+        $summaryDirectory = Join-Path $target "tools/summary"
+        $olderSummaryPath = Join-Path $summaryDirectory "2026-09-20_OLDER_AGENT_WORK_SUMMARY.md"
+        $newerSummaryPath = Join-Path $summaryDirectory "2026-09-21_NEWER_AGENT_WORK_SUMMARY.md"
+        $ignoredSummaryPath = Join-Path $summaryDirectory "9999-12-31_IGNORED.md"
+        [System.IO.File]::WriteAllText($olderSummaryPath, "OLDER SUMMARY", [System.Text.UTF8Encoding]::new($false))
+        [System.IO.File]::WriteAllText($newerSummaryPath, "NEWER SUMMARY", [System.Text.UTF8Encoding]::new($false))
+        [System.IO.File]::WriteAllText($ignoredSummaryPath, "IGNORED SUMMARY", [System.Text.UTF8Encoding]::new($false))
+        (Get-Item -LiteralPath $olderSummaryPath).LastWriteTime = (Get-Date).AddHours(-2)
+        (Get-Item -LiteralPath $newerSummaryPath).LastWriteTime = (Get-Date).AddHours(-1)
+        (Get-Item -LiteralPath $ignoredSummaryPath).LastWriteTime = Get-Date
+        [System.IO.File]::WriteAllText(
+            (Join-Path $target "tools/project-memory/index_project.py"),
+            "# startup hint fixture",
+            [System.Text.UTF8Encoding]::new($false)
+        )
+
+        Push-Location $testRoot
+        try {
+            $contextOutput = (& (Join-Path $target "tools/get-gi-context.ps1") `
+                -CommandText "gi start" -SkipUpdateCheck | Out-String)
+        }
+        finally {
+            Pop-Location
+        }
+        foreach ($needle in @(
+            "GI route: start",
+            "===== PROJECT ENTRYPOINT =====",
+            "===== WORKING AGREEMENTS =====",
+            "showing first 80 lines only.",
+            "===== GIT COMMIT PREFERENCES =====",
+            "===== AGENT SYSTEM LANGUAGE =====",
+            "===== LATEST HANDOFF SUMMARY =====",
+            "NEWER SUMMARY",
+            "===== GIT SNAPSHOT =====",
+            "===== RUNBOOK COMMAND HINTS =====",
+            "===== PROJECT MEMORY =====",
+            "Startup restore complete."
+        )) {
+            if (-not $contextOutput.Contains($needle)) {
+                throw "Bootstrap form '$($forms[$index])' context builder omitted: $needle"
+            }
+        }
+        if ($contextOutput.Contains("IGNORED SUMMARY")) {
+            throw "Bootstrap form '$($forms[$index])' selected an unrelated summary Markdown file."
+        }
+        $contextBudgets = Get-Content -LiteralPath (Join-Path $target "config/gi-context-budgets.json") -Raw | ConvertFrom-Json
+        if ($contextOutput.Length -gt [int]$contextBudgets.start_packet_max_chars) {
+            throw "Bootstrap form '$($forms[$index])' exceeded the installed start-packet budget: $($contextOutput.Length) chars."
         }
 
         $secretRuleText = [System.IO.File]::ReadAllText(

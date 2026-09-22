@@ -20,7 +20,9 @@ architecture, and operational details in each project's own documentation.
 - Resolves a specific GI command through a compact route manifest so the agent
   loads only that command's contract and mandatory policy modules.
 - Builds update status, routed context, and bounded `gi start` evidence in one
-  helper invocation, with regression-tested context-size budgets.
+  helper invocation. Startup-only sections restore project instructions,
+  working agreements, language preferences, the canonical handoff, compact Git
+  state, runbook hints, and memory search under regression-tested budgets.
 - Offers templates, checklists, playbooks, and migration metadata so projects
   can adopt and update the instruction kit consistently.
 - Separates human-facing project documentation from durable agent project memory
@@ -51,7 +53,9 @@ General Instructions Library - переносимый, независимый о
 - Разрешает конкретную команду `gi` через компактный manifest маршрутов, чтобы
   агент загружал только её контракт и обязательные модули правил.
 - Собирает статус обновлений, маршрутный контекст и ограниченный контекст
-  `gi start` одним вызовом и проверяет бюджеты размера регрессионными тестами.
+  `gi start` одним вызовом. Только при старте лениво возвращает локальные
+  инструкции, рабочие соглашения, языковые настройки, каноническое саммари,
+  Git-состояние, подсказки runbook и поиска по памяти в проверяемом бюджете.
 - Включает шаблоны, чек-листы, playbook-документы и данные миграций для
   согласованного внедрения и обновления набора инструкций.
 - Разделяет пользовательскую документацию проекта и долговременную память

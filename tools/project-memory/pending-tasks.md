@@ -30,6 +30,8 @@ Planned changes:
 - [x] Split overloaded 07/08/09 runtime modules, shrink both `AGENTS.md`
   entrypoints, compact migration metadata, add the one-call context builder,
   and enforce byte/packet budgets in regression tests.
+- [x] Restore the previous startup diagnostics as lazy, bounded sections of the
+  one-call context builder and add behavior-equivalence regression coverage.
 - [x] Update `DEVELOPMENT_PLAN.md` with current planned items.
 - [ ] Audit remaining templates (`AGENT_RUNBOOK.template.md`,
   `AGENT_WORKING_AGREEMENTS.template.md`) for similar duplication.

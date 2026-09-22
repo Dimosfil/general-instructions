@@ -2,7 +2,9 @@
 param(
     [Parameter(Mandatory = $true)][string]$CommandText,
     [switch]$SkipUpdateCheck,
-    [ValidateRange(1, 500)][int]$MaxSummaryLines = 80
+    [ValidateRange(1, 500)][int]$MaxSummaryLines = 80,
+    [ValidateRange(1, 500)][int]$MaxStartupFileLines = 80,
+    [ValidateRange(1, 200)][int]$MaxRunbookHintLines = 60
 )
 
 Set-StrictMode -Version Latest
@@ -18,6 +20,90 @@ $checkerCandidates = @(
 
 if (-not (Test-Path -LiteralPath $resolverPath -PathType Leaf)) {
     throw "GI command resolver is missing: $resolverPath"
+}
+
+function Write-BoundedFileSection {
+    param(
+        [Parameter(Mandatory = $true)][string]$RelativePath,
+        [Parameter(Mandatory = $true)][string]$Title,
+        [Parameter(Mandatory = $true)][int]$Limit
+    )
+
+    $fullPath = Join-Path $projectRoot $RelativePath
+    if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) { return }
+
+    Write-Output ""
+    Write-Output ("===== {0} =====" -f $Title)
+    $lineCount = (Get-Content -LiteralPath $fullPath | Measure-Object -Line).Lines
+    if ($lineCount -gt $Limit) {
+        Write-Output ("{0} has {1} lines; showing first {2} lines only." -f $RelativePath, $lineCount, $Limit)
+    }
+    Get-Content -LiteralPath $fullPath -TotalCount $Limit
+}
+
+function Write-GitCommitPreferences {
+    Write-Output ""
+    Write-Output "===== GIT COMMIT PREFERENCES ====="
+    $relativePath = "tools/project-memory/git-preferences.json"
+    $fullPath = Join-Path $projectRoot $relativePath
+    if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
+        Write-Output "No git commit language preferences found."
+        Write-Output "Default: English; configure with tools/select-git-commit-languages.ps1"
+        return
+    }
+
+    try {
+        $preferences = Get-Content -LiteralPath $fullPath -Raw | ConvertFrom-Json
+        $primary = [string]$preferences.commit_message_languages.primary
+        $additional = @($preferences.commit_message_languages.additional | ForEach-Object { [string]$_ })
+        if (-not $primary) { $primary = "English" }
+        Write-Output ("Primary: {0}" -f $primary)
+        Write-Output ("Additional: {0}" -f $(if ($additional.Count) { $additional -join ", " } else { "none" }))
+        Write-Output "Change with: tools/select-git-commit-languages.ps1"
+    }
+    catch {
+        Write-Output ("Could not read {0}; reconfigure with tools/select-git-commit-languages.ps1" -f $relativePath)
+    }
+}
+
+function Write-SystemLanguagePreferences {
+    Write-Output ""
+    Write-Output "===== AGENT SYSTEM LANGUAGE ====="
+    $relativePath = "tools/project-memory/system-preferences.json"
+    $fullPath = Join-Path $projectRoot $relativePath
+    if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
+        Write-Output "Agent working language: match the user's language"
+        Write-Output "Configure with: tools/select-system-language.ps1"
+        return
+    }
+
+    try {
+        $preferences = Get-Content -LiteralPath $fullPath -Raw | ConvertFrom-Json
+        $response = $preferences.agent_response_language
+        $mode = [string]$response.mode
+        $language = [string]$response.language
+        $languages = @($response.project_environment_languages | ForEach-Object { [string]$_ })
+        if ($languages.Count -eq 0) {
+            $languages = @($response.languages | ForEach-Object { [string]$_ })
+        }
+        $taskLanguages = @($response.task_languages | ForEach-Object { [string]$_ })
+        if ($mode -eq "fixed" -and $languages.Count -gt 0) {
+            Write-Output ("Project working environment: {0}" -f ($languages -join ", "))
+            if ($taskLanguages.Count -gt 0) {
+                Write-Output ("Tasks: {0}" -f ($taskLanguages -join ", "))
+            }
+        }
+        elseif ($mode -eq "fixed" -and $language) {
+            Write-Output ("Agent working language: {0}" -f $language)
+        }
+        else {
+            Write-Output "Agent working language: match the user's language"
+        }
+        Write-Output "Change with: tools/select-system-language.ps1"
+    }
+    catch {
+        Write-Output ("Could not read {0}; reconfigure with tools/select-system-language.ps1" -f $relativePath)
+    }
 }
 
 Write-Output "===== GI UPDATE STATUS ====="
@@ -44,7 +130,13 @@ else {
         if (-not $checkerPath) {
             throw "Instruction update checker is missing."
         }
-        & $checkerPath -InstructionKitPath $metadataPath
+        Push-Location $projectRoot
+        try {
+            & $checkerPath -InstructionKitPath $metadataPath
+        }
+        finally {
+            Pop-Location
+        }
     }
 }
 
@@ -59,12 +151,17 @@ $routeId = $routeMatch.Groups['id'].Value.Trim()
 & $resolverPath -CommandText $CommandText
 
 if ($routeId -eq "start") {
+    Write-BoundedFileSection -RelativePath "AGENTS.md" -Title "PROJECT ENTRYPOINT" -Limit $MaxStartupFileLines
+    Write-BoundedFileSection -RelativePath "tools/AGENT_WORKING_AGREEMENTS.md" -Title "WORKING AGREEMENTS" -Limit $MaxStartupFileLines
+    Write-GitCommitPreferences
+    Write-SystemLanguagePreferences
+
     Write-Output ""
     Write-Output "===== LATEST HANDOFF SUMMARY ====="
     $summaryDirectory = Join-Path $projectRoot "tools/summary"
     $latestSummary = if (Test-Path -LiteralPath $summaryDirectory -PathType Container) {
-        Get-ChildItem -LiteralPath $summaryDirectory -File -Filter "*.md" |
-            Sort-Object Name -Descending |
+        Get-ChildItem -LiteralPath $summaryDirectory -File -Filter "*_AGENT_WORK_SUMMARY.md" |
+            Sort-Object LastWriteTime -Descending |
             Select-Object -First 1
     }
     else {
@@ -87,4 +184,24 @@ if ($routeId -eq "start") {
     else {
         Write-Output "No Git worktree found at the project root."
     }
+
+    $runbookPath = Join-Path $projectRoot "tools/AGENT_RUNBOOK.md"
+    if (Test-Path -LiteralPath $runbookPath -PathType Leaf) {
+        Write-Output ""
+        Write-Output "===== RUNBOOK COMMAND HINTS ====="
+        Select-String -Path $runbookPath -Pattern "```|Install|Run|Test|Build|Smoke|Logs|powershell|npm|pnpm|yarn|dotnet|pytest|cargo|go test" -CaseSensitive:$false |
+            Select-Object -First $MaxRunbookHintLines |
+            ForEach-Object { $_.Line }
+    }
+
+    $projectMemorySearch = Join-Path $projectRoot "tools/project-memory/index_project.py"
+    if (Test-Path -LiteralPath $projectMemorySearch -PathType Leaf) {
+        Write-Output ""
+        Write-Output "===== PROJECT MEMORY ====="
+        Write-Output "Search memory with:"
+        Write-Output 'python .\tools\project-memory\index_project.py search "query" --limit 10'
+    }
+
+    Write-Output ""
+    Write-Output "Startup restore complete. Use targeted searches before reading large files."
 }

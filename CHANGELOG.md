@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.22
 
+- Restored the accumulated startup/restore behavior inside the one-call context
+  builder. `gi start` now lazily includes bounded project instructions and
+  working agreements, language preferences, the newest canonical handoff,
+  compact Git state, runbook command hints, and the project-memory search hint.
+  Regression tests cover the restored sections, canonical summary selection,
+  and the combined start-packet budget.
 - Added a compact runtime-context pipeline: 07/08/09 operational rules are now
   split into focused modules, root and copied `AGENTS.md` entrypoints are size
   bounded, and `tools/get-gi-context.ps1` returns update status, routed command

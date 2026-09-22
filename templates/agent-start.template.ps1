@@ -25,13 +25,19 @@ function Invoke-OptionalSelector {
     & $selectorPath
 }
 
-Invoke-OptionalSelector ([bool]$ConfigureProjectLanguage) "tools/select-project-language.ps1"
-Invoke-OptionalSelector ([bool]$ConfigureGitCommitLanguages) "tools/select-git-commit-languages.ps1"
-Invoke-OptionalSelector ([bool]$ConfigureSystemLanguage) "tools/select-system-language.ps1"
+Push-Location $projectRoot
+try {
+    Invoke-OptionalSelector ([bool]$ConfigureProjectLanguage) "tools/select-project-language.ps1"
+    Invoke-OptionalSelector ([bool]$ConfigureGitCommitLanguages) "tools/select-git-commit-languages.ps1"
+    Invoke-OptionalSelector ([bool]$ConfigureSystemLanguage) "tools/select-system-language.ps1"
 
-$contextBuilder = Join-Path $projectRoot "tools/get-gi-context.ps1"
-if (-not (Test-Path -LiteralPath $contextBuilder -PathType Leaf)) {
-    throw "GI context builder is missing: tools/get-gi-context.ps1"
+    $contextBuilder = Join-Path $projectRoot "tools/get-gi-context.ps1"
+    if (-not (Test-Path -LiteralPath $contextBuilder -PathType Leaf)) {
+        throw "GI context builder is missing: tools/get-gi-context.ps1"
+    }
+
+    & $contextBuilder -CommandText "gi start" -MaxSummaryLines $MaxLines -MaxStartupFileLines $MaxLines
 }
-
-& $contextBuilder -CommandText "gi start" -MaxSummaryLines $MaxLines
+finally {
+    Pop-Location
+}
