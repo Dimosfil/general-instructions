@@ -6,9 +6,16 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 $manifestPath = Join-Path $repoRoot "config/gi-command-routes.json"
+$budgetPath = Join-Path $repoRoot "config/gi-context-budgets.json"
 $resolverPath = Join-Path $repoRoot "tools/resolve-gi-command.ps1"
+$builderPath = Join-Path $repoRoot "tools/get-gi-context.ps1"
 $updaterTemplate = Join-Path $repoRoot "templates/check-instruction-kit-updates.template.ps1"
 $testRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("gi-context-routing-" + [guid]::NewGuid().ToString("N"))
+$compatibilityModules = @(
+    "patterns/AGENTS_RUNTIME/07-startup-and-scope.md",
+    "patterns/AGENTS_RUNTIME/08-config-service-and-task-manager.md",
+    "patterns/AGENTS_RUNTIME/09-project-operation-commands.md"
+)
 
 function Assert-Contains {
     param(
@@ -16,14 +23,56 @@ function Assert-Contains {
         [Parameter(Mandatory = $true)][string]$Expected,
         [Parameter(Mandatory = $true)][string]$Failure
     )
+    if (-not $Text.Contains($Expected)) { throw $Failure }
+}
 
-    if (-not $Text.Contains($Expected)) {
-        throw $Failure
+function Assert-FileBudget {
+    param(
+        [Parameter(Mandatory = $true)][string]$RelativePath,
+        [Parameter(Mandatory = $true)][long]$Maximum
+    )
+    $length = (Get-Item -LiteralPath (Join-Path $repoRoot $RelativePath)).Length
+    if ($length -gt $Maximum) {
+        throw "$RelativePath exceeded its context budget: $length > $Maximum bytes."
     }
+}
+
+function New-UpdateFixture {
+    param(
+        [Parameter(Mandatory = $true)][string]$Name,
+        [Parameter(Mandatory = $true)][string]$MetadataJson,
+        [switch]$WithoutMigrations
+    )
+    $source = Join-Path $testRoot "$Name-source"
+    $project = Join-Path $testRoot "$Name-project"
+    [void](New-Item -ItemType Directory -Path $source -Force)
+    [void](New-Item -ItemType Directory -Path (Join-Path $project "tools/project-memory") -Force)
+    [System.IO.File]::WriteAllText(
+        (Join-Path $source "VERSION.md"),
+        "Current accepted version: ``2026.09.22.2``",
+        [System.Text.UTF8Encoding]::new($false)
+    )
+    if (-not $WithoutMigrations) {
+        [void](New-Item -ItemType Directory -Path (Join-Path $source "migrations") -Force)
+        foreach ($id in @("2026.09.22.1__already", "2026.09.22.2__pending")) {
+            [System.IO.File]::WriteAllText(
+                (Join-Path $source "migrations/$id.md"),
+                "# $id",
+                [System.Text.UTF8Encoding]::new($false)
+            )
+        }
+    }
+    [System.IO.File]::WriteAllText(
+        (Join-Path $project "tools/project-memory/instruction-kit.json"),
+        $MetadataJson,
+        [System.Text.UTF8Encoding]::new($false)
+    )
+    return [pscustomobject]@{ Source = $source; Project = $project }
 }
 
 try {
     $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    $budgets = Get-Content -LiteralPath $budgetPath -Raw | ConvertFrom-Json
     $aliases = @{}
     foreach ($route in $manifest.routes) {
         if (-not $route.id -or -not $route.contract -or @($route.aliases).Count -eq 0) {
@@ -38,9 +87,20 @@ try {
         }
         foreach ($relativePathValue in $route.context_files) {
             $relativePath = [string]$relativePathValue
+            if ($compatibilityModules -contains $relativePath) {
+                throw "Route '$($route.id)' loads compatibility-only module '$relativePath'."
+            }
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $relativePath) -PathType Leaf)) {
                 throw "Route '$($route.id)' references missing context file '$relativePath'."
             }
+        }
+
+        $packet = (& $resolverPath -CommandText ([string]$route.aliases[0]) | Out-String)
+        $maximum = [int]$budgets.route_packet_default_max_chars
+        $override = $budgets.route_packet_overrides.PSObject.Properties[[string]$route.id]
+        if ($override) { $maximum = [int]$override.Value }
+        if ($packet.Length -gt $maximum) {
+            throw "Route '$($route.id)' exceeded its packet budget: $($packet.Length) > $maximum chars."
         }
     }
 
@@ -55,71 +115,67 @@ try {
     )
     foreach ($case in $routeCases) {
         $output = (& $resolverPath -CommandText $case.Command -PathsOnly | Out-String)
-        Assert-Contains -Text $output -Expected ("GI route: {0}" -f $case.Route) -Failure "Command '$($case.Command)' resolved to the wrong route."
+        Assert-Contains $output ("GI route: {0}" -f $case.Route) "Command '$($case.Command)' resolved incorrectly."
     }
 
-    $startOutput = (& $resolverPath -CommandText "ги старт новая задача" | Out-String)
-    Assert-Contains -Text $startOutput -Expected "patterns/AGENTS_RUNTIME/07-startup-and-scope.md" -Failure "Start route omitted its startup module."
-    if ($startOutput.Contains("GI Help / Command Index") -or $startOutput.Contains("09-project-operation-commands.md")) {
-        throw "Start route loaded unrelated command-index or operation context."
+    Assert-FileBudget "AGENTS.md" ([long]$budgets.entrypoint_max_bytes)
+    Assert-FileBudget "templates/AGENTS.template.md" ([long]$budgets.template_entrypoint_max_bytes)
+    Assert-FileBudget "COMMANDS.md" ([long]$budgets.command_index_max_bytes)
+    Assert-FileBudget "tools/project-memory/instruction-kit.json" ([long]$budgets.metadata_max_bytes)
+    Assert-FileBudget "templates/instruction-kit.template.json" ([long]$budgets.metadata_max_bytes)
+    foreach ($module in Get-ChildItem -LiteralPath (Join-Path $repoRoot "patterns/AGENTS_RUNTIME") -File -Filter "*.md") {
+        if ($module.Length -gt [long]$budgets.runtime_module_max_bytes) {
+            throw "$($module.Name) exceeded the runtime-module budget: $($module.Length) bytes."
+        }
     }
 
-    $commandsLength = (Get-Item -LiteralPath (Join-Path $repoRoot "COMMANDS.md")).Length
-    if ($commandsLength -gt 10000) {
-        throw "COMMANDS.md exceeded the 10 KB compact-index budget: $commandsLength bytes."
+    $startPacket = (& $builderPath -CommandText "gi start" -SkipUpdateCheck | Out-String)
+    Assert-Contains $startPacket "Instruction update check: skipped by caller" "Context builder omitted update status."
+    Assert-Contains $startPacket "GI route: start" "Context builder omitted the start route."
+    Assert-Contains $startPacket "===== LATEST HANDOFF SUMMARY =====" "Context builder omitted summary state."
+    Assert-Contains $startPacket "===== GIT SNAPSHOT =====" "Context builder omitted Git state."
+    if ($startPacket.Length -gt [int]$budgets.start_packet_max_chars) {
+        throw "gi start context packet exceeded budget: $($startPacket.Length) chars."
     }
 
     [void](New-Item -ItemType Directory -Path $testRoot)
-    $equalSource = Join-Path $testRoot "equal-source"
-    $equalProject = Join-Path $testRoot "equal-project"
-    [void](New-Item -ItemType Directory -Path $equalSource)
-    [void](New-Item -ItemType Directory -Path (Join-Path $equalProject "tools/project-memory") -Force)
-    [System.IO.File]::WriteAllText(
-        (Join-Path $equalSource "VERSION.md"),
-        "Current accepted version: ``2026.09.22.1``",
-        [System.Text.UTF8Encoding]::new($false)
-    )
-    [System.IO.File]::WriteAllText(
-        (Join-Path $equalProject "tools/project-memory/instruction-kit.json"),
-        '{"instruction_kit_version":"2026.09.22.1","applied_migrations":[],"update_check":{"enabled":true}}',
-        [System.Text.UTF8Encoding]::new($false)
-    )
+    $equal = New-UpdateFixture -Name "equal" -WithoutMigrations -MetadataJson `
+        '{"instruction_kit_version":"2026.09.22.2","migration_state":{"schema_version":2,"applied_through":"2026.09.22.2__pending","additional_applied_migrations":[],"skipped_migrations":[]},"update_check":{"enabled":true}}'
+    $equalOutput = (& $updaterTemplate -InstructionKitPath (Join-Path $equal.Project "tools/project-memory/instruction-kit.json") -SharedLibraryPath $equal.Source *>&1 | Out-String)
+    Assert-Contains $equalOutput "Pending instruction migrations: 0" "Equal-version fast path failed."
+    if ($equalOutput.Contains("No migrations folder found")) { throw "Equal-version check inspected migrations." }
 
-    $equalOutput = (& $updaterTemplate `
-        -InstructionKitPath (Join-Path $equalProject "tools/project-memory/instruction-kit.json") `
-        -SharedLibraryPath $equalSource *>&1 | Out-String)
-    Assert-Contains -Text $equalOutput -Expected "Pending instruction migrations: 0" -Failure "Equal-version update check did not return the zero-pending fast path."
-    if ($equalOutput.Contains("No migrations folder found")) {
-        throw "Equal-version update check inspected the migrations directory."
+    $v2 = New-UpdateFixture -Name "v2" -MetadataJson `
+        '{"instruction_kit_version":"2026.09.22.1","migration_state":{"schema_version":2,"applied_through":"2026.09.22.1__already","additional_applied_migrations":[],"skipped_migrations":[]},"update_check":{"enabled":true}}'
+    $v2Path = Join-Path $v2.Project "tools/project-memory/instruction-kit.json"
+    $v2Output = (& $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source *>&1 | Out-String)
+    Assert-Contains $v2Output "Pending instruction migrations: 1" "Schema-v2 metadata did not filter the checkpoint."
+    Assert-Contains $v2Output "2026.09.22.2__pending" "Schema-v2 metadata omitted the pending id."
+    & $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source -RecordApplied *>&1 | Out-Null
+    $recorded = Get-Content -LiteralPath $v2Path -Raw | ConvertFrom-Json
+    if ($recorded.migration_state.applied_through -ne "2026.09.22.2__pending") {
+        throw "Recording did not advance the schema-v2 checkpoint."
+    }
+    if ($recorded.PSObject.Properties.Name -contains "applied_migrations") {
+        throw "Recording retained the legacy migration array."
     }
 
-    $newerSource = Join-Path $testRoot "newer-source"
-    $newerProject = Join-Path $testRoot "newer-project"
-    [void](New-Item -ItemType Directory -Path (Join-Path $newerSource "migrations") -Force)
-    [void](New-Item -ItemType Directory -Path (Join-Path $newerProject "tools/project-memory") -Force)
-    [System.IO.File]::WriteAllText(
-        (Join-Path $newerSource "VERSION.md"),
-        "Current accepted version: ``2026.09.22.1``",
-        [System.Text.UTF8Encoding]::new($false)
-    )
-    [System.IO.File]::WriteAllText(
-        (Join-Path $newerSource "migrations/2026.09.22.1__test.md"),
-        "# Test migration",
-        [System.Text.UTF8Encoding]::new($false)
-    )
-    [System.IO.File]::WriteAllText(
-        (Join-Path $newerProject "tools/project-memory/instruction-kit.json"),
-        '{"instruction_kit_version":"2026.09.05.1","applied_migrations":[],"update_check":{"enabled":true}}',
-        [System.Text.UTF8Encoding]::new($false)
-    )
+    $exceptions = New-UpdateFixture -Name "exceptions" -MetadataJson `
+        '{"instruction_kit_version":"2026.09.22.1","migration_state":{"schema_version":2,"applied_through":"2026.09.22.1__already","additional_applied_migrations":["2026.09.22.2__pending"],"skipped_migrations":["2026.09.22.1__already"]},"update_check":{"enabled":true}}'
+    $exceptionOutput = (& $updaterTemplate -InstructionKitPath (Join-Path $exceptions.Project "tools/project-memory/instruction-kit.json") -SharedLibraryPath $exceptions.Source *>&1 | Out-String)
+    Assert-Contains $exceptionOutput "Pending instruction migrations: 1" "Migration-state exceptions were not applied."
+    Assert-Contains $exceptionOutput "- 2026.09.22.1__already" "Explicit skipped migration was not returned as pending."
+    if ($exceptionOutput.Contains("- 2026.09.22.2__pending")) {
+        throw "Explicit additional applied migration was returned as pending."
+    }
 
-    $newerOutput = (& $updaterTemplate `
-        -InstructionKitPath (Join-Path $newerProject "tools/project-memory/instruction-kit.json") `
-        -SharedLibraryPath $newerSource *>&1 | Out-String)
-    Assert-Contains -Text $newerOutput -Expected "Pending instruction migrations: 1" -Failure "Newer-version update check did not enumerate pending migrations."
-    Assert-Contains -Text $newerOutput -Expected "2026.09.22.1__test" -Failure "Newer-version update check omitted the pending migration id."
+    $legacy = New-UpdateFixture -Name "legacy" -MetadataJson `
+        '{"instruction_kit_version":"2026.09.22.1","applied_migrations":["2026.09.22.1__already"],"update_check":{"enabled":true}}'
+    $legacyOutput = (& $updaterTemplate -InstructionKitPath (Join-Path $legacy.Project "tools/project-memory/instruction-kit.json") -SharedLibraryPath $legacy.Source *>&1 | Out-String)
+    Assert-Contains $legacyOutput "Pending instruction migrations: 1" "Legacy metadata compatibility failed."
+    Assert-Contains $legacyOutput "2026.09.22.2__pending" "Legacy metadata omitted the pending id."
 
-    Write-Output "GI command routing and staged update checks passed."
+    Write-Output "GI routing, context budgets, builder, and migration-state checks passed."
 }
 finally {
     if (Test-Path -LiteralPath $testRoot -PathType Container) {

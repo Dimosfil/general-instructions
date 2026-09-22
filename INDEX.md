@@ -11,6 +11,8 @@ Reusable instructions in this repository are grouped by job.
 - `config/gi-main.json`: bootstrap pointer to the local GI config service.
 - `config/gi-command-routes.json`: deterministic longest-prefix route manifest
   that maps GI aliases to compact contracts and mandatory context files.
+- `config/gi-context-budgets.json`: executable size limits for entrypoints,
+  metadata, focused runtime modules, and routed context packets.
 - `COMMANDS.md`: compact user-facing GI command index; specific command
   execution is routed lazily instead of loading the full command reference.
 - `USER_GUIDE.md`: short user-facing overview of the main instructions and
@@ -43,6 +45,8 @@ Reusable instructions in this repository are grouped by job.
 - `tools/install-instruction-kit.ps1`: portable deterministic installer that
   resolves supported GI sources and creates missing project-local instruction
   files without changing Git configuration.
+- `tools/get-gi-context.ps1`: one-call context builder for staged update status,
+  lazy command routing, and bounded summary/Git evidence for `gi start`.
 - `tools/resolve-gi-command.ps1`: returns one selected GI command contract and
   its mandatory context files as a bounded context packet.
 - `tools/test-instruction-kit-bootstrap.ps1`: regression checks for full URL,
@@ -60,12 +64,33 @@ Reusable instructions in this repository are grouped by job.
 ## Patterns
 
 - `patterns/AGENTS_RUNTIME/`: task-routed runtime modules used by compact root
-  and copied `AGENTS.md` entrypoints. The modules cover project purpose, rule
-  precedence, authoring, Windows commands, token economy, startup/scope,
-  config-service and task-manager flows, operations commands, private scope,
-  language preferences, UI focus, progress updates, update intake,
-  verification, git policy, role routing, product engineering, and game
-  modding path handling.
+  and copied `AGENTS.md` entrypoints. Startup/scope, config/task-manager/sprint,
+  and operation families use focused 07/08/09 modules; the older combined files
+  remain compatibility indexes without operational rules.
+- `patterns/AGENTS_RUNTIME/07-startup.md`: first-task update, goal, restore,
+  start/sprint routing, and bootstrap rules.
+- `patterns/AGENTS_RUNTIME/07-scope-and-evidence.md`: bug/PDF evidence,
+  filesystem boundaries, cleanup, external paths, and repository scope.
+- `patterns/AGENTS_RUNTIME/08-config-service.md`: project config-service
+  toggles, discovery, contract lookup, and port-registration rules.
+- `patterns/AGENTS_RUNTIME/08-task-manager.md`: task-manager capability,
+  active-task, test, sprint, and plan-sync contracts.
+- `patterns/AGENTS_RUNTIME/08-sprint.md`: manager-backed and explicitly local
+  sprint execution rules.
+- `patterns/AGENTS_RUNTIME/09-production.md`: development-to-production service
+  publication contract.
+- `patterns/AGENTS_RUNTIME/09-deploy-gateway.md`: DevOps ownership and deploy
+  gateway selection/verification rules.
+- `patterns/AGENTS_RUNTIME/09-ftp.md`: FTP/FTPS/SFTP configuration and upload
+  workflow.
+- `patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md`: restart, Docker,
+  first-launch, and default-reset operations.
+- `patterns/AGENTS_RUNTIME/09-testing.md`: test-plan, release/full-test, and
+  project verification operations.
+- `patterns/AGENTS_RUNTIME/09-build-and-install.md`: project build/rebuild and
+  installer packaging operations.
+- `patterns/AGENTS_RUNTIME/09-project-memory-operations.md`: SQL/vector/RAG and
+  project-memory rebuild/inspection operations.
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
   AI-agent experience, with Markdown export for review.
 - `patterns/AGENT_HARNESS_RUNTIME.md`: runtime pattern for building or auditing
@@ -191,8 +216,9 @@ Reusable instructions in this repository are grouped by job.
   packets, optional code intelligence, and writeback.
 - `templates/pending-tasks.template.md`: starter active task checklist.
 - `templates/STUDY_PLAN.template.md`: starter study plan for mapping a project.
-- `templates/agent-start.template.ps1`: compact startup script template with
-  line guards and `git diff --stat`.
+- `templates/agent-start.template.ps1`: compact compatibility wrapper that
+  delegates restore to the one-call context builder and preserves language
+  selector switches.
 - `templates/FEATURE_TEST_PLAN.template.md`: copyable plan for verifying a new
   feature or risky change.
 - `templates/FEATURE_WORKFLOW_CONTRACT.template.md`: copyable contract for

@@ -9,8 +9,8 @@ script path.
 ## Agent Execution Guard
 
 - For a specific GI command, do not load this whole index as the execution
-  contract. Run `tools/resolve-gi-command.ps1 -CommandText "<user command>"` and
-  follow only the returned contract and mandatory context files.
+  contract. Run `tools/get-gi-context.ps1 -CommandText "<user command>"` and
+  follow only the returned update status, contract, and mandatory context.
 - The resolver uses `config/gi-command-routes.json`, selects the longest matching
   alias, and prints the selected files in one bounded context packet.
 - `gi help`, `ги хелп`, `gi commands`, and `ги команды` may use this file as the
@@ -81,6 +81,7 @@ These are terminal commands rather than chat commands:
 
 ```powershell
 .\tools\agent-start.ps1
+.\tools\get-gi-context.ps1 -CommandText "gi start"
 .\tools\resolve-gi-command.ps1 -CommandText "gi start"
 .\tools\check-instruction-kit-updates.ps1
 .\tools\select-project-language.ps1

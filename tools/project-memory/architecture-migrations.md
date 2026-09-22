@@ -10,6 +10,24 @@ patterns, templates, and accepted migrations.
 
 ## Entries
 
+### 2026-09-22: Bounded Runtime Context Pipeline
+
+Previous architecture: root entrypoints, migration history metadata, and the
+combined 07/08/09 runtime modules still imposed large fixed or route-level
+context costs. Update status, command routing, summary restore, and Git state
+also required separate tool loops.
+
+New architecture: focused 07/08/09 modules are selected by the route manifest;
+the old combined paths are compatibility indexes. `tools/get-gi-context.ps1`
+assembles update status, one routed packet, and bounded start evidence in one
+call. Metadata schema v2 stores an `applied_through` checkpoint with explicit
+addition/skip exceptions, and `config/gi-context-budgets.json` makes context
+ceilings executable regression gates.
+
+Reason: reduce fixed input tokens and repeated tool-loop amplification while
+preserving accepted behavior, legacy metadata compatibility, deterministic
+routing, and measurable safeguards against context growth.
+
 ### 2026-08-06: Optional Code Intelligence Federation
 
 Previous architecture: GI project memory could index exact source facts and

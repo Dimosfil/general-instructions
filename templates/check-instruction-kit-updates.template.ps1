@@ -171,9 +171,37 @@ if (-not $latestVersion) {
 }
 
 $installedVersion = [string]$kit.instruction_kit_version
-$applied = @()
-if ($kit.applied_migrations) {
-    $applied = @($kit.applied_migrations | ForEach-Object { [string]$_ })
+$legacyApplied = @()
+if (($kit.PSObject.Properties.Name -contains "applied_migrations") -and $kit.applied_migrations) {
+    $legacyApplied = @($kit.applied_migrations | ForEach-Object { [string]$_ })
+}
+$appliedThrough = ""
+$additionalApplied = @()
+$skippedMigrations = @()
+if (($kit.PSObject.Properties.Name -contains "migration_state") -and $kit.migration_state) {
+    if ($kit.migration_state.applied_through) {
+        $appliedThrough = [string]$kit.migration_state.applied_through
+    }
+    if ($kit.migration_state.additional_applied_migrations) {
+        $additionalApplied = @($kit.migration_state.additional_applied_migrations | ForEach-Object { [string]$_ })
+    }
+    if ($kit.migration_state.skipped_migrations) {
+        $skippedMigrations = @($kit.migration_state.skipped_migrations | ForEach-Object { [string]$_ })
+    }
+}
+
+function Test-MigrationApplied {
+    param([Parameter(Mandatory = $true)][string]$MigrationId)
+
+    if ($skippedMigrations -contains $MigrationId) {
+        return $false
+    }
+    if ($legacyApplied -contains $MigrationId -or $additionalApplied -contains $MigrationId) {
+        return $true
+    }
+    if ([string]::IsNullOrWhiteSpace($appliedThrough)) { return $false }
+
+    return [string]::CompareOrdinal($MigrationId, $appliedThrough) -le 0
 }
 
 Write-Host "Instruction kit: installed=$installedVersion available=$latestVersion"
@@ -211,7 +239,7 @@ $pending = @(Get-ChildItem -LiteralPath $migrationsPath -Filter "*.md" |
     Sort-Object Name |
     Where-Object {
         $migrationId = [System.IO.Path]::GetFileNameWithoutExtension($_.Name)
-        $applied -notcontains $migrationId
+        -not (Test-MigrationApplied -MigrationId $migrationId)
     })
 
 if (-not $pending) {
@@ -242,13 +270,23 @@ if (-not $RecordApplied) {
 Write-Detail "Recording migration metadata only after file changes were applied and verified."
 Write-Detail "If file changes are not complete, stop now and do not record migrations as applied."
 
-$newApplied = @($applied)
-foreach ($migration in $pending) {
-    $newApplied += [System.IO.Path]::GetFileNameWithoutExtension($migration.Name)
-}
+$allMigrationIds = @(Get-ChildItem -LiteralPath $migrationsPath -Filter "*.md" |
+    Where-Object { $_.Name -ne "README.md" } |
+    ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) } |
+    Sort-Object)
+$latestMigrationId = if ($allMigrationIds.Count -gt 0) { $allMigrationIds[-1] } else { "" }
 
 $kit.instruction_kit_version = $latestVersion
-$kit | Add-Member -NotePropertyName applied_migrations -NotePropertyValue $newApplied -Force
+$migrationState = [pscustomobject][ordered]@{
+    schema_version = 2
+    applied_through = $latestMigrationId
+    additional_applied_migrations = @()
+    skipped_migrations = @()
+}
+$kit | Add-Member -NotePropertyName migration_state -NotePropertyValue $migrationState -Force
+if ($kit.PSObject.Properties.Name -contains "applied_migrations") {
+    $kit.PSObject.Properties.Remove("applied_migrations")
+}
 $kit | Add-Member -NotePropertyName last_update_check_at -NotePropertyValue (Get-Date -Format "yyyy-MM-ddTHH:mm:ssK") -Force
 $kit | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $InstructionKitPath -Encoding UTF8
 

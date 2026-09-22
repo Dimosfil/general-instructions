@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.22
 
+- Added a compact runtime-context pipeline: 07/08/09 operational rules are now
+  split into focused modules, root and copied `AGENTS.md` entrypoints are size
+  bounded, and `tools/get-gi-context.ps1` returns update status, routed command
+  context, and bounded start-state evidence in one invocation.
+- Replaced the ever-growing `applied_migrations` array with migration-state
+  schema v2 (`applied_through`, explicit additions, and skips) while retaining
+  legacy metadata reads. Added executable byte/packet budgets so future changes
+  cannot silently restore large startup context.
 - Replaced whole-file `COMMANDS.md` loading for specific GI commands with a
   deterministic longest-prefix route manifest and one-call context resolver.
   `COMMANDS.md` is now a compact help index; the resolver returns only the

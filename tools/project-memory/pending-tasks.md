@@ -27,6 +27,9 @@ Planned changes:
 - [x] Restructure `COMMANDS.md` — reduced it to a compact help index, added the
   longest-prefix route manifest and bounded resolver, and retained detailed
   wording in a maintenance-only reference.
+- [x] Split overloaded 07/08/09 runtime modules, shrink both `AGENTS.md`
+  entrypoints, compact migration metadata, add the one-call context builder,
+  and enforce byte/packet budgets in regression tests.
 - [x] Update `DEVELOPMENT_PLAN.md` with current planned items.
 - [ ] Audit remaining templates (`AGENT_RUNBOOK.template.md`,
   `AGENT_WORKING_AGREEMENTS.template.md`) for similar duplication.

@@ -10,7 +10,7 @@ required verification. / Выполнять понятные задачи без
 
 - `patterns/AGENTS_RUNTIME/03-rule-precedence.md`: task authorization, material
   clarification, preparation before approval, and operation-scoped blockers.
-- `patterns/AGENTS_RUNTIME/07-startup-and-scope.md`: derive a bounded task goal
+- `patterns/AGENTS_RUNTIME/07-startup.md`: derive a bounded task goal
   without requiring a separate confirmation.
 - `patterns/AGENTS_RUNTIME/15-verification.md`: sufficient checks, required gates,
   and evidence-based reasons to repeat or expand verification.

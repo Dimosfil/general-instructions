@@ -19,6 +19,8 @@ architecture, and operational details in each project's own documentation.
   orientation, updates, testing, builds, deployment, and Git operations.
 - Resolves a specific GI command through a compact route manifest so the agent
   loads only that command's contract and mandatory policy modules.
+- Builds update status, routed context, and bounded `gi start` evidence in one
+  helper invocation, with regression-tested context-size budgets.
 - Offers templates, checklists, playbooks, and migration metadata so projects
   can adopt and update the instruction kit consistently.
 - Separates human-facing project documentation from durable agent project memory
@@ -48,6 +50,8 @@ General Instructions Library - переносимый, независимый о
   ориентации в проекте, обновлений, тестов, сборки, развёртывания и Git.
 - Разрешает конкретную команду `gi` через компактный manifest маршрутов, чтобы
   агент загружал только её контракт и обязательные модули правил.
+- Собирает статус обновлений, маршрутный контекст и ограниченный контекст
+  `gi start` одним вызовом и проверяет бюджеты размера регрессионными тестами.
 - Включает шаблоны, чек-листы, playbook-документы и данные миграций для
   согласованного внедрения и обновления набора инструкций.
 - Разделяет пользовательскую документацию проекта и долговременную память
@@ -90,8 +94,9 @@ Start with:
 
 - `VERSION.md` and `CHANGELOG.md`: current accepted instruction-kit version and
   release notes for copied project instruction kits.
-- `AGENTS.md`: compact runtime entrypoint for this repository; use its routing
-  table to open only the relevant modules under `patterns/AGENTS_RUNTIME/`.
+- `AGENTS.md`: compact runtime entrypoint for this repository; use
+  `tools/get-gi-context.ps1` and its routing table to open only the relevant
+  modules under `patterns/AGENTS_RUNTIME/`.
 - `COMMANDS.md`: common commands for using and maintaining the instruction kit.
 - `USER_GUIDE.md`: short user-facing overview of the main rules.
 - `INDEX.md`: catalog of available instructions and templates.

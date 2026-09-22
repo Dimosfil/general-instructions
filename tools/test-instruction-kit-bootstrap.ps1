@@ -17,16 +17,29 @@ $requiredFiles = @(
     "AGENTS.md",
     "COMMANDS.md",
     "config/gi-command-routes.json",
+    "config/gi-context-budgets.json",
     "tools/AGENT_WORKING_AGREEMENTS.md",
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
+    "tools/get-gi-context.ps1",
     "tools/resolve-gi-command.ps1",
     "tools/project-memory/instruction-kit.json",
     "tools/project-memory/rag-system.json",
     "tools/project-memory/code_intelligence.py",
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/GI_COMMAND_CONTRACTS.md",
-    "patterns/AGENTS_RUNTIME/07-startup-and-scope.md"
+    "patterns/AGENTS_RUNTIME/07-startup.md",
+    "patterns/AGENTS_RUNTIME/07-scope-and-evidence.md",
+    "patterns/AGENTS_RUNTIME/08-config-service.md",
+    "patterns/AGENTS_RUNTIME/08-task-manager.md",
+    "patterns/AGENTS_RUNTIME/08-sprint.md",
+    "patterns/AGENTS_RUNTIME/09-production.md",
+    "patterns/AGENTS_RUNTIME/09-deploy-gateway.md",
+    "patterns/AGENTS_RUNTIME/09-ftp.md",
+    "patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md",
+    "patterns/AGENTS_RUNTIME/09-testing.md",
+    "patterns/AGENTS_RUNTIME/09-build-and-install.md",
+    "patterns/AGENTS_RUNTIME/09-project-memory-operations.md"
 )
 
 try {
@@ -71,11 +84,14 @@ try {
         if ($metadata.config_service.enabled -ne $false) {
             throw "Bootstrap form '$($forms[$index])' did not default config-service integration to off."
         }
-        if ($metadata.applied_migrations -notcontains '2026.08.02.2__disambiguate_short_config_toggle_aliases') {
-            throw "Bootstrap form '$($forms[$index])' did not include the config-toggle alias migration."
+        if ($metadata.migration_state.schema_version -ne 2) {
+            throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.applied_migrations -notcontains '2026.08.06.1__add_code_intelligence_adapters') {
-            throw "Bootstrap form '$($forms[$index])' did not include the code-intelligence migration."
+        if ($metadata.migration_state.applied_through -ne '2026.09.22.2__compact_runtime_context_pipeline') {
+            throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
+        }
+        if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
+            throw "Bootstrap form '$($forms[$index])' retained the legacy migration array."
         }
 
         $ragConfig = Get-Content -Raw -LiteralPath (Join-Path $target "tools/project-memory/rag-system.json") | ConvertFrom-Json
@@ -84,7 +100,7 @@ try {
         }
 
         $configRuleText = [System.IO.File]::ReadAllText(
-            (Join-Path $target "patterns/AGENTS_RUNTIME/08-config-service-and-task-manager.md")
+            (Join-Path $target "patterns/AGENTS_RUNTIME/08-config-service.md")
         )
         $commandsText = [System.IO.File]::ReadAllText((Join-Path $target "COMMANDS.md"))
         foreach ($needle in @(
@@ -99,7 +115,7 @@ try {
         }
 
         $startupRuleText = [System.IO.File]::ReadAllText(
-            (Join-Path $target "patterns/AGENTS_RUNTIME/07-startup-and-scope.md")
+            (Join-Path $target "patterns/AGENTS_RUNTIME/07-startup.md")
         )
         foreach ($needle in @(
             'update_check.enabled: true',
@@ -114,14 +130,19 @@ try {
         }
 
         $agentStartText = [System.IO.File]::ReadAllText((Join-Path $target "tools/agent-start.ps1"))
-        if (-not $agentStartText.Contains("must apply pending migrations before task work")) {
-            throw "Bootstrap form '$($forms[$index])' retained an availability-only startup notice."
+        if (-not $agentStartText.Contains('tools/get-gi-context.ps1')) {
+            throw "Bootstrap form '$($forms[$index])' did not delegate startup to the one-call context builder."
         }
 
         $resolverOutput = (& (Join-Path $target "tools/resolve-gi-command.ps1") `
             -CommandText "gi start sprint" -PathsOnly | Out-String)
         if (-not $resolverOutput.Contains("GI route: start-sprint")) {
             throw "Bootstrap form '$($forms[$index])' did not install a working longest-prefix GI resolver."
+        }
+        $contextOutput = (& (Join-Path $target "tools/get-gi-context.ps1") `
+            -CommandText "gi start" -SkipUpdateCheck | Out-String)
+        if (-not $contextOutput.Contains("GI route: start") -or -not $contextOutput.Contains("===== GIT SNAPSHOT =====")) {
+            throw "Bootstrap form '$($forms[$index])' did not install a working one-call context builder."
         }
 
         $secretRuleText = [System.IO.File]::ReadAllText(

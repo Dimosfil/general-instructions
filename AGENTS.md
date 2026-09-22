@@ -1,169 +1,92 @@
 # Agent Instructions For This Repository
 
-This is the lightweight runtime entrypoint for the shared instruction library.
-Detailed rules live in focused modules under `patterns/AGENTS_RUNTIME/` so agents
-can load only the context needed for the current task.
-
-## Project Purpose
-
-Maintain reusable, project-agnostic AI-agent instructions, templates, patterns,
-checklists, and migration metadata for projects that copy this kit.
+This repository maintains reusable, project-agnostic AI-agent instructions,
+templates, patterns, checklists, and migration metadata. Detailed rules live in
+focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
 
 ## Loading Contract
 
-- Start with this file.
-- If the user points to this repository with `gi init`, `init`, `инит`, a
-  canonical URL, short repository name, Markdown link, or local checkout, read
-  root `BOOTSTRAP.md` before proposing any Git or project operation. This is
-  instruction-kit bootstrap into the active project, not repository replacement
-  or remote management.
-- Read only the modules needed for the current request.
-- Before introducing a clarification or approval gate, apply
-  `patterns/AGENTS_RUNTIME/03-rule-precedence.md` and check existing authorization.
-- Before acting on a concrete task, select and read the matching module(s);
-  this entrypoint alone is enough only for greetings or status-neutral replies.
-- Treat user wording such as "do by GI", "follow GI", "strictly by GI", and
-  equivalent local-language forms as a request for strict compliance with all
-  loaded GI rules. If an applicable rule cannot be followed, stop the affected
-  operation and report the concrete blocker or explicit deferral. Continue
-  independent authorized work without claiming the blocked step is complete.
-- On the first concrete task in a new chat/session, before task-specific work,
-  run a quiet staged GI update check. Prefer
-  `tools/check-instruction-kit-updates.ps1` when present. First compare the
-  installed metadata version with accepted-source `VERSION.md`. When they are
-  equal, report `pending migrations: 0` and do not read `CHANGELOG.md`,
-  `INDEX.md`, migration filenames, or migration bodies. Only when the accepted
-  version is newer, enumerate unapplied migration IDs and read the pending
-  migration files needed for application.
-  Treat `update_check.enabled: true` as authorization to check and apply; when
-  `auto_apply_pending_migrations` is absent, default it to `true` for backward
-  compatibility. Do not stop at “update available” or defer to `gi update`.
-  Skip application only for an explicit `false` setting or a concrete blocker
-  such as unavailable source, read-only files, unsafe scope, or merge conflict,
-  and name that blocker. The compact result must explicitly include the pending
-  migration count, including `0` when none are pending. Do not read `updates/`
-  for this startup check.
-- If the request contains a GI chat command such as `gi ...`, `ги ...`, or a
-  known mojibake form such as `РіРё ...`, treat it as a concrete task even when
-  the message is short. Resolve it with
-  `tools/resolve-gi-command.ps1 -CommandText "<exact user command>"`; the
-  resolver must select the longest matching alias and return only that command's
-  compact contract and mandatory context files. Use `COMMANDS.md` directly only
-  for help/index requests. Do not load the full command reference for a specific
-  command.
-- For state-changing GI commands that start, stop, restart, build, rebuild,
-  deploy, test, install, reset, update, commit, push, or manage task-manager
-  state, do not execute from memory, old chat examples, or a command name alone.
-  If the resolver, `config/gi-command-routes.json`, or a mandatory routed file is
-  unavailable, stop and report the missing path.
-- For `gi restart`, `gi reboot`, `gi docker`, `ги рестарт`, `ги ребут`,
-  `ги докер`, and equivalent aliases,
-  `patterns/AGENTS_RUNTIME/09-project-operation-commands.md` is mandatory
-  context before any process inspection, Docker build, stop, start, or success
-  report.
-- For broad or unclear work, read `patterns/AGENTS_RUNTIME/01-purpose.md`,
-  `patterns/AGENTS_RUNTIME/03-rule-precedence.md`,
-  `patterns/AGENTS_RUNTIME/06-tool-usage-and-token-economy.md`, and the most
-  relevant task module.
-- If a task crosses topics, read every matching module before acting.
-- Keep behavior compatible with the previous monolithic `AGENTS.md`; this split
-  changes retrieval shape, not the accepted rules.
+- Start here. This file alone is sufficient only for greetings and
+  status-neutral replies.
+- Before a concrete task, select the matching runtime modules. For a GI command,
+  run `tools/get-gi-context.ps1 -CommandText "<exact user command>"`; it performs
+  the staged update check, longest-prefix route resolution, and bounded context
+  retrieval. Use `COMMANDS.md` directly only for help or command-index requests.
+- For `gi init`, `init`, `инит`, a canonical URL, short repository name,
+  Markdown link, or local checkout, read `BOOTSTRAP.md` before any Git or project
+  operation. This means kit bootstrap into the active project, not repository
+  replacement or remote management.
+- On the first concrete task in a session, perform the staged update check even
+  without a GI command. Equal versions mean `pending migrations: 0` without
+  reading migration filenames, bodies, `CHANGELOG.md`, or `INDEX.md`. When the
+  accepted source is newer, enumerate and apply pending accepted migrations if
+  `update_check.enabled` and `auto_apply_pending_migrations` permit it; a missing
+  auto-apply setting defaults to `true`. Skip only for explicit `false` or a
+  concrete blocker, and report the pending count. Never inspect `updates/` for
+  this startup check.
+- Treat “do/follow strictly by GI” and equivalents as strict compliance with all
+  loaded GI rules. If one rule is blocked, report that operation precisely and
+  continue independent authorized work.
+- Before adding a clarification or approval gate, apply
+  `patterns/AGENTS_RUNTIME/03-rule-precedence.md` and existing authorization.
+- State-changing GI commands must never run from memory. If the context builder,
+  route manifest, resolver, or mandatory routed file is missing, stop that
+  operation and name the missing path.
+- Broad or unclear work requires modules `01-purpose.md`,
+  `03-rule-precedence.md`, `06-tool-usage-and-token-economy.md`, and the most
+  relevant task module. Cross-topic tasks require every matching module.
 
 ## Core Safety
 
-- Treat safety, secrets, destructive operations, and repository scope as highest
-  priority.
-- Do not treat a credential pasted into chat as an automatic blocker for the
-  whole task. Warn once without repeating the value, recommend rotation, and
-  continue every safe task step that does not require exposing or unsafely
-  persisting it. If one operation has no safe credential path, mark only that
-  operation blocked or unverified and continue the independent work.
-- Before filesystem writes, verify the active project root and target identity
-  from local instructions, README, manifests, git remote, service id, or project
-  memory. If the task appears to target a different product, repository, or
-  absolute path outside the current root, stop and warn the user unless the
-  current message explicitly authorizes that exact external path and action.
-- Do not add secrets, private project data, generated noise, or unrelated dirty
-  worktree changes to shared instructions.
-- Never add, stage, commit, or push content payloads such as LLM or other model
-  weights/checkpoints, photos, video, audio, datasets, archives, or similar
-  large binary artifacts. Keep them outside Git in project-approved artifact or
-  object storage, and commit only compact manifests, source URLs, checksums, or
-  retrieval instructions. Before staging, inspect new and unusually large files
-  and update project-local ignore rules for prohibited content. Allow an
-  exception only when the user explicitly approves that exact content and Git
-  storage approach for the current project.
-- Keep `tools/` for durable development and agent tooling only. Before writing
-  under `tools/`, classify the file. Allow scripts, adapters, bootstrap
-  commands, deploy/test helpers, agent-memory tooling, and small redacted
-  manifests. Do not put product runtime/source packages, product plugin
-  implementations, product tests, full product documentation, generated product
-  outputs, selected-run artifacts, screenshots, raw exports, build bundles,
-  downloaded datasets, or one-off work results there. `tools/project-memory/`
-  may hold compact implementation-driving specifications and evidence
-  references, but it is not a replacement for `src/`, `tests/`, `docs/`,
-  artifact/output/data/build/release folders, or product package directories.
-- A script is not durable tooling merely because it is Python, PowerShell, or
-  another executable file. Do not put single-task research probes, exploratory
-  scripts, scratch programs, ad hoc data collectors, or throwaway diagnostics
-  under `tools/` or create `tools/research`, `tools/probes`, or similar folders
-  for them. Prefer an inline command; when a file is genuinely needed, use the
-  project's documented ignored scratch/temp location outside `tools/`, remove
-  it after use, and preserve only necessary results in the documented evidence
-  or artifact location.
-- Keep reusable guidance project-agnostic; project-specific behavior belongs in
-  that project's local instructions, docs, runbook, or project memory.
+- Safety, secrets, destructive operations, and repository scope have highest
+  priority. Verify the active root and target identity before writes. An exact
+  external path and action require explicit authorization.
+- A pasted credential is not a blocker for unrelated work. Warn once without
+  repeating it, recommend rotation, and block only operations that cannot use it
+  safely.
+- Preserve unrelated dirty changes. Never add secrets, private project data,
+  generated noise, or unrelated changes to this shared library.
+- Never commit model weights, checkpoints, photos, video, audio, datasets,
+  archives, or similar large content payloads. Keep them in approved artifact
+  storage and commit only compact manifests, checksums, sources, or retrieval
+  instructions unless the user explicitly approves the exact exception.
+- `tools/` is for durable reusable development and agent tooling. Product code,
+  tests, docs, generated outputs, screenshots, raw exports, downloaded data,
+  build bundles, and one-off probes belong in their project-approved locations.
+  `tools/project-memory/` may hold compact implementation-driving knowledge and
+  evidence references, never bulk artifacts or a replacement for source/tests.
+- Keep shared guidance project-agnostic. Project-specific behavior belongs in
+  that project's local instructions, runbook, docs, or project memory.
 
-## Runtime Module Routing
+## Runtime Routing
 
-- Repository purpose, RAG startup, project memory, handoff summaries, connected
-  projects, and shared-rule propagation: `patterns/AGENTS_RUNTIME/01-purpose.md`
-- Repository map: `patterns/AGENTS_RUNTIME/02-repository-map.md`
-- Rule precedence and scope arbitration: `patterns/AGENTS_RUNTIME/03-rule-precedence.md`
-- Authoring reusable rules, configuration boundaries, code quality, project
-  info/stack inventory, and batch verification:
-  `patterns/AGENTS_RUNTIME/04-content-and-authoring.md`
-- Windows shell and networking policy: `patterns/AGENTS_RUNTIME/05-windows-command-policy.md`
-- Token economy, verification command lookup, `gi info`, `gi stack`,
-  `gi logic`, `gi refactor`, feature contracts, and large-output handling:
-  `patterns/AGENTS_RUNTIME/06-tool-usage-and-token-economy.md`
-- Startup, restore, project goal, bug evidence, PDF inspection, repository
-  cleanup, filesystem boundaries, and first-message handling:
-  `patterns/AGENTS_RUNTIME/07-startup-and-scope.md`
-- Config-service, service guide/contract lookup, task manager commands,
-  manager-backed and local sprint commands, and web-service port registration:
-  `patterns/AGENTS_RUNTIME/08-config-service-and-task-manager.md`
-- Dev/prod online service publication, FTP deploy, project build/rebuild,
-  restart/reboot,
-  Docker/Compose restart, first test, full test, default reset, installer
-  packaging, SQL/vector inspection, and project/RAG rebuild commands:
-  `patterns/AGENTS_RUNTIME/09-project-operation-commands.md`
-- Nested repositories, private local app data, `gi logic` external sources,
-  product-plan intent signals, and missing required entities:
-  `patterns/AGENTS_RUNTIME/10-private-scope-and-missing-context.md`
-- Project, commit, task, and response language preferences:
-  `patterns/AGENTS_RUNTIME/11-language-preferences.md`
-- UI focus, app launch focus, and frontend verification expectations:
-  `patterns/AGENTS_RUNTIME/12-ui-and-focus.md`
-- Progress-update style: `patterns/AGENTS_RUNTIME/13-progress-updates.md`
-- Update intake and `updates/` handling: `patterns/AGENTS_RUNTIME/14-update-intake.md`
-- Verification policy: `patterns/AGENTS_RUNTIME/15-verification.md`
-- Git policy: `patterns/AGENTS_RUNTIME/16-git-policy.md`
-- Agent role office, specialist role routing, and narrow professional scopes:
-  `patterns/AGENTS_RUNTIME/17-agent-role-office.md`
-- Startup product engineering, business-first delivery, .NET/frontend
-  expectations, and professional communication:
-  `patterns/AGENTS_RUNTIME/18-startup-product-engineering.md`
-- Game modding projects, `gi mod`, and selected game install path handling:
-  `patterns/AGENTS_RUNTIME/19-game-modding.md`
+- Purpose, RAG, memory, summaries, connected projects: `01-purpose.md`
+- Repository map: `02-repository-map.md`
+- Precedence and scope: `03-rule-precedence.md`
+- Reusable authoring, configuration, quality, inventories: `04-content-and-authoring.md`
+- Windows shell and networking: `05-windows-command-policy.md`
+- Token economy, info/stack/logic/refactor: `06-tool-usage-and-token-economy.md`
+- Startup and restore: `07-startup.md`; scope, evidence, cleanup: `07-scope-and-evidence.md`
+- Config service: `08-config-service.md`; task manager: `08-task-manager.md`; sprints: `08-sprint.md`
+- Publication: `09-production.md`; deploy gateway: `09-deploy-gateway.md`; FTP: `09-ftp.md`
+- Runtime/restart/defaults: `09-runtime-and-defaults.md`; tests: `09-testing.md`
+- Build/install: `09-build-and-install.md`; project-memory operations: `09-project-memory-operations.md`
+- Private scope and missing context: `10-private-scope-and-missing-context.md`
+- Language: `11-language-preferences.md`; UI: `12-ui-and-focus.md`; progress: `13-progress-updates.md`
+- Update intake: `14-update-intake.md`; verification: `15-verification.md`; Git: `16-git-policy.md`
+- Roles: `17-agent-role-office.md`; product engineering: `18-startup-product-engineering.md`
+- Game modding: `19-game-modding.md`
 
-## Library Entrypoints
+All paths above are under `patterns/AGENTS_RUNTIME/`. Compatibility indexes
+`07-startup-and-scope.md`, `08-config-service-and-task-manager.md`, and
+`09-project-operation-commands.md` contain no operational rules.
 
-- `README.md`: human-facing overview and high-level entry points.
-- `INDEX.md`: catalog of shared instructions and reusable files.
-- `COMMANDS.md`: compact user-facing command index.
-- `config/gi-command-routes.json`: deterministic lazy route manifest for GI
-  commands.
-- `tools/resolve-gi-command.ps1`: bounded command-context resolver.
-- `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline project workflow.
-- `templates/AGENTS.template.md`: copied project-local runtime entrypoint.
+## Entrypoints
+
+- `README.md`: human overview; `INDEX.md`: catalog; `COMMANDS.md`: compact help.
+- `config/gi-command-routes.json`: lazy routes;
+  `config/gi-context-budgets.json`: regression budgets.
+- `tools/get-gi-context.ps1`: update + route + bounded start context;
+  `tools/resolve-gi-command.ps1`: route-only resolver.
+- `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline workflow;
+  `templates/AGENTS.template.md`: project entrypoint.
