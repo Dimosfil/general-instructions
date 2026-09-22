@@ -6,11 +6,17 @@
   messages; reply briefly and ask what the user wants to do next.
 - On the first concrete task in a new chat/session, before task-specific
   startup restore, planning, implementation, or command execution, perform a
-  quiet GI instruction update check. Use the current project's
-  `tools/project-memory/instruction-kit.json` when present, resolve the accepted
-  shared-instruction source, and read only `VERSION.md`, `CHANGELOG.md`,
-  `INDEX.md`, and pending files under `migrations/`. Apply pending accepted
-  migrations before continuing with task-specific work. In instruction-kit
+  quiet staged GI instruction update check. Prefer the project-local
+  `tools/check-instruction-kit-updates.ps1` helper when present so file reads do
+  not enter model context. Resolve the accepted shared-instruction source and
+  first compare only the installed version in
+  `tools/project-memory/instruction-kit.json` with accepted-source `VERSION.md`.
+  If the versions are equal, report `pending migrations: 0` and stop the update
+  check without reading `CHANGELOG.md`, `INDEX.md`, migration directory entries,
+  or migration bodies. If the accepted version is newer, enumerate unapplied
+  migration IDs, then read and apply only those pending migration files before
+  task-specific work. `CHANGELOG.md` and `INDEX.md` are optional maintenance
+  references, not normal startup inputs. In instruction-kit
   metadata, `update_check.enabled: true` authorizes both checking and applying;
   a missing `auto_apply_pending_migrations` field defaults to `true` for
   backward compatibility. Finding a newer version is not a completed startup

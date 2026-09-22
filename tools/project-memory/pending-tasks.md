@@ -24,8 +24,9 @@ Planned changes:
 - [x] Audit template duplication in `templates/AGENTS.template.md` — removed
   ~67 lines of duplicated `gi` rules (lines 136–203), replaced with short
   cross-references.
-- [x] Restructure `COMMANDS.md` — removed duplicated policy paragraphs, kept
-  compact command reference with source references.
+- [x] Restructure `COMMANDS.md` — reduced it to a compact help index, added the
+  longest-prefix route manifest and bounded resolver, and retained detailed
+  wording in a maintenance-only reference.
 - [x] Update `DEVELOPMENT_PLAN.md` with current planned items.
 - [ ] Audit remaining templates (`AGENT_RUNBOOK.template.md`,
   `AGENT_WORKING_AGREEMENTS.template.md`) for similar duplication.

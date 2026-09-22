@@ -49,6 +49,9 @@ function Assert-SourceRoot {
     $required = @(
         "BOOTSTRAP.md",
         "COMMANDS.md",
+        "config/gi-command-routes.json",
+        "tools/resolve-gi-command.ps1",
+        "patterns/GI_COMMAND_CONTRACTS.md",
         "VERSION.md",
         "templates/AGENTS.template.md",
         "templates/instruction-kit.template.json",
@@ -148,6 +151,8 @@ try {
     $mappings = @(
         @{ Source = "templates/AGENTS.template.md"; Target = "AGENTS.md" },
         @{ Source = "COMMANDS.md"; Target = "COMMANDS.md" },
+        @{ Source = "config/gi-command-routes.json"; Target = "config/gi-command-routes.json" },
+        @{ Source = "tools/resolve-gi-command.ps1"; Target = "tools/resolve-gi-command.ps1" },
         @{ Source = "templates/AGENT_WORKING_AGREEMENTS.template.md"; Target = "tools/AGENT_WORKING_AGREEMENTS.md" },
         @{ Source = "templates/AGENT_RUNBOOK.template.md"; Target = "tools/AGENT_RUNBOOK.md" },
         @{ Source = "templates/agent-start.template.ps1"; Target = "tools/agent-start.ps1" },
@@ -192,6 +197,7 @@ try {
         "CONFIGURATION_BOUNDARIES.md",
         "DEVELOPMENT_TOOL_PRODUCT_BOUNDARIES.md",
         "EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
+        "GI_COMMAND_CONTRACTS.md",
         "PROJECT_DOCUMENTATION_LAYERS.md",
         "PROJECT_DEV_PROD_SERVICES.md",
         "QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md",

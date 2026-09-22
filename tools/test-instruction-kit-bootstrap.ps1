@@ -16,13 +16,16 @@ $forms = @(
 $requiredFiles = @(
     "AGENTS.md",
     "COMMANDS.md",
+    "config/gi-command-routes.json",
     "tools/AGENT_WORKING_AGREEMENTS.md",
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
+    "tools/resolve-gi-command.ps1",
     "tools/project-memory/instruction-kit.json",
     "tools/project-memory/rag-system.json",
     "tools/project-memory/code_intelligence.py",
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
+    "patterns/GI_COMMAND_CONTRACTS.md",
     "patterns/AGENTS_RUNTIME/07-startup-and-scope.md"
 )
 
@@ -101,7 +104,9 @@ try {
         foreach ($needle in @(
             'update_check.enabled: true',
             'auto_apply_pending_migrations',
-            'Finding a newer version is not a completed startup'
+            'Finding a newer version is not a completed startup',
+            'If the versions are equal',
+            'without reading `CHANGELOG.md`'
         )) {
             if (-not $startupRuleText.Contains($needle)) {
                 throw "Bootstrap form '$($forms[$index])' is missing startup auto-application rule text: $needle"
@@ -111,6 +116,12 @@ try {
         $agentStartText = [System.IO.File]::ReadAllText((Join-Path $target "tools/agent-start.ps1"))
         if (-not $agentStartText.Contains("must apply pending migrations before task work")) {
             throw "Bootstrap form '$($forms[$index])' retained an availability-only startup notice."
+        }
+
+        $resolverOutput = (& (Join-Path $target "tools/resolve-gi-command.ps1") `
+            -CommandText "gi start sprint" -PathsOnly | Out-String)
+        if (-not $resolverOutput.Contains("GI route: start-sprint")) {
+            throw "Bootstrap form '$($forms[$index])' did not install a working longest-prefix GI resolver."
         }
 
         $secretRuleText = [System.IO.File]::ReadAllText(

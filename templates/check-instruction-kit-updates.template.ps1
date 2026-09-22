@@ -178,6 +178,29 @@ if ($kit.applied_migrations) {
 
 Write-Host "Instruction kit: installed=$installedVersion available=$latestVersion"
 
+$versionComparison = -1
+if ($installedVersion) {
+    try {
+        $versionComparison = ([version]$installedVersion).CompareTo([version]$latestVersion)
+    }
+    catch {
+        if ($installedVersion -eq $latestVersion) {
+            $versionComparison = 0
+        }
+    }
+}
+
+if ($versionComparison -eq 0) {
+    Write-Host "Pending instruction migrations: 0"
+    exit 0
+}
+
+if ($versionComparison -gt 0) {
+    Write-Host "Accepted source is older than the installed instruction kit."
+    Write-Host "Pending instruction migrations: 0"
+    exit 0
+}
+
 if (-not (Test-Path -LiteralPath $migrationsPath)) {
     Write-Host "No migrations folder found at $migrationsPath."
     exit 0
@@ -192,7 +215,7 @@ $pending = @(Get-ChildItem -LiteralPath $migrationsPath -Filter "*.md" |
     })
 
 if (-not $pending) {
-    Write-Host "No pending instruction migrations."
+    Write-Host "Pending instruction migrations: 0"
     exit 0
 }
 

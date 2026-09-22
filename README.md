@@ -17,6 +17,8 @@ architecture, and operational details in each project's own documentation.
   verification, Windows tooling, documentation, and project startup.
 - Includes `gi` chat commands for common workflows such as bootstrap, project
   orientation, updates, testing, builds, deployment, and Git operations.
+- Resolves a specific GI command through a compact route manifest so the agent
+  loads only that command's contract and mandatory policy modules.
 - Offers templates, checklists, playbooks, and migration metadata so projects
   can adopt and update the instruction kit consistently.
 - Separates human-facing project documentation from durable agent project memory
@@ -44,6 +46,8 @@ General Instructions Library - переносимый, независимый о
   проекта.
 - Предоставляет чат-команды `gi` для типовых операций: инициализации,
   ориентации в проекте, обновлений, тестов, сборки, развёртывания и Git.
+- Разрешает конкретную команду `gi` через компактный manifest маршрутов, чтобы
+  агент загружал только её контракт и обязательные модули правил.
 - Включает шаблоны, чек-листы, playbook-документы и данные миграций для
   согласованного внедрения и обновления набора инструкций.
 - Разделяет пользовательскую документацию проекта и долговременную память

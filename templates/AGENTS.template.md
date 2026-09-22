@@ -35,8 +35,13 @@ implemented against each goal criterion and list remaining gaps as blockers.
   operation and report the concrete blocker or explicit deferral. Continue
   independent authorized work without claiming the blocked step is complete.
 - On the first concrete task in a new chat/session, before task-specific work,
-  run a quiet GI update check: read local instruction-kit metadata and accepted
-  source `VERSION.md`/`migrations/`, and apply pending accepted migrations.
+  run a quiet staged GI update check. Prefer
+  `tools/check-instruction-kit-updates.ps1` when present. First compare the
+  installed metadata version with accepted-source `VERSION.md`. When they are
+  equal, report `pending migrations: 0` and do not read `CHANGELOG.md`,
+  `INDEX.md`, migration filenames, or migration bodies. Only when the accepted
+  version is newer, enumerate unapplied migration IDs and read the pending
+  migration files needed for application.
   Treat `update_check.enabled: true` as authorization to check and apply; when
   `auto_apply_pending_migrations` is absent, default it to `true` for backward
   compatibility. Do not stop at “update available” or defer to `gi update`.
@@ -47,13 +52,17 @@ implemented against each goal criterion and list remaining gaps as blockers.
   for this startup check.
 - If the request contains a GI chat command such as `gi ...`, `ги ...`, or a
   known mojibake form such as `РіРё ...`, treat it as a concrete task even when
-  the message is short. First read `COMMANDS.md` when present, then read every
-  runtime module routed to that command before acting.
+  the message is short. Resolve it with
+  `tools/resolve-gi-command.ps1 -CommandText "<exact user command>"`; the
+  resolver must select the longest matching alias and return only that command's
+  compact contract and mandatory context files. Use `COMMANDS.md` directly only
+  for help/index requests. Do not load the full command reference for a specific
+  command.
 - For state-changing GI commands that start, stop, restart, build, rebuild,
   deploy, test, install, reset, update, commit, push, or manage task-manager
-  state, do
-  not execute from memory, old chat examples, or a command name alone. If the
-  command's routed module is unavailable, stop and report the missing path.
+  state, do not execute from memory, old chat examples, or a command name alone.
+  If the resolver, `config/gi-command-routes.json`, or a mandatory routed file is
+  unavailable, stop and report the missing path.
 - For `gi restart`, `gi reboot`, `gi docker`, `ги рестарт`, `ги ребут`,
   `ги докер`, and equivalent aliases,
   `patterns/AGENTS_RUNTIME/09-project-operation-commands.md` is mandatory

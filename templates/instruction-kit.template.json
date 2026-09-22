@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.05.1",
+  "instruction_kit_version": "2026.09.22.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -179,14 +179,17 @@
     "2026.08.02.2__disambiguate_short_config_toggle_aliases",
     "2026.08.05.1__keep_model_and_media_content_out_of_git",
     "2026.08.06.1__add_code_intelligence_adapters",
-    "2026.09.05.1__scope_approval_and_verification_gates"
+    "2026.09.05.1__scope_approval_and_verification_gates",
+    "2026.09.22.1__add_lazy_gi_routing_and_staged_update_check"
   ],
   "copied_files": [
     "AGENTS.md",
     "COMMANDS.md",
+    "config/gi-command-routes.json",
     "tools/AGENT_WORKING_AGREEMENTS.md",
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
+    "tools/resolve-gi-command.ps1",
     "tools/project-memory/README.md",
     "tools/project-memory/build_project_memory_index.py",
     "tools/project-memory/build_chroma_index.py",
@@ -201,6 +204,7 @@
     "tools/project-memory/rag-system.json",
     "tools/project-memory/specs/technology-stack.md",
     "patterns/EXTERNAL_DOCUMENTATION_RETRIEVAL.md",
+    "patterns/GI_COMMAND_CONTRACTS.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
     "patterns/AGENT_ROLE_OFFICE.md",
     "patterns/STARTUP_PRODUCT_ENGINEERING.md",

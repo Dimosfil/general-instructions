@@ -99,6 +99,13 @@ function Write-InstructionKitUpdateNotice {
         Write-Host "Available: $latestVersion"
         Write-Host "Accepted update detected. The first-task startup check must apply pending migrations before task work unless it reports a concrete blocker."
     }
+    elseif ($installedVersion -eq $latestVersion) {
+        Write-Host ""
+        Write-Host "== Instruction Kit =="
+        Write-Host "Installed: $installedVersion"
+        Write-Host "Available: $latestVersion"
+        Write-Host "Pending migrations: 0"
+    }
 }
 
 function Write-SmallFile {

@@ -44,6 +44,24 @@ Reason: preserve accepted behavior while reducing startup context, making
 project onboarding faster, and giving agents an explicit map for task-specific
 rule retrieval.
 
+### 2026-09-22: Lazy GI Command Routing And Staged Update Check
+
+Previous architecture: every specific `gi` command loaded the full command
+reference before its runtime modules, and first-task update guidance allowed
+equal-version checks to pull changelog, index, and migration inventory into
+model context.
+
+New architecture: `config/gi-command-routes.json` and
+`tools/resolve-gi-command.ps1` select the longest matching alias and return one
+compact command contract plus only its mandatory context files. `COMMANDS.md`
+is a bounded help index. Startup update checks compare installed and accepted
+versions first; equal versions return zero pending migrations immediately, while
+newer accepted versions enumerate and load only unapplied migrations.
+
+Reason: reduce persistent conversation context and tool-result amplification
+without weakening command safety, deterministic routing, or migration
+application guarantees.
+
 ### 2026-06-21: Coherent Batch Verification Pattern
 
 Previous architecture: batch-completion expectations were spread across

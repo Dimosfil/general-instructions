@@ -9,10 +9,10 @@ Reusable instructions in this repository are grouped by job.
   into the current active project.
 - `CHANGELOG.md`: accepted instruction-kit changes by version.
 - `config/gi-main.json`: bootstrap pointer to the local GI config service.
-- `COMMANDS.md`: user-facing agent prompts and helper commands for
-  bootstrapping projects, restoring context, configuring Git commit languages
-  and agent working languages, checking instruction updates, and maintaining
-  this library.
+- `config/gi-command-routes.json`: deterministic longest-prefix route manifest
+  that maps GI aliases to compact contracts and mandatory context files.
+- `COMMANDS.md`: compact user-facing GI command index; specific command
+  execution is routed lazily instead of loading the full command reference.
 - `USER_GUIDE.md`: short user-facing overview of the main instructions and
   rules.
 - `VERSION.md`: current accepted instruction-kit version.
@@ -43,8 +43,12 @@ Reusable instructions in this repository are grouped by job.
 - `tools/install-instruction-kit.ps1`: portable deterministic installer that
   resolves supported GI sources and creates missing project-local instruction
   files without changing Git configuration.
+- `tools/resolve-gi-command.ps1`: returns one selected GI command contract and
+  its mandatory context files as a bounded context packet.
 - `tools/test-instruction-kit-bootstrap.ps1`: regression checks for full URL,
   short repository, Markdown-link, and local-checkout bootstrap forms.
+- `tools/test-gi-context-routing.ps1`: regression checks for alias precedence,
+  routed context, command-index budget, and staged update checks.
 
 ## Core Playbooks
 
@@ -112,6 +116,9 @@ Reusable instructions in this repository are grouped by job.
   and optional n8n automation.
 - `patterns/GIT_WORKFLOW.md`: git policy, explicit commit requests, dirty
   worktrees, and commit-message language preferences.
+- `patterns/GI_COMMAND_CONTRACTS.md`: detailed command wording retained for
+  maintenance reference; runtime commands use the route manifest and routed
+  modules instead of loading this file wholesale.
 - `patterns/INSTRUCTION_KIT_MIGRATIONS.md`: migration-style update workflow for
   copied project instruction kits.
 - `patterns/MODEL_ROUTING_AND_COST_CONTROL.md`: model-routing and cost-control

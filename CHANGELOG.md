@@ -2,6 +2,21 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.09.22
+
+- Replaced whole-file `COMMANDS.md` loading for specific GI commands with a
+  deterministic longest-prefix route manifest and one-call context resolver.
+  `COMMANDS.md` is now a compact help index; the resolver returns only the
+  selected contract and mandatory policy files, while the previous detailed
+  command wording remains available as a maintenance reference.
+- Added a two-stage startup update check. Equal installed and accepted versions
+  now return `pending migrations: 0` without reading changelog, index, migration
+  directory entries, or migration bodies. A newer accepted version enumerates
+  and loads only unapplied migration files.
+- Added regression coverage for alias precedence, routed-file existence,
+  command-index size, copied-project routing, and equal/newer update paths in
+  migration `2026.09.22.1__add_lazy_gi_routing_and_staged_update_check`.
+
 ## 2026.09.05
 
 - Removed unconditional goal-confirmation pauses for clear bounded tasks.
