@@ -88,7 +88,7 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.27.2__keep_git_finish_git_only') {
+        if ($metadata.migration_state.applied_through -ne '2026.09.27.3__label_spec_status_and_maintain_index') {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {

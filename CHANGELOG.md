@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.27
 
+- Required focused project-memory specs to distinguish current, planned, and
+  historical behavior when ambiguous, with a last-check date and source/test
+  evidence for current implementation claims. Adding, renaming, moving, or
+  retiring a spec now updates the project-memory index and verifies its links
+  during implementation. Migration:
+  `2026.09.27.3__label_spec_status_and_maintain_index`.
 - Clarified that feature-contract writeback and verification happen during
   implementation. Git-finish commands perform the requested Git operation and
   compact Git safety checks; they do not launch a project-memory audit or

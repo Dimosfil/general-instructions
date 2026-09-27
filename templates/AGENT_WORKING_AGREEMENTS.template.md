@@ -57,6 +57,10 @@
   architecture decisions in focused specs, or confirm the existing spec covers
   them, before the implementation task is complete. Git finish does not repeat
   this product-contract audit.
+- Mark current, planned, and historical behavior clearly in affected specs;
+  support current-implementation claims with a last-check date and source or
+  test paths. When adding, renaming, moving, or retiring a spec, update its
+  project-memory index entry and verify the relative link in the same change.
 - Keep project documentation separate from project memory. Put overview,
   user-visible functionality, stack, commands, operations, and troubleshooting
   in `README.md`, `docs/`, or the runbook. Put algorithms, business rules,

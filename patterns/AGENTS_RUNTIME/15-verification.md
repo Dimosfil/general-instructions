@@ -30,6 +30,8 @@ affected user-facing documentation separately, and verify links and current
 implementation maps. A report, handoff summary, ticket, or commit message does
 not satisfy this contract check. Do not expand the check into a whole-project
 audit when the change is narrow.
+When a spec is added, renamed, moved, or retired, check the project-memory
+README or canonical spec index and its relative links in the same batch.
 
 After API, admin-tool, or service writes that include Russian or other
 non-ASCII text, read the saved value back through the API or product UI and
