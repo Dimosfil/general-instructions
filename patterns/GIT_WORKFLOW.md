@@ -71,6 +71,12 @@ language preferences.
 
 Before any `gi коммит`, `gi пуш`, `gi коммит пуш`, or `gi только пуш` action:
 
+- for scoped implementation changes, compare the changed behavior and
+  architecture with the relevant project-memory specs, current source/tests,
+  and affected user-facing docs; complete missing task-scoped contract updates
+  before staging, or stop and report the precise gap when they require work
+  outside the established scope; a summary or passing tests alone is not this
+  check;
 - finish every task-scoped filesystem write first, including project-memory,
   handoff, generated metadata, formatting, and verification-driven corrections;
   do not create or update a tracked task artifact after staging or committing;

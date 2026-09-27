@@ -2,6 +2,18 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.09.27
+
+- Added a scoped contract check before completing meaningful implementation
+  work and before staging it for commit or push. Agents compare changed
+  behavior and architecture with source, tests, focused project-memory specs,
+  and affected user documentation; missing authorized writeback is completed
+  before Git finish, while out-of-scope gaps stop the finish. Kept project
+  memory compact by linking source and evidence instead of duplicating them.
+- Routed `ги пуш` and related Git finish commands through the contract check,
+  added a route regression assertion, and propagated the guidance in migration
+  `2026.09.27.1__verify_contracts_before_git_finish`.
+
 ## 2026.09.22
 
 - Restricted Git-finish commands to finalizing an already established task

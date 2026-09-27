@@ -10,6 +10,12 @@ and project commit-message language preferences.
   last mutation and after commit/push. Local and upstream HEAD equality does not
   prove that the worktree is clean. Never report a complete clean finish while
   a new task-scoped diff remains.
+- Before staging a scoped implementation change, perform the contract check in
+  `15-verification.md`: compare changed behavior and architecture with focused
+  project-memory specs, affected docs, source, and tests. Repair an omission
+  within the original task scope before staging; if the original scope does not
+  authorize the needed write, stop the finish and report the exact gap. A
+  passing test suite or clean `git diff --check` does not prove this alignment.
 - Treat Git finish as finalization of an already established scope, not as a new
   implementation or repair task. Resolve scope only from the active conversation
   task or explicit user-selected changes; never classify the whole dirty

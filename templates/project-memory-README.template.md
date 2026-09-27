@@ -77,6 +77,12 @@ Split documents by meaning. Keep feature algorithms, business logic,
 architecture contracts, and implementation mapping searchable as separate
 focused files instead of one giant document.
 
+Keep specs concise and current. Revise the relevant contract when behavior
+changes; do not append a transcript of every task. Link to source, tests, docs,
+and evidence rather than copying their full contents here. Generated SQLite or
+vector indexes may help retrieval as the project grows, but the reviewable
+contracts remain focused Markdown files.
+
 Keep the current technology stack in project documentation. For compatibility,
 GI-enabled projects may keep the stack inventory at:
 

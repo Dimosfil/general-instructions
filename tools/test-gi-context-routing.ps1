@@ -139,9 +139,11 @@ try {
 
     $gitFinishPacket = (& $resolverPath -CommandText "ги пуш" | Out-String)
     foreach ($needle in @(
-        "already established scoped change set",
+        "established scoped change set",
         "never classify the whole dirty",
-        "does not by itself authorize product fixes"
+        "does not by itself authorize product fixes",
+        "compare the scoped diff with the relevant durable",
+        "perform the contract check in"
     )) {
         Assert-Contains $gitFinishPacket $needle "Git-finish route is missing scope boundary text: $needle"
     }

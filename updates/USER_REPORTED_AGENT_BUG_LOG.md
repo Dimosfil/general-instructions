@@ -11,6 +11,21 @@ or edit that project.
 
 ## Entries
 
+### 2026-09-27: Feature contracts were incomplete at push time
+
+- Symptom: after a previous push, detailed workflow rules remained only in
+  human-facing documentation; the agent wrote only part of the durable
+  project-memory contract and left stale references.
+- Evidence summary: two user-provided screenshots show the agent acknowledging
+  the missed pre-push GI-memory audit and making local corrections after push.
+- Likely rule gap: memory writeback was required during feature work, but the
+  Git-finish route did not require a scoped contract completeness check before
+  staging, so passing tests and Git checks could mask omitted behavior.
+- Privacy review: screenshots, project name, machine paths, source details,
+  commit identifiers, credentials, and raw logs were not copied into this log.
+- Status: accepted and repaired in
+  `2026.09.27.1__verify_contracts_before_git_finish`.
+
 ### 2026-09-22: Git finish expanded into application repair and runtime work
 
 - Symptom: an agent handling `ги пуш` treated a mixed dirty worktree as one
