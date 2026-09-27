@@ -138,20 +138,30 @@ try {
     }
 
     $gitFinishPacket = (& $resolverPath -CommandText "ги пуш" | Out-String)
+    $gitFinishRoute = @($manifest.routes | Where-Object { $_.id -eq "git-finish" })
+    if ($gitFinishRoute.Count -ne 1 -or
+        @($gitFinishRoute[0].context_files) -contains "patterns/AGENTS_RUNTIME/15-verification.md") {
+        throw "Git-finish route must not load feature-contract verification."
+    }
     foreach ($needle in @(
-        "established scoped change set",
+        "Perform only the requested Git finish",
         "never classify the whole dirty",
         "does not by itself authorize product fixes",
-        "compare the scoped diff with the relevant durable",
-        "perform the contract check in"
+        "does not start a project-memory audit"
     )) {
         Assert-Contains $gitFinishPacket $needle "Git-finish route is missing scope boundary text: $needle"
     }
+    if ($gitFinishPacket.Contains("===== patterns/AGENTS_RUNTIME/15-verification.md =====") -or
+        $gitFinishPacket.Contains("compare the scoped diff with the relevant durable")) {
+        throw "Git-finish route loaded the feature-contract verification workflow."
+    }
+    $featureVerificationText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/AGENTS_RUNTIME/15-verification.md"))
+    Assert-Contains $featureVerificationText "before calling the task complete" "Development-time contract verification disappeared."
     $gitWorkflowText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/GIT_WORKFLOW.md"))
     foreach ($needle in @(
         "Never infer that all dirty files",
-        "do not repair unrelated code or tests",
-        "rebuild/restart services solely because"
+        "authorize unrelated code or test repairs",
+        "rebuilds/restarts"
     )) {
         Assert-Contains $gitWorkflowText $needle "Git workflow is missing finish-only guard text: $needle"
     }

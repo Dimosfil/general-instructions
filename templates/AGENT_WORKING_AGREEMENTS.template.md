@@ -52,12 +52,11 @@
   work, update the relevant project-memory specification in the same scoped
   change. Write it so another agent could rebuild the behavior on a different
   language, framework, or platform. A handoff summary is not a substitute.
-- Before declaring such work complete or staging it for commit, compare the
-  scoped diff with the relevant spec, source, tests, and affected docs. Capture
-  changed behavior, branches, failure handling, invariants, and architecture
-  decisions in focused specs, or confirm the existing spec already covers them.
-  Stop a Git finish on a specific unresolved contract gap outside the original
-  task scope.
+- During such work, compare changed behavior with the relevant spec, source,
+  tests, and affected docs. Capture branches, failure handling, invariants, and
+  architecture decisions in focused specs, or confirm the existing spec covers
+  them, before the implementation task is complete. Git finish does not repeat
+  this product-contract audit.
 - Keep project documentation separate from project memory. Put overview,
   user-visible functionality, stack, commands, operations, and troubleshooting
   in `README.md`, `docs/`, or the runbook. Put algorithms, business rules,

@@ -71,12 +71,6 @@ language preferences.
 
 Before any `gi коммит`, `gi пуш`, `gi коммит пуш`, or `gi только пуш` action:
 
-- for scoped implementation changes, compare the changed behavior and
-  architecture with the relevant project-memory specs, current source/tests,
-  and affected user-facing docs; complete missing task-scoped contract updates
-  before staging, or stop and report the precise gap when they require work
-  outside the established scope; a summary or passing tests alone is not this
-  check;
 - finish every task-scoped filesystem write first, including project-memory,
   handoff, generated metadata, formatting, and verification-driven corrections;
   do not create or update a tracked task artifact after staging or committing;
@@ -91,12 +85,12 @@ Before any `gi коммит`, `gi пуш`, `gi коммит пуш`, or `gi то
 - stop and explain the blocker if scope is ambiguous, conflicts are present,
   secrets may be included, the project is not a git repository, no remote is
   configured for a push, or push fails.
-- Run project-local mandatory verification gates only when they apply to the
-  established scope. A failing check authorizes a correction only when the
-  failure was caused by that scoped work and the correction is already within
-  the original task authorization. Otherwise report the failure and stop the
-  finish; do not repair unrelated code or tests, delete runtime state, or
-  rebuild/restart services solely because `gi пуш` was requested.
+- Do not start a project-memory audit, feature work, or new product test cycle
+  solely because Git finish was requested. Implementation work completes its
+  own writeback and verification. Follow a more specific project-local
+  finish-time gate when one is expressly required; a failing gate does not
+  authorize unrelated code or test repairs, runtime deletion, or service
+  rebuilds/restarts.
 
 For `gi коммит`:
 

@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.27
 
+- Clarified that feature-contract writeback and verification happen during
+  implementation. Git-finish commands perform the requested Git operation and
+  compact Git safety checks; they do not launch a project-memory audit or
+  product test cycle. Migration
+  `2026.09.27.2__keep_git_finish_git_only` supersedes the Git-finish portion of
+  `.1` below.
 - Added a scoped contract check before completing meaningful implementation
   work and before staging it for commit or push. Agents compare changed
   behavior and architecture with source, tests, focused project-memory specs,
@@ -12,7 +18,8 @@ Accepted changes for the shared instruction library.
   memory compact by linking source and evidence instead of duplicating them.
 - Routed `ги пуш` and related Git finish commands through the contract check,
   added a route regression assertion, and propagated the guidance in migration
-  `2026.09.27.1__verify_contracts_before_git_finish`.
+  `2026.09.27.1__verify_contracts_before_git_finish` (Git-finish gate superseded
+  by `.2`).
 
 ## 2026.09.22
 

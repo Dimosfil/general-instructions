@@ -24,7 +24,9 @@ or edit that project.
 - Privacy review: screenshots, project name, machine paths, source details,
   commit identifiers, credentials, and raw logs were not copied into this log.
 - Status: accepted and repaired in
-  `2026.09.27.1__verify_contracts_before_git_finish`.
+  `2026.09.27.1__verify_contracts_before_git_finish`; the Git-finish gate was
+  superseded by `2026.09.27.2__keep_git_finish_git_only` after the user clarified
+  that contract writeback belongs to implementation, not commit/push.
 
 ### 2026-09-22: Git finish expanded into application repair and runtime work
 

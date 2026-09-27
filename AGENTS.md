@@ -56,9 +56,9 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
   build bundles, and one-off probes belong in their project-approved locations.
   `tools/project-memory/` may hold compact implementation-driving knowledge and
   evidence references, never bulk artifacts or a replacement for source/tests.
-- Before finishing meaningful behavior or architecture work, verify that the
-  scoped code, tests, affected docs, and focused project-memory contracts agree;
-  do this before staging for a commit or push.
+- During meaningful behavior or architecture work, keep scoped code, tests,
+  affected docs, and focused project-memory contracts aligned before the
+  implementation task is complete.
 - Keep shared guidance project-agnostic. Project-specific behavior belongs in
   that project's local instructions, runbook, docs, or project memory.
 

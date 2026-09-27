@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.27.1",
+  "instruction_kit_version": "2026.09.27.2",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -91,7 +91,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.09.27.1__verify_contracts_before_git_finish",
+    "applied_through": "2026.09.27.2__keep_git_finish_git_only",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }
