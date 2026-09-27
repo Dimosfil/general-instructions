@@ -105,8 +105,8 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/AI_ENGINEERING_BENCHMARKS.md`: benchmark pattern for proving AI
   engineering cost reduction while preserving task quality.
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
-  baseline for OOP, SOLID, DRY, clean-code, separation of concerns,
-  interfaces/adapters/contracts, abstraction discipline, and verification.
+  baseline for design principles across paradigms, component systems, quality
+  criteria, interfaces/adapters/contracts, and verification.
 - `patterns/API_KEY_SECRET_SAFETY.md`: API-key and secret-safety rules for
   keeping credentials out of code, client bundles, logs, generated artifacts,
   and project memory; separating dev/staging/prod credentials; using managed

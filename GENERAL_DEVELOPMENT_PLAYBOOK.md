@@ -38,14 +38,13 @@ It should contain:
   generated product, demo, task, customer, folder slug, stack, workflow run, or
   UI label. Treat those as task data, selected run state, fixtures, manifests,
   or project-local config, not as the runtime identity.
-- Application architecture and code-quality rules: follow OOP, SOLID, DRY,
-  clean-code, maintainability, extensibility, and established architecture
-  patterns such as clean architecture, microservices, DDD, and equivalent
-  stack-appropriate patterns where they fit the stack; keep domain/product
-  logic, orchestration, UI, persistence, filesystem, external services, and
-  configuration in separate layers with explicit contracts. Reduce duplicated
-  knowledge and behavior, but avoid premature abstractions before the shared
-  meaning is clear.
+- Application architecture and code-quality rules: choose a design approach
+  suited to the problem and stack; apply SOLID, DRY, KISS, and YAGNI to the
+  relevant modules, functions, objects, components, or systems; keep
+  domain/product logic, orchestration, UI, persistence, filesystem, external
+  services, and configuration in separate layers with explicit contracts.
+  Reduce duplicated knowledge and behavior, but avoid premature abstractions
+  before the shared meaning is clear.
 - Technology stack inventory: keep
   `tools/project-memory/specs/technology-stack.md` current for GI-enabled
   projects, with verified runtimes, frameworks, package managers, build/test
@@ -442,13 +441,15 @@ should collapse by default or render as compact final status unless the user is
 debugging them.
 
 Before meaningful implementation, choose an architecture shape that fits the
-stack and keep it visible in code: ports/adapters, layered architecture, clean
-architecture, MVC/MVVM, feature modules, service contracts, or another
-established pattern. Apply SOLID where OOP exists, DRY where duplicated
-knowledge or behavior has a clear shared meaning, and equivalent module and
-contract boundaries in functional or scripting stacks. Do not mix orchestration,
-domain logic, UI rendering, persistence, external service calls, and config
-loading in one unstructured layer.
+problem and stack, and keep it visible in code: ports/adapters, layered
+architecture, clean architecture, MVC/MVVM, feature modules, object components,
+ECS, service contracts, or another established pattern. Apply SOLID by its
+intent to the contracts and responsibilities in use; apply DRY, KISS, and YAGNI
+to keep abstractions grounded in current needs. Prefer composition when
+combining independent capabilities. Do not mix orchestration, domain logic, UI
+rendering, persistence, external service calls, and config loading in one
+unstructured layer. Record consequential quality goals and architecture
+tradeoffs with evidence, following `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 
 ## 9. Establish Quality Gates
 

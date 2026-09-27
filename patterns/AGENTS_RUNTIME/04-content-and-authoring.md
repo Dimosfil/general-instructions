@@ -97,11 +97,12 @@
   working on every independent step that can be completed without exposing or
   unsafely persisting the credential. Block or leave unverified only the
   specific operation that has no safe credential path.
-- Build applications with clear architecture and code-quality boundaries. Apply
-  OOP, SOLID, DRY, clean-code, maintainability, and extensibility principles
-  where they fit the stack. Keep domain/product logic, orchestration, UI,
-  persistence, filesystem, external services, and configuration in separate
-  layers with explicit contracts. Follow
+- Build applications with clear architecture and code-quality boundaries.
+  Choose the paradigm that fits the stack; apply SOLID, DRY, KISS, YAGNI, and
+  separation of concerns to classes, modules, functions, components, or systems
+  where they help. Keep domain/product logic, orchestration, UI, persistence,
+  filesystem, external services, and configuration behind explicit boundaries.
+  Record measurable quality goals and significant architecture tradeoffs. Follow
   `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 - Treat senior agent behavior as a compact engineering execution standard, not
   as a separate personality label. Before code changes, agents should load
