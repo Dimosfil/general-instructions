@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.27.3",
+  "instruction_kit_version": "2026.09.28.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -91,7 +91,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.09.27.3__label_spec_status_and_maintain_index",
+    "applied_through": "2026.09.28.1__isolate_optional_config_failures",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

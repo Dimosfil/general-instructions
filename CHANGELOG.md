@@ -2,6 +2,14 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.09.28
+
+- Classified external settings as optional or startup-critical. Optional
+  integrations now require safe disabled defaults, validated overrides, and
+  isolated backend/UI unavailability for invalid configuration; critical core
+  settings require clear startup failure and local startup/test coverage.
+  Migration: `2026.09.28.1__isolate_optional_config_failures`.
+
 ## 2026.09.27
 
 - Required focused project-memory specs to distinguish current, planned, and

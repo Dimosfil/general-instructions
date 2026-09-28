@@ -33,6 +33,12 @@ It should contain:
   scoring thresholds, and model-specific normalization as configurable
   resources, dedicated modules, pipeline components, or provider-swappable
   adapters, not inline application logic.
+- Configuration resilience: classify settings by startup criticality. Give
+  optional capabilities safe disabled defaults, validate external overrides,
+  and disable their backend action and UI control when values are absent or
+  invalid without stopping the core service. Validate required core settings
+  during local startup and tests; report their errors clearly and without
+  revealing secrets.
 - Development-tool/product boundary rules: orchestrators, task managers, agent
   harnesses, generators, and scaffolding systems must not bind themselves to one
   generated product, demo, task, customer, folder slug, stack, workflow run, or

@@ -85,6 +85,13 @@
   source of truth or temporary compatibility layer is genuinely undocumented.
   Follow
   `patterns/CONFIGURATION_BOUNDARIES.md`.
+- Classify external variables as startup-critical or optional by their actual
+  dependency. Give optional variables safe defaults, validate overrides, and
+  disable only the dependent backend/UI capability when an optional value is
+  absent or invalid. Keep the core running and surface a sanitized reason;
+  never use dummy credentials as valid defaults. Fail clearly for invalid
+  startup-critical values and cover them in local startup and tests. Follow
+  `patterns/CONFIGURATION_BOUNDARIES.md`.
 - Treat API keys and external-service tokens as secret boundaries, not ordinary
   config values. Keep them out of source, client bundles, public frontend env
   vars, logs, traces, chat, generated artifacts, and project memory; prefer
