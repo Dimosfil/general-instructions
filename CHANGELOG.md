@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.09.28
 
+- Added guidance for building large modular services with agents: system maps,
+  module passports, public contracts, coordinated ownership, assembled workflow
+  verification, and safe module evolution. Added three copyable templates and
+  installer support. Migration:
+  `2026.09.28.2__add_modular_service_agent_guidance`.
 - Classified external settings as optional or startup-critical. Optional
   integrations now require safe disabled defaults, validated overrides, and
   isolated backend/UI unavailability for invalid configuration; critical core

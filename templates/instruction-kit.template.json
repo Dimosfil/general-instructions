@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.09.28.1",
+  "instruction_kit_version": "2026.09.28.2",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -53,6 +53,7 @@
     "patterns/AGENTS_RUNTIME/19-game-modding.md",
     "patterns/API_KEY_SECRET_SAFETY.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
+    "patterns/MODULAR_SERVICE_ENGINEERING.md",
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/CONFIGURATION_BOUNDARIES.md",
@@ -66,6 +67,9 @@
     "patterns/TECHNOLOGY_STACK_INVENTORY.md",
     "skills/TODO-skill-name/SKILL.md",
     "templates/TECHNOLOGY_STACK.template.md",
+    "templates/SYSTEM_MAP.template.md",
+    "templates/MODULE_PASSPORT.template.md",
+    "templates/MODULE_CONTRACT.template.md",
     "tools/AGENT_RUNBOOK.md",
     "tools/AGENT_WORKING_AGREEMENTS.md",
     "tools/agent-start.ps1",
@@ -91,7 +95,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.09.28.1__isolate_optional_config_failures",
+    "applied_through": "2026.09.28.2__add_modular_service_agent_guidance",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

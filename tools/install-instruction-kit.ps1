@@ -173,7 +173,10 @@ try {
         @{ Source = "templates/system-preferences.template.json"; Target = "tools/project-memory/system-preferences.json" },
         @{ Source = "templates/rag-system.template.json"; Target = "tools/project-memory/rag-system.json" },
         @{ Source = "tools/project-memory/code_intelligence.py"; Target = "tools/project-memory/code_intelligence.py" },
-        @{ Source = "templates/TECHNOLOGY_STACK.template.md"; Target = "tools/project-memory/specs/technology-stack.md" }
+        @{ Source = "templates/TECHNOLOGY_STACK.template.md"; Target = "tools/project-memory/specs/technology-stack.md" },
+        @{ Source = "templates/SYSTEM_MAP.template.md"; Target = "templates/SYSTEM_MAP.template.md" },
+        @{ Source = "templates/MODULE_PASSPORT.template.md"; Target = "templates/MODULE_PASSPORT.template.md" },
+        @{ Source = "templates/MODULE_CONTRACT.template.md"; Target = "templates/MODULE_CONTRACT.template.md" }
     )
 
     foreach ($mapping in $mappings) {
@@ -197,6 +200,7 @@ try {
         "AGENT_ROLE_OFFICE.md",
         "API_KEY_SECRET_SAFETY.md",
         "ARCHITECTURE_AND_CODE_QUALITY.md",
+        "MODULAR_SERVICE_ENGINEERING.md",
         "COHERENT_BATCH_VERIFICATION.md",
         "CODE_INTELLIGENCE_ADAPTERS.md",
         "CONFIGURATION_BOUNDARIES.md",

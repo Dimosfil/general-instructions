@@ -51,6 +51,11 @@ It should contain:
   services, and configuration in separate layers with explicit contracts.
   Reduce duplicated knowledge and behavior, but avoid premature abstractions
   before the shared meaning is clear.
+- Modular system rules: for a large service with independently developed parts,
+  keep a system map, module passports, and public contracts in the project.
+  Assign data and contract ownership, coordinate dependent agent work through
+  agreed boundaries, and verify the assembled workflow. Follow
+  `patterns/MODULAR_SERVICE_ENGINEERING.md` and start from its linked templates.
 - Technology stack inventory: keep
   `tools/project-memory/specs/technology-stack.md` current for GI-enabled
   projects, with verified runtimes, frameworks, package managers, build/test

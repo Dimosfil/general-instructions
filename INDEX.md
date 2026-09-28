@@ -107,6 +107,9 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`: architecture and code-quality
   baseline for design principles across paradigms, component systems, quality
   criteria, interfaces/adapters/contracts, and verification.
+- `patterns/MODULAR_SERVICE_ENGINEERING.md`: system map, module passports,
+  public contracts, agent coordination, integration checks, and module evolution
+  for large services.
 - `patterns/API_KEY_SECRET_SAFETY.md`: API-key and secret-safety rules for
   keeping credentials out of code, client bundles, logs, generated artifacts,
   and project memory; separating dev/staging/prod credentials; using managed
@@ -238,6 +241,10 @@ Reusable instructions in this repository are grouped by job.
   memory and runtime noise.
 - `templates/instruction-kit.template.json`: copied provenance and local update
   check configuration for project instruction kits.
+- `templates/MODULE_CONTRACT.template.md`: contract for a public module
+  interaction, errors, side effects, compatibility, and verification.
+- `templates/MODULE_PASSPORT.template.md`: concise responsibility, ownership,
+  dependency, runtime, and evidence record for a module.
 - `templates/select-git-commit-languages.template.ps1`: interactive project
   setup command for commit-message language preferences.
 - `templates/select-system-language.template.ps1`: interactive project setup
@@ -247,6 +254,8 @@ Reusable instructions in this repository are grouped by job.
 - `templates/SKILL.template.md`: starter `SKILL.md` for a self-contained agent
   skill module.
 - `templates/SUMMARY.template.md`: handoff summary template.
+- `templates/SYSTEM_MAP.template.md`: starter map of product outcome, modules,
+  data owners, interaction edges, and shared rules.
 - `templates/task-managers.template.json`: starter project-local task-manager
   configuration for optional plan sync skills.
 - `templates/TECHNOLOGY_STACK.template.md`: starter project-memory technology

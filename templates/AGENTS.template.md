@@ -60,6 +60,10 @@ TODO: describe the product, users, and primary runtime surface.
 - During meaningful behavior or architecture work, keep scoped code, tests,
   affected docs, and focused project-memory contracts aligned before the
   implementation task is complete.
+- For large modular systems, keep a project-local system map, focused module
+  passports, and explicit public contracts. Agree on ownership and integration
+  edges before independent agents implement both sides; verify assembled
+  workflows. Follow `patterns/MODULAR_SERVICE_ENGINEERING.md`.
 - Do not revert user changes without an explicit request. Ask before destructive
   operations, broad formatting churn, dependency replacement, data migration,
   public contract changes, or unrelated expansion.

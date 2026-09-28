@@ -59,6 +59,10 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
 - During meaningful behavior or architecture work, keep scoped code, tests,
   affected docs, and focused project-memory contracts aligned before the
   implementation task is complete.
+- For large modular systems, keep a project-local system map, focused module
+  passports, and explicit public contracts. Agree on ownership and integration
+  edges before independent agents implement both sides; verify assembled
+  workflows. Follow `patterns/MODULAR_SERVICE_ENGINEERING.md`.
 - Keep shared guidance project-agnostic. Project-specific behavior belongs in
   that project's local instructions, runbook, docs, or project memory.
 

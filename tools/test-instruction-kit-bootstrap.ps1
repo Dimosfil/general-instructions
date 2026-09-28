@@ -29,6 +29,10 @@ $requiredFiles = @(
     "tools/project-memory/code_intelligence.py",
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/GI_COMMAND_CONTRACTS.md",
+    "patterns/MODULAR_SERVICE_ENGINEERING.md",
+    "templates/SYSTEM_MAP.template.md",
+    "templates/MODULE_PASSPORT.template.md",
+    "templates/MODULE_CONTRACT.template.md",
     "patterns/AGENTS_RUNTIME/07-startup.md",
     "patterns/AGENTS_RUNTIME/07-scope-and-evidence.md",
     "patterns/AGENTS_RUNTIME/08-config-service.md",
@@ -88,7 +92,7 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.28.1__isolate_optional_config_failures') {
+        if ($metadata.migration_state.applied_through -ne '2026.09.28.2__add_modular_service_agent_guidance') {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
