@@ -11,12 +11,12 @@ or edit that project.
 
 ## Entries
 
-### 2026-09-29: Project default blocked an explicit GI push
+### 2026-09-29: Project ban conflicted with an explicit GI push
 
-- Symptom: an agent refused `ги пуш`, treating a project no-commit rule as a
-  permanent veto while copied GI instructions defined the command as commit
-  then push. It suggested a manual commit and retry even though that command
-  has no push-only fallback; the branch also lacked an upstream.
+- Symptom: an agent refused `ги пуш` because project entrypoints expressly
+  prohibited agent commits, while copied GI instructions defined the command
+  as commit then push. It suggested a manual commit and retry even though that
+  command has no push-only fallback; the branch also lacked an upstream.
 - Evidence summary: user screenshots and authorized inspection of the target
   instruction files and Git branch state confirmed the conflicting local rule.
 - Likely rule gap: routed Git context did not directly distinguish a default
