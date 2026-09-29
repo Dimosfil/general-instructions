@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.09.29
+
+- Clarified that an explicit `ги пуш` authorizes a scoped commit despite a
+  project default that users normally commit, while an intentional absolute
+  project ban still blocks it. Required an upstream destination decision before
+  staging for a push and prohibited advising a manual commit followed by the
+  same commit-and-push command. Migration:
+  `2026.09.29.1__clarify_gi_push_project_rules_and_upstream`.
+
 ## 2026.09.28
 
 - Added guidance for building large modular services with agents: system maps,

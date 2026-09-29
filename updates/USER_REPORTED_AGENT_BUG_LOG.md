@@ -11,6 +11,23 @@ or edit that project.
 
 ## Entries
 
+### 2026-09-29: Project default blocked an explicit GI push
+
+- Symptom: an agent refused `ги пуш`, treating a project no-commit rule as a
+  permanent veto while copied GI instructions defined the command as commit
+  then push. It suggested a manual commit and retry even though that command
+  has no push-only fallback; the branch also lacked an upstream.
+- Evidence summary: user screenshots and authorized inspection of the target
+  instruction files and Git branch state confirmed the conflicting local rule.
+- Likely rule gap: routed Git context did not directly distinguish a default
+  user-commit preference from an unconditional project ban or require an
+  upstream destination decision before staging.
+- Privacy review: no screenshots, private project paths, product source,
+  credentials, or raw logs were copied into this entry.
+- Status: accepted and repaired in
+  `2026.09.29.1__clarify_gi_push_project_rules_and_upstream`; the specific
+  project's entrypoints were aligned separately with the user's authorization.
+
 ### 2026-09-27: Feature contracts were incomplete at push time
 
 - Symptom: after a previous push, detailed workflow rules remained only in

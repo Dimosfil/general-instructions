@@ -92,7 +92,7 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.28.2__add_modular_service_agent_guidance') {
+        if ($metadata.migration_state.applied_through -ne '2026.09.29.1__clarify_gi_push_project_rules_and_upstream') {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
