@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.01
+
+- Defined standalone commit/push scope for new chats: explicit selection takes
+  priority, then the active task, otherwise all eligible current repository
+  changes. Missing chat history or a large dirty-file count no longer triggers
+  a scope confirmation. Retained content exclusions, scope conflict handling,
+  and Git-only finalization. Migration:
+  `2026.10.01.1__define_standalone_git_finish_scope`.
+
 ## 2026.09.29
 
 - Clarified that an explicit `ги пуш` authorizes a scoped commit despite a

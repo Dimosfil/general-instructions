@@ -145,6 +145,11 @@ try {
     }
     foreach ($needle in @(
         "Perform only the requested Git finish",
+        "standalone repository scope",
+        "command-defined scope also applies in a new chat",
+        "exclude secrets",
+        "inseparable excluded",
+        '`gi only push` never selects working-tree files',
         "never classify the whole dirty",
         "does not by itself authorize product fixes",
         "does not start a project-memory audit"

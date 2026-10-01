@@ -11,6 +11,21 @@ or edit that project.
 
 ## Entries
 
+### 2026-10-01: Standalone GI push asks for scope in every new chat
+
+- Symptom: a standalone `ги пуш` in a new chat repeatedly asks whether all
+  current changes or selected files should be committed.
+- Evidence: user reports consistent reproduction; supplied screenshot cites
+  the GI requirement to clarify scope when the current task does not define it.
+- Cause: finish scope required current-conversation task history or explicit
+  path selection, leaving a standalone command without a default scope.
+- Resolution: explicit selection, then active task, then all eligible current
+  repository changes for standalone commit commands. Keep safety exclusions
+  and ask only about concrete scope conflicts or inseparable excluded changes.
+- Privacy: no screenshot, private path, raw log, credentials, or project data
+  copied into shared guidance.
+- Status: accepted in `2026.10.01.1__define_standalone_git_finish_scope`.
+
 ### 2026-09-29: Project ban conflicted with an explicit GI push
 
 - Symptom: an agent refused `ги пуш` because project entrypoints expressly
