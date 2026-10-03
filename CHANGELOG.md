@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.03
 
+- Generalized the project tester: `gi test` / `ги тест` now returns information
+  and local settings; `gi test start` / `ги тест старт` executes the selected
+  scenario. Kept full-system checks under explicit aliases and a separate
+  module. Added local-contract scaffolding, checkpoint/restoration/evidence
+  rules, routing regressions, and bootstrap propagation. Migration:
+  `2026.10.03.2__generalize_project_tester_info_and_start`.
+
 - Required dedicated ignored directories for rebuildable builds, frontend
   bundles, installers, and intermediate output. Kept build inputs versioned,
   required authorized tracked-output cleanup to preserve local files and update

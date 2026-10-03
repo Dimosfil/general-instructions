@@ -41,6 +41,8 @@ Reusable instructions in this repository are grouped by job.
   architecture rewrites and platform migrations for this repository.
 - `tools/project-memory/specs/build-output-policy.md`: build-output layout,
   Git exclusion, cleanup authorization, and verification contract.
+- `tools/project-memory/specs/project-tester.md`: information/start commands,
+  project-local scenario ownership, run evidence, and completion contract.
 
 ## Bootstrap Tools
 
@@ -89,8 +91,10 @@ Reusable instructions in this repository are grouped by job.
   workflow.
 - `patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md`: restart, Docker,
   first-launch, and default-reset operations.
-- `patterns/AGENTS_RUNTIME/09-testing.md`: test-plan, release/full-test, and
-  project verification operations.
+- `patterns/AGENTS_RUNTIME/09-testing.md`: shared tester information/start,
+  local scenario discovery, authorization, checkpoints, evidence, and restoration.
+- `patterns/AGENTS_RUNTIME/09-full-testing.md`: explicit full-system verification
+  with documented reset and live-surface requirements.
 - `patterns/AGENTS_RUNTIME/09-build-and-install.md`: project build/rebuild and
   installer packaging operations, dedicated ignored output directories, and
   clean-checkout build verification.
@@ -204,6 +208,10 @@ Reusable instructions in this repository are grouped by job.
   `skills/task-manager-plans/references/managers/worknest.md`.
 
 ## Templates
+
+- `templates/PROJECT_TESTING.template.md`: optional project-owned testing
+  contract scaffold for scenario selection, local settings, run evidence,
+  checkpoints, restoration, and completion gates.
 
 - `templates/AGENTS.template.md`: starter root `AGENTS.md` for a project.
 - `templates/AGENT_RUNBOOK.template.md`: starter project runbook.

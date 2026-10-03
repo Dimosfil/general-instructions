@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.03.1",
+  "instruction_kit_version": "2026.10.03.2",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -33,6 +33,7 @@
     "patterns/AGENTS_RUNTIME/09-build-and-install.md",
     "patterns/AGENTS_RUNTIME/09-deploy-gateway.md",
     "patterns/AGENTS_RUNTIME/09-ftp.md",
+    "patterns/AGENTS_RUNTIME/09-full-testing.md",
     "patterns/AGENTS_RUNTIME/09-production.md",
     "patterns/AGENTS_RUNTIME/09-project-memory-operations.md",
     "patterns/AGENTS_RUNTIME/09-project-operation-commands.md",
@@ -67,6 +68,7 @@
     "templates/SYSTEM_MAP.template.md",
     "templates/MODULE_PASSPORT.template.md",
     "templates/MODULE_CONTRACT.template.md",
+    "templates/PROJECT_TESTING.template.md",
     "tools/AGENT_RUNBOOK.md",
     "tools/AGENT_WORKING_AGREEMENTS.md",
     "tools/agent-start.ps1",
@@ -92,7 +94,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.03.1__separate_build_output_from_source_git",
+    "applied_through": "2026.10.03.2__generalize_project_tester_info_and_start",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

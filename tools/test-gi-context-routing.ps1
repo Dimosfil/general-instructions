@@ -117,9 +117,19 @@ try {
         @{ Command = "ги старт оптимизация подумать"; Route = "start" },
         @{ Command = "gi start sprint"; Route = "start-sprint" },
         @{ Command = "gi plan"; Route = "task-plan" },
-        @{ Command = "gi full test"; Route = "test" },
-        @{ Command = "gi release test"; Route = "test" },
-        @{ Command = "gi system test"; Route = "test" },
+        @{ Command = "gi test"; Route = "test" },
+        @{ Command = "ги тест"; Route = "test" },
+        @{ Command = "gi тест"; Route = "test" },
+        @{ Command = "gi testing"; Route = "test" },
+        @{ Command = "ги тест старт выбранный сценарий"; Route = "test-start" },
+        @{ Command = "gi test start selected scenario"; Route = "test-start" },
+        @{ Command = "gi тест старт"; Route = "test-start" },
+        @{ Command = "gi testing start"; Route = "test-start" },
+        @{ Command = "gi test plan"; Route = "test-plan" },
+        @{ Command = "ги тест таск выбранный сценарий"; Route = "test-task" },
+        @{ Command = "gi full test"; Route = "test-full" },
+        @{ Command = "gi release test"; Route = "test-full" },
+        @{ Command = "gi system test"; Route = "test-full" },
         @{ Command = "gi testing task"; Route = "test-task" },
         @{ Command = "gi задача теста"; Route = "test-task" },
         @{ Command = "ги менеджер"; Route = "task-manager" },
@@ -134,8 +144,29 @@ try {
     )
     foreach ($case in $routeCases) {
         $output = (& $resolverPath -CommandText $case.Command -PathsOnly | Out-String)
-        Assert-Contains $output ("GI route: {0}" -f $case.Route) "Command '$($case.Command)' resolved incorrectly."
+        $routeLine = @($output -split '\r?\n' | Where-Object { $_ -like 'GI route:*' })
+        if ($routeLine.Count -ne 1 -or $routeLine[0] -ne ("GI route: {0}" -f $case.Route)) {
+            throw "Command '$($case.Command)' resolved incorrectly."
+        }
     }
+
+    $testInfoRoute = @($manifest.routes | Where-Object { $_.id -eq "test" })[0]
+    if (@($testInfoRoute.context_files).Count -ne 1 -or
+        $testInfoRoute.context_files[0] -ne "patterns/AGENTS_RUNTIME/09-testing.md") {
+        throw "Tester information must load only the shared tester rule."
+    }
+    Assert-Contains $testInfoRoute.contract "do not execute tests or mutate runtime state" "Tester information became executable."
+    $testStartPacket = (& $resolverPath -CommandText "ги тест старт выбранный сценарий" | Out-String)
+    Assert-Contains $testStartPacket "project-local scenario" "Test start lost local scenario ownership."
+    Assert-Contains $testStartPacket "restoration-required" "Test start lost restoration state."
+    if ($testStartPacket.Contains("===== BEGIN patterns/AGENTS_RUNTIME/09-full-testing.md =====") -or
+        $testStartPacket.Contains("===== BEGIN patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md =====")) {
+        throw "Ordinary test start must not inherit full-system reset instructions."
+    }
+    $testFullPacket = (& $resolverPath -CommandText "gi full test" | Out-String)
+    Assert-Contains $testFullPacket "===== BEGIN patterns/AGENTS_RUNTIME/09-full-testing.md =====" "Full-system test lost its dedicated flow."
+    Assert-Contains $testFullPacket "default/factory baseline" "Full-system test lost baseline reset."
+    Assert-Contains $testFullPacket "Exercise live required" "Full-system test lost live-surface checks."
 
     $gitFinishPacket = (& $resolverPath -CommandText "ги пуш" | Out-String)
     $gitFinishRoute = @($manifest.routes | Where-Object { $_.id -eq "git-finish" })

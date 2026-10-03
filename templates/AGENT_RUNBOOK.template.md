@@ -16,6 +16,15 @@ Every command should be copy-pasteable from the project root.
 
 ## Test
 
+GI chat commands: `gi test` explains the local tester contract; `gi test start`
+executes its selected scenario. `gi full test` requests full-system verification.
+Link the canonical scenario inventory, settings, and behavioral contracts here:
+TODO. Use `templates/PROJECT_TESTING.template.md` as an authoring scaffold when
+no local contract exists. Keep project URLs, modes, roles, inputs, commands,
+evidence paths, and restoration procedures in the local contract.
+
+Literal test commands:
+
 ```powershell
 # TODO
 ```

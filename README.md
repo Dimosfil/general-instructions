@@ -17,6 +17,9 @@ architecture, and operational details in each project's own documentation.
   verification, Windows tooling, documentation, and project startup.
 - Includes `gi` chat commands for common workflows such as bootstrap, project
   orientation, updates, testing, builds, deployment, and Git operations.
+- Provides a shared tester: `gi test` explains local scenarios and settings;
+  `gi test start` runs the selected scenario with evidence and restoration.
+  Each project owns its modes, links, inputs, commands, and runtime settings.
 - Resolves a specific GI command through a compact route manifest so the agent
   loads only that command's contract and mandatory policy modules.
 - Builds update status, routed context, and hard-capped `gi start` evidence in
@@ -51,6 +54,9 @@ General Instructions Library - переносимый, независимый о
   проекта.
 - Предоставляет чат-команды `gi` для типовых операций: инициализации,
   ориентации в проекте, обновлений, тестов, сборки, развёртывания и Git.
+- Задаёт общее правило тестировщика: `ги тест` показывает сценарии и настройки,
+  `ги тест старт` запускает выбранный сценарий с отчётом и восстановлением.
+  Режимы, ссылки, исходники, команды и настройки определяются каждым проектом.
 - Разрешает конкретную команду `gi` через компактный manifest маршрутов, чтобы
   агент загружал только её контракт и обязательные модули правил.
 - Собирает статус обновлений, маршрутный контекст и ограниченный контекст

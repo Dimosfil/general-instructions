@@ -81,7 +81,8 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
 - Startup and restore: `07-startup.md`; scope, evidence, cleanup: `07-scope-and-evidence.md`
 - Config service: `08-config-service.md`; task manager: `08-task-manager.md`; sprints: `08-sprint.md`
 - Publication: `09-production.md`; deploy gateway: `09-deploy-gateway.md`; FTP: `09-ftp.md`
-- Runtime/restart/defaults: `09-runtime-and-defaults.md`; tests: `09-testing.md`
+- Runtime/restart/defaults: `09-runtime-and-defaults.md`; tester: `09-testing.md`
+- Full-system verification: `09-full-testing.md`
 - Build/install: `09-build-and-install.md`; project-memory operations: `09-project-memory-operations.md`
 - Private scope and missing context: `10-private-scope-and-missing-context.md`
 - Language: `11-language-preferences.md`; UI: `12-ui-and-focus.md`; progress: `13-progress-updates.md`

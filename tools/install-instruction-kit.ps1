@@ -176,7 +176,8 @@ try {
         @{ Source = "templates/TECHNOLOGY_STACK.template.md"; Target = "tools/project-memory/specs/technology-stack.md" },
         @{ Source = "templates/SYSTEM_MAP.template.md"; Target = "templates/SYSTEM_MAP.template.md" },
         @{ Source = "templates/MODULE_PASSPORT.template.md"; Target = "templates/MODULE_PASSPORT.template.md" },
-        @{ Source = "templates/MODULE_CONTRACT.template.md"; Target = "templates/MODULE_CONTRACT.template.md" }
+        @{ Source = "templates/MODULE_CONTRACT.template.md"; Target = "templates/MODULE_CONTRACT.template.md" },
+        @{ Source = "templates/PROJECT_TESTING.template.md"; Target = "templates/PROJECT_TESTING.template.md" }
     )
 
     foreach ($mapping in $mappings) {

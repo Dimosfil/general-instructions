@@ -33,6 +33,7 @@ $requiredFiles = @(
     "templates/SYSTEM_MAP.template.md",
     "templates/MODULE_PASSPORT.template.md",
     "templates/MODULE_CONTRACT.template.md",
+    "templates/PROJECT_TESTING.template.md",
     "patterns/AGENTS_RUNTIME/07-startup.md",
     "patterns/AGENTS_RUNTIME/07-scope-and-evidence.md",
     "patterns/AGENTS_RUNTIME/08-config-service.md",
@@ -43,6 +44,7 @@ $requiredFiles = @(
     "patterns/AGENTS_RUNTIME/09-ftp.md",
     "patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md",
     "patterns/AGENTS_RUNTIME/09-testing.md",
+    "patterns/AGENTS_RUNTIME/09-full-testing.md",
     "patterns/AGENTS_RUNTIME/09-build-and-install.md",
     "patterns/AGENTS_RUNTIME/09-project-memory-operations.md"
 )
@@ -92,7 +94,10 @@ try {
         if ($metadata.migration_state.schema_version -ne 2) {
             throw "Bootstrap form '$($forms[$index])' did not install migration-state schema v2."
         }
-        if ($metadata.migration_state.applied_through -ne '2026.09.29.1__clarify_gi_push_project_rules_and_upstream') {
+        $acceptedVersionText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "VERSION.md"))
+        $acceptedVersion = [regex]::Match($acceptedVersionText, '\d{4}\.\d{2}\.\d{2}\.\d+').Value
+        if ($metadata.instruction_kit_version -ne $acceptedVersion -or
+            -not $metadata.migration_state.applied_through.StartsWith($acceptedVersion + '__')) {
             throw "Bootstrap form '$($forms[$index])' did not record the accepted migration checkpoint."
         }
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {

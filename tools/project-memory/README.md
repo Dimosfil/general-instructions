@@ -65,6 +65,13 @@ removed, moved, replaced, or given a new role.
 
 ## SQLite Index
 
+Focused library contracts:
+
+- [Project tester](specs/project-tester.md): information/start routing, local
+  scenario ownership, evidence, restoration, and completion states.
+- [Build output policy](specs/build-output-policy.md): artifact layout and Git.
+
+
 Recommended local database:
 
 ```text
