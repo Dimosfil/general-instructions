@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.03
+
+- Required dedicated ignored directories for rebuildable builds, frontend
+  bundles, installers, and intermediate output. Kept build inputs versioned,
+  required authorized tracked-output cleanup to preserve local files and update
+  consuming paths, and added clean-checkout verification. Preserved required
+  deployment artifacts, generated source, and explicit project exceptions.
+  Migration: `2026.10.03.1__separate_build_output_from_source_git`.
+
 ## 2026.10.01
 
 - Defined standalone commit/push scope for new chats: explicit selection takes

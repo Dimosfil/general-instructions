@@ -39,6 +39,8 @@ Reusable instructions in this repository are grouped by job.
   for recurring keyword, semantic, and hybrid lookup expectations.
 - `tools/project-memory/architecture-migrations.md`: durable history of major
   architecture rewrites and platform migrations for this repository.
+- `tools/project-memory/specs/build-output-policy.md`: build-output layout,
+  Git exclusion, cleanup authorization, and verification contract.
 
 ## Bootstrap Tools
 
@@ -90,7 +92,8 @@ Reusable instructions in this repository are grouped by job.
 - `patterns/AGENTS_RUNTIME/09-testing.md`: test-plan, release/full-test, and
   project verification operations.
 - `patterns/AGENTS_RUNTIME/09-build-and-install.md`: project build/rebuild and
-  installer packaging operations.
+  installer packaging operations, dedicated ignored output directories, and
+  clean-checkout build verification.
 - `patterns/AGENTS_RUNTIME/09-project-memory-operations.md`: SQL/vector/RAG and
   project-memory rebuild/inspection operations.
 - `patterns/AGENT_EXPERIENCE_SQLITE.md`: local SQLite memory/index pattern for
