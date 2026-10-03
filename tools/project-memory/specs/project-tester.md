@@ -12,6 +12,7 @@ scenarios, execution modes, settings, links, runtime identity, and artifacts.
 - Routing: `config/gi-command-routes.json`; help: `COMMANDS.md`.
 - Authoring scaffold: `templates/PROJECT_TESTING.template.md`.
 - Propagation: `2026.10.03.2__generalize_project_tester_info_and_start`.
+- Content extension: `2026.10.03.3__add_project_test_content_contract`.
 - Checks: `tools/test-gi-context-routing.ps1` and
   `tools/test-instruction-kit-bootstrap.ps1`.
 
@@ -29,6 +30,11 @@ scenarios, execution modes, settings, links, runtime identity, and artifacts.
   local paths, roles, modes, budgets, or fixture sets from a source project.
 - Local canonical documentation defines scope, settings, access, action/input
   policies, expected results, environment gates, evidence, and state handling.
+- Content is optional per scenario. Required inputs have authorized sources or
+  permitted synthetic recipes, stable fixture/case/field mapping, validity
+  constraints, entry and acceptance signals, and lifecycle handling. Private
+  payloads remain separate from safe manifests. Real identifiers are verified,
+  missing inputs block dependent cases, and uploads do not authorize execution.
 - Authorization persists for the same target/scope. UI is authorized when needed
   by the selected run; chargeable/destructive/external-send actions retain
   applicable explicit authorization requirements. Testing does not authorize
@@ -49,6 +55,12 @@ scenarios, execution modes, settings, links, runtime identity, and artifacts.
 | Information command | Explain current scenarios/settings; no runtime mutation |
 | Start with trailing task text | Longest-prefix execution route; chosen local scope |
 | Plan/task command | Plan or selection; no implicit execution |
+| Information for a content-dependent case | Required types, sources, availability, and gaps shown |
+| Permitted synthetic input | Prepare reproducibly; map to case/field and validate acceptance |
+| Missing required real content | Name missing input; only dependent cases remain unverified |
+| Attachment in a different field | Do not claim required input is filled |
+| Interrupted upload | Inspect acceptance before retry; avoid duplicate content |
+| Content retained after run | Report lifecycle/cleanup state; preserve originals |
 | Missing or ambiguous local scenario | Exact missing contract/question; independent reads continue |
 | Observational audit | Local backup/restoration; no inherited factory reset |
 | Full-system command | Dedicated full-system module, reset contract, live surfaces |

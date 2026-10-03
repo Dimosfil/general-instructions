@@ -399,6 +399,10 @@ or:
   Follow `patterns/AGENTS_RUNTIME/09-testing.md` for authorization, evidence,
   checkpoint/resume, restoration, and completion states. Projects own scenario
   modes, settings, links, roles, inputs, commands, and artifact locations.
+- Include content entry when the selected test needs it: resolve authorized
+  material or permitted synthetic inputs, validate case/field mapping, confirm
+  acceptance, and track introduced content through cleanup/restoration. Keep
+  content values and source paths local; do not invent real IDs or links.
 - Use `gi full test`, `gi release test`, or `gi system test` for full-system
   verification, following `patterns/AGENTS_RUNTIME/09-full-testing.md` as well.
   Apply full-system resets only to that flow; an observational scenario uses

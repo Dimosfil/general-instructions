@@ -1262,7 +1262,8 @@ gi test start [scenario/task]
 
 `gi test` loads the shared tester rule and the current project's canonical
 testing entrypoint. Explain available scenarios, modes, effective settings,
-prerequisites, input/action policies, evidence locations, known gaps, and the
+required content and its availability, prerequisites, input/action policies,
+evidence locations, known gaps, and the
 start command. This is informational: do not run checks, start apps, reset
 state, open UI, or write settings/reports.
 
@@ -1273,6 +1274,12 @@ missing. Verify exact runtime details from current local sources.
 
 Each project owns scenarios, modes, settings, URLs/ports, roles, fixtures,
 commands, expected results, environment gates, and evidence/backup paths.
+When a test needs content entry, the local contract maps authorized supplied
+material, approved fixtures, or permitted synthetic input to case/field IDs.
+Validate relevant constraints, enter through the required UI/API surface,
+confirm parsing/upload and acceptance, and track introduced records/files
+through cleanup or retention. Missing real content limits its dependent cases;
+invented IDs, links, or unrelated personal material are not substitutes.
 The shared rule supplies scope and authorization boundaries, durable backup,
 stable case IDs, current final results, bounded retries, batch checkpoints,
 freshness checks on resume, privacy, restoration, and honest coverage reporting.

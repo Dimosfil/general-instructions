@@ -63,7 +63,7 @@ script path.
 | `gi local sprint`, `gi sprint local` | Run a local checklist without task-manager mutation. |
 | `gi test plan`, `gi тест-план` | Build a verification plan from current contracts. |
 | `gi test task`, `ги тест таск` | Select the active project-local test scenario or workload. |
-| `gi test`, `ги тест` | Explain the tester, local scenarios, settings, prerequisites, and gaps without running. |
+| `gi test`, `ги тест` | Explain the tester, local scenarios, settings, required content, prerequisites, and gaps without running. |
 | `gi test start`, `ги тест старт` | Run the selected local scenario and save evidence/checkpoints; verify restoration. |
 | `gi full test`, `gi release test`, `gi system test` | Run documented full-system verification. |
 | `gi git summary`, `gi гит-обзор` | Summarize the latest commit without a full diff. |

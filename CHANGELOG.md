@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.03
 
+- Added a project-local test content contract: required text/data/files,
+  authorized sources or reproducible synthetic preparation, case/field mapping,
+  validation and acceptance, and upload/record lifecycle. Tester information
+  reports content availability; start uses only permitted inputs. Migration:
+  `2026.10.03.3__add_project_test_content_contract`.
+
 - Generalized the project tester: `gi test` / `ги тест` now returns information
   and local settings; `gi test start` / `ги тест старт` executes the selected
   scenario. Kept full-system checks under explicit aliases and a separate

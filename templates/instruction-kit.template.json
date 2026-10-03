@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.03.2",
+  "instruction_kit_version": "2026.10.03.3",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -97,7 +97,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.03.2__generalize_project_tester_info_and_start",
+    "applied_through": "2026.10.03.3__add_project_test_content_contract",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

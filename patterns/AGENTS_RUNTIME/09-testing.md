@@ -2,8 +2,9 @@
 
 - Treat `gi test`, `ги тест`, `gi тест`, and `gi testing` as information requests:
   load this rule and the current project's testing entrypoint, then explain
-  available scenarios, scope, modes, settings, prerequisites, evidence paths,
-  known gaps, and how to start. Do not run tests, start apps, reset state, open
+  available scenarios, scope, modes, settings, required test content and its
+  availability, prerequisites, evidence paths, known gaps, and how to start.
+  Do not run tests, start apps, reset state, open
   UI, write configuration, or create reports from this information command.
 - Treat `gi test start`, `ги тест старт`, `gi тест старт`, and `gi testing start`
   as requests to execute the selected project-local scenario. Resolve selection
@@ -44,6 +45,43 @@
   remain missing. Do not invent addresses, roles, fixtures, reset targets,
   budgets, or credentials. Do not auto-install a runner or rewrite product
   tests/configuration merely to execute a scenario.
+
+### Test Content And Input
+
+- Treat content entry as part of a scenario when its cases require it. Projects
+  define the needed text, structured data, documents, media, links, or existing
+  records; these examples do not impose a universal content set. Map each input
+  to its case and destination field, with purpose, source, required/optional
+  status, expected use, and validity constraints.
+- Resolve content from the current task, authorized supplied material, approved
+  project fixtures, or reproducible synthetic inputs permitted by the scenario.
+  Prepare simple non-sensitive synthetic content locally when that satisfies
+  the case. Do not invent existing record IDs, working links, credentials, or
+  material whose authenticity is part of the test. Required real content that
+  is unavailable blocks only dependent cases; report what is missing.
+- Keep content values, fixture paths, generation/preparation recipes, and input
+  constraints project-local. Record a safe content manifest with stable fixture
+  IDs, type, source/provenance, relevant characteristics, and case/field mapping.
+  Store private values and original payloads only in approved private locations.
+- Validate inputs before entry against the selected case: format, schema,
+  encoding, size, dimensions, duration, or other relevant constraints. Use
+  invalid or boundary content only for an explicitly selected negative/boundary
+  case and record the expected rejection. Do not silently alter supplied files
+  or replace required content with an unrelated placeholder.
+- Enter content through the scenario's documented surface. Use visible fields
+  and supported upload/file chooser tools for UI cases, or the verified request
+  contract for API cases. Confirm the content reached its intended field,
+  parsing/upload completed, and the current validation/final result used it.
+  A loaded attachment alone does not prove that the required input is filled.
+- Content preparation or upload does not authorize paid generation, publication,
+  external messaging, or reuse of unrelated personal data. Respect already
+  authorized sources and budgets; ask only for actually missing authorization.
+  Do not acquire fixtures through such actions without that authorization.
+- Track content introduced by the run in its checkpoint. Avoid duplicate
+  uploads on uncertain timeouts; inspect current state first. Follow the local
+  retention/cleanup/restoration contract for test records and uploaded content,
+  preserving original files and unrelated data. Report any remaining artifacts
+  and cleanup gaps; do not infer their absence from zero generation actions.
 
 ### Execution And Evidence
 
