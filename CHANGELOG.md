@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.13
+
+- Defined explicit all-changes selection for `ги пуш всё`, `ги пуш все`, and
+  `gi push all`, overriding active-task defaults while retaining safety and
+  repository boundaries. Preserve the full request in routed context, reconcile
+  selected changes with the staged diff, and report every remaining changed
+  path. Push existing outgoing commits when no new commit is needed. Include
+  the Git workflow in fresh bootstraps. Migration:
+  `2026.10.13.1__complete_git_push_selection_and_delivery`.
+
 ## 2026.10.03
 
 - Added a project-local test content contract: required text/data/files,

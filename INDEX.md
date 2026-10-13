@@ -43,6 +43,8 @@ Reusable instructions in this repository are grouped by job.
   Git exclusion, cleanup authorization, and verification contract.
 - `tools/project-memory/specs/project-tester.md`: information/start commands,
   project-local scenario ownership, run evidence, and completion contract.
+- `tools/project-memory/specs/git-finish.md`: command scope, all-changes
+  selection, outgoing commits, exclusions, and completion evidence.
 
 ## Bootstrap Tools
 

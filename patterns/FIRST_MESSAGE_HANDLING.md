@@ -136,7 +136,11 @@ Examples:
   feature, bug fix, or release check.
 - `gi коммит`: commit scoped current changes without pushing.
 - `gi пуш` or `gi коммит пуш`: commit scoped current changes, then push the
-  current branch.
+  current branch; in a new chat without a narrower selection or active task,
+  select all eligible current repository changes. If no new commit is needed,
+  still push existing outgoing commits after Git safety checks.
+- `gi push all`, `ги пуш всё`, or `ги пуш все`: explicitly select all eligible
+  current repository changes, overriding the active-task default.
 - `gi только пуш`: push existing local commits without creating a new commit.
 - `gi пул`, `gi pull`, or `ги пул`: fetch and pull the current branch, resolving
   only clear low-risk conflicts and asking the user when judgment is needed.

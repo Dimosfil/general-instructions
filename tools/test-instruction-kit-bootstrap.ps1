@@ -29,6 +29,7 @@ $requiredFiles = @(
     "tools/project-memory/code_intelligence.py",
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/GI_COMMAND_CONTRACTS.md",
+    "patterns/GIT_WORKFLOW.md",
     "patterns/MODULAR_SERVICE_ENGINEERING.md",
     "templates/SYSTEM_MAP.template.md",
     "templates/MODULE_PASSPORT.template.md",
@@ -155,6 +156,32 @@ try {
                 -CommandText ([string]$route.aliases[0]) -PathsOnly | Out-String)
             if (-not $routeOutput.Contains("GI route: $($route.id)")) {
                 throw "Bootstrap form '$($forms[$index])' could not resolve installed route '$($route.id)'."
+            }
+        }
+
+        $installedGitPacket = (& (Join-Path $target "tools/resolve-gi-command.ps1") `
+            -CommandText "ги пуш всё" | Out-String)
+        foreach ($needle in @(
+            "Requested command: ги пуш всё",
+            "explicit all-changes selection overrides active task scope",
+            "command-defined scope also applies in a new chat",
+            "still pushes existing outgoing commits",
+            "An eligible selected remainder makes the finish incomplete"
+        )) {
+            if (-not $installedGitPacket.Contains($needle)) {
+                throw "Bootstrap form '$($forms[$index])' lost Git finish contract: $needle"
+            }
+        }
+        $installedGitWorkflow = [System.IO.File]::ReadAllText((Join-Path $target "patterns/GIT_WORKFLOW.md"))
+        $sourceGitWorkflow = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/GIT_WORKFLOW.md"))
+        if ($installedGitWorkflow -cne $sourceGitWorkflow -or
+            $metadata.copied_files -notcontains "patterns/GIT_WORKFLOW.md") {
+            throw "Bootstrap form '$($forms[$index])' did not copy and record the accepted Git workflow."
+        }
+        $installedAgreements = [System.IO.File]::ReadAllText((Join-Path $target "tools/AGENT_WORKING_AGREEMENTS.md"))
+        foreach ($needle in @("ги пуш всё", "still push existing outgoing commits", "Eligible selected residue")) {
+            if (-not $installedAgreements.Contains($needle)) {
+                throw "Bootstrap form '$($forms[$index])' lost Git working agreement: $needle"
             }
         }
 

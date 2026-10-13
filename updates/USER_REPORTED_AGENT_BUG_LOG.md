@@ -11,6 +11,24 @@ or edit that project.
 
 ## Entries
 
+### 2026-10-13: GI push all omits changes and no-new-commit push can stop
+
+- Symptom: the user reports that `ги пуш`, including `ги пуш всё`, leaves some
+  changes uncommitted or undelivered, and asks about the new-chat case.
+- Evidence: the local resolver returned identical packets for ordinary push,
+  `всё`, and `все`; rules described task/standalone scope without an explicit
+  all-changes override. Detailed workflow prohibited push without a new commit.
+  No failing consumer checkout was inspected; its exact omitted files remain
+  unverified. The source checkout was clean and matched its upstream.
+- Resolution: preserve full command text, define explicit all-changes selection,
+  reinforce new-chat repository scope, reconcile staged contents, report each
+  remaining changed path, and allow delivery of existing outgoing commits when
+  no new commit is needed. Fresh bootstrap includes the referenced Git workflow.
+- Privacy: no private project files, external paths, raw logs, or credentials
+  included in shared guidance.
+- Status: accepted in
+  `2026.10.13.1__complete_git_push_selection_and_delivery`.
+
 ### 2026-10-01: Standalone GI push asks for scope in every new chat
 
 - Symptom: a standalone `ги пуш` in a new chat repeatedly asks whether all

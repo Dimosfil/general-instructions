@@ -140,7 +140,14 @@ try {
         @{ Command = "gi error fix"; Route = "error-fix" },
         @{ Command = "gi tools rebuild vector"; Route = "rag-rebuild" },
         @{ Command = "gi only push"; Route = "git-finish" },
-        @{ Command = "ги пуш"; Route = "git-finish" }
+        @{ Command = "ги пуш"; Route = "git-finish" },
+        @{ Command = "ги пуш всё"; Route = "git-finish" },
+        @{ Command = "ги пуш все"; Route = "git-finish" },
+        @{ Command = "gi push all"; Route = "git-finish" },
+        @{ Command = "ги коммит всё"; Route = "git-finish" },
+        @{ Command = "gi commit push all"; Route = "git-finish" },
+        @{ Command = "ги пуш src/example.ps1"; Route = "git-finish" },
+        @{ Command = "gi only push all"; Route = "git-finish" }
     )
     foreach ($case in $routeCases) {
         $output = (& $resolverPath -CommandText $case.Command -PathsOnly | Out-String)
@@ -148,6 +155,7 @@ try {
         if ($routeLine.Count -ne 1 -or $routeLine[0] -ne ("GI route: {0}" -f $case.Route)) {
             throw "Command '$($case.Command)' resolved incorrectly."
         }
+        Assert-Contains $output ("Requested command: {0}" -f $case.Command) "Resolver discarded command modifiers or selection."
     }
 
     $testInfoRoute = @($manifest.routes | Where-Object { $_.id -eq "test" })[0]
@@ -187,6 +195,25 @@ try {
     )) {
         Assert-Contains $gitFinishPacket $needle "Git-finish route is missing scope boundary text: $needle"
     }
+    $gitAllPacket = (& $builderPath -CommandText "ги пуш всё" -SkipUpdateCheck | Out-String)
+    foreach ($needle in @(
+        "Requested command: ги пуш всё",
+        "explicit all-changes selection overrides active task scope",
+        "including staged, unstaged",
+        "old summaries alone do not create an active task",
+        "still pushes existing outgoing commits",
+        "Do not create an empty commit",
+        "git status --short --untracked-files=all",
+        "Account for every selected eligible change",
+        "report each remaining changed path",
+        "An eligible selected remainder makes the finish incomplete",
+        "gi only push all",
+        "git check-ignore"
+    )) {
+        Assert-Contains $gitAllPacket $needle "Git all-changes context is incomplete: $needle"
+    }
+    $onlyPushAllPacket = (& $resolverPath -CommandText "gi only push all" -PathsOnly | Out-String)
+    Assert-Contains $onlyPushAllPacket "Matched alias: gi only push" "All modifier changed push-only operation."
     if ($gitFinishPacket.Contains("===== patterns/AGENTS_RUNTIME/15-verification.md =====") -or
         $gitFinishPacket.Contains("compare the scoped diff with the relevant durable")) {
         throw "Git-finish route loaded the feature-contract verification workflow."
@@ -200,6 +227,18 @@ try {
         "rebuilds/restarts"
     )) {
         Assert-Contains $gitWorkflowText $needle "Git workflow is missing finish-only guard text: $needle"
+    }
+    $agreementsText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "templates/AGENT_WORKING_AGREEMENTS.template.md"))
+    $gitContractsText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/GI_COMMAND_CONTRACTS.md"))
+    foreach ($obsolete in @(
+        "instead of falling back to push-only behavior",
+        "running a push-only fallback",
+        "Push без нового`r`ncommit выполняется только",
+        "Push без нового`ncommit выполняется только"
+    )) {
+        if (($gitWorkflowText + $agreementsText + $gitContractsText).Contains($obsolete)) {
+            throw "Git guidance retained obsolete no-new-commit push prohibition: $obsolete"
+        }
     }
 
     Assert-FileBudget "AGENTS.md" ([long]$budgets.entrypoint_max_bytes)

@@ -107,9 +107,11 @@
   git finish requests. `gi коммит` commits scoped current changes only; `gi пуш`
   and `gi коммит пуш` commit scoped current changes and push the current branch;
   `gi только пуш` pushes existing local commits without creating a new commit.
-  Do not reinterpret `gi пуш` as a raw `git push`, a retry of a previous
-  terminal push, or a push-only command; if there are no scoped changes to
-  commit, report that clearly instead of falling back to push-only behavior.
+  Do not skip eligible selected changes by treating `gi пуш` as a raw push or
+  a retry of a terminal push. If no eligible selected changes need a new commit,
+  still push existing outgoing commits after compact Git safety checks; do not
+  create an empty commit or require a second push-only command. If nothing
+  needs committing or pushing, report that state.
   Inspect status, keep changes outside the resolved scope out, follow commit-message
   preferences, and stop on ambiguous scope, missing remote, conflicts, secrets,
   or push failures.
@@ -127,6 +129,20 @@
   Do not expand an active task from apparent file similarity. Ask only about
   concrete conflicting scope instructions or inseparable excluded changes.
   `gi only push` never selects working-tree files.
+- Treat `gi push all`, `ги пуш всё`, `ги пуш все`, and equivalent commit or
+  commit/push forms as explicit selection of all eligible current repository
+  changes, overriding the active-task default. Include staged, unstaged,
+  untracked, deleted, and pre-existing changes. Preserve concrete separate-work
+  reservations and report conflicts. Old summaries alone do not establish an
+  active task in a new chat. Keep safety exclusions and ignored files; do not
+  expand to other repositories, worktrees, branches, or force-push.
+  `gi only push all` remains push-only.
+- Inventory with `git status --short --untracked-files=all` and reconcile the
+  staged diff with the resolved selection before committing; do not commit
+  excluded staged changes or silently reset the user's index. Report each
+  remaining changed path with its exclusion reason or blocker after finish.
+  Eligible selected residue means incomplete work. Explain expected ignored
+  files with `git check-ignore` instead of force-adding them.
 - Git finish does not authorize new implementation, test-expectation rewrites,
   runtime-state deletion, dependency changes, service restart/rebuild, or broad
   cleanup merely to make checks pass. Fix a verification failure only when the
