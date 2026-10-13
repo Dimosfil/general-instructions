@@ -39,6 +39,12 @@
 - Do not revert user changes unless explicitly requested.
 - Treat dirty worktrees as normal.
 - If user changes affect the task, work with them.
+- Before meaningful implementation, bug fixes, or refactoring, apply the system
+  mechanism gate in `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`. Record a scoped
+  scenario -> mechanism -> contract owner -> change location -> verification
+  mapping using current source. Correct the cause at its owner, reuse or extend
+  existing mechanisms, and justify bypasses with constraints, side effects,
+  and a removal/review condition. Verify behavior and related invariants.
 - Preserve recorded feature workflow contracts. If a feature has an agreed
   runtime workflow, loading order, branching state flow, background work, or
   user-visible guarantee, read that contract before changing the feature and

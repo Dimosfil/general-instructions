@@ -51,6 +51,11 @@ It should contain:
   services, and configuration in separate layers with explicit contracts.
   Reduce duplicated knowledge and behavior, but avoid premature abstractions
   before the shared meaning is clear.
+- System mechanism rules: before meaningful implementation, bug fixes, or
+  refactoring, identify the scenario, existing mechanism, contract owner,
+  change location, and verification. Correct the cause at its owner, use or
+  extend existing mechanisms, and justify bypasses. Verify results and related
+  side effects. Follow the gate in `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 - Modular system rules: for a large service with independently developed parts,
   keep a system map, module passports, and public contracts in the project.
   Assign data and contract ownership, coordinate dependent agent work through

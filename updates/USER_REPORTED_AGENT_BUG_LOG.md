@@ -11,6 +11,27 @@ or edit that project.
 
 ## Entries
 
+### 2026-10-13: Local symptom fixes bypass system responsibility
+
+- Symptom: agents add compensating special cases despite an existing system
+  execution mechanism.
+- Evidence: an authorized source/diff/contract audit found a release-and-restore
+  workaround (subsequently removed), repeated caller compensation for shared
+  attachment behavior, incomplete action scaffolding, and workflow composition
+  that rewrites child execution flags. Tests had also used simplified input
+  types that missed a real destination distinction; the current fix improves
+  those tests. Historical reports alone do not prove current live behavior.
+- Cause: guidance preferred existing patterns and required contracts, but lacked
+  an explicit pre-edit mechanism/owner mapping and a check of compensating
+  side effects. Some intended mechanisms were only partially implemented.
+- Resolution: require the system mechanism and responsibility gate, justified
+  bypasses, scenario/invariant/side-effect checks, and source/template/migration
+  propagation. Consumer product refactoring remains a separate task.
+- Privacy: project names, absolute paths, product source excerpts, credentials,
+  raw logs, and private runtime data omitted.
+- Status: accepted in
+  `2026.10.13.2__enforce_system_mechanism_and_responsibility_gate`.
+
 ### 2026-10-13: GI push all omits changes and no-new-commit push can stop
 
 - Symptom: the user reports that `ги пуш`, including `ги пуш всё`, leaves some

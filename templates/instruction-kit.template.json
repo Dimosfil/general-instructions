@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.13.1",
+  "instruction_kit_version": "2026.10.13.2",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -65,6 +65,7 @@
     "patterns/PROJECT_DEV_PROD_SERVICES.md",
     "patterns/PROJECT_DOCUMENTATION_LAYERS.md",
     "patterns/QUERY_PROMPT_NORMALIZATION_BOUNDARIES.md",
+    "patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md",
     "patterns/STARTUP_PRODUCT_ENGINEERING.md",
     "patterns/TECHNOLOGY_STACK_INVENTORY.md",
     "skills/TODO-skill-name/SKILL.md",
@@ -98,7 +99,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.13.1__complete_git_push_selection_and_delivery",
+    "applied_through": "2026.10.13.2__enforce_system_mechanism_and_responsibility_gate",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

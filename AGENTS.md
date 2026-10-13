@@ -16,15 +16,12 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
   Markdown link, or local checkout, read `BOOTSTRAP.md` before any Git or project
   operation. This means kit bootstrap into the active project, not repository
   replacement or remote management.
-- On the first concrete task in a session, perform the staged update check even
-  without a GI command. Equal versions with no explicit skipped migrations mean
-  `pending migrations: 0` without reading migration filenames, bodies,
-  `CHANGELOG.md`, or `INDEX.md`. When the
-  accepted source is newer, enumerate and apply pending accepted migrations if
-  `update_check.enabled` and `auto_apply_pending_migrations` permit it; a missing
-  auto-apply setting defaults to `true`. Skip only for explicit `false` or a
-  concrete blocker, and report the pending count. Never inspect `updates/` for
-  this startup check.
+- On the first concrete task, check accepted updates even without a GI command.
+  Equal versions without skipped migrations mean `pending migrations: 0`;
+  do not read migration entries/bodies, `CHANGELOG.md`, or `INDEX.md`. For a
+  newer source, apply pending accepted migrations when update checking and
+  auto-apply permit it; missing auto-apply means `true`. Skip only for explicit
+  `false` or a concrete blocker, and report the count. Never inspect `updates/`.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded GI rules. If one rule is blocked, report that operation precisely and
   continue independent authorized work.
@@ -60,9 +57,10 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
   build bundles, and one-off probes belong in their project-approved locations.
   `tools/project-memory/` may hold compact implementation-driving knowledge and
   evidence references, never bulk artifacts or a replacement for source/tests.
-- During meaningful behavior or architecture work, keep scoped code, tests,
-  affected docs, and focused project-memory contracts aligned before the
-  implementation task is complete.
+- Before implementation, bug fixes, or refactoring, load modules 04, 06, and 15.
+  Trace the affected scenario, identify its mechanism and contract owner, and
+  correct the cause there. Justify any bypass. Follow the mechanism gate in
+  `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`; align code, tests, docs, and memory.
 - For large modular systems, keep a project-local system map, focused module
   passports, and explicit public contracts. Agree on ownership and integration
   edges before independent agents implement both sides; verify assembled

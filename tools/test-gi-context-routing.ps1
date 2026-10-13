@@ -220,6 +220,11 @@ try {
     }
     $featureVerificationText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/AGENTS_RUNTIME/15-verification.md"))
     Assert-Contains $featureVerificationText "before calling the task complete" "Development-time contract verification disappeared."
+    $refactorContext = (& $resolverPath -CommandText "gi refactor" | Out-String)
+    Assert-Contains $refactorContext 'scenario -> mechanism' 'Refactor context omitted the pre-edit mechanism mapping.'
+    Assert-Contains $refactorContext 'contract owner -> change location -> verification' 'Refactor context omitted responsibility and verification.'
+    Assert-Contains $refactorContext 'side effects' 'Refactor context omitted observable side-effect verification.'
+    Assert-Contains $refactorContext 'patterns/ARCHITECTURE_AND_CODE_QUALITY.md' 'Refactor context omitted its mechanism-gate dependency.'
     $gitWorkflowText = [System.IO.File]::ReadAllText((Join-Path $repoRoot "patterns/GIT_WORKFLOW.md"))
     foreach ($needle in @(
         "Never infer that all dirty files",

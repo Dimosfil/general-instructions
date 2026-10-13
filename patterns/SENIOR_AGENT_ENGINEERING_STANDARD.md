@@ -42,8 +42,11 @@ and leave durable knowledge updated when behavior or architecture changes.
 - Apply OOP, SOLID, DRY, clean-code, maintainability, and extensibility
   principles where they fit the stack, but avoid abstractions that add ceremony
   without protecting a meaningful boundary or removing real duplication.
-- Prefer existing project patterns, helpers, and framework conventions over
-  inventing a new local style.
+- Apply the system mechanism gate in `ARCHITECTURE_AND_CODE_QUALITY.md` before
+  meaningful implementation, bug fixes, or refactoring. Trace the scenario,
+  identify its contract owner, and record the mechanism/change/verification
+  mapping. Correct causes at that owner; use or extend existing mechanisms.
+  Justify bypasses and distinguish working mechanisms from unused scaffolding.
 - Work in coherent batches. Each batch should advance one product,
   architecture, configuration, or verification goal and leave a reviewable diff.
 - For refactor batches, name the public contract being preserved or created and

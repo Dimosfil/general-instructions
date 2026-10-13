@@ -4,6 +4,14 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.13
 
+- Required a system mechanism and responsibility gate before meaningful
+  implementation, bug fixes, and refactoring: trace the scenario, identify the
+  contract owner, record the change/verification mapping, and correct causes
+  through existing mechanisms. Justify bypasses and verify invariants and side
+  effects. Propagated the gate through entrypoints, runtime modules, agreements,
+  engineering patterns, and bootstrap. Migration:
+  `2026.10.13.2__enforce_system_mechanism_and_responsibility_gate`.
+
 - Defined explicit all-changes selection for `ги пуш всё`, `ги пуш все`, and
   `gi push all`, overriding active-task defaults while retaining safety and
   repository boundaries. Preserve the full request in routed context, reconcile

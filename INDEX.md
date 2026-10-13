@@ -45,6 +45,8 @@ Reusable instructions in this repository are grouped by job.
   project-local scenario ownership, run evidence, and completion contract.
 - `tools/project-memory/specs/git-finish.md`: command scope, all-changes
   selection, outgoing commits, exclusions, and completion evidence.
+- `tools/project-memory/specs/system-mechanism-gate.md`: implementation-time
+  responsibility mapping, existing mechanisms, bypasses, and verification.
 
 ## Bootstrap Tools
 

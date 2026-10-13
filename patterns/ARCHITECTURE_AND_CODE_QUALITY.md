@@ -22,6 +22,57 @@ across stacks.
 - Apply DRY to repeated knowledge and behavior, but do not create premature
   abstractions before the duplication has a clear shared meaning.
 
+## System Mechanism And Responsibility Gate
+
+Correct the cause at the owner of the violated responsibility. Use or extend
+the system's intended mechanisms while preserving contracts and invariants.
+Justify every bypass. Apply this gate before meaningful implementation, bug
+fixes, or refactoring; keep its depth proportional to the affected scenario.
+
+1. Trace the scenario from its entry point through decisions, execution, state
+   changes, and observable result. Read current source, relevant contracts,
+   and tests; use targeted retrieval. Distinguish implemented mechanisms from
+   incomplete scaffolding, disabled paths, and historical notes.
+2. Identify the violated or new contract, the invariant to preserve, and the
+   component that owns the decision or state transition. Name where callers
+   consume that behavior and where side effects occur.
+3. Before editing, record a compact mapping in the task plan or relevant local
+   contract: scenario -> mechanism -> contract owner -> change location ->
+   verification. Use concrete source references. Reuse existing task context
+   when it already provides this mapping; do not require another approval,
+   a broad audit, or a new document for every small edit.
+4. Use or extend the existing mechanism at its owner. If it is incomplete,
+   implement the smallest coherent missing contract there. Introduce another
+   mechanism only after explaining why the existing one cannot satisfy the
+   requirement and who will own the new behavior. An interface or unused
+   abstraction alone is not evidence of a working mechanism.
+5. Verify the scenario's result, related invariants, and relevant side effects
+   through the actual participating components. Keep focused source, tests,
+   affected docs, and durable contracts aligned before completing the batch.
+
+- Keep orchestration about sequencing and delegation; keep execution about
+  executing its contract. Do not recreate an owner's domain decisions in
+  callers, views, adapters, cleanup callbacks, or special-case branches.
+- Correct a shared primitive's contract when callers repeatedly compensate
+  for its side effects. Preserve legitimate variants through explicit inputs
+  or operations rather than changing all callers to an assumed global behavior.
+- Make state ownership, handoff, resource acquisition/release, successful
+  completion, cancellation, and failure explicit where applicable. Use the
+  project's architecture; this rule does not mandate a particular pipeline,
+  class hierarchy, framework, or new abstraction layer.
+- Do not destroy a valid state and then restore it to simulate success. Such
+  compensation can still emit events, release resources, or trigger other work
+  between the two operations. Distinguish this from contract-defined rollback
+  or recovery, which must also preserve ownership and observable guarantees.
+- For an unavoidable bypass, record the concrete constraint, why correction at
+  the owner is unavailable, scope, side effects, verification, and the removal
+  condition or review trigger. Keep temporary behavior explicit in the relevant
+  local contract. Do not call an undocumented bypass the completed system fix.
+- Test expected behavior derived from the contract, including representative
+  input types and participating components. Do not change expectations merely
+  to match the new implementation or treat a final-state assertion as proof
+  that intermediate side effects are safe. Report unverified live integrations.
+
 ## Principles Across Paradigms
 
 - Apply separation of concerns and single responsibility to units that change

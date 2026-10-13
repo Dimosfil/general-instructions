@@ -30,6 +30,9 @@ $requiredFiles = @(
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/GI_COMMAND_CONTRACTS.md",
     "patterns/GIT_WORKFLOW.md",
+    "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
+    "patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md",
+    "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/MODULAR_SERVICE_ENGINEERING.md",
     "templates/SYSTEM_MAP.template.md",
     "templates/MODULE_PASSPORT.template.md",
@@ -104,6 +107,32 @@ try {
         if ($metadata.PSObject.Properties.Name -contains 'applied_migrations') {
             throw "Bootstrap form '$($forms[$index])' retained the legacy migration array."
         }
+
+        $mechanismFiles = @(
+            "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
+            "patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md",
+            "patterns/COHERENT_BATCH_VERIFICATION.md"
+        )
+        foreach ($relativePath in $mechanismFiles) {
+            if ($metadata.copied_files -notcontains $relativePath) {
+                throw "Bootstrap omitted mechanism-gate dependency from metadata: $relativePath"
+            }
+        }
+        $architectureText = [System.IO.File]::ReadAllText((Join-Path $target $mechanismFiles[0]))
+        foreach ($needle in @('## System Mechanism And Responsibility Gate',
+            'scenario -> mechanism -> contract owner -> change location ->',
+            'removal', 'side effects')) {
+            if (-not $architectureText.Contains($needle)) {
+                throw "Bootstrap omitted mechanism-gate contract: $needle"
+            }
+        }
+        if ($index -ne 2) {
+            $entryText = [System.IO.File]::ReadAllText((Join-Path $target "AGENTS.md"))
+            if (-not $entryText.Contains('Before implementation, bug fixes, or refactoring, load modules 04, 06, and 15.')) {
+                throw "Fresh entrypoint does not require the mechanism gate for ordinary implementation."
+            }
+        }
+        $mechanismBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target $mechanismFiles[0]))
 
         $ragConfig = Get-Content -Raw -LiteralPath (Join-Path $target "tools/project-memory/rag-system.json") | ConvertFrom-Json
         if ($ragConfig.code_intelligence.enabled -ne $false) {
@@ -330,6 +359,9 @@ try {
         )
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
         $gitIgnoreAfter = [System.IO.File]::ReadAllText($gitIgnorePath)
+        if ([System.IO.File]::ReadAllText((Join-Path $target $mechanismFiles[0])) -ne $mechanismBeforeReinstall) {
+            throw "Reinstall changed the already installed mechanism-gate contract."
+        }
         if ($gitIgnoreAfter -ne $gitIgnoreBefore) {
             throw "Bootstrap form '$($forms[$index])' is not idempotent for .gitignore."
         }

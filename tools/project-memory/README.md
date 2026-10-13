@@ -71,6 +71,8 @@ Focused library contracts:
   scenario ownership, evidence, restoration, and completion states.
 - [Build output policy](specs/build-output-policy.md): artifact layout and Git.
 - [Git finish](specs/git-finish.md): change selection, delivery, and exclusions.
+- [System mechanism gate](specs/system-mechanism-gate.md): responsibility,
+  existing mechanisms, justified bypasses, and scenario verification.
 
 
 Recommended local database:
