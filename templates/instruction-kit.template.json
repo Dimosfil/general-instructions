@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.13.2",
+  "instruction_kit_version": "2026.10.14.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -99,7 +99,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.13.2__enforce_system_mechanism_and_responsibility_gate",
+    "applied_through": "2026.10.14.1__warn_before_third_party_service_launch",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

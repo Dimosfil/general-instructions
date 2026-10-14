@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.14
+
+- Required advance notice before starting or restarting third-party services,
+  including local daemons, containers, and indirect launches by scripts or
+  test commands. Name the service, purpose, location, and applicable effects
+  before launch; keep notice separate from existing authorization and approval
+  requirements. Propagated through live and copied-project entrypoints and the
+  runtime module. Migration:
+  `2026.10.14.1__warn_before_third_party_service_launch`.
+
 ## 2026.10.13
 
 - Required a system mechanism and responsibility gate before meaningful

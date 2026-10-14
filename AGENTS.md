@@ -44,6 +44,7 @@ focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
   safely.
 - Preserve unrelated dirty changes. Never add secrets, private project data,
   generated noise, or unrelated changes to this shared library.
+- Warn before third-party service launches.
 - Keep rebuildable build output in dedicated ignored directories and out of
   source Git; version build inputs. Follow
   `patterns/AGENTS_RUNTIME/09-build-and-install.md` for authorized cleanup,

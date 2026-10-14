@@ -52,6 +52,7 @@ TODO: describe the product, users, and primary runtime surface.
 - A pasted credential is not a blocker for unrelated work. Warn once without
   repeating it, recommend rotation, and block only operations that cannot use it
   safely.
+- Warn before third-party service launches; load runtime module 09.
 - Never commit secrets, private data, model weights, checkpoints, photos, video,
   audio, datasets, archives, or similar large content payloads. Use approved
   artifact storage and commit compact manifests, checksums, sources, or
