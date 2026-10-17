@@ -1,9 +1,7 @@
 # Agent Instructions
 
-This is the lightweight runtime entrypoint for this project. Shared rules live
-in focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task
-needs and prefer more specific project-local instructions, contracts, memory,
-and runbooks over shared defaults.
+Load only task-relevant modules under `patterns/AGENTS_RUNTIME/`. Prefer more
+specific project-local instructions, contracts, memory, and runbooks.
 
 ## Project
 
@@ -11,6 +9,7 @@ TODO: describe the product, users, and primary runtime surface.
 
 ## Goal And Loading Contract
 
+- For Unity projects, also load `20-unity-projects.md` before Unity work.
 - Derive a bounded goal and observable success criteria from the request and
   project context. Ask only when missing information materially changes scope;
   continue independent authorized work while waiting.

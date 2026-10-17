@@ -2,6 +2,15 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.17
+
+- Added a Unity-specific runtime module requiring official CLI/Pipeline tooling
+  first, verified live project identity, and separate reporting of MCP client
+  configuration, live Editor connectivity, and tools callable in the current
+  chat. Diagnose failed layers before reinstalling; preserve Editor state during
+  connection checks. Routed through live and template entrypoints. Migration:
+  `2026.10.17.1__require_unity_live_connection_verification`.
+
 ## 2026.10.14
 
 - Required advance notice before starting or restarting third-party services,

@@ -50,7 +50,8 @@ $requiredFiles = @(
     "patterns/AGENTS_RUNTIME/09-testing.md",
     "patterns/AGENTS_RUNTIME/09-full-testing.md",
     "patterns/AGENTS_RUNTIME/09-build-and-install.md",
-    "patterns/AGENTS_RUNTIME/09-project-memory-operations.md"
+    "patterns/AGENTS_RUNTIME/09-project-memory-operations.md",
+    "patterns/AGENTS_RUNTIME/20-unity-projects.md"
 )
 
 try {

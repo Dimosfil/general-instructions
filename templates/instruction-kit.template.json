@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.14.1",
+  "instruction_kit_version": "2026.10.17.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -52,6 +52,7 @@
     "patterns/AGENTS_RUNTIME/17-agent-role-office.md",
     "patterns/AGENTS_RUNTIME/18-startup-product-engineering.md",
     "patterns/AGENTS_RUNTIME/19-game-modding.md",
+    "patterns/AGENTS_RUNTIME/20-unity-projects.md",
     "patterns/API_KEY_SECRET_SAFETY.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
     "patterns/MODULAR_SERVICE_ENGINEERING.md",
@@ -99,7 +100,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.14.1__warn_before_third_party_service_launch",
+    "applied_through": "2026.10.17.1__require_unity_live_connection_verification",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

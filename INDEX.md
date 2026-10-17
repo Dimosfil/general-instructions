@@ -73,6 +73,8 @@ Reusable instructions in this repository are grouped by job.
 
 ## Patterns
 
+- `patterns/AGENTS_RUNTIME/20-unity-projects.md`: official Unity CLI/Pipeline
+  tooling, live MCP and chat verification, target identity, and diagnostics.
 - `patterns/AGENTS_RUNTIME/`: task-routed runtime modules used by compact root
   and copied `AGENTS.md` entrypoints. Startup/scope, config/task-manager/sprint,
   and operation families use focused 07/08/09 modules; the older combined files

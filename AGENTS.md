@@ -1,11 +1,11 @@
 # Agent Instructions For This Repository
 
-This repository maintains reusable, project-agnostic AI-agent instructions,
-templates, patterns, checklists, and migration metadata. Detailed rules live in
-focused modules under `patterns/AGENTS_RUNTIME/`; load only what the task needs.
+Reusable agent instructions, templates, and migrations live here. Load only
+task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 
 ## Loading Contract
 
+- For Unity projects, also load `20-unity-projects.md` before Unity work.
 - Start here. This file alone is sufficient only for greetings and
   status-neutral replies.
 - Before a concrete task, select the matching runtime modules. For a GI command,
