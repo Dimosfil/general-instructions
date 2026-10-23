@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.23
+
+- Made the update checker report validated policy evidence and require immediate
+  agent application when migrations are pending. Missing settings mean enabled;
+  disabled reports require the metadata path, key, and JSON false. Preserve the
+  handoff through the context builder; distinguish legacy notices, unsupported
+  helper switches, and execution blockers from policy opt-outs. Keep metadata
+  recording after verified file changes. Migration:
+  `2026.10.23.1__enforce_evidence_based_automatic_updates`.
+
 ## 2026.10.17
 
 - Added a Unity-specific runtime module requiring official CLI/Pipeline tooling

@@ -282,3 +282,13 @@ or edit that project.
   contents were copied into this log. Concrete local project path omitted.
 - Status: accepted as shared-rule improvement in
   `2026.07.04.3__log_user_reported_agent_bugs_and_tools_artifact_boundary`.
+
+## 2026-10-23: Unsupported claim that GI automatic updates were disabled
+
+- Symptom: an agent treated a legacy availability-only startup notice as proof of disabled automatic migration application.
+- Rule gap: policy evidence and the checker-to-agent execution handoff were not explicit in helper output. Missing auto-apply metadata already defaulted to true.
+- Evidence: user-supplied screenshot and inspected source-chat output showed an enabled check with no explicit auto-apply opt-out; the helper only reported availability.
+- Privacy: retain only portable behavior; omit project identities, credentials, screenshots, and raw chat/tool output.
+- Resolution: checker validates boolean policy, reports exact metadata evidence, and requires immediate agent application before recording; context builder preserves the handoff. Live rules, templates, behavioral spec, migration, and regression checks updated.
+- Verification: scoped routing/policy/handoff/metadata tests and bootstrap checks passed.
+- Status: fixed by `2026.10.23.1__enforce_evidence_based_automatic_updates`.

@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.17.1",
+  "instruction_kit_version": "2026.10.23.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "config_service": {
@@ -100,7 +100,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.17.1__require_unity_live_connection_verification",
+    "applied_through": "2026.10.23.1__enforce_evidence_based_automatic_updates",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

@@ -21,6 +21,8 @@ Reusable instructions in this repository are grouped by job.
 
 ## Project Memory
 
+- `tools/project-memory/specs/instruction-kit-auto-update.md`: policy evidence,
+  checker-to-agent handoff, automatic application, and metadata invariants.
 - `tools/project-memory/specs/authorization-and-verification.md`: authorization,
   scoped blockers, and proportionate verification contract with decision cases.
 

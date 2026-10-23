@@ -3,6 +3,8 @@
 This folder stores concise, implementation-driving project knowledge for AI
 agents.
 
+Automatic GI updates: [execution contract](specs/instruction-kit-auto-update.md).
+
 Use Markdown and JSON files here for human-reviewable memory. Use the local
 SQLite database only as a generated search index that can be rebuilt from git
 tracked files.

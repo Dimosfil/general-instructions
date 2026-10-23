@@ -19,13 +19,12 @@ TODO: describe the product, users, and primary runtime surface.
   `tools/get-gi-context.ps1 -CommandText "<exact user command>"`. It performs the
   staged update check, longest-prefix route resolution, and bounded retrieval.
   Use `COMMANDS.md` directly only for help or command-index requests.
-- On the first concrete task in a session, perform the staged update check even
-  without a GI command. Equal versions with no explicit skipped migrations mean
-  `pending migrations: 0` without reading migration filenames, bodies,
-  `CHANGELOG.md`, or `INDEX.md`. When the
-  accepted source is newer, enumerate and apply pending accepted migrations if
-  enabled; absent `auto_apply_pending_migrations` defaults to `true`. Skip only
-  for explicit `false` or a concrete blocker, and report the pending count.
+- On the first concrete task, perform the staged update check. Equal versions
+  without skipped migrations mean `pending migrations: 0` without reading
+  migrations, `CHANGELOG.md`, or `INDEX.md`. Apply pending accepted migrations
+  automatically; absent `auto_apply_pending_migrations` defaults to `true`.
+  Skip only for explicit `false` with metadata path/key/value evidence, or a
+  concrete blocker; report the pending count. Helper limitations are not opt-outs.
   Never inspect `updates/` during this startup check.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded rules. Report a blocked operation precisely and continue independent

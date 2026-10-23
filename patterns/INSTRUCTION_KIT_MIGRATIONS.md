@@ -45,6 +45,15 @@ migrations included in that version as already applied.
   a merge conflict prevents a safe update.
 - Apply and verify file changes before advancing migration metadata. This
   authorization does not turn helper-script `-Apply` into a metadata shortcut.
+- Keep update-policy defaults, JSON-boolean validation, evidence, and required
+  next action in the update checker; the context builder must preserve its
+  output. Enabled policy with pending migrations requires agent execution now,
+  followed by verification, metadata recording, and a zero-pending recheck.
+- Report disabled automatic application only with the current metadata path,
+  exact key, and JSON `false`. A legacy notice-only helper, unsupported `-Apply`,
+  missing key, or missing script executor is not evidence of an opt-out. Invalid
+  policy values block policy interpretation; report them as unverified rather
+  than disabled. Report unavailable migration sources as unknown pending count.
 
 ## Project Command
 

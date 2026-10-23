@@ -16,12 +16,12 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
   Markdown link, or local checkout, read `BOOTSTRAP.md` before any Git or project
   operation. This means kit bootstrap into the active project, not repository
   replacement or remote management.
-- On the first concrete task, check accepted updates even without a GI command.
-  Equal versions without skipped migrations mean `pending migrations: 0`;
-  do not read migration entries/bodies, `CHANGELOG.md`, or `INDEX.md`. For a
-  newer source, apply pending accepted migrations when update checking and
-  auto-apply permit it; missing auto-apply means `true`. Skip only for explicit
-  `false` or a concrete blocker, and report the count. Never inspect `updates/`.
+- On the first concrete task, check accepted updates. Equal versions without
+  skipped migrations mean `pending migrations: 0`; do not read migrations,
+  `CHANGELOG.md`, or `INDEX.md`. Apply pending accepted migrations automatically;
+  missing auto-apply means `true`. Skip only for explicit `false` with metadata
+  path/key/value evidence, or a concrete blocker; report the count. Helper
+  limitations are not opt-outs. Never inspect `updates/`.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded GI rules. If one rule is blocked, report that operation precisely and
   continue independent authorized work.

@@ -289,6 +289,65 @@ try {
     $v2Output = (& $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source *>&1 | Out-String)
     Assert-Contains $v2Output "Pending instruction migrations: 1" "Schema-v2 metadata did not filter the checkpoint."
     Assert-Contains $v2Output "2026.09.22.2__pending" "Schema-v2 metadata omitted the pending id."
+    Assert-Contains $v2Output 'Automatic migration application: enabled' 'Missing auto-apply setting did not default to enabled.'
+    Assert-Contains $v2Output 'absent; default=true' 'Default policy evidence was omitted.'
+    Assert-Contains $v2Output 'Required agent action: apply pending accepted migrations now' 'Checker stopped at availability instead of handing off application.'
+    Assert-Contains $v2Output "Migration source: $(Join-Path $v2.Source 'migrations')" 'Agent cannot resolve migration instructions.'
+    if ((Get-Content $v2Path -Raw | ConvertFrom-Json).instruction_kit_version -ne '2026.09.22.1') {
+        throw 'Checking updates advanced metadata before file application.'
+    }
+
+    # Exercise the real builder/checker handoff in an isolated project.
+    New-Item -ItemType Directory -Path (Join-Path $v2.Project 'config') -Force | Out-Null
+    Copy-Item $builderPath, $resolverPath -Destination (Join-Path $v2.Project 'tools')
+    Copy-Item $updaterTemplate -Destination (Join-Path $v2.Project 'tools/check-instruction-kit-updates.ps1')
+    Copy-Item $budgetPath -Destination (Join-Path $v2.Project 'config/gi-context-budgets.json')
+    '{"routes":[{"id":"fixture","aliases":["gi fixture"],"contract":"Update handoff fixture","context_files":[]}]}' |
+        Set-Content (Join-Path $v2.Project 'config/gi-command-routes.json')
+    $v2Metadata = Get-Content $v2Path -Raw | ConvertFrom-Json
+    $v2Metadata.update_check | Add-Member -NotePropertyName shared_library_path -NotePropertyValue $v2.Source
+    $v2Metadata | ConvertTo-Json -Depth 8 | Set-Content $v2Path
+    $handoff = (& (Join-Path $v2.Project 'tools/get-gi-context.ps1') -CommandText 'gi fixture' *>&1 | Out-String)
+    Assert-Contains $handoff 'Required agent action: apply pending accepted migrations now' 'Context builder lost automatic application handoff.'
+    Assert-Contains $handoff 'Automatic migration application: enabled' 'Context builder lost policy evidence.'
+
+    foreach ($policyCase in @(
+        @{ Name = 'explicit-on'; Json = '{"enabled":true,"auto_apply_pending_migrations":true}'; Expected = 'auto_apply_pending_migrations=true' },
+        @{ Name = 'explicit-off'; Json = '{"enabled":true,"auto_apply_pending_migrations":false}'; Expected = 'auto_apply_pending_migrations=false' },
+        @{ Name = 'check-off'; Json = '{"enabled":false}'; Expected = 'update_check.enabled=false' }
+    )) {
+        $policyFixture = New-UpdateFixture -Name $policyCase.Name -MetadataJson ('{"instruction_kit_version":"2026.09.22.1","applied_migrations":["2026.09.22.1__already"],"update_check":' + $policyCase.Json + '}')
+        $policyPath = Join-Path $policyFixture.Project 'tools/project-memory/instruction-kit.json'
+        $beforePolicy = [IO.File]::ReadAllText($policyPath)
+        $policyOutput = (& $updaterTemplate -InstructionKitPath $policyPath -SharedLibraryPath $policyFixture.Source *>&1 | Out-String)
+        Assert-Contains $policyOutput $policyCase.Expected 'Policy report omitted the exact metadata value.'
+        Assert-Contains $policyOutput $policyPath 'Policy report omitted its evidence path.'
+        if ($policyCase.Name -ne 'explicit-on' -and $policyOutput.Contains('Required agent action: apply')) { throw 'Explicit opt-out still required automatic application.' }
+        if ($policyCase.Name -eq 'check-off') { Assert-Contains $policyOutput 'Pending instruction migrations: unknown' 'Disabled check invented a pending count.' }
+        if ([IO.File]::ReadAllText($policyPath) -cne $beforePolicy) { throw 'Policy check changed migration state.' }
+    }
+    foreach ($invalidPolicy in @('{"auto_apply_pending_migrations":"false"}', '{"enabled":null}')) {
+        $invalid = New-UpdateFixture -Name ('invalid-' + [guid]::NewGuid().ToString('N')) -MetadataJson ('{"instruction_kit_version":"2026.09.22.1","update_check":' + $invalidPolicy + '}')
+        $policyFailure = ''
+        try { & $updaterTemplate -InstructionKitPath (Join-Path $invalid.Project 'tools/project-memory/instruction-kit.json') -SharedLibraryPath $invalid.Source *> $null }
+        catch { $policyFailure = $_.ToString() }
+        Assert-Contains $policyFailure 'expected a JSON boolean' 'Invalid policy was silently interpreted.'
+    }
+    $noPolicy = New-UpdateFixture -Name 'no-policy' -MetadataJson '{"instruction_kit_version":"2026.09.22.1","applied_migrations":["2026.09.22.1__already"]}'
+    $noPolicyOutput = (& $updaterTemplate -InstructionKitPath (Join-Path $noPolicy.Project 'tools/project-memory/instruction-kit.json') -SharedLibraryPath $noPolicy.Source *>&1 | Out-String)
+    Assert-Contains $noPolicyOutput 'Required agent action: apply pending accepted migrations now' 'Legacy metadata without update_check lost automatic application.'
+
+    $applyNotice = (& $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source -Apply *>&1 | Out-String)
+    if ($LASTEXITCODE -ne 1) { throw 'Unsupported helper -Apply did not fail safely.' }
+    Assert-Contains $applyNotice 'Automatic migration application: enabled' 'Helper limitation changed the reported policy.'
+    Assert-Contains $applyNotice 'does not disable the automatic application policy' 'Helper limitation was presented as an opt-out.'
+    if ((Get-Content $v2Path -Raw | ConvertFrom-Json).instruction_kit_version -ne '2026.09.22.1') { throw 'Unsupported -Apply advanced metadata.' }
+    $missingSource = New-UpdateFixture -Name 'missing-migrations' -WithoutMigrations -MetadataJson '{"instruction_kit_version":"2026.09.22.1","update_check":{"enabled":true}}'
+    $missingFailure = ''
+    try { & $updaterTemplate -InstructionKitPath (Join-Path $missingSource.Project 'tools/project-memory/instruction-kit.json') -SharedLibraryPath $missingSource.Source *> $null }
+    catch { $missingFailure = $_.ToString() }
+    Assert-Contains $missingFailure 'Pending instruction migrations: unknown' 'Missing migration source was reported as zero pending.'
+
     & $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source -RecordApplied *>&1 | Out-Null
     $recorded = Get-Content -LiteralPath $v2Path -Raw | ConvertFrom-Json
     if ($recorded.migration_state.applied_through -ne "2026.09.22.2__pending") {
@@ -297,6 +356,8 @@ try {
     if ($recorded.PSObject.Properties.Name -contains "applied_migrations") {
         throw "Recording retained the legacy migration array."
     }
+    $afterRecording = (& $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source *>&1 | Out-String)
+    Assert-Contains $afterRecording 'Pending instruction migrations: 0' 'Verified recording did not complete the update flow.'
 
     $exceptions = New-UpdateFixture -Name "exceptions" -MetadataJson `
         '{"instruction_kit_version":"2026.09.22.1","migration_state":{"schema_version":2,"applied_through":"2026.09.22.1__already","additional_applied_migrations":["2026.09.22.2__pending"],"skipped_migrations":["2026.09.22.1__already"]},"update_check":{"enabled":true}}'
