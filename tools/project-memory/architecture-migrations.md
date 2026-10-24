@@ -27,6 +27,16 @@ runtime, keeps Git inspection neutral to checkout line-ending policy, and stops
 packet assembly when the staged update check fails. Migration checkpoints use
 numeric version ordering and preserve explicit skipped exceptions.
 
+Context-budget measurement contract (2026-10-24): normalize CRLF to LF before
+counting text. File gates count UTF-8 bytes of normalized text; routed packets,
+startup sections, and final packet caps count normalized characters, including
+one logical trailing newline. Keep configured thresholds unchanged. The builder
+owns runtime normalization before section/final truncation; routing/bootstrap
+checks use the same measurement semantics. Routing regression fixtures compare
+LF, CRLF, and mixed inputs, UTF-8 byte boundaries, section truncation, and the
+exact final cap through the public builder. Do not rewrite source line endings
+or normalize other whitespace as part of budget measurement.
+
 Reason: reduce fixed input tokens and repeated tool-loop amplification while
 preserving accepted behavior, legacy metadata compatibility, deterministic
 routing, and measurable safeguards against context growth.

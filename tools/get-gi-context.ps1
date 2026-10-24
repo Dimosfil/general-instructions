@@ -41,6 +41,7 @@ function Limit-ContextText {
         [Parameter(Mandatory = $true)][string]$Label
     )
 
+    $Text = $Text.Replace("`r`n", "`n")
     if ($Text.Length -le $Maximum) { return $Text }
     $marker = "`n[context truncated: $Label; original_chars=$($Text.Length); max_chars=$Maximum]"
     $prefixLength = [Math]::Max(0, $Maximum - $marker.Length)
@@ -202,12 +203,13 @@ if ($routeId -eq "start") {
     $parts.Add("Startup restore complete. Use targeted searches before reading large files.")
 }
 
-$packet = ($parts -join "`n`n").TrimEnd()
+$packet = ($parts -join "`n`n").Replace("`r`n", "`n").TrimEnd()
 $packetLimit = [int]$budgets.route_packet_default_max_chars
 $overrideProperty = $budgets.route_packet_overrides.PSObject.Properties[$routeId]
 if ($overrideProperty) { $packetLimit = [int]$overrideProperty.Value }
 if ($routeId -eq "start") { $packetLimit = [int]$budgets.start_packet_max_chars }
-$payloadLimit = [Math]::Max(0, $packetLimit - [Environment]::NewLine.Length)
+# Budget one logical LF for Write-Output, independent of the host's newline.
+$payloadLimit = [Math]::Max(0, $packetLimit - 1)
 if ($packet.Length -gt $payloadLimit) {
     $tail = "`n[context packet truncated: route=$routeId; original_chars=$($packet.Length); max_chars=$packetLimit]"
     if ($routeId -eq "start") { $tail += "`nStartup restore complete. Use targeted searches before reading large files." }

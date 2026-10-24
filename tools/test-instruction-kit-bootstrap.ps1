@@ -261,6 +261,7 @@ try {
             throw "Bootstrap form '$($forms[$index])' selected an unrelated summary Markdown file."
         }
         $contextBudgets = Get-Content -LiteralPath (Join-Path $target "config/gi-context-budgets.json") -Raw | ConvertFrom-Json
+        $contextOutput = $contextOutput.Replace("`r`n", "`n")
         if ($contextOutput.Length -gt [int]$contextBudgets.start_packet_max_chars) {
             throw "Bootstrap form '$($forms[$index])' exceeded the installed start-packet budget: $($contextOutput.Length) chars."
         }
@@ -284,6 +285,7 @@ try {
             finally {
                 [System.IO.File]::WriteAllText($budgetFile, $budgetText, [System.Text.UTF8Encoding]::new($false))
             }
+            $tightContext = $tightContext.Replace("`r`n", "`n")
             if ($tightContext.Length -gt 5000) { throw "Final startup packet hard cap was not enforced." }
             if (-not $tightContext.Contains("context packet truncated:") -or -not $tightContext.Contains("Startup restore complete.")) {
                 throw "Hard-capped startup packet omitted its truncation or completion marker."

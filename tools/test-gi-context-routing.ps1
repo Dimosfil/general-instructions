@@ -29,9 +29,11 @@ function Assert-Contains {
 function Assert-FileBudget {
     param(
         [Parameter(Mandatory = $true)][string]$RelativePath,
-        [Parameter(Mandatory = $true)][long]$Maximum
+        [Parameter(Mandatory = $true)][long]$Maximum,
+        [string]$RootPath = $repoRoot
     )
-    $length = (Get-Item -LiteralPath (Join-Path $repoRoot $RelativePath)).Length
+    $text = [System.IO.File]::ReadAllText((Join-Path $RootPath $RelativePath)).Replace("`r`n", "`n")
+    $length = [System.Text.Encoding]::UTF8.GetByteCount($text)
     if ($length -gt $Maximum) {
         throw "$RelativePath exceeded its context budget: $length > $Maximum bytes."
     }
@@ -104,7 +106,7 @@ try {
             }
         }
 
-        $packet = (& $resolverPath -CommandText ([string]$route.aliases[0]) | Out-String)
+        $packet = (& $resolverPath -CommandText ([string]$route.aliases[0]) | Out-String).Replace("`r`n", "`n")
         $maximum = [int]$budgets.route_packet_default_max_chars
         $override = $budgets.route_packet_overrides.PSObject.Properties[[string]$route.id]
         if ($override) { $maximum = [int]$override.Value }
@@ -252,12 +254,10 @@ try {
     Assert-FileBudget "tools/project-memory/instruction-kit.json" ([long]$budgets.metadata_max_bytes)
     Assert-FileBudget "templates/instruction-kit.template.json" ([long]$budgets.metadata_max_bytes)
     foreach ($module in Get-ChildItem -LiteralPath (Join-Path $repoRoot "patterns/AGENTS_RUNTIME") -File -Filter "*.md") {
-        if ($module.Length -gt [long]$budgets.runtime_module_max_bytes) {
-            throw "$($module.Name) exceeded the runtime-module budget: $($module.Length) bytes."
-        }
+        Assert-FileBudget ("patterns/AGENTS_RUNTIME/" + $module.Name) ([long]$budgets.runtime_module_max_bytes)
     }
 
-    $startPacket = (& $builderPath -CommandText "gi start" -SkipUpdateCheck | Out-String)
+    $startPacket = (& $builderPath -CommandText "gi start" -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
     Assert-Contains $startPacket "Instruction update check: skipped by caller" "Context builder omitted update status."
     Assert-Contains $startPacket "GI route: start" "Context builder omitted the start route."
     Assert-Contains $startPacket "===== PROJECT ENTRYPOINT =====" "Context builder omitted the project entrypoint."
@@ -404,7 +404,44 @@ try {
     Assert-Contains $legacyOutput "Pending instruction migrations: 1" "Legacy metadata compatibility failed."
     Assert-Contains $legacyOutput "2026.09.22.2__pending" "Legacy metadata omitted the pending id."
 
-    Write-Output "GI routing, context budgets, builder, and migration-state checks passed."
+    # Exercise file limits and both builder caps through the public entrypoint.
+    $newlineRoot = Join-Path $testRoot 'line-endings'
+    foreach ($directory in @('tools', 'config', 'patterns')) {
+        [void](New-Item -ItemType Directory -Path (Join-Path $newlineRoot $directory) -Force)
+    }
+    Copy-Item -LiteralPath $builderPath -Destination (Join-Path $newlineRoot 'tools/get-gi-context.ps1')
+    Copy-Item -LiteralPath $resolverPath -Destination (Join-Path $newlineRoot 'tools/resolve-gi-command.ps1')
+    $utf8 = [System.Text.UTF8Encoding]::new($false)
+    $newlineManifest = '{"routes":[{"id":"start","aliases":["gi start"],"contract":"Line-ending fixture","context_files":["patterns/body.md"]}]}'
+    [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'config/gi-command-routes.json'), $newlineManifest, $utf8)
+    $lfBody = "пример boundary`n" * 100
+    $fileBytes = $utf8.GetByteCount($lfBody)
+    $bodies = @($lfBody, $lfBody.Replace("`n", "`r`n"), ("пример boundary`r`nпример boundary`n" * 50))
+    foreach ($cap in @(10000, 900)) {
+        $newlineBudgets = @{ section_max_chars = 320; git_snapshot_max_chars = 4000; start_packet_max_chars = $cap; route_packet_default_max_chars = 36000; route_packet_overrides = @{} }
+        [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'config/gi-context-budgets.json'), ($newlineBudgets | ConvertTo-Json), $utf8)
+        $expectedPacket = $null
+        foreach ($body in $bodies) {
+            foreach ($file in @('patterns/body.md', 'AGENTS.md')) {
+                [System.IO.File]::WriteAllText((Join-Path $newlineRoot $file), $body, $utf8)
+            }
+            Assert-FileBudget -RelativePath 'AGENTS.md' -RootPath $newlineRoot -Maximum $fileBytes
+            $rejected = $false
+            try { Assert-FileBudget -RelativePath 'AGENTS.md' -RootPath $newlineRoot -Maximum ($fileBytes - 1) }
+            catch { $rejected = $true }
+            if (-not $rejected) { throw 'A real UTF-8 byte-budget overflow was accepted.' }
+            $newlinePacket = (& (Join-Path $newlineRoot 'tools/get-gi-context.ps1') -CommandText 'gi start' -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
+            if ($null -eq $expectedPacket) { $expectedPacket = $newlinePacket }
+            elseif ($newlinePacket -cne $expectedPacket) { throw 'LF, CRLF, and mixed inputs produced different bounded context.' }
+            if ($newlinePacket.Length -gt $cap) { throw 'Normalized context exceeded its unchanged cap.' }
+            if ($cap -eq 900) {
+                if ($newlinePacket.Length -ne $cap) { throw 'The final packet cap has an off-by-one error.' }
+                Assert-Contains $newlinePacket 'context packet truncated:' 'Missing final truncation marker.'
+            }
+            else { Assert-Contains $newlinePacket 'context truncated:' 'Missing section truncation marker.' }
+        }
+    }
+    Write-Output "GI routing, context budgets, builder, migration-state, and line-ending checks passed."
 }
 finally {
     if (Test-Path -LiteralPath $testRoot -PathType Container) {

@@ -27,6 +27,8 @@ architecture, and operational details in each project's own documentation.
   Startup-only sections restore project instructions,
   working agreements, language preferences, the canonical handoff, compact Git
   state, runbook hints, and memory search under regression-tested budgets.
+  Text budgets count CRLF and LF identically after LF normalization; file
+  budgets measure normalized UTF-8 bytes and packet budgets measure characters.
 - Offers templates, checklists, playbooks, and migration metadata so projects
   can adopt and update the instruction kit consistently.
 - Separates human-facing project documentation from durable agent project memory

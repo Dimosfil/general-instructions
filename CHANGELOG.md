@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.24
 
+- Normalize CRLF to LF before context-budget measurement and truncation. Keep
+  file limits in normalized UTF-8 bytes, packet limits in normalized characters,
+  and all configured thresholds unchanged. Cover LF, CRLF, mixed endings, real
+  byte overflow, section truncation, and the final packet boundary. Migration:
+  `2026.10.24.2__normalize_context_budget_line_endings`.
+
 - Require whole-task verification against the full agreed request, evidence at
   the level claimed, and explicit reporting of incomplete or unverified work,
   even when optional final review is off. Require agreement before implementing
