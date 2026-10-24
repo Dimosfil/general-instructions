@@ -25,8 +25,8 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded GI rules. If one rule is blocked, report that operation precisely and
   continue independent authorized work.
-- Before adding a clarification or approval gate, apply
-  `patterns/AGENTS_RUNTIME/03-rule-precedence.md` and existing authorization.
+- Before work, load `03-rule-precedence.md` for scope and complexity.
+- Before completion, load `15-verification.md` for whole-task checks and gaps.
 - State-changing GI commands must never run from memory. If the context builder,
   route manifest, resolver, or mandatory routed file is missing, stop that
   operation and name the missing path.

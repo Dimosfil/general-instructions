@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.24
+
+- Require whole-task verification against the full agreed request, evidence at
+  the level claimed, and explicit reporting of incomplete or unverified work,
+  even when optional final review is off. Require agreement before implementing
+  material complexity beyond the agreed solution; keep routine choices and
+  necessary local fixes autonomous. Reuse existing context without new forms,
+  rigid reports, or repeated checks. Migration:
+  `2026.10.24.1__require_whole_task_completion_and_complexity_agreement`.
+
 ## 2026.10.23
 
 - Made the update checker report validated policy evidence and require immediate
