@@ -94,6 +94,29 @@ function Copy-MissingFile {
     $Created.Add($DestinationPath)
 }
 
+function Merge-MandatoryContextEntry {
+    param([string]$TemplatePath, [string]$DestinationPath)
+
+    $pattern = '(?s)<!--gi-->.*?<!--/gi-->'
+    $templateText = [System.IO.File]::ReadAllText($TemplatePath)
+    $blocks = [regex]::Matches($templateText, $pattern)
+    if ($blocks.Count -ne 1) { throw 'Template must contain exactly one mandatory GI context block.' }
+    if ((Get-Item -LiteralPath $DestinationPath).Attributes -band [System.IO.FileAttributes]::ReparsePoint) { throw 'Cannot merge GI context into a linked AGENTS.md without explicit target authorization.' }
+    $reader = [System.IO.StreamReader]::new($DestinationPath, [System.Text.UTF8Encoding]::new($false), $true)
+    try { $existing = $reader.ReadToEnd(); $encoding = $reader.CurrentEncoding }
+    finally { $reader.Dispose() }
+    $newline = if ($existing.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $block = $blocks[0].Value.Replace("`r`n", "`n").Replace("`n", $newline)
+    $owned = [regex]::Matches($existing, $pattern)
+    if ($owned.Count -gt 1) { throw 'Multiple mandatory GI context blocks require a scoped merge.' }
+    $merged = if ($owned.Count -eq 1) {
+        $existing.Remove($owned[0].Index, $owned[0].Length).Insert($owned[0].Index, $block)
+    } else { $existing + $newline + $newline + $block + $newline }
+    if ($merged -ceq $existing) { return $false }
+    [System.IO.File]::WriteAllText($DestinationPath, $merged, $encoding)
+    return $true
+}
+
 function Merge-GitIgnoreRules {
     param(
         [Parameter(Mandatory = $true)][string]$TemplatePath,
@@ -197,6 +220,19 @@ try {
             -Preserved $preserved
     }
 
+    $builderTarget = Join-Path $resolvedTarget 'tools/get-gi-context.ps1'
+    $builderAst = [System.Management.Automation.Language.Parser]::ParseFile($builderTarget, [ref]$null, [ref]$null)
+    $builderParameters = @($builderAst.ParamBlock.Parameters | ForEach-Object { $_.Name.VariablePath.UserPath })
+    $targetRules = [System.IO.File]::ReadAllText((Join-Path $resolvedTarget 'patterns/AGENTS_RUNTIME/03-rule-precedence.md'))
+    if ($builderParameters -notcontains 'Phase' -or
+        -not $targetRules.Contains('## Whole-Task Completion Gate') -or
+        -not $targetRules.Contains('## Simplicity And Material Complexity')) {
+        throw 'Existing GI files need the accepted context-delivery migration before bootstrap can finish; preserve local hooks and update the helper and module 03.'
+    }
+    $contextEntryUpdated = Merge-MandatoryContextEntry `
+        -TemplatePath (Join-Path $resolvedSourceRoot 'templates/AGENTS.template.md') `
+        -DestinationPath (Join-Path $resolvedTarget 'AGENTS.md')
+
     $patternFiles = @(
         "AGENT_ROLE_OFFICE.md",
         "API_KEY_SECRET_SAFETY.md",
@@ -257,6 +293,7 @@ try {
         target_project = $resolvedTarget
         created_count = $created.Count
         preserved_count = $preserved.Count
+        context_entry_updated = $contextEntryUpdated
         created = $created
         preserved = $preserved
         next_step = "Inspect TODO placeholders, merge any preserved instruction files, then ask about task-manager plan sync."

@@ -81,7 +81,8 @@ try {
         }
         if ($index -eq 2) {
             $agentsText = [System.IO.File]::ReadAllText((Join-Path $target "AGENTS.md"))
-            if ($agentsText -ne "# Existing project instructions") {
+            $projectText = ($agentsText -replace '(?s)\s*<!--gi-->.*?<!--/gi-->\s*', '')
+            if ($projectText -ne "# Existing project instructions") {
                 throw "The installer overwrote existing project instructions."
             }
         }
@@ -262,6 +263,16 @@ try {
         }
         $contextBudgets = Get-Content -LiteralPath (Join-Path $target "config/gi-context-budgets.json") -Raw | ConvertFrom-Json
         $contextOutput = $contextOutput.Replace("`r`n", "`n")
+        $installedRules = [System.IO.File]::ReadAllText((Join-Path $target 'patterns/AGENTS_RUNTIME/03-rule-precedence.md')).Replace("`r`n", "`n").TrimEnd()
+        if (-not $contextOutput.Contains($installedRules)) { throw 'Installed work context omitted mandatory task rules.' }
+        $installedEntry = [System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md'))
+        if (-not $installedEntry.Contains('-Phase Complete')) { throw 'Installed entrypoint omitted completion-phase invocation.' }
+        $completionContext = (& (Join-Path $target 'tools/get-gi-context.ps1') -Phase Complete | Out-String).Replace("`r`n", "`n")
+        if (-not $completionContext.Contains($installedRules) -or $completionContext.Contains('GI UPDATE STATUS')) { throw 'Installed completion phase omitted rules or ran startup.' }
+        if ($completionContext.Length -gt [int]$contextBudgets.route_packet_default_max_chars) { throw 'Installed completion phase exceeded its unchanged budget.' }
+        $entryBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md'))
+        & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
+        if ([System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md')) -cne $entryBeforeReinstall) { throw 'Reinstall duplicated or changed the mandatory context block.' }
         if ($contextOutput.Length -gt [int]$contextBudgets.start_packet_max_chars) {
             throw "Bootstrap form '$($forms[$index])' exceeded the installed start-packet budget: $($contextOutput.Length) chars."
         }
@@ -270,6 +281,19 @@ try {
         }
 
         if ($index -eq 0) {
+            $legacyTarget = Join-Path $testRoot 'legacy-context-target'
+            [void](New-Item -ItemType Directory -Path (Join-Path $legacyTarget 'tools') -Force)
+            [System.IO.File]::WriteAllText((Join-Path $legacyTarget 'AGENTS.md'), '# Legacy project content', [System.Text.UTF8Encoding]::new($false))
+            $legacyBuilder = Join-Path $legacyTarget 'tools/get-gi-context.ps1'
+            [System.IO.File]::WriteAllText($legacyBuilder, 'param([string]$CommandText)', [System.Text.UTF8Encoding]::new($false))
+            $legacyRejected = $false
+            try { & $installer -SourceRoot $repoRoot -TargetPath $legacyTarget | Out-Null }
+            catch { $legacyRejected = $_.Exception.Message.Contains('context-delivery migration') }
+            if (-not $legacyRejected -or [System.IO.File]::ReadAllText((Join-Path $legacyTarget 'AGENTS.md')) -cne '# Legacy project content' -or
+                [System.IO.File]::ReadAllText($legacyBuilder) -cne 'param([string]$CommandText)' -or
+                (Test-Path -LiteralPath (Join-Path $legacyTarget 'tools/project-memory/instruction-kit.json'))) {
+                throw 'Legacy files were overwritten or bootstrap falsely reported current context delivery.'
+            }
             $budgetFile = Join-Path $target "config/gi-context-budgets.json"
             $budgetText = [System.IO.File]::ReadAllText($budgetFile)
             $tightBudgets = $budgetText | ConvertFrom-Json
@@ -286,6 +310,7 @@ try {
                 [System.IO.File]::WriteAllText($budgetFile, $budgetText, [System.Text.UTF8Encoding]::new($false))
             }
             $tightContext = $tightContext.Replace("`r`n", "`n")
+            if (-not $tightContext.Contains($installedRules)) { throw 'Final startup cap removed mandatory task rules.' }
             if ($tightContext.Length -gt 5000) { throw "Final startup packet hard cap was not enforced." }
             if (-not $tightContext.Contains("context packet truncated:") -or -not $tightContext.Contains("Startup restore complete.")) {
                 throw "Hard-capped startup packet omitted its truncation or completion marker."

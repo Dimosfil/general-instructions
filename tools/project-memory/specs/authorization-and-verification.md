@@ -20,7 +20,10 @@ required verification. / Выполнять понятные задачи без
 - `patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md`: advance notice before
   direct or indirect third-party service launches, separate from approval.
 
-Root and copied-project entrypoints route approval decisions to module 03.
+Root and copied-project entrypoints use `tools/get-gi-context.ps1` before work
+and with `-Phase Complete` before the final response; GI commands add their
+exact text via `-CommandText`. The entrypoints also carry a compact reminder of
+whole-task verification, honest gaps, and prior complexity agreement.
 Migration `2026.09.05.1__scope_approval_and_verification_gates` propagates this
 contract without replacing project-owned safety requirements.
 
@@ -57,15 +60,27 @@ choices is required. / Миграция добавляет обязательн�
 
 ## Evidence / Основания
 
-Completion mapping: request -> entrypoints load modules 03/15 -> module 03 owns
-scope, complexity agreement, whole-task evidence and gap reporting -> module 15
-references the gate and owns proportionate checks -> decision-case review
-and installed-kit delivery check. These are agent instructions, not a runtime
-validator or a guarantee that future agents obey them.
+Completion mapping: request -> entrypoint invocation -> builder reads the live
+module 03 -> untruncated mandatory prefix -> bounded route/startup remainder.
+The Complete phase rereads the same source and returns its full text plus a
+completion instruction, without update checks, routing, Git inspection, or
+service startup. The optional final-review preference never suppresses it.
+Missing/incomplete rules or a budget too small for the protected prefix fail
+before any packet is emitted. No thresholds are raised, new approval record is
+required, or form/checklist added. Module 15 still owns proportionate checks.
 
-Связь завершения: запрос -> загрузка модулей 03/15 -> согласование усложнения и
-проверка всей задачи -> правила, шаблон и миграция -> контрольные случаи и
-проверка доставки. Это инструкции агенту, а не программная блокировка завершения.
+Verification covers every route, phase-only Work and Complete, optional review
+Off, oversized context, missing/incomplete/oversized rules, too-small budgets,
+LF/CRLF, and the installed public helper. Repeat these checks on a checkout of
+the actual published commit, not an unrelated dirty working tree. This enforces
+packet contents; the agent/runtime must still invoke the helper as instructed.
+
+Связь завершения: входной файл -> вызов сборщика -> чтение актуального модуля 03
+-> полный защищённый блок -> обрезаемый остаток контекста. Перед финалом фаза
+Complete повторно читает правила без запуска команд, обновлений и сервисов.
+Проверка Off не отключает обязательный блок. При нехватке места или правил
+частичный пакет не выдаётся. Проверяется опубликованный комплект; вызов
+сборщика остаётся обязанностью агента или среды выполнения.
 
 Service-launch mapping: launch decision -> entrypoint safety routing -> runtime
 module owns advance notice -> source and copied-project entrypoints plus

@@ -4,6 +4,15 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.24
 
+- Deliver complete mandatory task rules as an untruncated prefix in every work
+  context and in a side-effect-free `-Phase Complete` invocation before the
+  final response. Reserve their space within existing limits; reject missing,
+  incomplete, or oversized rules instead of emitting partial instructions.
+  Merge the marked invocation block into existing project entrypoints without
+  replacing project content. Verify all routes, truncation, optional review Off,
+  failure cases, installed kits, and the actual published source. Migration:
+  `2026.10.24.3__protect_mandatory_work_and_completion_context`.
+
 - Normalize CRLF to LF before context-budget measurement and truncation. Keep
   file limits in normalized UTF-8 bytes, packet limits in normalized characters,
   and all configured thresholds unchanged. Cover LF, CRLF, mixed endings, real

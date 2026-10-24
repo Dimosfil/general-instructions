@@ -75,6 +75,7 @@ function New-UpdateFixture {
 try {
     $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
     $budgets = Get-Content -LiteralPath $budgetPath -Raw | ConvertFrom-Json
+    $mandatoryRules = [System.IO.File]::ReadAllText((Join-Path $repoRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md')).Replace("`r`n", "`n").TrimEnd()
     $aliases = @{}
     foreach ($route in $manifest.routes) {
         if (-not $route.id -or -not $route.contract -or @($route.aliases).Count -eq 0) {
@@ -113,6 +114,10 @@ try {
         if ($packet.Length -gt $maximum) {
             throw "Route '$($route.id)' exceeded its packet budget: $($packet.Length) > $maximum chars."
         }
+        $workPacket = (& $builderPath -CommandText ([string]$route.aliases[0]) -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
+        Assert-Contains $workPacket $mandatoryRules "Route '$($route.id)' omitted complete mandatory task rules."
+        $workMaximum = if ($route.id -eq 'start') { [int]$budgets.start_packet_max_chars } else { $maximum }
+        if ($workPacket.Length -gt $workMaximum) { throw "Protected work context exceeded its unchanged budget: $($route.id)" }
     }
 
     $routeCases = @(
@@ -300,6 +305,8 @@ try {
     # Exercise the real builder/checker handoff in an isolated project.
     New-Item -ItemType Directory -Path (Join-Path $v2.Project 'config') -Force | Out-Null
     Copy-Item $builderPath, $resolverPath -Destination (Join-Path $v2.Project 'tools')
+    [void](New-Item -ItemType Directory -Path (Join-Path $v2.Project 'patterns/AGENTS_RUNTIME') -Force)
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md') -Destination (Join-Path $v2.Project 'patterns/AGENTS_RUNTIME/03-rule-precedence.md')
     Copy-Item $updaterTemplate -Destination (Join-Path $v2.Project 'tools/check-instruction-kit-updates.ps1')
     Copy-Item $budgetPath -Destination (Join-Path $v2.Project 'config/gi-context-budgets.json')
     '{"routes":[{"id":"fixture","aliases":["gi fixture"],"contract":"Update handoff fixture","context_files":[]}]}' |
@@ -406,12 +413,15 @@ try {
 
     # Exercise file limits and both builder caps through the public entrypoint.
     $newlineRoot = Join-Path $testRoot 'line-endings'
-    foreach ($directory in @('tools', 'config', 'patterns')) {
+    foreach ($directory in @('tools', 'config', 'patterns/AGENTS_RUNTIME', 'tools/project-memory')) {
         [void](New-Item -ItemType Directory -Path (Join-Path $newlineRoot $directory) -Force)
     }
     Copy-Item -LiteralPath $builderPath -Destination (Join-Path $newlineRoot 'tools/get-gi-context.ps1')
     Copy-Item -LiteralPath $resolverPath -Destination (Join-Path $newlineRoot 'tools/resolve-gi-command.ps1')
     $utf8 = [System.Text.UTF8Encoding]::new($false)
+    $fixtureRulesPath = Join-Path $newlineRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md'
+    $fixtureRules = "## Simplicity And Material Complexity`nAgree material complexity first.`n## Whole-Task Completion Gate`nVerify all requirements and report gaps.`n"
+    [System.IO.File]::WriteAllText($fixtureRulesPath, $fixtureRules, $utf8)
     $newlineManifest = '{"routes":[{"id":"start","aliases":["gi start"],"contract":"Line-ending fixture","context_files":["patterns/body.md"]}]}'
     [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'config/gi-command-routes.json'), $newlineManifest, $utf8)
     $lfBody = "пример boundary`n" * 100
@@ -431,6 +441,7 @@ try {
             catch { $rejected = $true }
             if (-not $rejected) { throw 'A real UTF-8 byte-budget overflow was accepted.' }
             $newlinePacket = (& (Join-Path $newlineRoot 'tools/get-gi-context.ps1') -CommandText 'gi start' -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
+            Assert-Contains $newlinePacket $fixtureRules.TrimEnd() 'Truncation removed mandatory rules.'
             if ($null -eq $expectedPacket) { $expectedPacket = $newlinePacket }
             elseif ($newlinePacket -cne $expectedPacket) { throw 'LF, CRLF, and mixed inputs produced different bounded context.' }
             if ($newlinePacket.Length -gt $cap) { throw 'Normalized context exceeded its unchanged cap.' }
@@ -441,7 +452,43 @@ try {
             else { Assert-Contains $newlinePacket 'context truncated:' 'Missing section truncation marker.' }
         }
     }
-    Write-Output "GI routing, context budgets, builder, migration-state, and line-ending checks passed."
+    foreach ($phase in @('Work', 'Complete')) {
+        $phasePacket = (& $builderPath -Phase $phase -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
+        Assert-Contains $phasePacket $mandatoryRules "Phase $phase omitted mandatory rules."
+        Assert-Contains $phasePacket "MANDATORY TASK RULES ($phase)" 'Missing phase identity.'
+        if ($phasePacket.Length -gt [int]$budgets.route_packet_default_max_chars) { throw 'Phase context exceeded its unchanged budget.' }
+    }
+    $fixtureBuilder = Join-Path $newlineRoot 'tools/get-gi-context.ps1'
+    [System.IO.File]::WriteAllText($fixtureRulesPath, $mandatoryRules, $utf8)
+    [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'tools/project-memory/verification-preferences.json'), '{"task_completion_review":{"enabled":false}}', $utf8)
+    $newlineBudgets.route_packet_default_max_chars = 5000
+    [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'config/gi-context-budgets.json'), ($newlineBudgets | ConvertTo-Json), $utf8)
+    foreach ($phase in @('Work', 'Complete')) {
+        $phasePacket = (& $fixtureBuilder -Phase $phase -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
+        Assert-Contains $phasePacket $mandatoryRules 'Optional review Off suppressed mandatory rules.'
+    }
+    $completionPacket = (& $fixtureBuilder -Phase Complete -CommandText 'not a GI route' | Out-String)
+    if ($completionPacket.Contains('GI UPDATE STATUS') -or $completionPacket.Contains('GI ROUTE PACKET')) { throw 'Completion phase triggered startup or route work.' }
+    foreach ($failure in @('missing', 'incomplete', 'too-large', 'too-small-budget')) {
+        $fixtureText = switch ($failure) {
+            'missing' { $null }
+            'incomplete' { 'No mandatory sections here.' }
+            'too-large' { $mandatoryRules + ("oversized rule`n" * 1000) }
+            'too-small-budget' { $mandatoryRules }
+        }
+        if ($null -eq $fixtureText) { Remove-Item -LiteralPath $fixtureRulesPath }
+        else { [System.IO.File]::WriteAllText($fixtureRulesPath, $fixtureText, $utf8) }
+        if ($failure -eq 'too-small-budget') {
+            $newlineBudgets.route_packet_default_max_chars = $mandatoryRules.Length - 1
+            [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'config/gi-context-budgets.json'), ($newlineBudgets | ConvertTo-Json), $utf8)
+        }
+        $emitted = [System.Collections.Generic.List[string]]::new()
+        $rejected = $false
+        try { & $fixtureBuilder -Phase Complete | ForEach-Object { $emitted.Add([string]$_) } }
+        catch { $rejected = $true }
+        if (-not $rejected -or $emitted.Count -ne 0) { throw "Unsafe partial rules packet accepted: $failure" }
+    }
+    Write-Output "GI routing, budgets, protected Work/Complete rules, migration-state, and line-ending checks passed."
 }
 finally {
     if (Test-Path -LiteralPath $testRoot -PathType Container) {

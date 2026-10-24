@@ -98,7 +98,9 @@ For a fresh target, prefer the resolved checkout's deterministic installer:
 .\tools\install-instruction-kit.ps1 -TargetPath <current-project-root>
 ```
 
-The installer creates missing files and preserves existing files. If local
+The installer creates missing files and preserves project-owned content. It
+merges only the marked mandatory context block into an existing `AGENTS.md`.
+If local
 instruction files already exist, inspect them and merge missing rules carefully
 after the installer reports them as preserved.
 

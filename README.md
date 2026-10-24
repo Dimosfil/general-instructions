@@ -29,6 +29,11 @@ architecture, and operational details in each project's own documentation.
   state, runbook hints, and memory search under regression-tested budgets.
   Text budgets count CRLF and LF identically after LF normalization; file
   budgets measure normalized UTF-8 bytes and packet budgets measure characters.
+  Every work packet starts with the complete mandatory task rules, protected
+  from truncation. Call `tools/get-gi-context.ps1 -Phase Complete` before the
+  final response to reload them without startup or service operations. Ordinary
+  tasks use the helper without a command; GI commands add `-CommandText`.
+  Missing rules or insufficient space fail explicitly; limits stay unchanged.
 - Offers templates, checklists, playbooks, and migration metadata so projects
   can adopt and update the instruction kit consistently.
 - Separates human-facing project documentation from durable agent project memory

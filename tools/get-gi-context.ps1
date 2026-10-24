@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $true)][string]$CommandText,
+    [string]$CommandText = "",
+    [ValidateSet('Work', 'Complete')][string]$Phase = 'Work',
     [switch]$SkipUpdateCheck,
     [ValidateRange(1, 500)][int]$MaxSummaryLines = 80,
     [ValidateRange(1, 500)][int]$MaxStartupFileLines = 80,
@@ -14,12 +15,15 @@ $projectRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 $resolverPath = Join-Path $projectRoot "tools/resolve-gi-command.ps1"
 $metadataPath = Join-Path $projectRoot "tools/project-memory/instruction-kit.json"
 $budgetPath = Join-Path $projectRoot "config/gi-context-budgets.json"
+$mandatoryRulesPath = Join-Path $projectRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md'
 $checkerCandidates = @(
     (Join-Path $projectRoot "tools/check-instruction-kit-updates.ps1"),
     (Join-Path $projectRoot "templates/check-instruction-kit-updates.template.ps1")
 )
 
-foreach ($requiredPath in @($resolverPath, $budgetPath)) {
+$requiredPaths = @($budgetPath, $mandatoryRulesPath)
+if ($Phase -eq 'Work' -and -not [string]::IsNullOrWhiteSpace($CommandText)) { $requiredPaths += $resolverPath }
+foreach ($requiredPath in $requiredPaths) {
     if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
         throw "Required GI context file is missing: $requiredPath"
     }
@@ -54,6 +58,26 @@ function New-ContextSection {
         [AllowEmptyString()][string]$Body
     )
     return "===== $Title =====`n$Body".TrimEnd()
+}
+
+function Write-BoundedContextPacket {
+    param([AllowEmptyString()][string]$Body, [string]$RouteId)
+
+    $Body = $Body.Replace("`r`n", "`n").TrimEnd()
+    $packetLimit = [int]$budgets.route_packet_default_max_chars
+    $overrideProperty = $budgets.route_packet_overrides.PSObject.Properties[$RouteId]
+    if ($overrideProperty) { $packetLimit = [int]$overrideProperty.Value }
+    if ($RouteId -eq 'start') { $packetLimit = [int]$budgets.start_packet_max_chars }
+    $payloadLimit = [Math]::Max(0, $packetLimit - 1)
+    $bodyLimit = $payloadLimit - $mandatoryPrefix.Length
+    if ($bodyLimit -lt 0) { throw 'Context budget cannot fit mandatory task rules; no partial packet emitted.' }
+    if ($Body.Length -gt $bodyLimit) {
+        $tail = "`n[context packet truncated: route=$RouteId; original_chars=$($mandatoryPrefix.Length + $Body.Length); max_chars=$packetLimit]"
+        if ($RouteId -eq 'start') { $tail += "`nStartup restore complete. Use targeted searches before reading large files." }
+        if ($bodyLimit -lt $tail.Length) { throw 'Context budget cannot fit mandatory task rules and truncation notice; no partial packet emitted.' }
+        $Body = $Body.Substring(0, $bodyLimit - $tail.Length) + $tail
+    }
+    Write-Output ($mandatoryPrefix + $Body)
 }
 
 function Get-BoundedFileSection {
@@ -123,12 +147,25 @@ function Get-SystemLanguagePreferencesSection {
     }
 }
 
-$routeHeaderItems = @(& $resolverPath -CommandText $CommandText -PathsOnly *>&1)
-if ($LASTEXITCODE -ne 0) { throw (Convert-ItemsToText -Items $routeHeaderItems) }
-$routeHeader = Convert-ItemsToText -Items $routeHeaderItems
-$routeMatch = [regex]::Match($routeHeader, '(?m)^GI route:\s*(?<id>[^\r\n]+)')
-if (-not $routeMatch.Success) { throw "GI resolver did not return a route id." }
-$routeId = $routeMatch.Groups['id'].Value.Trim()
+$mandatoryRules = [System.IO.File]::ReadAllText($mandatoryRulesPath).Replace("`r`n", "`n").TrimEnd()
+foreach ($heading in @('## Simplicity And Material Complexity', '## Whole-Task Completion Gate')) {
+    if (-not $mandatoryRules.Contains($heading)) { throw "Mandatory task rules section missing: $heading" }
+}
+$mandatoryPrefix = (New-ContextSection -Title "MANDATORY TASK RULES ($Phase)" -Body $mandatoryRules) + "`n`n"
+if ($Phase -eq 'Complete') {
+    Write-BoundedContextPacket -RouteId 'complete' -Body 'Apply the loaded whole-task gate to the actual result before the final response. Report remaining gaps explicitly.'
+    exit 0
+}
+
+$routeId = 'work'
+if (-not [string]::IsNullOrWhiteSpace($CommandText)) {
+    $routeHeaderItems = @(& $resolverPath -CommandText $CommandText -PathsOnly *>&1)
+    if ($LASTEXITCODE -ne 0) { throw (Convert-ItemsToText -Items $routeHeaderItems) }
+    $routeHeader = Convert-ItemsToText -Items $routeHeaderItems
+    $routeMatch = [regex]::Match($routeHeader, '(?m)^GI route:\s*(?<id>[^\r\n]+)')
+    if (-not $routeMatch.Success) { throw "GI resolver did not return a route id." }
+    $routeId = $routeMatch.Groups['id'].Value.Trim()
+}
 $parts = [System.Collections.Generic.List[string]]::new()
 
 $updateBody = if ($SkipUpdateCheck) {
@@ -156,9 +193,11 @@ else {
 }
 $parts.Add((New-ContextSection -Title "GI UPDATE STATUS" -Body $updateBody))
 
-$routeItems = @(& $resolverPath -CommandText $CommandText *>&1)
-if ($LASTEXITCODE -ne 0) { throw (Convert-ItemsToText -Items $routeItems) }
-$parts.Add((New-ContextSection -Title "GI ROUTE PACKET" -Body (Convert-ItemsToText -Items $routeItems)))
+if (-not [string]::IsNullOrWhiteSpace($CommandText)) {
+    $routeItems = @(& $resolverPath -CommandText $CommandText *>&1)
+    if ($LASTEXITCODE -ne 0) { throw (Convert-ItemsToText -Items $routeItems) }
+    $parts.Add((New-ContextSection -Title "GI ROUTE PACKET" -Body (Convert-ItemsToText -Items $routeItems)))
+}
 
 if ($routeId -eq "start") {
     foreach ($section in @(
@@ -203,18 +242,4 @@ if ($routeId -eq "start") {
     $parts.Add("Startup restore complete. Use targeted searches before reading large files.")
 }
 
-$packet = ($parts -join "`n`n").Replace("`r`n", "`n").TrimEnd()
-$packetLimit = [int]$budgets.route_packet_default_max_chars
-$overrideProperty = $budgets.route_packet_overrides.PSObject.Properties[$routeId]
-if ($overrideProperty) { $packetLimit = [int]$overrideProperty.Value }
-if ($routeId -eq "start") { $packetLimit = [int]$budgets.start_packet_max_chars }
-# Budget one logical LF for Write-Output, independent of the host's newline.
-$payloadLimit = [Math]::Max(0, $packetLimit - 1)
-if ($packet.Length -gt $payloadLimit) {
-    $tail = "`n[context packet truncated: route=$routeId; original_chars=$($packet.Length); max_chars=$packetLimit]"
-    if ($routeId -eq "start") { $tail += "`nStartup restore complete. Use targeted searches before reading large files." }
-    $prefixLength = [Math]::Max(0, $payloadLimit - $tail.Length)
-    $packet = $packet.Substring(0, $prefixLength) + $tail
-}
-
-Write-Output $packet
+Write-BoundedContextPacket -RouteId $routeId -Body ($parts -join "`n`n")

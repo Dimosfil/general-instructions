@@ -15,10 +15,8 @@ TODO: describe the product, users, and primary runtime surface.
   continue independent authorized work while waiting.
 - This file alone is sufficient only for greetings and status-neutral replies.
   Before concrete work, select the matching runtime modules.
-- For a GI command, run
-  `tools/get-gi-context.ps1 -CommandText "<exact user command>"`. It performs the
-  staged update check, longest-prefix route resolution, and bounded retrieval.
-  Use `COMMANDS.md` directly only for help or command-index requests.
+- For GI commands, pass the exact user command via `-CommandText` to the context
+  helper. Use `COMMANDS.md` only for help or command-index requests.
 - On the first concrete task, perform the staged update check. Equal versions
   without skipped migrations mean `pending migrations: 0` without reading
   migrations, `CHANGELOG.md`, or `INDEX.md`. Apply pending accepted migrations
@@ -29,8 +27,12 @@ TODO: describe the product, users, and primary runtime surface.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded rules. Report a blocked operation precisely and continue independent
   authorized work.
-- Before work, load `03-rule-precedence.md` for scope and complexity.
-- Before completion, load `15-verification.md` for whole-task checks and gaps.
+<!--gi-->
+- Verify the full task, report gaps, and agree material complexity first.
+- Before work, run `tools/get-gi-context.ps1`; before the final response, run it
+  with `-Phase Complete` and apply its rules. Load failure blocks completion;
+  continue independent work. Routine work needs no extra approval.
+<!--/gi-->
 - State-changing GI commands must not run from memory. If the context builder,
   route manifest, resolver, or a mandatory routed file is missing, stop that
   operation and name the missing path.

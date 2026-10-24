@@ -8,10 +8,8 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 - For Unity projects, also load `20-unity-projects.md` before Unity work.
 - Start here. This file alone is sufficient only for greetings and
   status-neutral replies.
-- Before a concrete task, select the matching runtime modules. For a GI command,
-  run `tools/get-gi-context.ps1 -CommandText "<exact user command>"`; it performs
-  the staged update check, longest-prefix route resolution, and bounded context
-  retrieval. Use `COMMANDS.md` directly only for help or command-index requests.
+- Select task modules before concrete work. For GI commands, pass the exact user
+  command via `-CommandText` to the context helper. Use `COMMANDS.md` only for help.
 - For `gi init`, `init`, `инит`, a canonical URL, short repository name,
   Markdown link, or local checkout, read `BOOTSTRAP.md` before any Git or project
   operation. This means kit bootstrap into the active project, not repository
@@ -25,8 +23,10 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded GI rules. If one rule is blocked, report that operation precisely and
   continue independent authorized work.
-- Before work, load `03-rule-precedence.md` for scope and complexity.
-- Before completion, load `15-verification.md` for whole-task checks and gaps.
+- Verify the full task, report gaps, and agree material complexity first.
+- Before work, run `tools/get-gi-context.ps1`; before the final response, run it
+  with `-Phase Complete` and apply its rules. Load failure blocks completion;
+  continue independent work. Routine work needs no extra approval.
 - State-changing GI commands must never run from memory. If the context builder,
   route manifest, resolver, or mandatory routed file is missing, stop that
   operation and name the missing path.
