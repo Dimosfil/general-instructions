@@ -1,4 +1,5 @@
 # Local/generated AI-agent memory and runtime noise
+.codex/.gi-hook-state/
 tools/project-memory/*.sqlite
 tools/project-memory/*.sqlite-*
 tools/project-memory/*.db

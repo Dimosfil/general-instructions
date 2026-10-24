@@ -55,6 +55,9 @@ name, or local checkout:
 
 The installer creates missing files and preserves project-owned content. It
 merges only the marked mandatory context block into an existing `AGENTS.md`.
+It also merges GI lifecycle handlers into `.codex/hooks.json`, preserving other
+hooks. See [activation and live verification](docs/gi-lifecycle-hooks.md).
+Configured files alone do not prove that the running host trusts or runs hooks.
 When a target
 already has instruction files, inspect and merge missing rules deliberately
 instead of overwriting project-owned content.

@@ -20,9 +20,10 @@ required verification. / Выполнять понятные задачи без
 - `patterns/AGENTS_RUNTIME/09-runtime-and-defaults.md`: advance notice before
   direct or indirect third-party service launches, separate from approval.
 
-Root and copied-project entrypoints use `tools/get-gi-context.ps1` before work
-and with `-Phase Complete` before the final response; GI commands add their
-exact text via `-CommandText`. The entrypoints also carry a compact reminder of
+Trusted native Codex hooks call `tools/get-gi-context.ps1` before work and on
+Stop, independently of the agent; compacted sessions restore the Work rules.
+Entrypoints keep manual Work/Complete fallback for hosts without active hooks;
+GI commands add their exact text via `-CommandText`. They carry a reminder of
 whole-task verification, honest gaps, and prior complexity agreement.
 Migration `2026.09.05.1__scope_approval_and_verification_gates` propagates this
 contract without replacing project-owned safety requirements.
@@ -72,15 +73,19 @@ required, or form/checklist added. Module 15 still owns proportionate checks.
 Verification covers every route, phase-only Work and Complete, optional review
 Off, oversized context, missing/incomplete/oversized rules, too-small budgets,
 LF/CRLF, and the installed public helper. Repeat these checks on a checkout of
-the actual published commit, not an unrelated dirty working tree. This enforces
-packet contents; the agent/runtime must still invoke the helper as instructed.
+the actual published commit, not an unrelated dirty working tree. Native hooks
+own automatic invocation, including a real CLI omission test. The Stop receipt
+is tied to the rules and work fingerprint and only permits an unchanged automatic
+continuation with passing checks. See `docs/gi-lifecycle-hooks.md` for trust,
+failure, privacy, and verification limits; copying files is not host activation.
 
 Связь завершения: входной файл -> вызов сборщика -> чтение актуального модуля 03
 -> полный защищённый блок -> обрезаемый остаток контекста. Перед финалом фаза
 Complete повторно читает правила без запуска команд, обновлений и сервисов.
 Проверка Off не отключает обязательный блок. При нехватке места или правил
-частичный пакет не выдаётся. Проверяется опубликованный комплект; вызов
-сборщика остаётся обязанностью агента или среды выполнения.
+частичный пакет не выдаётся. В доверенном Codex вызов сборщика выполняют native
+hooks, включая автоматическое продолжение при пропуске Complete агентом.
+Без активных hooks ручной fallback не обеспечивает независимого контроля.
 
 Service-launch mapping: launch decision -> entrypoint safety routing -> runtime
 module owns advance notice -> source and copied-project entrypoints plus

@@ -100,6 +100,9 @@ For a fresh target, prefer the resolved checkout's deterministic installer:
 
 The installer creates missing files and preserves project-owned content. It
 merges only the marked mandatory context block into an existing `AGENTS.md`.
+It merges native GI lifecycle handlers without replacing other hooks. Review
+the project and exact hook definitions in Codex `/hooks`; configured, trusted,
+and live-tested are separate states. See `docs/gi-lifecycle-hooks.md`.
 If local
 instruction files already exist, inspect them and merge missing rules carefully
 after the installer reports them as preserved.

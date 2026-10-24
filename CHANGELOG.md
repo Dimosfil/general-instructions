@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.24
 
+- Add native Codex hooks for mandatory rules on each prompt and compaction,
+  and automatic Stop review without an agent-issued Complete call. Recheck
+  changed work; preserve other hooks, bounded retries, existing context limits,
+  and private chat content. Separate configured, trusted, and live verification.
+  Migration: `2026.10.24.4__automate_mandatory_lifecycle_hooks`.
+
 - Deliver complete mandatory task rules as an untruncated prefix in every work
   context and in a side-effect-free `-Phase Complete` invocation before the
   final response. Reserve their space within existing limits; reject missing,

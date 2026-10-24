@@ -59,6 +59,12 @@ Reusable instructions in this repository are grouped by job.
   lazy command routing, and hard-capped `gi start` restoration of project rules,
   preferences, canonical handoff, Git state, runbook hints, and memory search;
   update-check failures stop packet assembly.
+- `.codex/hooks.json`, `tools/invoke-gi-lifecycle-hook.ps1`: native automatic
+  mandatory context and completion review; `docs/gi-lifecycle-hooks.md` owns
+  activation, trust, evidence, and limits.
+- `tools/test-gi-lifecycle-hooks.ps1`: protocol and failure regression checks.
+- `tools/test-gi-lifecycle-hooks-live.ps1`: real Codex test deliberately omitting
+  manual Complete and all model tool calls.
 - `tools/resolve-gi-command.ps1`: returns one selected GI command contract and
   its mandatory context files as a bounded context packet.
 - `tools/test-instruction-kit-bootstrap.ps1`: regression checks for full URL,

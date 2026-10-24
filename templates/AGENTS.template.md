@@ -29,9 +29,9 @@ TODO: describe the product, users, and primary runtime surface.
   authorized work.
 <!--gi-->
 - Verify the full task, report gaps, and agree material complexity first.
-- Before work, run `tools/get-gi-context.ps1`; before the final response, run it
-  with `-Phase Complete` and apply its rules. Load failure blocks completion;
-  continue independent work. Routine work needs no extra approval.
+- Trusted Codex hooks load rules and require final review automatically.
+  Otherwise run `tools/get-gi-context.ps1` before work and `-Phase Complete`
+  before final. Apply its rules; load failure blocks completion.
 <!--/gi-->
 - State-changing GI commands must not run from memory. If the context builder,
   route manifest, resolver, or a mandatory routed file is missing, stop that

@@ -23,6 +23,8 @@ $requiredFiles = @(
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
     "tools/get-gi-context.ps1",
+    ".codex/hooks.json",
+    "tools/invoke-gi-lifecycle-hook.ps1",
     "tools/resolve-gi-command.ps1",
     "tools/project-memory/instruction-kit.json",
     "tools/project-memory/rag-system.json",
@@ -61,6 +63,9 @@ try {
         [void](New-Item -ItemType Directory -Path $target)
 
         if ($index -eq 2) {
+            [void][System.IO.Directory]::CreateDirectory((Join-Path $target '.codex'))
+            [System.IO.File]::WriteAllText((Join-Path $target '.codex/hooks.json'),
+                '{"description":"project-owned","hooks":{"Stop":[{"hooks":[{"type":"command","command":"echo project-owned"}]}]}}')
             [System.IO.File]::WriteAllText(
                 (Join-Path $target "AGENTS.md"),
                 "# Existing project instructions",
@@ -69,6 +74,14 @@ try {
         }
 
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
+        $nativeHooks = Get-Content -LiteralPath (Join-Path $target '.codex/hooks.json') -Raw | ConvertFrom-Json
+        if ($index -eq 2 -and ($nativeHooks.description -ne 'project-owned' -or $nativeHooks.hooks.Stop[0].hooks[0].command -ne 'echo project-owned')) {
+            throw 'Bootstrap replaced a project-owned hook.'
+        }
+        foreach ($name in @('UserPromptSubmit', 'SessionStart', 'Stop')) {
+            $giHandlers = @($nativeHooks.hooks.$name.hooks | Where-Object command -like '*invoke-gi-lifecycle-hook.ps1*')
+            if ($giHandlers.Count -ne 1) { throw "Missing or duplicated native hook: $name" }
+        }
 
         foreach ($requiredFile in $requiredFiles) {
             $requiredPath = Join-Path $target $requiredFile
@@ -271,8 +284,10 @@ try {
         if (-not $completionContext.Contains($installedRules) -or $completionContext.Contains('GI UPDATE STATUS')) { throw 'Installed completion phase omitted rules or ran startup.' }
         if ($completionContext.Length -gt [int]$contextBudgets.route_packet_default_max_chars) { throw 'Installed completion phase exceeded its unchanged budget.' }
         $entryBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md'))
+        $hooksBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target '.codex/hooks.json'))
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
         if ([System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md')) -cne $entryBeforeReinstall) { throw 'Reinstall duplicated or changed the mandatory context block.' }
+        if ([System.IO.File]::ReadAllText((Join-Path $target '.codex/hooks.json')) -cne $hooksBeforeReinstall) { throw 'Reinstall duplicated or changed lifecycle hooks.' }
         if ($contextOutput.Length -gt [int]$contextBudgets.start_packet_max_chars) {
             throw "Bootstrap form '$($forms[$index])' exceeded the installed start-packet budget: $($contextOutput.Length) chars."
         }

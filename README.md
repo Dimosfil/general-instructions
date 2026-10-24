@@ -30,8 +30,10 @@ architecture, and operational details in each project's own documentation.
   Text budgets count CRLF and LF identically after LF normalization; file
   budgets measure normalized UTF-8 bytes and packet budgets measure characters.
   Every work packet starts with the complete mandatory task rules, protected
-  from truncation. Call `tools/get-gi-context.ps1 -Phase Complete` before the
-  final response to reload them without startup or service operations. Ordinary
+  from truncation. [Trusted Codex hooks](docs/gi-lifecycle-hooks.md) reload rules
+  on prompts and compaction and force automatic final review even when the
+  agent skips Complete. Hosts without active hooks use
+  `tools/get-gi-context.ps1 -Phase Complete` before final. Ordinary
   tasks use the helper without a command; GI commands add `-CommandText`.
   Missing rules or insufficient space fail explicitly; limits stay unchanged.
 - Offers templates, checklists, playbooks, and migration metadata so projects
@@ -56,6 +58,9 @@ General Instructions Library - переносимый, независимый о
 
 - Даёт компактный входной файл `AGENTS.md`, направляющий агента только к
   инструкциям, нужным для текущей задачи.
+- [Hooks Codex](docs/gi-lifecycle-hooks.md) автоматически загружают обязательные
+  правила и требуют финальной проверки даже при пропуске `Complete` агентом.
+  Нужны доверие проекту и hooks; лимиты контекста остаются прежними.
 - Содержит переиспользуемые правила по безопасности, границам репозитория,
   секретам, Git, проверкам, Windows-инструментам, документации и запуску
   проекта.

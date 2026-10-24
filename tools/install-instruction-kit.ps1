@@ -52,6 +52,9 @@ function Assert-SourceRoot {
         "config/gi-command-routes.json",
         "config/gi-context-budgets.json",
         "tools/get-gi-context.ps1",
+        ".codex/hooks.json",
+        "tools/invoke-gi-lifecycle-hook.ps1",
+        "docs/gi-lifecycle-hooks.md",
         "tools/resolve-gi-command.ps1",
         "patterns/GI_COMMAND_CONTRACTS.md",
         "VERSION.md",
@@ -114,6 +117,34 @@ function Merge-MandatoryContextEntry {
     } else { $existing + $newline + $newline + $block + $newline }
     if ($merged -ceq $existing) { return $false }
     [System.IO.File]::WriteAllText($DestinationPath, $merged, $encoding)
+    return $true
+}
+
+function Merge-LifecycleHooks {
+    param([string]$SourcePath, [string]$DestinationPath)
+
+    if (Test-Path -LiteralPath $DestinationPath) {
+        if ((Get-Item -LiteralPath $DestinationPath).Attributes -band [System.IO.FileAttributes]::ReparsePoint) { throw 'Cannot merge linked hooks.json without explicit target authorization.' }
+        $existing = [System.IO.File]::ReadAllText($DestinationPath)
+        $target = ConvertFrom-Json -InputObject $existing -AsHashtable
+    } else { $existing = ''; $target = [ordered]@{} }
+    $source = Get-Content -LiteralPath $SourcePath -Raw | ConvertFrom-Json -AsHashtable
+    if (-not $target.Contains('hooks')) { $target['hooks'] = [ordered]@{} }
+    foreach ($eventName in $source.hooks.Keys) {
+        $groups = @($target.hooks[$eventName]) | Where-Object { $null -ne $_ }
+        $ownedCommands = @($source.hooks[$eventName].hooks | ForEach-Object { $_.command })
+        $preservedGroups = @(
+            foreach ($group in $groups) {
+                $handlers = @($group.hooks | Where-Object { $_['command'] -notin $ownedCommands })
+                if ($handlers.Count -gt 0) { $group.hooks = $handlers; $group }
+            }
+        )
+        $target.hooks[$eventName] = @($preservedGroups) + @($source.hooks[$eventName])
+    }
+    $json = ($target | ConvertTo-Json -Depth 100) + [Environment]::NewLine
+    if ($existing -ceq $json) { return $false }
+    Ensure-Directory -Path (Split-Path -Parent $DestinationPath)
+    [System.IO.File]::WriteAllText($DestinationPath, $json, [System.Text.UTF8Encoding]::new($false))
     return $true
 }
 
@@ -180,6 +211,8 @@ try {
         @{ Source = "config/gi-command-routes.json"; Target = "config/gi-command-routes.json" },
         @{ Source = "config/gi-context-budgets.json"; Target = "config/gi-context-budgets.json" },
         @{ Source = "tools/get-gi-context.ps1"; Target = "tools/get-gi-context.ps1" },
+        @{ Source = "tools/invoke-gi-lifecycle-hook.ps1"; Target = "tools/invoke-gi-lifecycle-hook.ps1" },
+        @{ Source = "docs/gi-lifecycle-hooks.md"; Target = "docs/gi-lifecycle-hooks.md" },
         @{ Source = "tools/resolve-gi-command.ps1"; Target = "tools/resolve-gi-command.ps1" },
         @{ Source = "templates/AGENT_WORKING_AGREEMENTS.template.md"; Target = "tools/AGENT_WORKING_AGREEMENTS.md" },
         @{ Source = "templates/AGENT_RUNBOOK.template.md"; Target = "tools/AGENT_RUNBOOK.md" },
@@ -232,6 +265,13 @@ try {
     $contextEntryUpdated = Merge-MandatoryContextEntry `
         -TemplatePath (Join-Path $resolvedSourceRoot 'templates/AGENTS.template.md') `
         -DestinationPath (Join-Path $resolvedTarget 'AGENTS.md')
+    $installedHook = [System.IO.File]::ReadAllText((Join-Path $resolvedTarget 'tools/invoke-gi-lifecycle-hook.ps1')).Replace("`r`n", "`n")
+    $sourceHook = [System.IO.File]::ReadAllText((Join-Path $resolvedSourceRoot 'tools/invoke-gi-lifecycle-hook.ps1')).Replace("`r`n", "`n")
+    if ($installedHook -cne $sourceHook) {
+        throw 'Preserved lifecycle hook differs from source; merge the accepted lifecycle migration before reporting hooks configured.'
+    }
+    $hooksUpdated = Merge-LifecycleHooks -SourcePath (Join-Path $resolvedSourceRoot '.codex/hooks.json') `
+        -DestinationPath (Join-Path $resolvedTarget '.codex/hooks.json')
 
     $patternFiles = @(
         "AGENT_ROLE_OFFICE.md",
@@ -294,6 +334,8 @@ try {
         created_count = $created.Count
         preserved_count = $preserved.Count
         context_entry_updated = $contextEntryUpdated
+        hooks_updated = $hooksUpdated
+        hooks_status = 'configured; project and hook trust must be checked in the running Codex host (/hooks); copying files does not prove activation'
         created = $created
         preserved = $preserved
         next_step = "Inspect TODO placeholders, merge any preserved instruction files, then ask about task-manager plan sync."
