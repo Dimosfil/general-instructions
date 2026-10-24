@@ -79,6 +79,15 @@ is tied to the rules and work fingerprint and only permits an unchanged automati
 continuation with passing checks. See `docs/gi-lifecycle-hooks.md` for trust,
 failure, privacy, and verification limits; copying files is not host activation.
 
+Desktop service mapping: outgoing create/send -> native sender PreToolUse ->
+builder Work/MandatoryOnly -> updatedInput.prompt -> actual delegated input ->
+recipient Stop. UserPromptSubmit does not cover these service inputs. Preserve
+the original task and all destination fields; forward only shared mandatory
+policy, not sender preferences. Explicitly deny on unavailable rules. Record only
+tool name and added/reused action, never message content. Verify both native
+Desktop service paths with a freshly loaded trusted sender, exact incoming text,
+zero recipient tools/manual helper calls, and correlated native audit events.
+
 Связь завершения: входной файл -> вызов сборщика -> чтение актуального модуля 03
 -> полный защищённый блок -> обрезаемый остаток контекста. Перед финалом фаза
 Complete повторно читает правила без запуска команд, обновлений и сервисов.

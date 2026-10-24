@@ -78,7 +78,7 @@ try {
         if ($index -eq 2 -and ($nativeHooks.description -ne 'project-owned' -or $nativeHooks.hooks.Stop[0].hooks[0].command -ne 'echo project-owned')) {
             throw 'Bootstrap replaced a project-owned hook.'
         }
-        foreach ($name in @('UserPromptSubmit', 'SessionStart', 'Stop')) {
+        foreach ($name in @('UserPromptSubmit', 'SessionStart', 'PreToolUse', 'Stop')) {
             $giHandlers = @($nativeHooks.hooks.$name.hooks | Where-Object command -like '*invoke-gi-lifecycle-hook.ps1*')
             if ($giHandlers.Count -ne 1) { throw "Missing or duplicated native hook: $name" }
         }

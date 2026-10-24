@@ -5,6 +5,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $root = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $utf8 = [System.Text.UTF8Encoding]::new($false)
+[Console]::InputEncoding = $utf8
+[Console]::OutputEncoding = $utf8
 
 function Get-Digest {
     param([string]$Text)
@@ -44,19 +46,21 @@ function Get-WorkFingerprint {
 }
 
 function Write-Audit {
-    param([string]$Outcome, [bool]$ChecksPassed, [int]$ReviewCount)
+    param([string]$Outcome, [bool]$ChecksPassed, [int]$ReviewCount, [string]$ServiceTool = '', [string]$Delivery = '')
     $entry = [ordered]@{
         time_utc = [DateTime]::UtcNow.ToString('o'); event = $eventName
         session = $sessionKey; turn = $turnId; outcome = $Outcome
         checks_passed = $ChecksPassed; review_count = $ReviewCount
     }
+    if ($ServiceTool) { $entry['service_tool'] = $ServiceTool; $entry['delivery'] = $Delivery }
     [System.IO.File]::AppendAllText((Join-Path $stateRoot 'events.jsonl'), (($entry | ConvertTo-Json -Compress) + "`n"), $utf8)
 }
 
 try {
     $event = [Console]::In.ReadToEnd() | ConvertFrom-Json
     $eventName = [string]$event.hook_event_name
-    if ($eventName -notin @('UserPromptSubmit', 'SessionStart', 'Stop')) { throw 'Unsupported GI hook event.' }
+    if ($eventName -notin @('UserPromptSubmit', 'SessionStart', 'PreToolUse', 'Stop')) { throw 'Unsupported GI hook event.' }
+    if ($eventName -eq 'PreToolUse' -and [string]$event.tool_name -notmatch '^(?:mcp__codex_app__|codex_app[./])?(?:create_thread|send_message_to_thread)$') { '{}'; exit 0 }
     if ([string]::IsNullOrWhiteSpace([string]$event.session_id)) { throw 'Missing hook session identity.' }
     $cwd = [System.IO.Path]::GetFullPath([string]$event.cwd)
     if ($cwd -ne $root -and -not $cwd.StartsWith($root + [System.IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'Hook cwd does not belong to this project.' }
@@ -67,9 +71,23 @@ try {
     [void][System.IO.Directory]::CreateDirectory($stateRoot)
     $receiptPath = Join-Path $stateRoot ($sessionKey + '.json')
     $phase = if ($eventName -eq 'Stop') { 'Complete' } else { 'Work' }
-    $context = (& (Join-Path $root 'tools/get-gi-context.ps1') -Phase $phase -SkipUpdateCheck | Out-String).Replace("`r`n", "`n").TrimEnd()
+    $context = (& (Join-Path $root 'tools/get-gi-context.ps1') -Phase $phase -MandatoryOnly:($eventName -eq 'PreToolUse') -SkipUpdateCheck | Out-String).Replace("`r`n", "`n").TrimEnd()
     $budgets = [System.IO.File]::ReadAllText((Join-Path $root 'config/gi-context-budgets.json')) | ConvertFrom-Json
     if ($context.Length -gt [int]$budgets.section_max_chars) { throw 'Mandatory hook context exceeds the existing section cap.' }
+
+    if ($eventName -eq 'PreToolUse') {
+        $inputObject = $event.tool_input
+        if ($inputObject.prompt -isnot [string] -or [string]::IsNullOrWhiteSpace($inputObject.prompt)) { throw 'Service message requires a nonempty prompt.' }
+        # Preserve the original task and every routing/authorization field.
+        # Only an identical generated prefix is reused; never strip user text.
+        $prefix = "[GI automatic service context]`n$context`n[End GI automatic service context]`n`n"
+        if ($prefix.Length -gt [int]$budgets.section_max_chars) { throw 'Service context exceeds the existing section cap.' }
+        $delivery = if ($inputObject.prompt.StartsWith($prefix, [StringComparison]::Ordinal)) { 'reused' } else { 'added' }
+        if ($delivery -eq 'added') { $inputObject.prompt = $prefix + $inputObject.prompt }
+        Write-Audit -Outcome 'service_rules_forwarded' -ChecksPassed $true -ReviewCount 0 -ServiceTool ([string]$event.tool_name) -Delivery $delivery
+        @{ hookSpecificOutput = @{ hookEventName = 'PreToolUse'; permissionDecision = 'allow'; updatedInput = $inputObject } } | ConvertTo-Json -Depth 100 -Compress
+        exit 0
+    }
 
     if ($eventName -ne 'Stop') {
         Write-Audit -Outcome 'rules_injected' -ChecksPassed $true -ReviewCount 0
@@ -108,6 +126,11 @@ try {
     if ($reason.Length -gt [int]$budgets.section_max_chars) { throw 'Automatic review exceeds the existing section cap.' }
     @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress
 } catch {
+    if ((Get-Variable -Name eventName -ErrorAction SilentlyContinue) -and $eventName -eq 'PreToolUse') {
+        # PreToolUse does not support continue:false; explicitly deny forwarding.
+        @{ hookSpecificOutput = @{ hookEventName = 'PreToolUse'; permissionDecision = 'deny'; permissionDecisionReason = 'GI mandatory service context is unavailable; message was not forwarded.' } } | ConvertTo-Json -Compress
+        exit 0
+    }
     # Hook failures must be visible; never print a successful completion receipt.
     @{ continue = $false; stopReason = 'GI mandatory lifecycle verification failed.'; systemMessage = 'GI hook failed: mandatory context or local verification is unavailable. Task completion remains unverified.' } | ConvertTo-Json -Compress
     exit 0

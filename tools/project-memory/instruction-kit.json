@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.24.4",
+  "instruction_kit_version": "2026.10.24.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "update_check": {
@@ -100,7 +100,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.24.4__automate_mandatory_lifecycle_hooks",
+    "applied_through": "2026.10.24.5__forward_mandatory_rules_with_service_messages",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   },

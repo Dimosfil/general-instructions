@@ -32,7 +32,9 @@ architecture, and operational details in each project's own documentation.
   Every work packet starts with the complete mandatory task rules, protected
   from truncation. [Trusted Codex hooks](docs/gi-lifecycle-hooks.md) reload rules
   on prompts and compaction and force automatic final review even when the
-  agent skips Complete. Hosts without active hooks use
+  agent skips Complete. A native sender hook also forwards mandatory rules with
+  `create_thread` and `send_message_to_thread`, preserving task and destination.
+  Hosts without active hooks use
   `tools/get-gi-context.ps1 -Phase Complete` before final. Ordinary
   tasks use the helper without a command; GI commands add `-CommandText`.
   Missing rules or insufficient space fail explicitly; limits stay unchanged.

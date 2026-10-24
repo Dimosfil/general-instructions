@@ -458,6 +458,8 @@ try {
         Assert-Contains $phasePacket "MANDATORY TASK RULES ($phase)" 'Missing phase identity.'
         if ($phasePacket.Length -gt [int]$budgets.route_packet_default_max_chars) { throw 'Phase context exceeded its unchanged budget.' }
     }
+    $servicePacket = (& $builderPath -Phase Work -MandatoryOnly -CommandText 'not a GI route' | Out-String).Replace("`r`n", "`n").TrimEnd()
+    if ($servicePacket -cne ("===== MANDATORY TASK RULES (Work) =====`n" + $mandatoryRules)) { throw 'Mandatory-only context omitted rules or included sender-specific state.' }
     $fixtureBuilder = Join-Path $newlineRoot 'tools/get-gi-context.ps1'
     [System.IO.File]::WriteAllText($fixtureRulesPath, $mandatoryRules, $utf8)
     [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'tools/project-memory/verification-preferences.json'), '{"task_completion_review":{"enabled":false}}', $utf8)

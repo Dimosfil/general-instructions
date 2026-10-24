@@ -257,10 +257,10 @@ try {
     $builderAst = [System.Management.Automation.Language.Parser]::ParseFile($builderTarget, [ref]$null, [ref]$null)
     $builderParameters = @($builderAst.ParamBlock.Parameters | ForEach-Object { $_.Name.VariablePath.UserPath })
     $targetRules = [System.IO.File]::ReadAllText((Join-Path $resolvedTarget 'patterns/AGENTS_RUNTIME/03-rule-precedence.md'))
-    if ($builderParameters -notcontains 'Phase' -or
+    if ($builderParameters -notcontains 'Phase' -or $builderParameters -notcontains 'MandatoryOnly' -or
         -not $targetRules.Contains('## Whole-Task Completion Gate') -or
         -not $targetRules.Contains('## Simplicity And Material Complexity')) {
-        throw 'Existing GI files need the accepted context-delivery migration before bootstrap can finish; preserve local hooks and update the helper and module 03.'
+        throw 'Existing GI files need the accepted context-delivery migration (including mandatory-only service context) before bootstrap can finish; preserve local hooks and update the helper and module 03.'
     }
     $contextEntryUpdated = Merge-MandatoryContextEntry `
         -TemplatePath (Join-Path $resolvedSourceRoot 'templates/AGENTS.template.md') `

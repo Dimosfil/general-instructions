@@ -7,6 +7,11 @@ Hooks deliver that live source instead of maintaining another copy of the rules.
 - `UserPromptSubmit` injects the complete mandatory Work rules as developer
   context on each user turn.
 - `SessionStart` with source `compact` restores them after context compaction.
+- `PreToolUse` automatically prepends mandatory Work rules to the `prompt` of
+  Codex `create_thread` and `send_message_to_thread`. Desktop service deliveries
+  do not emit `UserPromptSubmit`. This hook runs in the sending chat, before the
+  service call; the recipient needs no manual helper call. The rules arrive in
+  the delegated service input, not a fabricated developer-role message.
 - `Stop` independently builds Complete context, runs Git whitespace checks,
   and blocks the first completion attempt to require review of the entire task
   and honest gaps. Manual `-Phase Complete` cannot bypass or satisfy this hook.
@@ -14,7 +19,7 @@ Hooks deliver that live source instead of maintaining another copy of the rules.
   and nonignored untracked files can then finish. Changes require another review.
 
 State is local and ignored under `.codex/.gi-hook-state/`. It contains hashes,
-event names, counts, and check outcomes; no prompt, transcript, response, or
+event/tool names, delivery action, counts, and check outcomes; no prompt, transcript, response, or
 source diff is saved. Missing rules or a failed loader stop visibly as unverified.
 Repeated failures or changes stop after three review requests with an explicit
 warning, avoiding an infinite loop. No extra forms or routine approvals are added.
@@ -28,10 +33,11 @@ because files were copied. A preserved, different lifecycle script requires a
 scoped migration merge.
 
 Codex must support and enable native hooks, trust the project `.codex` layer,
-and trust the exact three GI definitions. Review them through `/hooks` in the
+and trust the exact four GI definitions. Review them through `/hooks` in the
 running host; changed definitions require trust again. Verify **Active** for
-UserPromptSubmit, SessionStart, and Stop. Existing chats may require reopening
-after installing hooks. There is no portable repository file that can grant
+PreToolUse, UserPromptSubmit, SessionStart, and Stop. Open or reload the sending
+chat after adding the service hook: an already-running turn can retain its old
+hook configuration. There is no portable repository file that can grant
 itself trusted status in every host.
 
 Without active native hooks, the entrypoint's manual helper calls remain a
@@ -41,10 +47,11 @@ that fallback or an untrusted installation as automatic enforcement.
 ## Verification
 
 Run `tools/test-gi-lifecycle-hooks.ps1` for protocol, compaction, omitted Complete,
-changed files, failed checks, missing loader, bounded retries, and privacy.
+service delivery, unchanged task/destination, UTF-8, duplicate-prefix reuse,
+unavailable-rule denial, changed files, bounded retries, and privacy.
 Run `tools/test-gi-lifecycle-hooks-live.ps1 -FixturePath <empty-test-directory>`
 for a real authenticated Codex CLI session in an isolated installed kit. The
-first run creates an owned fixture; trust that project and its three hooks
+first run creates an owned fixture; trust that project and its four hooks
 through the native UI, then rerun. The fixture remains available for repeated
 checks. It deliberately permits no tools or manual
 Complete. Require the initial response, native Stop continuation, final response,
@@ -55,6 +62,25 @@ installed definitions, and requires normal persisted project and exact hook trus
 It does not bypass trust, modify trust state, or copy credentials. Host activation
 is checked through `/hooks` and the app-server `hooks/list` API. Repeat
 tests against the published source and its installed kit.
+
+For Desktop service verification, use a freshly loaded sender with the four
+trusted hooks. Create one recipient through the native tool, then send it a
+second service message. The sender must pass only the original test prompts,
+without manually adding rules or calling the helper. The recipient must use no
+tools or manual Work/Complete. Read both actual service inputs: require the
+generated prefix, the complete current module 03, unchanged task text, and
+INITIAL -> native hookPrompt -> REVIEWED. Correlate both tool calls with sender
+audit entries `PreToolUse/service_rules_forwarded/delivery=added` and both
+recipient turns with `completion_review_required` -> `completion_allowed`.
+Do not substitute a typed user message or a CLI run for either service path.
+
+The hook uses `get-gi-context.ps1 -Phase Work -MandatoryOnly`: it forwards shared
+mandatory policy without sender update status, project preferences, or local
+runtime data. Preserve every destination/model/routing field and the exact
+original prompt suffix. Reuse an identical generated prefix without duplication;
+never strip arbitrary user text. Deny the service call explicitly if rules or
+the loader are unavailable or the prefix exceeds the existing section cap.
+Permission checks and authorization requirements still apply to the actual call.
 
 All GI limits and Codex's default hook output threshold remain unchanged. The
 entire output is bounded by the existing GI section cap, with no partial rule
@@ -70,3 +96,5 @@ Official behavior and trust contract: [Codex hooks](https://learn.chatgpt.com/do
 Пропуск `Complete` больше не пропускает проверку в доверенной среде с активными
 hooks. Это не гарантия безошибочности: рабочие сценарии всё равно нужно проверять,
 а недоделки и границы проверки — честно указывать.
+Служебные сообщения между чатами получают общий обязательный блок автоматически
+через hook отправителя; его локальные настройки получателю не передаются.

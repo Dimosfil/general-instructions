@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.24
 
+- Automatically deliver mandatory Work rules with native Desktop create/send
+  service calls via sender PreToolUse, without agent-authored policy text.
+  Preserve task, destination, and UTF-8; exclude sender preferences, deny on
+  unavailable rules, and keep context limits unchanged. Verify both Desktop
+  paths and native final review. Migration:
+  `2026.10.24.5__forward_mandatory_rules_with_service_messages`.
+
 - Add native Codex hooks for mandatory rules on each prompt and compaction,
   and automatic Stop review without an agent-issued Complete call. Recheck
   changed work; preserve other hooks, bounded retries, existing context limits,

@@ -2,6 +2,7 @@
 param(
     [string]$CommandText = "",
     [ValidateSet('Work', 'Complete')][string]$Phase = 'Work',
+    [switch]$MandatoryOnly,
     [switch]$SkipUpdateCheck,
     [ValidateRange(1, 500)][int]$MaxSummaryLines = 80,
     [ValidateRange(1, 500)][int]$MaxStartupFileLines = 80,
@@ -22,7 +23,7 @@ $checkerCandidates = @(
 )
 
 $requiredPaths = @($budgetPath, $mandatoryRulesPath)
-if ($Phase -eq 'Work' -and -not [string]::IsNullOrWhiteSpace($CommandText)) { $requiredPaths += $resolverPath }
+if (-not $MandatoryOnly -and $Phase -eq 'Work' -and -not [string]::IsNullOrWhiteSpace($CommandText)) { $requiredPaths += $resolverPath }
 foreach ($requiredPath in $requiredPaths) {
     if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
         throw "Required GI context file is missing: $requiredPath"
@@ -152,6 +153,10 @@ foreach ($heading in @('## Simplicity And Material Complexity', '## Whole-Task C
     if (-not $mandatoryRules.Contains($heading)) { throw "Mandatory task rules section missing: $heading" }
 }
 $mandatoryPrefix = (New-ContextSection -Title "MANDATORY TASK RULES ($Phase)" -Body $mandatoryRules) + "`n`n"
+if ($MandatoryOnly) {
+    Write-BoundedContextPacket -RouteId 'work' -Body ''
+    exit 0
+}
 if ($Phase -eq 'Complete') {
     Write-BoundedContextPacket -RouteId 'complete' -Body 'Apply the loaded whole-task gate to the actual result before the final response. Report remaining gaps explicitly.'
     exit 0

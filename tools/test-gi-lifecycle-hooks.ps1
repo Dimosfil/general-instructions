@@ -17,6 +17,9 @@ function Invoke-Hook {
     $start.RedirectStandardInput = $true
     $start.RedirectStandardOutput = $true
     $start.RedirectStandardError = $true
+    $start.StandardInputEncoding = $utf8
+    $start.StandardOutputEncoding = $utf8
+    $start.StandardErrorEncoding = $utf8
     $process = [System.Diagnostics.Process]::Start($start)
     try {
         $inputText = if ($Raw) { $Raw } else { $Event | ConvertTo-Json -Depth 8 -Compress }
@@ -41,6 +44,21 @@ try {
     & git -C $testRoot init --quiet
     $rules = [System.IO.File]::ReadAllText((Join-Path $testRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md')).Replace("`r`n", "`n").TrimEnd()
     $event = @{ session_id = 'native-test'; turn_id = 'turn-1'; cwd = $testRoot; hook_event_name = 'UserPromptSubmit' }
+    foreach ($toolName in @('create_thread','send_message_to_thread','mcp__codex_app__create_thread','codex_app.send_message_to_thread')) {
+        $service = @{ session_id='native-test'; turn_id='service-turn'; cwd=$testRoot; hook_event_name='PreToolUse'; tool_name=$toolName
+            tool_input=@{prompt="Original task — сохранить дословно.`r`nSecond line"; threadId='unchanged-target'; hostId='local'; target=@{projectId='unchanged-project';environment=@{type='local'}}} }
+        $result = Invoke-Hook $service
+        $updated = $result.hookSpecificOutput.updatedInput
+        Assert-True ($result.hookSpecificOutput.permissionDecision -eq 'allow' -and $updated.prompt.Contains($rules)) 'Service call did not automatically receive mandatory rules.'
+        Assert-True (-not $updated.prompt.Contains('TASK COMPLETION REVIEW') -and -not $updated.prompt.Contains('GI UPDATE STATUS')) 'Service forwarding leaked sender project preferences.'
+        Assert-True ($updated.prompt.EndsWith($service.tool_input.prompt) -and $updated.threadId -eq 'unchanged-target' -and $updated.target.projectId -eq 'unchanged-project') 'Service hook changed task text or destination.'
+        $service.tool_input.prompt = $updated.prompt
+        $repeated = Invoke-Hook $service
+        Assert-True ($repeated.hookSpecificOutput.updatedInput.prompt -ceq $updated.prompt) 'Service forwarding duplicated an identical mandatory block.'
+    }
+    $service.tool_name = 'mcp__other__create_thread'
+    $result = Invoke-Hook $service
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Service hook intercepted an unrelated tool.'
     $result = Invoke-Hook $event
     Assert-True ($result.hookSpecificOutput.additionalContext.Contains($rules)) 'UserPromptSubmit did not inject the actual mandatory rules.'
     $event.hook_event_name = 'SessionStart'; $event.source = 'compact'
@@ -71,12 +89,18 @@ try {
     $result = Invoke-Hook -Raw '{malformed private input'
     Assert-True ($result.continue -eq $false -and -not (($result | ConvertTo-Json).Contains('private input'))) 'Invalid input leaked data or looked successful.'
     Remove-Item -LiteralPath (Join-Path $testRoot 'tools/get-gi-context.ps1')
+    $service.tool_name = 'send_message_to_thread'
+    $result = Invoke-Hook $service
+    Assert-True ($result.hookSpecificOutput.permissionDecision -eq 'deny') 'Unavailable rules did not deny service forwarding.'
     $result = Invoke-Hook $event
     Assert-True ($result.continue -eq $false) 'Missing mandatory loader was accepted.'
     $audit = Get-Content -LiteralPath (Join-Path $testRoot '.codex/.gi-hook-state/events.jsonl') | ForEach-Object { $_ | ConvertFrom-Json }
     Assert-True (@($audit | Where-Object outcome -eq 'completion_review_required').Count -gt 0) 'Review audit is missing.'
     Assert-True (@($audit | Where-Object outcome -eq 'completion_allowed').Count -gt 0) 'Successful automatic review audit is missing.'
-    'GI lifecycle hook checks passed: automatic injection, omitted Complete, stale receipts, failures, bounded retries, and privacy.'
+    Assert-True (@($audit | Where-Object { $_.outcome -eq 'service_rules_forwarded' -and $_.delivery -eq 'added' }).Count -eq 4) 'Automatic service additions are not independently recorded.'
+    Assert-True (@($audit | Where-Object { $_.outcome -eq 'service_rules_forwarded' -and $_.delivery -eq 'reused' }).Count -eq 4) 'Idempotent service forwarding is not recorded.'
+    Assert-True (-not ((Get-Content -LiteralPath (Join-Path $testRoot '.codex/.gi-hook-state/events.jsonl') -Raw).Contains('Original task'))) 'Service audit saved private prompt text.'
+    'GI lifecycle hook checks passed: automatic service delivery, destination/text preservation, UTF-8, omitted Complete, stale receipts, failures, bounded retries, and privacy.'
 } finally {
     $resolved = [System.IO.Path]::GetFullPath($testRoot)
     $allowed = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar

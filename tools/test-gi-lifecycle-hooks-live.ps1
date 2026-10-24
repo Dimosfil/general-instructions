@@ -17,6 +17,7 @@ function Start-CodexProcess {
     $start.WorkingDirectory = $fixture
     $start.UseShellExecute = $false; $start.CreateNoWindow = $true
     $start.RedirectStandardInput = $true; $start.RedirectStandardOutput = $true; $start.RedirectStandardError = $true
+    $start.StandardInputEncoding = $utf8; $start.StandardOutputEncoding = $utf8; $start.StandardErrorEncoding = $utf8
     return [Diagnostics.Process]::Start($start)
 }
 
@@ -52,7 +53,7 @@ try {
     $hooks = @($listed.data | ForEach-Object { $_['hooks'] } | Where-Object { $null -ne $_ })
     $expected = (Join-Path $fixture '.codex/hooks.json')
     $loadErrors = @($listed.data | ForEach-Object { $_['errors'] } | Where-Object { $null -ne $_ })
-    if ($loadErrors.Count -gt 0 -or $hooks.Count -ne 3) { throw "Trust the isolated test project and its three GI hooks in Codex /hooks first: $fixture" }
+    if ($loadErrors.Count -gt 0 -or $hooks.Count -ne 4) { throw "Trust the isolated test project and its four GI hooks in Codex /hooks first: $fixture" }
     if ((Get-FileHash -LiteralPath $expected).Hash -ne (Get-FileHash -LiteralPath (Join-Path $source '.codex/hooks.json')).Hash) {
         # Installer formatting can differ; compare the event definitions.
         $installed = Get-Content -LiteralPath $expected -Raw | ConvertFrom-Json -AsHashtable
