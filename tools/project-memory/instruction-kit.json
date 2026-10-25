@@ -1,7 +1,10 @@
 {
-  "instruction_kit_version": "2026.10.24.5",
+  "instruction_kit_version": "2026.10.25.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
+  "unity_mcp": {
+    "enabled": true
+  },
   "update_check": {
     "source_repo": "https://github.com/Dimosfil/general-instructions.git",
     "source_cache_path": "",
@@ -12,6 +15,8 @@
   "copied_files": [
     ".gitignore",
     ".codex/hooks.json",
+    ".opencode/plugins/gi-lifecycle.js",
+    "docs/gi-opencode-hooks.md",
     "docs/gi-lifecycle-hooks.md",
     "tools/invoke-gi-lifecycle-hook.ps1",
     "AGENTS.md",
@@ -19,6 +24,8 @@
     "COMMANDS.md",
     "config/gi-command-routes.json",
     "config/gi-context-budgets.json",
+    "config/unity-mcp.json",
+    "docs/unity-mcp-router.md",
     "patterns/AGENT_ROLE_OFFICE.md",
     "patterns/AGENTS_RUNTIME/01-purpose.md",
     "patterns/AGENTS_RUNTIME/02-repository-map.md",
@@ -48,6 +55,7 @@
     "patterns/AGENTS_RUNTIME/13-progress-updates.md",
     "patterns/AGENTS_RUNTIME/14-update-intake.md",
     "patterns/AGENTS_RUNTIME/15-verification.md",
+    "patterns/AGENTS_RUNTIME/15-final-review.md",
     "patterns/AGENTS_RUNTIME/16-git-policy.md",
     "patterns/AGENTS_RUNTIME/17-agent-role-office.md",
     "patterns/AGENTS_RUNTIME/18-startup-product-engineering.md",
@@ -80,6 +88,9 @@
     "tools/agent-start.ps1",
     "tools/check-instruction-kit-updates.ps1",
     "tools/get-gi-context.ps1",
+    "tools/ensure-unity-mcp.ps1",
+    "tools/unity-mcp-router.mjs",
+    "tools/verify-unity-mcp.mjs",
     "tools/project-memory/architecture-migrations.md",
     "tools/project-memory/build_chroma_index.py",
     "tools/project-memory/build_project_memory_index.py",
@@ -93,14 +104,16 @@
     "tools/project-memory/specs/technology-stack.md",
     "tools/project-memory/STUDY_PLAN.md",
     "tools/project-memory/system-preferences.json",
+    "tools/project-memory/verification-preferences.json",
     "tools/resolve-gi-command.ps1",
     "tools/select-git-commit-languages.ps1",
     "tools/select-project-language.ps1",
-    "tools/select-system-language.ps1"
+    "tools/select-system-language.ps1",
+    "tools/select-task-verification.ps1"
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.24.5__forward_mandatory_rules_with_service_messages",
+    "applied_through": "2026.10.25.1__add_opencode_gi_lifecycle_hooks",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   },

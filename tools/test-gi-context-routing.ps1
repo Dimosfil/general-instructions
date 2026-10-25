@@ -121,6 +121,10 @@ try {
     }
 
     $routeCases = @(
+        @{ Command = "ги проверка"; Route = "task-verification" },
+        @{ Command = "gi проверка выкл"; Route = "task-verification" },
+        @{ Command = "gi verification on"; Route = "task-verification" },
+        @{ Command = "gi check"; Route = "task-verification" },
         @{ Command = "ги старт оптимизация подумать"; Route = "start" },
         @{ Command = "gi start sprint"; Route = "start-sprint" },
         @{ Command = "gi plan"; Route = "task-plan" },

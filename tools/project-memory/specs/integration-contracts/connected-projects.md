@@ -83,3 +83,22 @@ or cross-project integration guidance.
 - Reason this dependency still exists: it provided evidence for the neutral
   adapter contract and is a usable opt-in implementation without becoming a GI
   hard dependency.
+
+## OpenCode
+
+- Purpose: an alternative agent host for the same project-local GI rules and
+  lifecycle verification engine.
+- Source of truth: [upstream](https://github.com/anomalyco/opencode) owns its
+  plugin/SDK/response-loop API; GI owns `.opencode/plugins/gi-lifecycle.js` and
+  [its contract](opencode-gi-lifecycle.md).
+- Local folder and credentials: no source checkout, external model credential,
+  remote endpoint or user-global configuration is required by the adapter.
+- Setup/update: install the instruction kit or apply migration
+  `2026.10.25.1__add_opencode_gi_lifecycle_hooks`; reload the target OpenCode host.
+- Verification: `node --test tests/test_opencode_gi_hooks.mjs` and
+  `node --test tests/test_opencode_gi_live.mjs` (installed CLI, local HTTP fixture).
+- Status: response-loop continuation verified on 1.15.7, normal text only;
+  OpenCode 2 and other versions require separate validation. Streamed preliminary
+  text is not retractable. Context budgets and task-check requirements remain GI-owned.
+- Privacy/scope: project-local files and ignored hash-only state; preserve other
+  plugins, permissions and config. Do not inspect other projects or account state.

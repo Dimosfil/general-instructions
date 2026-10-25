@@ -51,8 +51,15 @@ function Assert-SourceRoot {
         "COMMANDS.md",
         "config/gi-command-routes.json",
         "config/gi-context-budgets.json",
+        "config/unity-mcp.json",
+        "tools/ensure-unity-mcp.ps1",
+        "tools/unity-mcp-router.mjs",
+        "tools/verify-unity-mcp.mjs",
+        "docs/unity-mcp-router.md",
         "tools/get-gi-context.ps1",
         ".codex/hooks.json",
+        ".opencode/plugins/gi-lifecycle.js",
+        "docs/gi-opencode-hooks.md",
         "tools/invoke-gi-lifecycle-hook.ps1",
         "docs/gi-lifecycle-hooks.md",
         "tools/resolve-gi-command.ps1",
@@ -210,9 +217,16 @@ try {
         @{ Source = "COMMANDS.md"; Target = "COMMANDS.md" },
         @{ Source = "config/gi-command-routes.json"; Target = "config/gi-command-routes.json" },
         @{ Source = "config/gi-context-budgets.json"; Target = "config/gi-context-budgets.json" },
+        @{ Source = "config/unity-mcp.json"; Target = "config/unity-mcp.json" },
+        @{ Source = "tools/ensure-unity-mcp.ps1"; Target = "tools/ensure-unity-mcp.ps1" },
+        @{ Source = "tools/unity-mcp-router.mjs"; Target = "tools/unity-mcp-router.mjs" },
+        @{ Source = "tools/verify-unity-mcp.mjs"; Target = "tools/verify-unity-mcp.mjs" },
+        @{ Source = "docs/unity-mcp-router.md"; Target = "docs/unity-mcp-router.md" },
         @{ Source = "tools/get-gi-context.ps1"; Target = "tools/get-gi-context.ps1" },
         @{ Source = "tools/invoke-gi-lifecycle-hook.ps1"; Target = "tools/invoke-gi-lifecycle-hook.ps1" },
         @{ Source = "docs/gi-lifecycle-hooks.md"; Target = "docs/gi-lifecycle-hooks.md" },
+        @{ Source = ".opencode/plugins/gi-lifecycle.js"; Target = ".opencode/plugins/gi-lifecycle.js" },
+        @{ Source = "docs/gi-opencode-hooks.md"; Target = "docs/gi-opencode-hooks.md" },
         @{ Source = "tools/resolve-gi-command.ps1"; Target = "tools/resolve-gi-command.ps1" },
         @{ Source = "templates/AGENT_WORKING_AGREEMENTS.template.md"; Target = "tools/AGENT_WORKING_AGREEMENTS.md" },
         @{ Source = "templates/AGENT_RUNBOOK.template.md"; Target = "tools/AGENT_RUNBOOK.md" },
@@ -220,6 +234,8 @@ try {
         @{ Source = "templates/select-project-language.template.ps1"; Target = "tools/select-project-language.ps1" },
         @{ Source = "templates/select-git-commit-languages.template.ps1"; Target = "tools/select-git-commit-languages.ps1" },
         @{ Source = "templates/select-system-language.template.ps1"; Target = "tools/select-system-language.ps1" },
+        @{ Source = "templates/select-task-verification.template.ps1"; Target = "tools/select-task-verification.ps1" },
+        @{ Source = "templates/verification-preferences.template.json"; Target = "tools/project-memory/verification-preferences.json" },
         @{ Source = "templates/check-instruction-kit-updates.template.ps1"; Target = "tools/check-instruction-kit-updates.ps1" },
         @{ Source = "templates/project-memory-README.template.md"; Target = "tools/project-memory/README.md" },
         @{ Source = "templates/ARCHITECTURE_MIGRATIONS.template.md"; Target = "tools/project-memory/architecture-migrations.md" },
@@ -272,6 +288,15 @@ try {
     }
     $hooksUpdated = Merge-LifecycleHooks -SourcePath (Join-Path $resolvedSourceRoot '.codex/hooks.json') `
         -DestinationPath (Join-Path $resolvedTarget '.codex/hooks.json')
+    $openCodePluginPath = '.opencode/plugins/gi-lifecycle.js'
+    if ((Get-Item -LiteralPath (Join-Path $resolvedTarget $openCodePluginPath)).Attributes -band [System.IO.FileAttributes]::ReparsePoint) {
+        throw 'Cannot inspect a linked OpenCode GI plugin without explicit target authorization.'
+    }
+    $installedPlugin = [System.IO.File]::ReadAllText((Join-Path $resolvedTarget $openCodePluginPath)).Replace("`r`n", "`n")
+    $sourcePlugin = [System.IO.File]::ReadAllText((Join-Path $resolvedSourceRoot $openCodePluginPath)).Replace("`r`n", "`n")
+    if ($installedPlugin -cne $sourcePlugin) {
+        throw 'Preserved OpenCode GI plugin differs from source; merge the accepted OpenCode lifecycle migration before reporting hooks configured.'
+    }
 
     $patternFiles = @(
         "AGENT_ROLE_OFFICE.md",
@@ -327,6 +352,8 @@ try {
         $created.Add($instructionKitTarget)
     }
 
+    $unityMcp = & (Join-Path $resolvedTarget 'tools/ensure-unity-mcp.ps1') -ProjectPath $resolvedTarget
+
     [pscustomobject]@{
         source_repo = $CanonicalSource
         source_checkout = $resolvedSourceRoot
@@ -336,8 +363,10 @@ try {
         context_entry_updated = $contextEntryUpdated
         hooks_updated = $hooksUpdated
         hooks_status = 'configured; project and hook trust must be checked in the running Codex host (/hooks); copying files does not prove activation'
+        opencode_hooks_status = 'configured; reload OpenCode 1.x with plugins enabled and verify automatic review; see docs/gi-opencode-hooks.md'
         created = $created
         preserved = $preserved
+        unity_mcp = $unityMcp
         next_step = "Inspect TODO placeholders, merge any preserved instruction files, then ask about task-manager plan sync."
     }
 } finally {

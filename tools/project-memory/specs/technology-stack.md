@@ -20,6 +20,8 @@ guarantees belong in project memory specs, not in this stack inventory.
 | --- | --- | --- | --- |
 | Documentation/runtime | Markdown instruction kit | `AGENTS.md`, `COMMANDS.md`, `patterns/`, `templates/`, `migrations/` | This repository is the canonical GI source. |
 | Agent tooling | PowerShell | `templates/agent-start.template.ps1`, `templates/check-instruction-kit-updates.template.ps1` | Templates are copied into consuming projects. |
+| OpenCode GI adapter | JavaScript (Node built-ins), PowerShell 7, OpenCode 1.x | `.opencode/plugins/gi-lifecycle.js`, `docs/gi-opencode-hooks.md`, `tests/test_opencode_gi_live.mjs` | Response-loop continuation verified on 1.15.7 with a local provider; no additional npm dependency. |
+| Unity host tooling | PowerShell, Node.js 18+ (built-in modules only), official Unity CLI, Codex CLI | `tools/ensure-unity-mcp.ps1`, `tools/unity-mcp-router.mjs`, `tools/verify-unity-mcp.mjs`, `config/unity-mcp.json` | Automatic Unity-only provisioning; missing Node 24/runtime and CLI use official sources. No npm packages. |
 | Project memory tooling | Python | `tools/project-memory/build_project_memory_index.py`, `tools/project-memory/build_chroma_index.py`, `tools/project-memory/rag_check.py`, `tools/project-memory/code_intelligence.py` | Used for optional SQLite, semantic corpus, Chroma, RAG checks, and local MCP code-intelligence federation. |
 | Storage/indexes | SQLite, JSONL, Chroma-compatible local vector index | `tools/project-memory/project_memory.sqlite`, `tools/project-memory/semantic-corpus.jsonl`, `tools/project-memory/vector-index/` | Generated/rebuildable local project-memory artifacts. |
 | Templates | Markdown, JSON, PowerShell | `templates/` | Source templates for copied instruction kits. |

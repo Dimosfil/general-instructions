@@ -9,7 +9,7 @@ TODO: describe the product, users, and primary runtime surface.
 
 ## Goal And Loading Contract
 
-- For Unity projects, also load `20-unity-projects.md` before Unity work.
+- For Unity work and automatic setup, load `20-unity-projects.md`.
 - Derive a bounded goal and observable success criteria from the request and
   project context. Ask only when missing information materially changes scope;
   continue independent authorized work while waiting.
@@ -29,7 +29,7 @@ TODO: describe the product, users, and primary runtime surface.
   authorized work.
 <!--gi-->
 - Verify the full task, report gaps, and agree material complexity first.
-- Trusted Codex hooks load rules and require final review automatically.
+- Active GI hooks in Codex or OpenCode load rules and require final review automatically.
   Otherwise run `tools/get-gi-context.ps1` before work and `-Phase Complete`
   before final. Apply its rules; load failure blocks completion.
 <!--/gi-->
@@ -42,6 +42,7 @@ TODO: describe the product, users, and primary runtime surface.
 
 ## Core Safety And Boundaries
 
+- Final: load `15-final-review.md`.
 - Before implementation, bug fixes, or refactoring, load modules 04, 06, and 15.
   Trace the affected scenario, identify its mechanism and contract owner, and
   correct the cause there. Justify any bypass. Follow the mechanism gate in

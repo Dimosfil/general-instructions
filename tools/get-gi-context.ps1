@@ -148,6 +148,33 @@ function Get-SystemLanguagePreferencesSection {
     }
 }
 
+function Get-TaskVerificationPreferencesSection {
+    $relativePath = 'tools/project-memory/verification-preferences.json'
+    $fullPath = Join-Path $projectRoot $relativePath
+    $enabled = $true
+    try {
+        if (Test-Path -LiteralPath $fullPath -PathType Leaf) {
+            $preferences = Get-Content -LiteralPath $fullPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($null -eq $preferences -or $preferences -isnot [pscustomobject]) { throw 'Expected a JSON object.' }
+            $review = $preferences.PSObject.Properties['task_completion_review']
+            if ($review) {
+                if ($null -eq $review.Value -or $review.Value -isnot [pscustomobject]) { throw 'Expected a review object.' }
+                $setting = $review.Value.PSObject.Properties['enabled']
+                if ($setting) {
+                    if ($setting.Value -isnot [bool]) { throw 'Expected a JSON boolean.' }
+                    $enabled = $setting.Value
+                }
+            }
+        }
+        $state = if ($enabled) { 'On' } else { 'Off' }
+        $body = "Task completion review: $state`nApply only after task execution, before the final response; follow patterns/AGENTS_RUNTIME/15-final-review.md. Required project checks remain mandatory.`nConfigure with: gi verification / ги проверка"
+    }
+    catch {
+        $body = "Invalid verification preferences at $relativePath; report the configuration gap and do not overwrite it. Required checks and truthful reporting remain mandatory."
+    }
+    return New-ContextSection -Title 'TASK COMPLETION REVIEW' -Body $body
+}
+
 $mandatoryRules = [System.IO.File]::ReadAllText($mandatoryRulesPath).Replace("`r`n", "`n").TrimEnd()
 foreach ($heading in @('## Simplicity And Material Complexity', '## Whole-Task Completion Gate')) {
     if (-not $mandatoryRules.Contains($heading)) { throw "Mandatory task rules section missing: $heading" }
@@ -197,6 +224,18 @@ else {
     }
 }
 $parts.Add((New-ContextSection -Title "GI UPDATE STATUS" -Body $updateBody))
+$parts.Add((Get-TaskVerificationPreferencesSection))
+
+# Host setup is separate from the zero-pending migration fast path. A copied
+# Unity project on a new host still needs the client configured once.
+if ($routeId -in @('start', 'update') -and
+    (Test-Path -LiteralPath (Join-Path $projectRoot 'Assets') -PathType Container) -and
+    (Test-Path -LiteralPath (Join-Path $projectRoot 'ProjectSettings/ProjectVersion.txt') -PathType Leaf)) {
+    $unitySetup = Join-Path $projectRoot 'tools/ensure-unity-mcp.ps1'
+    if (-not (Test-Path -LiteralPath $unitySetup -PathType Leaf)) { throw 'Unity MCP setup helper is missing: tools/ensure-unity-mcp.ps1' }
+    $unityStatus = & $unitySetup -ProjectPath $projectRoot
+    $parts.Add((New-ContextSection -Title 'UNITY MCP SETUP' -Body ($unityStatus | ConvertTo-Json -Depth 8 -Compress)))
+}
 
 if (-not [string]::IsNullOrWhiteSpace($CommandText)) {
     $routeItems = @(& $resolverPath -CommandText $CommandText *>&1)

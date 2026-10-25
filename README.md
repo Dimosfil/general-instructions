@@ -34,12 +34,17 @@ architecture, and operational details in each project's own documentation.
   on prompts and compaction and force automatic final review even when the
   agent skips Complete. A native sender hook also forwards mandatory rules with
   `create_thread` and `send_message_to_thread`, preserving task and destination.
+  [OpenCode hooks](docs/gi-opencode-hooks.md) use the same engine for system
+  context, compaction, task forwarding and review before its response loop exits.
   Hosts without active hooks use
   `tools/get-gi-context.ps1 -Phase Complete` before final. Ordinary
   tasks use the helper without a command; GI commands add `-CommandText`.
   Missing rules or insufficient space fail explicitly; limits stay unchanged.
 - Offers templates, checklists, playbooks, and migration metadata so projects
   can adopt and update the instruction kit consistently.
+- Automatically provisions [Unity MCP](docs/unity-mcp-router.md) for Unity
+  projects during initialization, updates, and first-session setup on a new
+  host, with opt-outs and no Unity backend launches in ordinary projects.
 - Separates human-facing project documentation from durable agent project memory
   for architecture decisions, workflow contracts, and implementation context.
 - Documents architecture patterns for relational databases, including schema and
@@ -63,6 +68,9 @@ General Instructions Library - переносимый, независимый о
 - [Hooks Codex](docs/gi-lifecycle-hooks.md) автоматически загружают обязательные
   правила и требуют финальной проверки даже при пропуске `Complete` агентом.
   Нужны доверие проекту и hooks; лимиты контекста остаются прежними.
+- [Hooks OpenCode](docs/gi-opencode-hooks.md) используют тот же механизм GI:
+  правила, восстановление контекста, передача в `task` и автоматическая проверка
+  перед завершением цикла ответа. Проверено на OpenCode 1.15.7.
 - Содержит переиспользуемые правила по безопасности, границам репозитория,
   секретам, Git, проверкам, Windows-инструментам, документации и запуску
   проекта.

@@ -48,6 +48,10 @@
   concrete configuration blocker. Distinguish policy, execution, and blockers:
   say "updates not applied: <verified reason>" if execution did not complete;
   never invent a user opt-out or report an unchecked pending count as zero.
+- For Unity projects, follow `20-unity-projects.md` automatic host setup after
+  initialization/updates and once on the first task of a session, even when
+  accepted versions match. This is separate from the zero-pending update check;
+  reuse bootstrap/context-builder setup evidence instead of running it twice.
 - Before implementation, derive the task goal and observable success criteria
   from the user's request and relevant project context. A clear bounded fix,
   review, or instruction edit is sufficient without a project-goal interview.

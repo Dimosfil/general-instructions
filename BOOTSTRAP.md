@@ -62,6 +62,13 @@ When a target
 already has instruction files, inspect and merge missing rules deliberately
 instead of overwriting project-owned content.
 
+For Unity targets, the installer also runs `tools/ensure-unity-mcp.ps1`.
+Bootstrap authorizes its bounded automatic host/client setup and installation
+of missing Pipeline in the active project, under
+`patterns/AGENTS_RUNTIME/20-unity-projects.md`. It preserves unrelated settings,
+uses a stable user-local copy, and reports readiness separately from setup.
+Non-Unity targets perform no Unity host or package operations.
+
 After the core bootstrap, ask whether the project should connect an available
 task-manager plan adapter or use `none`, as required by the full bootstrap
 contract.

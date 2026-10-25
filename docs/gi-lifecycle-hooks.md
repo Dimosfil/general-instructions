@@ -1,5 +1,7 @@
 # Automatic GI Lifecycle
 
+For the OpenCode adapter to this same engine, see [OpenCode GI hooks](gi-opencode-hooks.md).
+
 Codex executes `.codex/hooks.json`; the agent does not need to call the hook.
 The shared contract owner remains module 03 and `tools/get-gi-context.ps1`.
 Hooks deliver that live source instead of maintaining another copy of the rules.

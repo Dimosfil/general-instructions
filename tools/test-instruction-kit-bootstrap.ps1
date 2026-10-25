@@ -14,16 +14,25 @@ $forms = @(
     $repoRoot
 )
 $requiredFiles = @(
+    "tools/select-task-verification.ps1",
+    "tools/project-memory/verification-preferences.json",
     "AGENTS.md",
     "BOOTSTRAP.md",
     "COMMANDS.md",
     "config/gi-command-routes.json",
     "config/gi-context-budgets.json",
+    "config/unity-mcp.json",
+    "tools/ensure-unity-mcp.ps1",
+    "tools/unity-mcp-router.mjs",
+    "tools/verify-unity-mcp.mjs",
+    "docs/unity-mcp-router.md",
     "tools/AGENT_WORKING_AGREEMENTS.md",
     "tools/AGENT_RUNBOOK.md",
     "tools/agent-start.ps1",
     "tools/get-gi-context.ps1",
     ".codex/hooks.json",
+    ".opencode/plugins/gi-lifecycle.js",
+    "docs/gi-opencode-hooks.md",
     "tools/invoke-gi-lifecycle-hook.ps1",
     "tools/resolve-gi-command.ps1",
     "tools/project-memory/instruction-kit.json",
@@ -63,6 +72,8 @@ try {
         [void](New-Item -ItemType Directory -Path $target)
 
         if ($index -eq 2) {
+            [void][System.IO.Directory]::CreateDirectory((Join-Path $target '.opencode/plugins'))
+            [System.IO.File]::WriteAllText((Join-Path $target '.opencode/plugins/project-owned.js'), 'export default async () => ({})')
             [void][System.IO.Directory]::CreateDirectory((Join-Path $target '.codex'))
             [System.IO.File]::WriteAllText((Join-Path $target '.codex/hooks.json'),
                 '{"description":"project-owned","hooks":{"Stop":[{"hooks":[{"type":"command","command":"echo project-owned"}]}]}}')
@@ -74,6 +85,9 @@ try {
         }
 
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
+        if ($index -eq 2 -and [System.IO.File]::ReadAllText((Join-Path $target '.opencode/plugins/project-owned.js')) -cne 'export default async () => ({})') {
+            throw 'Bootstrap replaced a project-owned OpenCode plugin.'
+        }
         $nativeHooks = Get-Content -LiteralPath (Join-Path $target '.codex/hooks.json') -Raw | ConvertFrom-Json
         if ($index -eq 2 -and ($nativeHooks.description -ne 'project-owned' -or $nativeHooks.hooks.Stop[0].hooks[0].command -ne 'echo project-owned')) {
             throw 'Bootstrap replaced a project-owned hook.'
@@ -285,9 +299,11 @@ try {
         if ($completionContext.Length -gt [int]$contextBudgets.route_packet_default_max_chars) { throw 'Installed completion phase exceeded its unchanged budget.' }
         $entryBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md'))
         $hooksBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target '.codex/hooks.json'))
+        $openCodeBeforeReinstall = [System.IO.File]::ReadAllText((Join-Path $target '.opencode/plugins/gi-lifecycle.js'))
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
         if ([System.IO.File]::ReadAllText((Join-Path $target 'AGENTS.md')) -cne $entryBeforeReinstall) { throw 'Reinstall duplicated or changed the mandatory context block.' }
         if ([System.IO.File]::ReadAllText((Join-Path $target '.codex/hooks.json')) -cne $hooksBeforeReinstall) { throw 'Reinstall duplicated or changed lifecycle hooks.' }
+        if ([System.IO.File]::ReadAllText((Join-Path $target '.opencode/plugins/gi-lifecycle.js')) -cne $openCodeBeforeReinstall) { throw 'Reinstall changed the OpenCode plugin.' }
         if ($contextOutput.Length -gt [int]$contextBudgets.start_packet_max_chars) {
             throw "Bootstrap form '$($forms[$index])' exceeded the installed start-packet budget: $($contextOutput.Length) chars."
         }
@@ -296,6 +312,15 @@ try {
         }
 
         if ($index -eq 0) {
+            $pluginPath = Join-Path $target '.opencode/plugins/gi-lifecycle.js'
+            [System.IO.File]::WriteAllText($pluginPath, '// Project-owned GI customization')
+            $pluginRejected = $false
+            try { & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null }
+            catch { $pluginRejected = $_.Exception.Message.Contains('OpenCode GI plugin differs') }
+            if (-not $pluginRejected -or [System.IO.File]::ReadAllText($pluginPath) -cne '// Project-owned GI customization') {
+                throw 'Conflicting OpenCode plugin was overwritten or silently accepted.'
+            }
+            [System.IO.File]::WriteAllText($pluginPath, $openCodeBeforeReinstall)
             $legacyTarget = Join-Path $testRoot 'legacy-context-target'
             [void](New-Item -ItemType Directory -Path (Join-Path $legacyTarget 'tools') -Force)
             [System.IO.File]::WriteAllText((Join-Path $legacyTarget 'AGENTS.md'), '# Legacy project content', [System.Text.UTF8Encoding]::new($false))

@@ -35,7 +35,7 @@ function Get-WorkFingerprint {
     $untracked = Invoke-GitRead -Arguments @('ls-files', '--others', '--exclude-standard', '-z')
     foreach ($relative in ($untracked.TrimEnd("`n") -split "`0")) {
         if (-not $relative) { continue }
-        if ($relative.Replace('\', '/').StartsWith('.codex/.gi-hook-state/')) { continue }
+        if ($relative.Replace('\', '/') -match '^\.(codex|opencode)/\.gi-hook-state/') { continue }
         $path = [System.IO.Path]::GetFullPath((Join-Path $root $relative))
         if (-not $path.StartsWith($root + [System.IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'Untracked file escaped the project root.' }
         $item = Get-Item -LiteralPath $path -Force
@@ -58,16 +58,23 @@ function Write-Audit {
 
 try {
     $event = [Console]::In.ReadToEnd() | ConvertFrom-Json
+    $hostProperty = $event.PSObject.Properties['host']
+    $hookHost = if ($hostProperty) { [string]$hostProperty.Value } else { 'codex' }
+    if ($hookHost -notin @('codex', 'opencode')) { throw 'Unsupported GI hook host.' }
     $eventName = [string]$event.hook_event_name
     if ($eventName -notin @('UserPromptSubmit', 'SessionStart', 'PreToolUse', 'Stop')) { throw 'Unsupported GI hook event.' }
-    if ($eventName -eq 'PreToolUse' -and [string]$event.tool_name -notmatch '^(?:mcp__codex_app__|codex_app[./])?(?:create_thread|send_message_to_thread)$') { '{}'; exit 0 }
+    if ($eventName -eq 'PreToolUse') {
+        $isServiceTool = [string]$event.tool_name -match '^(?:mcp__codex_app__|codex_app[./])?(?:create_thread|send_message_to_thread)$'
+        if ($hookHost -eq 'opencode') { $isServiceTool = [string]$event.tool_name -eq 'task' }
+        if (-not $isServiceTool) { '{}'; exit 0 }
+    }
     if ([string]::IsNullOrWhiteSpace([string]$event.session_id)) { throw 'Missing hook session identity.' }
     $cwd = [System.IO.Path]::GetFullPath([string]$event.cwd)
     if ($cwd -ne $root -and -not $cwd.StartsWith($root + [System.IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'Hook cwd does not belong to this project.' }
     $turnProperty = $event.PSObject.Properties['turn_id']
     $turnId = if ($turnProperty) { [string]$turnProperty.Value } else { '' }
     $sessionKey = Get-Digest ([string]$event.session_id)
-    $stateRoot = Join-Path $root '.codex/.gi-hook-state'
+    $stateRoot = Join-Path $root ('.' + $hookHost + '/.gi-hook-state')
     [void][System.IO.Directory]::CreateDirectory($stateRoot)
     $receiptPath = Join-Path $stateRoot ($sessionKey + '.json')
     $phase = if ($eventName -eq 'Stop') { 'Complete' } else { 'Work' }

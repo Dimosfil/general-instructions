@@ -90,7 +90,13 @@ It does not mean:
    `update_check.source_repo` as
    `https://github.com/Dimosfil/general-instructions.git`. Store a local path
    only as optional checkout/cache metadata, not as the canonical source.
-9. Stop after setup and ask what the user wants to do next.
+9. For a Unity target, run the installed `tools/ensure-unity-mcp.ps1` unless the
+   deterministic installer already returned its result. Follow
+   `patterns/AGENTS_RUNTIME/20-unity-projects.md` for the bounded authorized
+   client/tool/Pipeline setup, opt-outs, custom-config conflicts, and separate
+   configuration/live/chat verification. Never treat a closed Editor as a
+   reason to reopen it or reinstall dependencies. Non-Unity targets do nothing.
+10. Stop after setup and ask what the user wants to do next.
 
 For a fresh target, prefer the resolved checkout's deterministic installer:
 
@@ -103,6 +109,9 @@ merges only the marked mandatory context block into an existing `AGENTS.md`.
 It merges native GI lifecycle handlers without replacing other hooks. Review
 the project and exact hook definitions in Codex `/hooks`; configured, trusted,
 and live-tested are separate states. See `docs/gi-lifecycle-hooks.md`.
+It also installs `.opencode/plugins/gi-lifecycle.js`, preserving other plugins.
+Reload OpenCode with plugins enabled; confirm its pre-completion review in the
+running host. See `docs/gi-opencode-hooks.md`; copying does not prove activation.
 If local
 instruction files already exist, inspect them and merge missing rules carefully
 after the installer reports them as preserved.

@@ -110,6 +110,11 @@ the agent should:
 10. Merge project-owned files carefully; do not overwrite project-specific
    content without review.
 11. Update `instruction-kit.json` only after successful application.
+    For Unity projects, deliver the setup helper, config, router, and probe,
+    then run `tools/ensure-unity-mcp.ps1` under `20-unity-projects.md`, including
+    on a new host when no file migrations are pending. Preserve opt-outs and
+    custom configuration. Record instruction delivery separately from any host,
+    Pipeline, Editor, or current-chat blocker; the next session retries setup.
 12. Treat successfully applied local instructions as active immediately. Before
     the next concrete task in the same chat/session, reread the updated local
     `AGENTS.md` and every routed runtime module needed for that task instead of

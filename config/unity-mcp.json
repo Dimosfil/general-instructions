@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "server_name": "unity",
+  "pipeline_package": "com.unity.pipeline",
+  "minimum_editor_major": 6000,
+  "install_missing_dependencies": true,
+  "unity_windows_installer": "https://unity.com/install.ps1",
+  "unity_unix_installer": "https://unity.com/install.sh",
+  "node_distribution": "https://nodejs.org/dist/latest-v24.x",
+  "probe_timeout_ms": 15000
+}

@@ -23,6 +23,9 @@ Reusable instructions in this repository are grouped by job.
 
 - `tools/project-memory/specs/instruction-kit-auto-update.md`: policy evidence,
   checker-to-agent handoff, automatic application, and metadata invariants.
+- `tools/project-memory/specs/task-completion-review.md`: final-only verification
+  workflow, preference persistence, and evidence/reporting boundaries.
+- `tools/project-memory/verification-preferences.json`: current project setting.
 - `tools/project-memory/specs/authorization-and-verification.md`: authorization,
   scoped blockers, and proportionate verification contract with decision cases.
 
@@ -52,6 +55,24 @@ Reusable instructions in this repository are grouped by job.
 
 ## Bootstrap Tools
 
+- `patterns/AGENTS_RUNTIME/15-final-review.md`: optional final review
+  with document conclusion-to-quotation mapping and its project On/Off/Cancel
+  configuration contract.
+- `templates/select-task-verification.template.ps1`: On/Off/Cancel selector,
+  installed as `tools/select-task-verification.ps1` in consuming projects.
+- `templates/verification-preferences.template.json`: enabled-by-default final
+  task-result review preference; preserve existing selections.
+- `tools/test-task-verification.ps1`: preference and installed context scenarios.
+- `config/unity-mcp.json`: portable automatic Unity MCP setup policy and official
+  dependency sources, with no machine-specific paths.
+- `tools/ensure-unity-mcp.ps1`: idempotent Unity-only host/client/Pipeline setup
+  used by bootstrap, accepted updates, and first-session host provisioning.
+- `tools/unity-mcp-router.mjs`: workspace gate for the official Unity MCP backend.
+- `tools/verify-unity-mcp.mjs`: bounded read-only initialize/tool-discovery probe.
+- `docs/unity-mcp-router.md`: setup lifecycle, authorization, opt-outs, and limits.
+- `tools/project-memory/specs/integration-contracts/unity-mcp-routing.md`:
+  routing, provisioning ownership, and verification contract.
+
 - `tools/install-instruction-kit.ps1`: portable deterministic installer that
   resolves supported GI sources and creates missing project-local instruction
   files without changing Git configuration.
@@ -64,6 +85,10 @@ Reusable instructions in this repository are grouped by job.
   `docs/gi-lifecycle-hooks.md` owns
   activation, trust, evidence, and limits.
 - `tools/test-gi-lifecycle-hooks.ps1`: protocol and failure regression checks.
+- `.opencode/plugins/gi-lifecycle.js`: OpenCode 1.x adapter for the shared GI
+  engine; `docs/gi-opencode-hooks.md` covers activation, compatibility and limits.
+- `tests/test_opencode_gi_hooks.mjs`, `tests/test_opencode_gi_live.mjs`: adapter
+  failure/receipt contracts and real OpenCode response-loop verification.
 - `tools/test-gi-lifecycle-hooks-live.ps1`: real Codex test deliberately omitting
   manual Complete and all model tool calls.
 - `tools/resolve-gi-command.ps1`: returns one selected GI command contract and

@@ -2,6 +2,16 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.10.25
+
+- Add project-local OpenCode 1.x GI hooks for mandatory system context, compaction,
+  task forwarding and automatic review before response-loop completion. Reuse
+  the shared lifecycle engine with separate ignored host receipts. Persist a
+  synthetic `noReply` review before the running loop can exit; do not restart on
+  idle. Verify against OpenCode 1.15.7 with a local model fixture, and preserve
+  unrelated plugins during bootstrap. Migration:
+  `2026.10.25.1__add_opencode_gi_lifecycle_hooks`.
+
 ## 2026.10.24
 
 - Automatically deliver mandatory Work rules with native Desktop create/send
@@ -50,7 +60,33 @@ Accepted changes for the shared instruction library.
   recording after verified file changes. Migration:
   `2026.10.23.1__enforce_evidence_based_automatic_updates`.
 
+## 2026.10.18
+
+- Extended final review to document-based tasks: reread disputed passages with
+  context, test interpretations, and map every source-derived conclusion to a
+  point/page/section plus a short verbatim supporting quote in the delivered
+  result. Identify unsupported inferences, conflicting passages, uncertain OCR,
+  and unavailable evidence. Use the existing review preference and final-only
+  timing. Migration: `2026.10.18.2__verify_document_conclusions_with_quotes`.
+
+- Added an enabled-by-default task completion review: verify the delivered
+  result, linked sources, and material facts after execution and before the
+  final answer; mark confirmed results with `✓` and explain unverified items.
+  `ги проверка` / `gi verification` offers an On/Off/Cancel checklist like the
+  language setting. Keep its project preference separate from languages and
+  preserve opt-outs during bootstrap/updates; required project checks remain
+  mandatory. Migration: `2026.10.18.1__configure_task_completion_review`.
+
 ## 2026.10.17
+
+- Added automatic Unity MCP provisioning to GI bootstrap, accepted updates, and
+  first-session host setup. Copy portable tooling into each kit, discover local
+  tool paths, install missing official dependencies and active-project
+  Pipeline, configure a stable host router, and verify protocol discovery.
+  Preserve unrelated config, custom servers, opt-outs, and Editor state. Retry
+  host provisioning even with zero pending migrations; separate configuration,
+  package, live Editor, and current-chat readiness. Migration:
+  `2026.10.17.2__automate_unity_mcp_setup`.
 
 - Added a Unity-specific runtime module requiring official CLI/Pipeline tooling
   first, verified live project identity, and separate reporting of MCP client

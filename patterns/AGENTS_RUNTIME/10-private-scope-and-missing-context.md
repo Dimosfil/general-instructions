@@ -23,6 +23,11 @@
   history, application SQLite databases, or local app logs outside the project
   root unless the user gives an explicit path and action. For analyzer tasks,
   prefer mock or sample data, or ask for permission to inspect a specific file.
+- The bounded Unity setup explicitly authorized by GI bootstrap/accepted
+  updates follows `20-unity-projects.md`: only the resolved client MCP config,
+  dedicated user tooling, official dependency installers, and active project's
+  Pipeline installation are in scope. This exception grants no access to other
+  user-home data, credentials, logs, databases, or projects.
 - Treat product plans, `apps.txt`, summaries, and task-manager notes as intent
   signals only. They are not permission to read private local data sources.
 - If a required file, skill, config, script, endpoint, task, or other entity is

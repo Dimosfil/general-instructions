@@ -6,6 +6,40 @@ relevant package manifests before Unity operations. Keep exact commands,
 versions, project selectors, and verification evidence in the local runbook or
 integration contract; do not copy one project's machine paths into shared rules.
 
+## Automatic GI Setup
+
+- On GI initialization, after accepted updates (including zero pending), and
+  the first task in a Unity session, run the project-owned
+  `tools/ensure-unity-mcp.ps1 -ProjectPath <active-project-root>`. Reuse a result
+  already produced by bootstrap or `tools/get-gi-context.ps1` in this session.
+  This also provisions a host when a GI-enabled project is moved to another PC.
+- Treat GI bootstrap and accepted-update authorization as permission for this
+  bounded setup: resolve the current Codex home; use only its MCP configuration
+  and dedicated user tools, the official missing CLI/runtime installers, and
+  the active Unity project's package manifest through the official Pipeline
+  installer. Do not inspect personal databases, history, credentials, or other
+  projects. Preserve unrelated config and custom MCP entries. This narrowly
+  scoped operation needs no repeated project-by-project confirmation.
+- Follow `config/unity-mcp.json`. Default to automatic setup for Unity; honor
+  `unity_mcp.enabled: false` in instruction-kit metadata or `enabled: false`
+  in that setup config. An explicitly disabled existing client entry is also
+  an opt-out. Do not force a custom server replacement or a Pipeline upgrade.
+- Detect host tools, check current CLI help, install missing dependencies
+  from official sources, copy the router into stable user tools, configure it
+  once through the client's MCP commands, and install missing Pipeline only in
+  the active supported Unity project. Use official Windows or macOS/Linux
+  installers and SHA-256-verified runtime downloads; name unsupported hosts
+  and missing platform dependencies rather than inventing installation methods.
+- Run setup idempotently. Outside Unity, return before host configuration reads,
+  downloads, package writes, or backend launches. A closed Editor is a live
+  verification gap, not a reason to reinstall tools. Never open/close an Editor,
+  change a scene, or start an interactive login as part of automatic setup.
+- Report configuration, package, protocol discovery, and current-chat/live-state
+  verification separately. If login, network, permissions, unsupported versions,
+  or a custom-config conflict blocks a step, complete independent GI work and
+  report the specific step. Retry on a later session after the blocker changes;
+  do not loop or mark a failed live check successful.
+
 ## Official Tooling First
 
 - Try the installed official `unity` CLI first; check its current help before

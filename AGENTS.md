@@ -5,7 +5,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 
 ## Loading Contract
 
-- For Unity projects, also load `20-unity-projects.md` before Unity work.
+- For Unity work and automatic setup, load `20-unity-projects.md`.
 - Start here. This file alone is sufficient only for greetings and
   status-neutral replies.
 - Select task modules before concrete work. For GI commands, pass the exact user
@@ -24,7 +24,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
   loaded GI rules. If one rule is blocked, report that operation precisely and
   continue independent authorized work.
 - Verify the full task, report gaps, and agree material complexity first.
-- Trusted Codex hooks load rules and require final review automatically.
+- Active GI hooks in Codex or OpenCode load rules and require final review automatically.
   Otherwise run `tools/get-gi-context.ps1` before work and `-Phase Complete`
   before final. Apply its rules; load failure blocks completion.
 - State-changing GI commands must never run from memory. If the context builder,
@@ -36,6 +36,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 
 ## Core Safety
 
+- Final: load `15-final-review.md`.
 - Safety, secrets, destructive operations, and repository scope have highest
   priority. Verify the active root and target identity before writes. An exact
   external path and action require explicit authorization.

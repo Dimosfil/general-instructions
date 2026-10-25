@@ -5,6 +5,10 @@ agents.
 
 Automatic GI updates: [execution contract](specs/instruction-kit-auto-update.md).
 
+Unity MCP host routing: [integration contract](specs/integration-contracts/unity-mcp-routing.md).
+
+OpenCode GI lifecycle: [integration contract](specs/integration-contracts/opencode-gi-lifecycle.md).
+
 Use Markdown and JSON files here for human-reviewable memory. Use the local
 SQLite database only as a generated search index that can be rebuilt from git
 tracked files.
@@ -69,6 +73,8 @@ removed, moved, replaced, or given a new role.
 
 Focused library contracts:
 
+- [Task completion review](specs/task-completion-review.md): final result/link/fact
+  verification, On/Off/Cancel selection, persistence, and required-check boundary.
 - [Project tester](specs/project-tester.md): information/start routing, local
   scenario ownership, evidence, restoration, and completion states.
 - [Build output policy](specs/build-output-policy.md): artifact layout and Git.

@@ -315,6 +315,9 @@ count, index path, freshness caveats, and readiness.
 - `STUDY_PLAN.md`: roadmap for understanding the project.
 - `git-preferences.json`: commit-message language preferences.
 - `system-preferences.json`: agent user-facing working language preferences.
+- `verification-preferences.json`: optional final task-result review setting;
+  configure with `ги проверка` (On/Off/Cancel). Default: enabled. This controls
+  the additional review after execution, not required project checks.
 - `rag-system.json`: RAG source, exclusion, retrieval, context-packet, and
   writeback configuration.
 - `architecture-migrations.md`: major architecture rewrites, platform moves,
