@@ -56,6 +56,7 @@ function New-UpdateFixture {
     )
     if (-not $WithoutMigrations) {
         [void](New-Item -ItemType Directory -Path (Join-Path $source "migrations") -Force)
+        Copy-Item -LiteralPath (Join-Path $repoRoot 'migrations/README.md') -Destination (Join-Path $source 'migrations/README.md')
         foreach ($id in @("2026.09.22.1__already", "2026.09.22.2__pending")) {
             [System.IO.File]::WriteAllText(
                 (Join-Path $source "migrations/$id.md"),
@@ -321,6 +322,10 @@ try {
     $handoff = (& (Join-Path $v2.Project 'tools/get-gi-context.ps1') -CommandText 'gi fixture' *>&1 | Out-String)
     Assert-Contains $handoff 'Required agent action: apply pending accepted migrations now' 'Context builder lost automatic application handoff.'
     Assert-Contains $handoff 'Automatic migration application: enabled' 'Context builder lost policy evidence.'
+    Assert-Contains $handoff 'verify installation separately from host activation' 'Context builder lost the installation/runtime boundary.'
+    Assert-Contains $handoff 'Codex trust/CLI/Desktop checks are Codex-only; OpenCode plugin/response-loop checks are OpenCode-only.' 'Context builder lost host applicability.'
+    Assert-Contains $handoff "Read accepted applicability contract: $(Join-Path $v2.Source 'migrations/README.md')" 'Historical migrations lack an authoritative applicability contract.'
+    Assert-Contains $handoff 'whole batch including later host adapters' 'Handoff can still stop before a later host adapter.'
 
     foreach ($policyCase in @(
         @{ Name = 'explicit-on'; Json = '{"enabled":true,"auto_apply_pending_migrations":true}'; Expected = 'auto_apply_pending_migrations=true' },
@@ -352,6 +357,7 @@ try {
     if ($LASTEXITCODE -ne 1) { throw 'Unsupported helper -Apply did not fail safely.' }
     Assert-Contains $applyNotice 'Automatic migration application: enabled' 'Helper limitation changed the reported policy.'
     Assert-Contains $applyNotice 'does not disable the automatic application policy' 'Helper limitation was presented as an opt-out.'
+    Assert-Contains $applyNotice 'unavailable runtime checks do not block installed migrations' 'Legacy -Apply handoff lost host applicability.'
     if ((Get-Content $v2Path -Raw | ConvertFrom-Json).instruction_kit_version -ne '2026.09.22.1') { throw 'Unsupported -Apply advanced metadata.' }
     $missingSource = New-UpdateFixture -Name 'missing-migrations' -WithoutMigrations -MetadataJson '{"instruction_kit_version":"2026.09.22.1","update_check":{"enabled":true}}'
     $missingFailure = ''
@@ -369,6 +375,37 @@ try {
     }
     $afterRecording = (& $updaterTemplate -InstructionKitPath $v2Path -SharedLibraryPath $v2.Source *>&1 | Out-String)
     Assert-Contains $afterRecording 'Pending instruction migrations: 0' 'Verified recording did not complete the update flow.'
+
+    # Recover the reported historical batch using the public checker, without
+    # native host APIs. File installation is verified by the caller; recording
+    # must neither probe host trust nor turn unverified runtime evidence into success.
+    $recovery = New-UpdateFixture -Name 'host-recovery' -MetadataJson `
+        '{"instruction_kit_version":"2026.10.24.5","migration_state":{"schema_version":2,"applied_through":"2026.10.24.5__forward_mandatory_rules_with_service_messages","additional_applied_migrations":[],"skipped_migrations":["2026.10.24.4__automate_mandatory_lifecycle_hooks","2026.10.24.5__forward_mandatory_rules_with_service_messages"]},"update_check":{"enabled":true},"project_runtime_evidence":{"codex":"unverified: trust unavailable","opencode":"unverified: reload required"}}'
+    $recoveryPath = Join-Path $recovery.Project 'tools/project-memory/instruction-kit.json'
+    $batch = @(
+        '2026.10.24.4__automate_mandatory_lifecycle_hooks',
+        '2026.10.24.5__forward_mandatory_rules_with_service_messages',
+        '2026.10.25.1__add_opencode_gi_lifecycle_hooks',
+        '2026.10.25.2__separate_migration_installation_from_host_activation'
+    )
+    foreach ($id in $batch) {
+        Copy-Item -LiteralPath (Join-Path $repoRoot "migrations/$id.md") -Destination (Join-Path $recovery.Source "migrations/$id.md")
+    }
+    [System.IO.File]::WriteAllText((Join-Path $recovery.Source 'VERSION.md'), 'Current accepted version: `2026.10.25.2`')
+    $beforeRecovery = [System.IO.File]::ReadAllText($recoveryPath)
+    $recoveryNotice = (& $updaterTemplate -InstructionKitPath $recoveryPath -SharedLibraryPath $recovery.Source *>&1 | Out-String)
+    Assert-Contains $recoveryNotice 'Pending instruction migrations: 4' 'Skipped historical migrations and later adapters did not form one pending batch.'
+    foreach ($id in $batch) { Assert-Contains $recoveryNotice "- $id" 'Recovery lost a pending migration.' }
+    if ([System.IO.File]::ReadAllText($recoveryPath) -cne $beforeRecovery) { throw 'Recovery check prematurely recorded installation or changed runtime evidence.' }
+    & $updaterTemplate -InstructionKitPath $recoveryPath -SharedLibraryPath $recovery.Source -RecordApplied *>&1 | Out-Null
+    $recovered = Get-Content -LiteralPath $recoveryPath -Raw | ConvertFrom-Json
+    if ($recovered.instruction_kit_version -ne '2026.10.25.2' -or
+        $recovered.migration_state.applied_through -ne $batch[-1] -or
+        @($recovered.migration_state.skipped_migrations).Count -ne 0) { throw 'Verified recovery did not record the entire pending batch.' }
+    if ($recovered.project_runtime_evidence.codex -cne 'unverified: trust unavailable' -or
+        $recovered.project_runtime_evidence.opencode -cne 'unverified: reload required') { throw 'Recording installation fabricated or erased runtime readiness.' }
+    $recoveryAfter = (& $updaterTemplate -InstructionKitPath $recoveryPath -SharedLibraryPath $recovery.Source *>&1 | Out-String)
+    Assert-Contains $recoveryAfter 'Pending instruction migrations: 0' 'Unverified host activation kept installed migrations pending.'
 
     $exceptions = New-UpdateFixture -Name "exceptions" -MetadataJson `
         '{"instruction_kit_version":"2026.09.22.1","migration_state":{"schema_version":2,"applied_through":"2026.09.22.1__already","additional_applied_migrations":["2026.09.22.2__pending"],"skipped_migrations":["2026.09.22.1__already"]},"update_check":{"enabled":true}}'

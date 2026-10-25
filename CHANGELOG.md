@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.25
 
+- Separate verified migration file installation from host activation. Apply the
+  ordered batch including later adapters; Codex trust/CLI/Desktop checks and
+  OpenCode plugin/loop checks establish runtime readiness separately. Recover
+  historical pending migrations without inventing activation success, skipping
+  file checks or blocking on another host. Migration:
+  `2026.10.25.2__separate_migration_installation_from_host_activation`.
+
 - Add project-local OpenCode 1.x GI hooks for mandatory system context, compaction,
   task forwarding and automatic review before response-loop completion. Reuse
   the shared lifecycle engine with separate ignored host receipts. Persist a

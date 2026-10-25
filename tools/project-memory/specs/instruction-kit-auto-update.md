@@ -26,10 +26,27 @@ decide policy. `patterns/AGENTS_RUNTIME/07-startup.md` owns agent execution.
   conflict or scope/access blocker, report the precise unperformed operation.
 - Equal versions with no skipped migrations avoid reading migration entries.
   Disabled checks and missing migration sources have unknown pending count.
+- The checkpoint means verified file installation, not automatic enforcement.
+  The accepted `migrations/README.md` applicability contract and startup module
+  govern historical recording language. Merge the whole ordered pending batch,
+  including later host adapters; missing/conflicting files or failed installation
+  checks block recording. Do not wait between file migrations for another host.
+- Codex trust, CLI omission and Desktop delivery checks and OpenCode plugin/loop
+  checks establish separate runtime readiness. Unavailable or failed activation
+  must be reported with reason/next action and manual fallback, without leaving
+  verified file migrations pending. Explicit runtime tasks remain unfinished.
+  Source regression suites belong to source maintenance, not consuming startup.
+- The checker emits host applicability before pending bodies, including on the
+  `-Apply` error path; the context builder forwards it within existing budgets.
+  No host probing, trust changes, synthetic activation success, or new readiness
+  schema is required for metadata recording.
 
 ## Verification
 
 `tools/test-gi-context-routing.ps1` exercises legacy/default/enabled policy,
 explicit opt-outs with evidence, invalid values, pending action through the
 actual builder, unchanged metadata during checks, and zero pending after
-recording. Bootstrap checks verify delivery of the shared helper and modules.
+recording. It also covers the applicability handoff and a batch recovering
+historical skipped Codex migrations together with the later OpenCode adapter,
+without native host APIs or fabricated readiness. Bootstrap checks verify
+delivery of the shared helper and modules.

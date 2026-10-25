@@ -7,6 +7,12 @@ Git checks, fingerprints, receipts, context limits or bounded review retries.
 
 ## Activation
 
+Treat plugin loading and the live loop test as OpenCode runtime readiness checks.
+They do not gate recording verified kit file installation from Codex or OpenCode.
+Follow the [startup applicability rules](../patterns/AGENTS_RUNTIME/07-startup.md).
+Report unavailable or failed activation separately; use manual Work/Complete
+until hooks are verified. Zero pending migrations is not proof of active hooks.
+
 Install the kit normally, or apply its accepted OpenCode migration. The installer
 copies the plugin and shared engine, preserves unrelated plugins/configuration,
 and rejects a different existing GI plugin rather than overwriting it.

@@ -17,13 +17,13 @@ TODO: describe the product, users, and primary runtime surface.
   Before concrete work, select the matching runtime modules.
 - For GI commands, pass the exact user command via `-CommandText` to the context
   helper. Use `COMMANDS.md` only for help or command-index requests.
-- On the first concrete task, perform the staged update check. Equal versions
-  without skipped migrations mean `pending migrations: 0` without reading
-  migrations, `CHANGELOG.md`, or `INDEX.md`. Apply pending accepted migrations
-  automatically; absent `auto_apply_pending_migrations` defaults to `true`.
-  Skip only for explicit `false` with metadata path/key/value evidence, or a
-  concrete blocker; report the pending count. Helper limitations are not opt-outs.
-  Never inspect `updates/` during this startup check.
+- On the first concrete task, check accepted updates. Equal versions without
+  skipped migrations mean `pending migrations: 0`; do not read migrations,
+  `CHANGELOG.md`, or `INDEX.md`. Auto-apply pending migrations; absent
+  `auto_apply_pending_migrations` means `true`. Skip only for explicit `false`
+  (metadata path/key/value) or a concrete blocker; report count. Helper limits
+  are not opt-outs. Separate installation and host activation (`07-startup.md`).
+  Never inspect `updates/` during startup.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded rules. Report a blocked operation precisely and continue independent
   authorized work.

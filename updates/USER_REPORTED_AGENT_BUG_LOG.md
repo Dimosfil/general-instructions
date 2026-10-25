@@ -292,3 +292,13 @@ or edit that project.
 - Resolution: checker validates boolean policy, reports exact metadata evidence, and requires immediate agent application before recording; context builder preserves the handoff. Live rules, templates, behavioral spec, migration, and regression checks updated.
 - Verification: scoped routing/policy/handoff/metadata tests and bootstrap checks passed.
 - Status: fixed by `2026.10.23.1__enforce_evidence_based_automatic_updates`.
+
+
+## 2026-10-25 - Host-specific checks block installed GI migrations
+
+- Symptom: OpenCode reported two pending lifecycle migrations after verifying their files because Codex trust, CLI omission and Desktop delivery checks were unavailable.
+- Cause: historical Verify And Record text conflated installation checkpoints with native host activation and could stop the batch before the later OpenCode adapter.
+- Evidence: user-provided screenshot and accepted migrations 2026.10.24.4, 2026.10.24.5 and 2026.10.25.1; no raw screenshot, local paths or private project data copied here.
+- Fix: accepted installation/host applicability contract, startup/helper handoff, historical scope notes and migration 2026.10.25.2__separate_migration_installation_from_host_activation. Keep missing/conflicting files as blockers and runtime gaps explicit.
+- Verification: routing/update recovery tests, bootstrap preservation across four source forms and shared lifecycle protocol passed. Native activation in the reported project was not tested.
+- Status: resolved in shared rules; consuming projects must apply the accepted migration and separately verify runtime activation.

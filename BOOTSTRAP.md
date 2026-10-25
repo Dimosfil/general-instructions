@@ -58,6 +58,10 @@ merges only the marked mandatory context block into an existing `AGENTS.md`.
 It also merges GI lifecycle handlers into `.codex/hooks.json`, preserving other
 hooks. See [activation and live verification](docs/gi-lifecycle-hooks.md).
 Configured files alone do not prove that the running host trusts or runs hooks.
+It also installs the [OpenCode adapter](docs/gi-opencode-hooks.md). Record verified
+file installation separately from host activation under the
+[startup applicability rules](patterns/AGENTS_RUNTIME/07-startup.md);
+another host's unavailable trust/live checks do not block the update checkpoint.
 When a target
 already has instruction files, inspect and merge missing rules deliberately
 instead of overwriting project-owned content.

@@ -325,6 +325,10 @@ Reusable instructions in this repository are grouped by job.
 - `migrations/`: accepted ordered instruction-kit migrations for consuming
   projects. External projects may read this folder only when checking or applying
   instruction updates.
+- [Installation and host applicability](migrations/README.md#installation-and-host-applicability):
+  recording verified files separately from Codex/OpenCode activation.
+- [2026.10.25.2 migration](migrations/2026.10.25.2__separate_migration_installation_from_host_activation.md):
+  recover historical host-check blockers without claiming runtime readiness.
 
 ## Checklists
 

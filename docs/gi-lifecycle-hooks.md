@@ -28,6 +28,12 @@ warning, avoiding an infinite loop. No extra forms or routine approvals are adde
 
 ## Activation
 
+Treat this section and the Codex live tests below as runtime readiness checks.
+They do not gate recording verified kit file installation, including installation
+from OpenCode. Follow the [startup applicability rules](../patterns/AGENTS_RUNTIME/07-startup.md).
+Report unavailable or failed activation separately; zero pending migrations is
+not proof of trusted hooks. Use manual Work/Complete until hooks are verified.
+
 Use a Git project and PowerShell 7 (`pwsh`) available to the Codex hook host.
 Install the kit normally; the installer preserves unrelated handlers and merges
 only the canonical GI definitions. It reports **configured**, never active merely
