@@ -14,6 +14,13 @@ decide policy. `patterns/AGENTS_RUNTIME/07-startup.md` owns agent execution.
 
 ## Invariants
 
+- Every newly published migration ID must be above the previous published
+  version. A compact checkpoint cannot discover later additions below its
+  boundary. Preserve released IDs and the equal-version fast path; recover
+  omitted components through a forward migration with verified file delivery.
+- Source publication runs `tools/test-instruction-kit-release.ps1 -BaseRef
+  <previous-published-ref>` against a fixed baseline, covering untracked,
+  staged and committed additions. Never substitute the new release HEAD.
 - Missing update-check and auto-apply keys mean true. Only JSON boolean false
   establishes an explicit opt-out; cite the metadata path, key, and value.
 - Reject non-boolean policy values. Invalid or unavailable evidence means
@@ -50,3 +57,10 @@ recording. It also covers the applicability handoff and a batch recovering
 historical skipped Codex migrations together with the later OpenCode adapter,
 without native host APIs or fabricated readiness. Bootstrap checks verify
 delivery of the shared helper and modules.
+
+Release fixtures reject new IDs below/equal to the previous published version
+in untracked, staged and committed states, malformed IDs, IDs beyond `VERSION.md`
+and removal/renaming of released migrations.
+`tools/test-task-verification.ps1` reproduces skipped historical IDs at installed
+versions `2026.10.23.1` and `2026.10.25.3`, discovers the forward repair, verifies
+restored commands and preserved Off/custom fields, then records and rechecks.

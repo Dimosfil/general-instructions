@@ -73,7 +73,65 @@ try {
     [System.IO.File]::WriteAllText($installedPath, '{"task_completion_review":{"enabled":"false"}}', $utf8)
     $packet = (& $builder -CommandText 'gi stack' -SkipUpdateCheck | Out-String)
     Assert-True ($packet.Contains('Invalid verification preferences') -and -not $packet.Contains('Task completion review: Off')) 'Malformed preference was treated as a valid choice.'
-    Write-Output 'Task completion review scenarios passed.'
+    # Reproduce late-published historical IDs below an installed checkpoint.
+    # The forward repair must be discoverable from both affected boundaries.
+    $repairId = '2026.10.25.4__repair_task_review_delivery'
+    $repairSource = Join-Path $testRoot 'repair-source'
+    [void](New-Item -ItemType Directory -Path (Join-Path $repairSource 'migrations') -Force)
+    foreach ($name in @('README', '2026.10.18.1__configure_task_completion_review', '2026.10.18.2__verify_document_conclusions_with_quotes', $repairId)) {
+        Copy-Item -LiteralPath (Join-Path $repoRoot "migrations/$name.md") -Destination (Join-Path $repairSource "migrations/$name.md")
+    }
+    [System.IO.File]::WriteAllText((Join-Path $repairSource 'VERSION.md'), 'Current accepted version: `2026.10.25.4`', $utf8)
+    $checker = Join-Path $repoRoot 'templates/check-instruction-kit-updates.template.ps1'
+    $routePath = Join-Path $project 'config/gi-command-routes.json'
+    $modulePath = Join-Path $project 'patterns/AGENTS_RUNTIME/15-final-review.md'
+    $ownedPaths = @('patterns/AGENTS_RUNTIME/15-final-review.md', 'tools/select-task-verification.ps1', 'tools/project-memory/verification-preferences.json')
+    foreach ($checkpoint in @('2026.10.23.1', '2026.10.25.3')) {
+        $metadataPath = Join-Path $project 'tools/project-memory/instruction-kit.json'
+        $metadata = Get-Content -LiteralPath $metadataPath -Raw | ConvertFrom-Json
+        $metadata.instruction_kit_version = $checkpoint
+        $metadata.migration_state.applied_through = "${checkpoint}__previous"
+        $metadata.copied_files = @($metadata.copied_files | Where-Object { $_ -notin $ownedPaths })
+        [System.IO.File]::WriteAllText($metadataPath, ($metadata | ConvertTo-Json -Depth 10), $utf8)
+        Remove-Item -LiteralPath $modulePath, $installedSelector
+        if ($checkpoint -eq '2026.10.23.1') { Remove-Item -LiteralPath $installedPath }
+        else { [System.IO.File]::WriteAllText($installedPath, '{"task_completion_review":{"enabled":false,"custom":"сохранить"},"other":42}', $utf8) }
+        $preferencesBefore = if (Test-Path -LiteralPath $installedPath) { [System.IO.File]::ReadAllText($installedPath) } else { $null }
+        $manifest = Get-Content -LiteralPath $routePath -Raw | ConvertFrom-Json
+        $manifest.routes = @($manifest.routes | Where-Object { $_.id -ne 'task-verification' })
+        [System.IO.File]::WriteAllText($routePath, ($manifest | ConvertTo-Json -Depth 100), $utf8)
+        $notice = (& $checker -InstructionKitPath $metadataPath -SharedLibraryPath $repairSource *>&1 | Out-String)
+        Assert-True ($notice.Contains('Pending instruction migrations: 1') -and $notice.Contains("- $repairId")) 'Forward repair was skipped by an older checkpoint.'
+        Assert-True (-not $notice.Contains('- 2026.10.18.1__')) 'Fixture no longer reproduces the historical checkpoint failure.'
+        # Apply the migration delivery contract, preserving unrelated routes/settings.
+        Copy-Item -LiteralPath (Join-Path $repoRoot 'patterns/AGENTS_RUNTIME/15-final-review.md') -Destination $modulePath
+        Copy-Item -LiteralPath $selector -Destination $installedSelector
+        if (-not (Test-Path -LiteralPath $installedPath)) {
+            Copy-Item -LiteralPath (Join-Path $repoRoot 'templates/verification-preferences.template.json') -Destination $installedPath
+        }
+        $sourceManifest = Get-Content -LiteralPath (Join-Path $repoRoot 'config/gi-command-routes.json') -Raw | ConvertFrom-Json
+        $manifest.routes = @($manifest.routes) + @($sourceManifest.routes | Where-Object { $_.id -eq 'task-verification' })
+        [System.IO.File]::WriteAllText($routePath, ($manifest | ConvertTo-Json -Depth 100), $utf8)
+        $metadata.copied_files = @($metadata.copied_files) + $ownedPaths
+        [System.IO.File]::WriteAllText($metadataPath, ($metadata | ConvertTo-Json -Depth 10), $utf8)
+        foreach ($alias in @('ги проверка', 'gi проверка', 'gi verification', 'gi check')) {
+            $packet = (& $builder -CommandText $alias -SkipUpdateCheck | Out-String)
+            Assert-True ($packet.Contains('GI route: task-verification') -and $packet.Contains('15-final-review.md')) 'Restored command cannot load the delivered review module.'
+        }
+        $state = if ($null -eq $preferencesBefore) { 'On' } else { 'Off' }
+        Assert-True ($packet.Contains("Task completion review: $state")) 'Repair lost default state or existing opt-out.'
+        if ($null -ne $preferencesBefore) { Assert-True ([System.IO.File]::ReadAllText($installedPath) -ceq $preferencesBefore) 'Repair rewrote existing preferences.' }
+        $unrelatedPacket = (& $builder -CommandText 'gi stack' -SkipUpdateCheck | Out-String)
+        Assert-True ($unrelatedPacket.Contains('GI route: stack')) 'Repair lost an unrelated route.'
+        $complete = (& $builder -Phase Complete | Out-String)
+        Assert-True ($complete.Contains('Whole-Task Completion Gate')) 'Repaired installation cannot load Complete rules.'
+        & $checker -InstructionKitPath $metadataPath -SharedLibraryPath $repairSource -RecordApplied *>&1 | Out-Null
+        $after = (& $checker -InstructionKitPath $metadataPath -SharedLibraryPath $repairSource *>&1 | Out-String)
+        Assert-True ($after.Contains('Pending instruction migrations: 0')) 'Verified repair did not finish recording.'
+        $recorded = Get-Content -LiteralPath $metadataPath -Raw | ConvertFrom-Json
+        Assert-True ($recorded.migration_state.applied_through -eq $repairId) 'Repair checkpoint was not recorded.'
+    }
+    Write-Output 'Task completion review and forward-repair scenarios passed.'
 }
 finally {
     $resolved = [System.IO.Path]::GetFullPath($testRoot)

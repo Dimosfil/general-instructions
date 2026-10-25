@@ -106,6 +106,21 @@ language preferences.
   the current project.
 - Prefer `git diff --stat` and targeted file checks over full diff dumps.
 
+## Preserve Published Main-Branch History
+
+- Never rewrite published history or delete/recreate `master`, `main`, or the
+  default branch. This covers force flags (including leases), `+` refspecs,
+  mirror pushes and API/UI updates. Do not replace published commits after
+  amend/rebase/reset/filter. Ordinary finish/sync/repair requests grant no exception.
+- Fetch the actual destination; require
+  `git merge-base --is-ancestor <fetched-tip> <proposed-tip>` to succeed before
+  a normal push. Stop on failed fetch, divergence, uncertain destination or
+  rejection; never retry with force or disable protections. Repair through new
+  commits or `revert` within the authorized scope.
+- Inspect effective host settings before claiming protection. Recommend blocking
+  force pushes, deletion and administrator bypass. Changing host settings requires
+  an explicit request for that repository; agent instructions do not enforce them.
+
 ## Finish Workflow
 
 Before any `gi коммит`, `gi пуш`, `gi коммит пуш`, or `gi только пуш` action:

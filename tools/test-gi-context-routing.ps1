@@ -287,6 +287,58 @@ try {
     }
 
     [void](New-Item -ItemType Directory -Path $testRoot)
+    # Publication must reject late additions below the compact checkpoint,
+    # regardless of whether they are untracked, staged or already committed.
+    $releaseCheck = Join-Path $repoRoot 'tools/test-instruction-kit-release.ps1'
+    foreach ($case in @('valid', 'equal', 'backdated', 'staged', 'committed', 'future', 'malformed', 'removed')) {
+        $releaseRoot = Join-Path $testRoot "release-$case"
+        [void](New-Item -ItemType Directory -Path (Join-Path $releaseRoot 'migrations') -Force)
+        function Invoke-FixtureGit {
+            param([string[]]$GitArguments)
+            $result = @(& git -C $releaseRoot @GitArguments 2>&1)
+            if ($LASTEXITCODE -ne 0) { throw ($result -join "`n") }
+            return $result
+        }
+        Invoke-FixtureGit -GitArguments @('init', '-q') | Out-Null
+        [System.IO.File]::WriteAllText((Join-Path $releaseRoot 'VERSION.md'), 'Current accepted version: `2026.10.25.3`')
+        if ($case -eq 'removed') {
+            [System.IO.File]::WriteAllText((Join-Path $releaseRoot 'migrations/2026.10.25.3__released.md'), "# Released`n`nVersion: ``2026.10.25.3```n")
+        }
+        Invoke-FixtureGit -GitArguments @('add', '.') | Out-Null
+        Invoke-FixtureGit -GitArguments @('-c', 'user.name=GI fixture', '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false', 'commit', '-qm', 'published baseline') | Out-Null
+        $baselineRef = [string](Invoke-FixtureGit -GitArguments @('rev-parse', 'HEAD'))
+        [System.IO.File]::WriteAllText((Join-Path $releaseRoot 'VERSION.md'), 'Current accepted version: `2026.10.25.4`')
+        if ($case -eq 'removed') { Remove-Item -LiteralPath (Join-Path $releaseRoot 'migrations/2026.10.25.3__released.md') }
+        $version = switch ($case) {
+            'valid' { '2026.10.25.4' }
+            'removed' { '2026.10.25.4' }
+            'malformed' { 'invalid' }
+            'equal' { '2026.10.25.3' }
+            'future' { '2026.10.25.5' }
+            default { '2026.10.18.1' }
+        }
+        [System.IO.File]::WriteAllText((Join-Path $releaseRoot "migrations/${version}__fixture.md"), "# Fixture`n`nVersion: ``$version```n")
+        if ($case -in @('staged', 'committed')) {
+            Invoke-FixtureGit -GitArguments @('add', '.') | Out-Null
+        }
+        if ($case -eq 'committed') {
+            Invoke-FixtureGit -GitArguments @('-c', 'user.name=GI fixture', '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false', 'commit', '-qm', 'late addition') | Out-Null
+        }
+        $failure = ''
+        try { & $releaseCheck -BaseRef $baselineRef -SourceRoot $releaseRoot | Out-Null }
+        catch { $failure = $_.Exception.Message }
+        if ($case -eq 'valid') {
+            if ($failure) { throw "Valid forward release rejected: $failure" }
+        } else {
+            $expected = switch ($case) {
+                'future' { 'Migration exceeds VERSION.md' }
+                'malformed' { 'Invalid migration ID' }
+                'removed' { 'Released migration removed or renamed' }
+                default { 'Backdated migration' }
+            }
+            Assert-Contains $failure $expected "Release guard accepted invalid $case publication or failed for an unrelated reason."
+        }
+    }
     $equal = New-UpdateFixture -Name "equal" -WithoutMigrations -MetadataJson `
         '{"instruction_kit_version":"2026.09.22.2","migration_state":{"schema_version":2,"applied_through":"2026.09.22.2__pending","additional_applied_migrations":[],"skipped_migrations":[]},"update_check":{"enabled":true}}'
     $equalOutput = (& $updaterTemplate -InstructionKitPath (Join-Path $equal.Project "tools/project-memory/instruction-kit.json") -SharedLibraryPath $equal.Source *>&1 | Out-String)

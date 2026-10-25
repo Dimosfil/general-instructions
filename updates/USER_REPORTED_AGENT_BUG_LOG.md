@@ -302,3 +302,14 @@ or edit that project.
 - Fix: accepted installation/host applicability contract, startup/helper handoff, historical scope notes and migration 2026.10.25.2__separate_migration_installation_from_host_activation. Keep missing/conflicting files as blockers and runtime gaps explicit.
 - Verification: routing/update recovery tests, bootstrap preservation across four source forms and shared lifecycle protocol passed. Native activation in the reported project was not tested.
 - Status: resolved in shared rules; consuming projects must apply the accepted migration and separately verify runtime activation.
+
+## 2026-10-25 — Late migration IDs skipped by compact checkpoints
+
+- Symptom: enabled final review referenced a missing runtime module after an update reported zero pending migrations.
+- Cause: historical migration IDs first published after a newer baseline were treated as already installed.
+- Evidence: source Git history, installed metadata and missing module/selector/preference/route; no private content retained.
+- Privacy review: generic mechanism only; no project paths, screenshots, credentials or raw logs.
+- Resolution: forward repair 2026.10.25.4__repair_task_review_delivery; source release-order guard; checkpoint recovery and delivery regressions.
+- Status: implemented locally; source regressions passed; consuming installation verification in progress; publication not performed.
+
+- Verification complete: source release-order/routing/bootstrap/review regressions passed; repaired consumer aliases and Work/Complete load; both checkpoints record 2026.10.25.4 with zero pending against the local source. Unrelated consumer files verified unchanged. Status: resolved locally; publication not performed.

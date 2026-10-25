@@ -16,6 +16,23 @@ YYYY.MM.DD.N__short_description.md
 Apply migrations in filename order and record applied migration IDs in
 `tools/project-memory/instruction-kit.json`.
 
+## Release Order
+
+Assign every new migration a numeric version strictly greater than the last
+published `VERSION.md`, even when the underlying work predates that release.
+Do not backdate, rename or renumber released IDs. If an older ID was published
+late, deliver the omitted changes through a new forward migration: advancing a
+checkpoint or an equal-version zero-pending result does not verify file delivery.
+
+Before committing or publishing a source release, run
+`tools/test-instruction-kit-release.ps1 -BaseRef
+<previous-published-ref>` against the actual previous release commit. The check
+includes untracked, staged and committed additions relative to that ref and
+rejects removal/renaming of released migration IDs. Keep
+the reference fixed through the release; defaulting to the new HEAD after a
+commit would hide additions. Run routing, task-verification and bootstrap checks
+for the changed delivery contract before recording installation.
+
 ## Installation And Host Applicability
 
 This contract governs recording for all migrations, including historical

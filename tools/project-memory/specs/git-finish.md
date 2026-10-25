@@ -1,7 +1,7 @@
 # Git Finish Contract
 
 Status: current accepted instruction behavior.
-Last checked: 2026-10-13.
+Last checked: 2026-10-25.
 
 ## Ownership And Evidence
 
@@ -57,6 +57,23 @@ executor. The resolver supplies instructions; the agent performs Git operations.
 | Expected ignored file | Explain matching ignore rule; do not force-add. |
 | Eligible selected residue after commit | Finish remains incomplete even if upstream matches. |
 | Missing upstream, Git conflict, or failed push | Report the specific blocker; no force-push or unrelated repair. |
+| Divergent published main-branch history | Stop the push; preserve commits, repair with new commits/revert. |
+| Force-with-lease, mirror, forced refspec or API replacement of main history | Forbidden, including deletion/recreation; a lease is not an exception. |
+
+## Published History Contract
+
+Scenario: a sync or repair would replace the remote main-branch history.
+Mechanism: Git finish is routed to runtime module 16; the agent fetches the
+actual destination, verifies fast-forward ancestry and performs only a normal
+push. Ownership: `16-git-policy.md` and the detailed Git workflow, mirrored in
+consumer working agreements. Invariant: published commits on `master`, `main`
+and the default branch remain ancestors of the new tip. Divergence, failed
+fetch or rejection blocks the push; authorized fixes append commits or reverts.
+
+Verification: inspect delivered Git-finish context, run routing/bootstrap and
+release-order checks, and inspect migration delivery. These checks validate
+instruction availability, not host enforcement. Inspect effective host settings
+separately; changing them requires an explicit repository protection request.
 
 ## Propagation And Verification Limits
 

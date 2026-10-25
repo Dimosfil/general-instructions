@@ -322,6 +322,13 @@ Reusable instructions in this repository are grouped by job.
 
 ## Migrations
 
+- [2026.10.25.5 migration](migrations/2026.10.25.5__preserve_published_main_branch_history.md):
+  preserve published main-branch history and distinguish server enforcement.
+
+- [2026.10.25.4 migration](migrations/2026.10.25.4__repair_task_review_delivery.md):
+  restore task-review delivery skipped by historical checkpoints; enforce
+  forward-only publication with `tools/test-instruction-kit-release.ps1`.
+
 - [2026.10.25.3 migration](migrations/2026.10.25.3__compact_automatic_review_continuation.md):
   compact visible final-review reminders while preserving automatic checks.
 

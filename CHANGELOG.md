@@ -4,6 +4,18 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.25
 
+- Preserve published `master`, `main` and default-branch history. Prohibit force
+  pushes including leases, ref/API bypasses and deletion/recreation; verify
+  fast-forward ancestry and stop on divergence. Separate agent instructions
+  from server protection. Migration:
+  `2026.10.25.5__preserve_published_main_branch_history`.
+
+- Repair task-review delivery skipped by backdated migration IDs. Restore the
+  module, selector, preserved preference, aliases and entrypoint via a forward
+  migration. Require new IDs above the previous published version and check
+  working-tree/staged/committed additions against an explicit release baseline.
+  Migration: `2026.10.25.4__repair_task_review_delivery`.
+
 - Keep automatic final review while replacing the repeated full policy in the
   visible continuation with a compact reminder. Preserve full Work/compaction
   context, Complete validation/fingerprints, failed-check blocking and retries.

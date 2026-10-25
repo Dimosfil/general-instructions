@@ -28,6 +28,16 @@ only in source-only files, or only in copied templates.
 Fresh bootstraps should treat the copied version as a baseline and record all
 migrations included in that version as already applied.
 
+## Release Order
+
+Give each new migration a version strictly above the previously published
+`VERSION.md`. The compact checkpoint skips earlier IDs, even when their files
+arrive later. Preserve published IDs; repair omitted delivery with a new forward
+migration instead of resetting metadata or treating zero pending as integrity
+verification. Before publication, run the source-only
+`tools/test-instruction-kit-release.ps1 -BaseRef <previous-published-ref>` and
+delivery regressions against that fixed baseline, including untracked additions.
+
 ## Startup Auto-Application Contract
 
 - `update_check.enabled: true` authorizes the first-concrete-task startup check

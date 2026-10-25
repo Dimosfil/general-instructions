@@ -98,6 +98,13 @@
 
 ## Git
 
+- Preserve published history on `master`, `main`, and the repository's default
+  branch. Never force-push (including `--force-with-lease`), delete/recreate the
+  branch, or bypass this rule through refspecs, mirror pushes, APIs or host
+  settings. Fetch and verify fast-forward ancestry before a normal push; stop
+  on divergence or rejection. Repair with new commits or `revert`. Ordinary
+  sync/repair/push requests do not authorize rewriting. Follow
+  `patterns/GIT_WORKFLOW.md#preserve-published-main-branch-history`.
 - Keep rebuildable builds, frontend bundles, installers, and intermediate
   output in dedicated ignored directories; exclude them from staging, commits,
   and pushes to source repositories unless an exact project-specific exception

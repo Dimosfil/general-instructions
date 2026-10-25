@@ -2,6 +2,11 @@
 
 ## Behavior
 
+Deliver the runtime module, selector, preserved preference, command route and
+entrypoint as one component. A version checkpoint alone does not prove delivery.
+Forward migration `2026.10.25.4__repair_task_review_delivery` restores this
+component for projects that skipped the late-published historical IDs.
+
 `ги проверка`, `gi проверка`, `gi verification`, and `gi check` configure a
 project-local preference. They do not run the tester. With no explicit choice,
 show current state and plain numbered checkbox lines for On, Off, Cancel.
@@ -50,7 +55,10 @@ The source repository uses the template helper directly; consuming projects use
 
 `tools/test-task-verification.ps1` covers On/Off, numeric and named input,
 cancellation, invalid input/state, preservation of unrelated settings, installed
-helper delivery and state through the public context builder. Existing
+helper delivery and state through the public context builder. Forward-repair
+cases reproduce both affected checkpoints, restore delivery,
+preserve existing Off/custom fields, load all aliases and Work/Complete, then
+record only the verified repair. Existing
 `tools/test-gi-context-routing.ps1` checks aliases and context budgets;
 `tools/test-instruction-kit-bootstrap.ps1` checks delivery for supported source
 forms. Instruction review covers final-only timing, evidence quality, and honest

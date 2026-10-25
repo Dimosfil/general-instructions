@@ -97,10 +97,11 @@ All paths above are under `patterns/AGENTS_RUNTIME/`. Compatibility indexes
 
 ## Entrypoints
 
-- `README.md`: human overview; `INDEX.md`: catalog; `COMMANDS.md`: compact help.
-- `config/gi-command-routes.json`: lazy routes;
-  `config/gi-context-budgets.json`: regression budgets.
+- Releases: follow `migrations/README.md#release-order`.
+- `README.md`: overview; `INDEX.md`: catalog; `COMMANDS.md`: help.
+- `config/gi-command-routes.json`: routes;
+  `config/gi-context-budgets.json`: budgets.
 - `tools/get-gi-context.ps1`: update + route + bounded start context;
-  `tools/resolve-gi-command.ps1`: route-only resolver.
-- `GENERAL_DEVELOPMENT_PLAYBOOK.md`: baseline workflow;
-  `templates/AGENTS.template.md`: project entrypoint.
+  `tools/resolve-gi-command.ps1`: resolver.
+- `GENERAL_DEVELOPMENT_PLAYBOOK.md`: workflow;
+  `templates/AGENTS.template.md`: entrypoint.
