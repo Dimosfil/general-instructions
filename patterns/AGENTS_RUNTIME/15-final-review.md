@@ -27,6 +27,10 @@
 
 - When enabled, perform this additional review only after task execution and
   required checks finish, immediately before the final completion response.
+  Perform it internally before sending the single final response; do not publish
+  an initial answer, review reminder or second routine copy of the same result.
+  Use Markdown without raw HTML and summarize file inventories by count,
+  directory and reason, preserving specific blockers and requested details.
   Do not add this pass or its checkmarks to intermediate progress, clarification,
   or preference-selection messages. A blocked/unfinished task must remain
   explicitly unfinished; a partial-result handoff may verify only its delivered
@@ -44,6 +48,9 @@
   material claims/results with `✓` and a concise source or verification reference
   where useful. Keep the final response compact; do not expose a lengthy audit
   trail or mark proposals, assumptions, or unperformed actions as confirmed.
+- Successful lifecycle checks must not create a chat continuation. A hook may
+  continue the turn for an actual failed check; fix or report that failure and
+  send only the necessary correction, without repeating an unchanged result.
 - If a fact, link, or result cannot be confirmed, say exactly what remains
   unverified and why (for example, unavailable source, access limit, or a check
   that could not run). Never imply verification succeeded because a link exists

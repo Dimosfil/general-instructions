@@ -4,6 +4,13 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.25
 
+- Review internally before one final response, use Markdown without raw HTML,
+  and summarize file inventories by count, directory and reason. Successful
+  Codex/OpenCode completion checks now finish silently instead of creating a
+  synthetic chat prompt and duplicate answer. Keep actual failed checks visible
+  with bounded corrections; do not claim hooks prove semantic review.
+  Migration: `2026.10.25.7__single_final_response_and_quiet_completion`.
+
 - Fetch and pull/merge upstream changes before push when needed, preserving
   both histories without requiring a pull request. Stop on conflicts instead
   of overwriting either side; keep normal pushes and the force-push ban.

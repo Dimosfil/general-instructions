@@ -68,7 +68,7 @@ try {
 } finally { if (-not $inventory.HasExited) { $inventory.Kill($true) }; $inventory.WaitForExit(); $inventory.Dispose() }
 
 $prompt = @'
-Controlled native hook test. Do not use any tools, read files, modify files, or call get-gi-context.ps1 or Complete. The entire task is this two-step response protocol. In your FIRST final response, write INITIAL_WITHOUT_COMPLETE and quote the heading of the whole-task completion rule received in developer context. If an automatic GI final review then makes you continue, review this response protocol and answer VERIFIED_BY_HOOK. Do not claim a continuation occurred until it actually does. No manual Complete invocation is permitted in either step.
+Controlled native hook test. Do not use any tools, read files, modify files, or call get-gi-context.ps1 or Complete. Review this response protocol internally before one final response. Write FINAL_ONCE and quote the heading of the whole-task completion rule received in developer context. No manual Complete invocation is permitted.
 '@
 $auditPath = Join-Path $fixture '.codex/.gi-hook-state/events.jsonl'
 $auditOffset = if (Test-Path -LiteralPath $auditPath) { @(Get-Content -LiteralPath $auditPath).Count } else { 0 }
@@ -82,15 +82,15 @@ try {
     $items = @($events | Where-Object { $_['type'] -eq 'item.completed' } | ForEach-Object { $_.item })
     $toolItems = @($items | Where-Object { $_['type'] -notin @('agent_message', 'reasoning', 'error') })
     $messages = @($items | Where-Object { $_['type'] -eq 'agent_message' } | ForEach-Object { $_.text })
-    if ($toolItems.Count -ne 0 -or ($messages -join "`n") -notmatch 'INITIAL_WITHOUT_COMPLETE' -or ($messages -join "`n") -notmatch 'Whole-Task Completion Gate' -or $messages[-1] -notmatch 'VERIFIED_BY_HOOK') {
+    if ($toolItems.Count -ne 0 -or $messages.Count -ne 1 -or $messages[0] -notmatch 'FINAL_ONCE' -or $messages[0] -notmatch 'Whole-Task Completion Gate' -or $output.Result.Contains('[GI automatic final review]')) {
         $auditPath = Join-Path $fixture '.codex/.gi-hook-state/events.jsonl'
         $outcomeText = if (Test-Path -LiteralPath $auditPath) { (Get-Content -LiteralPath $auditPath) -join ' ' } else { 'NO HOOK AUDIT' }
         throw ('Native omission test failed: tool count=' + $toolItems.Count + '; responses=' + ($messages -join ' | ') + '; errors=' + (@($items | Where-Object { $_.type -eq 'error' }) | ConvertTo-Json -Depth 8 -Compress) + '; audit=' + $outcomeText + '; diagnostics=' + $errors.Result)
     }
     $audit = @(Get-Content -LiteralPath $auditPath | Select-Object -Skip $auditOffset | ForEach-Object { $_ | ConvertFrom-Json })
     $outcomes = @($audit.outcome)
-    if ($outcomes -notcontains 'rules_injected' -or $outcomes -notcontains 'completion_review_required' -or $outcomes[-1] -ne 'completion_allowed') {
+    if ($outcomes -notcontains 'rules_injected' -or $outcomes -contains 'completion_review_required' -or $outcomes -contains 'completion_check_failed' -or $outcomes[-1] -ne 'completion_allowed') {
         throw ('Native hooks did not finish the required lifecycle: ' + ($outcomes -join ', '))
     }
-    [pscustomobject]@{ cli = (& codex --version); manual_complete_calls = 0; tool_calls = 0; automatic_review = $true; outcomes = $outcomes; trust = 'normal persisted project and exact hook trust; no bypass' }
+    [pscustomobject]@{ cli = (& codex --version); manual_complete_calls = 0; tool_calls = 0; final_responses = $messages.Count; quiet_completion = $true; semantic_review = 'model responsibility, not proven by hook'; outcomes = $outcomes; trust = 'normal persisted project and exact hook trust; no bypass' }
 } finally { if (-not $process.HasExited) { $process.Kill($true) }; $process.WaitForExit(); $process.Dispose() }

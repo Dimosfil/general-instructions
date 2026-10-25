@@ -3,7 +3,7 @@
 The project-local `.opencode/plugins/gi-lifecycle.js` adapter connects OpenCode
 1.x to `tools/invoke-gi-lifecycle-hook.ps1`. Mandatory policy remains in module
 03 and `tools/get-gi-context.ps1`; this plugin does not copy policy or reimplement
-Git checks, fingerprints, receipts, context limits or bounded review retries.
+Git checks, fingerprints, failure receipts, context limits or bounded retries.
 
 ## Activation
 
@@ -23,8 +23,8 @@ do not use `--pure`, which disables external plugins. No global config changes,
 extra npm package, API key or custom model is required by the adapter.
 
 Verify a normal text turn: the ignored `.opencode/.gi-hook-state/events.jsonl`
-must contain `rules_injected`, `completion_review_required`, another
-`rules_injected`, and `completion_allowed`. Configured, loaded and verified are
+must contain `rules_injected` and `completion_allowed`, without a routine
+synthetic review message or extra answer. Configured, loaded and verified are
 different states; files on disk alone do not establish active enforcement.
 
 ## Event Mapping
@@ -40,24 +40,26 @@ Task forwarding changes only `prompt`. Preserve description, agent, model and
 task/session destination, exact original prompt suffix and host permission
 checks. Reuse an identical generated prefix, and never forward sender preferences.
 
-## Pre-completion Review
+## Quiet Completion And Failed Checks
 
 OpenCode 1.15.7 has no public `Stop` hook. When it finishes an assistant text
-part, the adapter invokes the shared Complete check. If review is required, it
-awaits `client.session.prompt` with `noReply: true` and a synthetic review message,
+part, the adapter invokes the shared Complete check. Passing checks return empty
+JSON, so the loop ends without a synthetic message or duplicate response. If an
+actual check fails, it awaits `client.session.prompt` with `noReply: true` and a
+correction message,
 preserving agent/model/variant. This persists a newer user message before the
 running loop evaluates its normal completion condition. The loop then continues
-with the review; no idle listener, recursive generation call or text rewrite is
-used. A manual Complete call does not satisfy the engine's receipt.
+with the correction; no idle listener, recursive generation call or text rewrite
+is used. A manual Complete call does not replace automatic checks.
 
-The synthetic review is a compact reminder with check status, without another
-copy of the mandatory rules. The system transform supplies current rules on
-each model request; the engine still loads full Complete context for receipts.
+The system transform supplies current rules on each model request, including
+internal review before one final response, Markdown without raw HTML, and
+grouped file inventories. The engine still validates full Complete context.
+It never emits a synthetic message merely to repeat a successful review.
 
-Only a subsequent assistant message with unchanged rules, HEAD, index and work
-can complete successfully. New user turns reset continuation, changed work
-requires a new review, and repeated changes/failures stop after the engine's
-existing three review requests. Missing rules, SDK errors and exhausted retries
+After a failed check is fixed, successful checks finish silently and clear its
+retry receipt. New user turns reset the retry count, and repeated failures stop
+after three correction requests. Missing rules, SDK errors and exhausted retries
 raise a visible failure with the task unverified. State is local, ignored and
 host-separated; audits contain hashes/outcomes, not private text or file contents.
 
@@ -69,13 +71,14 @@ adapter. Revalidate other versions before claiming the same guarantee.
 Structured JSON responses bypass the ordinary loop exit path, so the adapter
 rejects them explicitly. Compaction summaries are excluded from text review.
 Streaming text can appear before the check, including intermediate text before
-tools. Review prevents normal loop completion; it cannot retract streamed text.
+tools. A failed check prevents normal loop completion; it cannot retract streamed text.
 An empty/error/cancelled response with no text-end callback has no successful
 review receipt. No idle handler revives a cancelled session. Other plugins and
 disabled hooks can affect enforcement; these local hooks are not tamper-proof.
 
-The host forces context delivery and a review opportunity. It cannot prove
-that a model actually reasoned correctly. Git whitespace checks do not replace
+The host forces context delivery and automated checks. Semantic review before
+the final response remains the agent's responsibility; the hook cannot prove
+that the model performed it. Git whitespace checks do not replace
 the task's required tests or integrated workflow verification.
 
 ## Verification
@@ -91,8 +94,8 @@ node --test tests/test_opencode_gi_live.mjs
 
 The live test launches the installed OpenCode with an isolated config/data/cache,
 a local HTTP model fixture, denied tools and no external model requests. It
-requires `INITIAL` then `REVIEWED`, actual mandatory context and the final audit
-outcome `completion_allowed`, without the agent invoking Complete. Fixtures
+requires one `FINAL_ONCE`, one model request, actual mandatory context and the
+final audit outcome `completion_allowed`, without manual Complete. Fixtures
 and their runtime files are removed afterwards; user settings are not modified.
 
 ## Upstream Contract

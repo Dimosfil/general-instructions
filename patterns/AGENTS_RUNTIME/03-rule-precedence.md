@@ -61,3 +61,13 @@
 - Continue feasible authorized work. This gate is mandatory even with optional
   final review off; reuse evidence without new forms or repeated checks. Git
   finalization checks its own result, without reopening verified product work.
+
+## Final Response
+
+- Complete required checks and the enabled final review internally before
+  sending one final response. Do not send a provisional final followed by a
+  routine reviewed copy or expose successful internal review reminders.
+- Use plain text or Markdown, without raw HTML tags. Summarize large file
+  inventories by count, directory and reason; name individual paths only when
+  requested or needed to explain a specific change or blocker. Keep every
+  selected file accounted for internally and report all material gaps.

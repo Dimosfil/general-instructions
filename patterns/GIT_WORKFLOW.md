@@ -198,7 +198,9 @@ After the last commit or push and before the success response:
   upstream;
 - distinguish pre-existing unrelated dirt from new task-scoped residue; never
   claim a clean worktree merely because local and remote HEAD match;
-- report each remaining changed path with its exclusion reason or blocker;
+- report remaining changes grouped by directory and exclusion reason, with file
+  counts; identify individual paths for specific blockers or on request, while
+  keeping the full path inventory internally;
   any eligible selected remainder makes the finish incomplete. For an expected
   ignored file, explain the matching rule with `git check-ignore`; do not
   force-add ignored files because the user requested all changes;

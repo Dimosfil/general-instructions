@@ -14,25 +14,25 @@ Hooks deliver that live source instead of maintaining another copy of the rules.
   do not emit `UserPromptSubmit`. This hook runs in the sending chat, before the
   service call; the recipient needs no manual helper call. The rules arrive in
   the delegated service input, not a fabricated developer-role message.
-- `Stop` independently builds Complete context, runs Git whitespace checks,
-  and blocks the first completion attempt to require review of the entire task
-  and honest gaps. Manual `-Phase Complete` cannot bypass or satisfy this hook.
-  An automatic continuation with unchanged rules, HEAD, index, working changes,
-  and nonignored untracked files can then finish. Changes require another review.
+- `Stop` independently builds Complete context and runs Git whitespace checks.
+  Passing checks return empty JSON, recording `completion_allowed` locally
+  without a chat message or second response. Manual `-Phase Complete` does not
+  replace these automatic checks. Only actual check failures request correction.
 
-The visible continuation contains only a compact review reminder and check
-status. Work and compaction hooks still deliver the full mandatory rules as
-developer context; Stop still loads and fingerprints the full Complete context.
-The reminder points to current module 03 if rules need rereading. Failed checks,
-missing context and retry limits remain enforced. Codex renders Stop `reason`
-as a user continuation; its documented `suppressOutput` is not implemented, so
-GI cannot promise to hide that short message entirely. See the official
-[common output fields and Stop protocol](https://learn.chatgpt.com/docs/hooks).
+Work, compaction and service context deliver module 03's requirement to review
+the actual result internally before one final response. The enabled module 15
+review follows the same timing. Use Markdown without raw HTML; summarize large
+file inventories by count, directory and reason, retaining specific blockers.
+Successful checks never issue a review reminder. This replaces the former
+always-blocking Stop contract: a post-response hook cannot retract a streamed
+answer, and Codex turns a blocking `reason` into a new user continuation.
+See the official [Stop protocol](https://learn.chatgpt.com/docs/hooks#stop).
+GI uses empty JSON on success rather than unsupported output suppression.
 
 State is local and ignored under `.codex/.gi-hook-state/`. It contains hashes,
 event/tool names, delivery action, counts, and check outcomes; no prompt, transcript, response, or
 source diff is saved. Missing rules or a failed loader stop visibly as unverified.
-Repeated failures or changes stop after three review requests with an explicit
+Repeated failed checks stop after three correction requests with an explicit
 warning, avoiding an infinite loop. No extra forms or routine approvals are added.
 
 ## Activation
@@ -64,15 +64,16 @@ that fallback or an untrusted installation as automatic enforcement.
 ## Verification
 
 Run `tools/test-gi-lifecycle-hooks.ps1` for protocol, compaction, omitted Complete,
-service delivery, unchanged task/destination, UTF-8, duplicate-prefix reuse,
-unavailable-rule denial, changed files, bounded retries, and privacy.
+quiet success, service delivery, unchanged task/destination, UTF-8, prefix reuse,
+unavailable-rule denial, staged/unstaged failure, repair, bounded retries and privacy.
 Run `tools/test-gi-lifecycle-hooks-live.ps1 -FixturePath <empty-test-directory>`
 for a real authenticated Codex CLI session in an isolated installed kit. The
 first run creates an owned fixture; trust that project and its four hooks
 through the native UI, then rerun. The fixture remains available for repeated
 checks. It deliberately permits no tools or manual
-Complete. Require the initial response, native Stop continuation, final response,
-and actual audit sequence: rules injected -> review required -> completion allowed.
+Complete. Require exactly one final response, no routine Stop continuation,
+current pre-response rules and the audit sequence: rules injected -> completion
+allowed. This proves context delivery and automated checks, not semantic review.
 
 The live test inventories all visible hooks, rejects other sources, vets the
 installed definitions, and requires normal persisted project and exact hook trust.
@@ -86,9 +87,10 @@ second service message. The sender must pass only the original test prompts,
 without manually adding rules or calling the helper. The recipient must use no
 tools or manual Work/Complete. Read both actual service inputs: require the
 generated prefix, the complete current module 03, unchanged task text, and
-INITIAL -> native hookPrompt -> REVIEWED. Correlate both tool calls with sender
+one final response without a routine native hookPrompt. Correlate both tool calls
+with sender
 audit entries `PreToolUse/service_rules_forwarded/delivery=added` and both
-recipient turns with `completion_review_required` -> `completion_allowed`.
+recipient turns with `completion_allowed`, without a review continuation.
 Do not substitute a typed user message or a CLI run for either service path.
 
 The hook uses `get-gi-context.ps1 -Phase Work -MandatoryOnly`: it forwards shared
@@ -101,17 +103,19 @@ Permission checks and authorization requirements still apply to the actual call.
 
 All GI limits and Codex's default hook output threshold remain unchanged. The
 entire output is bounded by the existing GI section cap, with no partial rule
-packet on overflow. Hooks force delivery and a review opportunity; whitespace
-checks do not prove product behavior. Required project tests and end-to-end
-evidence still depend on the task. Stop runs after a candidate response may have
-streamed, so it forces a continuation rather than retracting that text. Local
-hooks are not tamper-proof and cannot guarantee model honesty or correctness.
+packet on overflow. Hooks force rule delivery and automated completion checks;
+they do not independently prove that the agent performed semantic review.
+Required project tests and integrated evidence still depend on the task. Stop
+runs after a response may have streamed. A real failure can therefore create a
+visible correction, but success must not create a continuation. Missing context
+and retry exhaustion remain visible failures. Local hooks are not tamper-proof.
 
 Official behavior and trust contract: [Codex hooks](https://learn.chatgpt.com/docs/hooks).
 
-Правила загружаются средой Codex, финальная проверка запускается автоматически.
-Пропуск `Complete` больше не пропускает проверку в доверенной среде с активными
-hooks. Это не гарантия безошибочности: рабочие сценарии всё равно нужно проверять,
-а недоделки и границы проверки — честно указывать.
+Правила загружаются средой Codex; автоматические проверки завершения выполняются
+даже без ручного `Complete`. Содержательная проверка — обязанность агента до
+единственного итогового ответа. Успешный Stop не создаёт сообщения в чате.
+Реальные ошибки проверки остаются видимыми; недоделки и границы проверки нужно
+честно указывать. Hook не доказывает правильность содержательного анализа.
 Служебные сообщения между чатами получают общий обязательный блок автоматически
 через hook отправителя; его локальные настройки получателю не передаются.

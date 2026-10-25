@@ -363,7 +363,7 @@ try {
         context_entry_updated = $contextEntryUpdated
         hooks_updated = $hooksUpdated
         hooks_status = 'configured; project and hook trust must be checked in the running Codex host (/hooks); copying files does not prove activation'
-        opencode_hooks_status = 'configured; reload OpenCode 1.x with plugins enabled and verify automatic review; see docs/gi-opencode-hooks.md'
+        opencode_hooks_status = 'configured; reload OpenCode 1.x with plugins enabled and verify quiet completion checks; see docs/gi-opencode-hooks.md'
         created = $created
         preserved = $preserved
         unity_mcp = $unityMcp

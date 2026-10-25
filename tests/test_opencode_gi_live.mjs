@@ -1,6 +1,6 @@
 // Real OpenCode loop against an isolated, local OpenAI-compatible provider.
-// No credentials or external model requests. A fixed model answer deliberately
-// ignores the review: this verifies host delivery/continuation, not model honesty.
+// No credentials or external model requests. A fixed model answer verifies
+// quiet host completion and context delivery, not semantic review by the model.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 
 const source = fileURLToPath(new URL('../', import.meta.url));
 
-test('real OpenCode 1.15.7 continues for GI review before exiting its response loop', { timeout: 90_000 }, async (t) => {
+test('real OpenCode 1.15.7 completes once without a routine GI chat continuation', { timeout: 90_000 }, async (t) => {
   const root = await mkdtemp(path.join(tmpdir(), 'gi-opencode-live-'));
   t.after(() => {
     assert.ok(path.resolve(root).startsWith(path.resolve(tmpdir()) + path.sep));
@@ -31,8 +31,7 @@ test('real OpenCode 1.15.7 continues for GI review before exiting its response l
     for await (const chunk of request) text += chunk;
     const body = JSON.parse(text);
     requests.push(body);
-    const answer = body.messages?.some((m) => JSON.stringify(m.content).includes('[GI automatic final review]'))
-      ? 'REVIEWED' : 'INITIAL';
+    const answer = 'FINAL_ONCE';
     response.writeHead(200, { 'content-type': 'text/event-stream' });
     const chunk = (delta, finish_reason = null) => response.write(`data: ${JSON.stringify({
       id: 'local-fixture', object: 'chat.completion.chunk', created: 1, model: 'test',
@@ -58,8 +57,8 @@ test('real OpenCode 1.15.7 continues for GI review before exiting its response l
   const windows = process.platform === 'win32';
   const command = windows ? (process.env.GI_PWSH || 'pwsh') : (process.env.GI_OPENCODE || 'opencode');
   const args = windows
-    ? ['-NoProfile', '-NonInteractive', '-Command', '& opencode run --model gi-test/test --format json --title GI-hook-test "Return INITIAL; do not use tools."']
-    : ['run', '--model', 'gi-test/test', '--format', 'json', '--title', 'GI-hook-test', 'Return INITIAL; do not use tools.'];
+    ? ['-NoProfile', '-NonInteractive', '-Command', '& opencode run --model gi-test/test --format json --title GI-hook-test "Return FINAL_ONCE; do not use tools."']
+    : ['run', '--model', 'gi-test/test', '--format', 'json', '--title', 'GI-hook-test', 'Return FINAL_ONCE; do not use tools.'];
   const versionArgs = windows ? ['-NoProfile', '-NonInteractive', '-Command', '& opencode --version'] : ['--version'];
   assert.equal(execFileSync(command, versionArgs, { encoding: 'utf8' }).trim(), '1.15.7',
     'Revalidate the upstream loop contract before testing another OpenCode version.');
@@ -82,12 +81,15 @@ test('real OpenCode 1.15.7 continues for GI review before exiting its response l
   const code = await new Promise((resolve, reject) => { child.on('error', reject); child.on('close', resolve); });
   clearTimeout(timer);
   assert.equal(code, 0, errors.slice(-3000));
-  assert.ok(requests.length >= 2, `No automatic review continuation: ${output.slice(-3000)} ${errors.slice(-1500)}`);
+  assert.equal(requests.length, 1, `Unexpected extra model request: ${output.slice(-3000)} ${errors.slice(-1500)}`);
   assert.ok(JSON.stringify(requests[0].messages).includes('MANDATORY TASK RULES (Work)'));
-  assert.ok(requests.some((r) => JSON.stringify(r.messages).includes('[GI automatic final review]')));
-  assert.ok(output.includes('INITIAL') && output.includes('REVIEWED'), output.slice(-2000));
+  assert.ok(JSON.stringify(requests[0].messages).includes('sending one final response'));
+  assert.ok(!output.includes('[GI automatic final review]'));
+  const textEvents = output.trim().split(/\r?\n/).map((line) => JSON.parse(line)).filter((event) => event.type === 'text');
+  assert.equal(textEvents.length, 1, output.slice(-2000));
+  assert.equal(textEvents[0].part.text, 'FINAL_ONCE');
   const audit = (await readFile(path.join(root, '.opencode/.gi-hook-state/events.jsonl'), 'utf8'))
     .trim().split('\n').map((line) => JSON.parse(line));
-  assert.ok(audit.some((entry) => entry.outcome === 'completion_review_required'));
+  assert.ok(!audit.some((entry) => entry.outcome === 'completion_check_failed' || entry.outcome === 'completion_review_required'));
   assert.equal(audit.at(-1).outcome, 'completion_allowed');
 });

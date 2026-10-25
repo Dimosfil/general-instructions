@@ -1,5 +1,5 @@
 {
-  "description": "GI mandatory context and automatic final review. Review and trust this definition in Codex.",
+  "description": "GI mandatory context and quiet successful completion checks. Review and trust this definition in Codex.",
   "hooks": {
     "PreToolUse": [{ "matcher": "^(?:mcp__codex_app__|codex_app[./])?(?:create_thread|send_message_to_thread)$", "hooks": [{
       "type": "command",

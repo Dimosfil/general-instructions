@@ -217,7 +217,7 @@ try {
         "Do not create an empty commit",
         "git status --short --untracked-files=all",
         "Account for every selected eligible change",
-        "report each remaining changed path",
+        "report remaining changes by directory/reason with counts",
         "An eligible selected remainder makes the finish incomplete",
         "gi only push all",
         "git check-ignore"

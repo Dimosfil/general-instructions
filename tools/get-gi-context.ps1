@@ -167,7 +167,7 @@ function Get-TaskVerificationPreferencesSection {
             }
         }
         $state = if ($enabled) { 'On' } else { 'Off' }
-        $body = "Task completion review: $state`nApply only after task execution, before the final response; follow patterns/AGENTS_RUNTIME/15-final-review.md. Required project checks remain mandatory.`nConfigure with: gi verification / ги проверка"
+        $body = "Task completion review: $state`nApply internally after task execution, before the single final response; follow patterns/AGENTS_RUNTIME/15-final-review.md. Do not publish routine review reminders. Required project checks remain mandatory.`nConfigure with: gi verification / ги проверка"
     }
     catch {
         $body = "Invalid verification preferences at $relativePath; report the configuration gap and do not overwrite it. Required checks and truthful reporting remain mandatory."

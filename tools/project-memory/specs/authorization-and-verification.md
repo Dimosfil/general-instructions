@@ -74,19 +74,28 @@ Verification covers every route, phase-only Work and Complete, optional review
 Off, oversized context, missing/incomplete/oversized rules, too-small budgets,
 LF/CRLF, and the installed public helper. Repeat these checks on a checkout of
 the actual published commit, not an unrelated dirty working tree. Native hooks
-own automatic invocation, including a real CLI omission test. The Stop receipt
-is tied to the rules and work fingerprint and only permits an unchanged automatic
-continuation with passing checks. See `docs/gi-lifecycle-hooks.md` for trust,
-failure, privacy, and verification limits; copying files is not host activation.
+own automatic invocation, including a real CLI omission test. A passing Stop
+returns empty JSON with a local check audit; it does not force another answer.
+See `docs/gi-lifecycle-hooks.md` for trust, failure, privacy, and verification
+limits; copying files is not host activation.
 
-Visible-review mapping: Stop -> shared lifecycle engine -> short `reason` ->
-native continuation. Work/compaction remain the full-rule delivery owners;
-Complete still validates and fingerprints current rules. Do not embed that
-full context in the visible reason or use unsupported suppression to bypass
-review. Preserve automatic continuation, stale-receipt rejection, failed-check
-blocking and bounded retries. Protocol tests bound the reminder below 700
-characters and exercise policy changes as well as work changes. Native UI
-delivery must be reported separately from fixture verification.
+Single-result mapping: Work/compaction/service context -> module 03's final
+response contract -> internal review before one final answer -> Stop checks ->
+empty JSON on success. Module 03 owns the presentation contract; module 15 owns
+optional evidence review. No successful Stop reason or synthetic user message
+is emitted. Complete still validates current rules and fingerprints the work;
+only actual failed checks request a bounded correction. Preserve explicit
+failure reporting, missing-context handling, turn isolation and privacy. The
+audit confirms automated checks only, not semantic review or product behavior.
+Protocol and installed-host tests distinguish quiet success, real failure and
+repair. Native UI evidence remains separate from fixture verification.
+
+Source verification for `2026.10.25.7`: lifecycle protocol, routing/budgets,
+task-verification, bootstrap and release-order checks pass. OpenCode 1.15.7's
+real installed response loop makes one model request and emits one final answer.
+Native Codex fixture activation is unverified: its isolated project/four hooks
+lack persisted trust; the CLI test stops before model execution. Desktop
+create/send live paths were not rerun; protocol forwarding remains verified.
 
 Desktop service mapping: outgoing create/send -> native sender PreToolUse ->
 builder Work/MandatoryOnly -> updatedInput.prompt -> actual delegated input ->
@@ -102,7 +111,9 @@ zero recipient tools/manual helper calls, and correlated native audit events.
 Complete повторно читает правила без запуска команд, обновлений и сервисов.
 Проверка Off не отключает обязательный блок. При нехватке места или правил
 частичный пакет не выдаётся. В доверенном Codex вызов сборщика выполняют native
-hooks, включая автоматическое продолжение при пропуске Complete агентом.
+hooks, включая автоматическую проверку завершения при пропуске Complete агентом.
+Успешная проверка завершается молча; содержательная проверка остаётся
+обязанностью агента до единственного финального ответа.
 Без активных hooks ручной fallback не обеспечивает независимого контроля.
 
 Service-launch mapping: launch decision -> entrypoint safety routing -> runtime

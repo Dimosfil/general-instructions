@@ -25,7 +25,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
   loaded GI rules. If one rule is blocked, report that operation precisely and
   continue independent authorized work.
 - Verify the full task, report gaps, and agree material complexity first.
-- Active GI hooks in Codex or OpenCode load rules and require final review automatically.
+- Active GI hooks load rules; successful checks are silent. Review before final.
   Otherwise run `tools/get-gi-context.ps1` before work and `-Phase Complete`
   before final. Apply its rules; load failure blocks completion.
 - State-changing GI commands must never run from memory. If the context builder,

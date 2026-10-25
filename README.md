@@ -31,8 +31,10 @@ architecture, and operational details in each project's own documentation.
   budgets measure normalized UTF-8 bytes and packet budgets measure characters.
   Every work packet starts with the complete mandatory task rules, protected
   from truncation. [Trusted Codex hooks](docs/gi-lifecycle-hooks.md) reload rules
-  on prompts and compaction and force automatic final review even when the
-  agent skips Complete. A native sender hook also forwards mandatory rules with
+  on prompts and compaction and run completion checks even when the
+  agent skips Complete. Review takes place internally before one final response;
+  successful checks create no chat continuation. A native sender hook also
+  forwards mandatory rules with
   `create_thread` and `send_message_to_thread`, preserving task and destination.
   [OpenCode hooks](docs/gi-opencode-hooks.md) use the same engine for system
   context, compaction, task forwarding and review before its response loop exits.
@@ -66,7 +68,9 @@ General Instructions Library - переносимый, независимый о
 - Даёт компактный входной файл `AGENTS.md`, направляющий агента только к
   инструкциям, нужным для текущей задачи.
 - [Hooks Codex](docs/gi-lifecycle-hooks.md) автоматически загружают обязательные
-  правила и требуют финальной проверки даже при пропуске `Complete` агентом.
+  правила и выполняют проверки завершения даже при пропуске `Complete` агентом.
+  Содержательная проверка выполняется до единственного итогового ответа;
+  успешные автоматические проверки не создают служебных сообщений в чате.
   Нужны доверие проекту и hooks; лимиты контекста остаются прежними.
 - [Hooks OpenCode](docs/gi-opencode-hooks.md) используют тот же механизм GI:
   правила, восстановление контекста, передача в `task` и автоматическая проверка

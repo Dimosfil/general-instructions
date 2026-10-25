@@ -61,36 +61,48 @@ try {
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Service hook intercepted an unrelated tool.'
     $result = Invoke-Hook $event
     Assert-True ($result.hookSpecificOutput.additionalContext.Contains($rules)) 'UserPromptSubmit did not inject the actual mandatory rules.'
+    Assert-True ($result.hookSpecificOutput.additionalContext.Contains('sending one final response') -and $result.hookSpecificOutput.additionalContext.Contains('without raw HTML tags')) 'Pre-response review/format rules are missing from actual hook context.'
     $event.hook_event_name = 'SessionStart'; $event.source = 'compact'
     $result = Invoke-Hook $event
     Assert-True ($result.hookSpecificOutput.additionalContext.Contains($rules)) 'Compaction did not restore mandatory rules.'
     $event.hook_event_name = 'Stop'; $event.stop_hook_active = $false
     $result = Invoke-Hook $event
-    Assert-True ($result.decision -eq 'block' -and $result.reason.Contains('[GI automatic final review]')) 'Skipping Complete did not force automatic review.'
-    Assert-True ($result.reason.Length -lt 700 -and -not $result.reason.Contains('MANDATORY TASK RULES') -and -not $result.reason.Contains($rules)) 'Visible review repeated the full policy instead of a compact reminder.'
-    Assert-True ($result.reason.Contains('Report gaps') -and $result.reason.Contains('preserve unrelated work')) 'Compact review dropped whole-task gap or scope protection.'
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Successful completion created a visible continuation without manual Complete.'
     $event.stop_hook_active = $true
     $result = Invoke-Hook $event
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Unchanged reviewed result was not allowed.'
     [System.IO.File]::WriteAllText((Join-Path $testRoot 'new-file.txt'), 'changed after review', $utf8)
     $result = Invoke-Hook $event
-    Assert-True ($result.decision -eq 'block') 'Changes after review reused a stale receipt.'
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Passing changed work created a routine second answer.'
     $result = Invoke-Hook $event
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Stable second review did not finish.'
     $rulesPath = Join-Path $testRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md'
     [System.IO.File]::AppendAllText($rulesPath, "`n- Additional fixture rule.`n", $utf8)
     $result = Invoke-Hook $event
-    Assert-True ($result.decision -eq 'block') 'Compact review failed to invalidate a receipt after policy changed.'
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Valid changed rules created a routine second answer.'
     $result = Invoke-Hook $event
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Stable policy review did not finish.'
     $event.turn_id = 'turn-2'; $event.stop_hook_active = $false
     $result = Invoke-Hook $event
-    Assert-True ($result.decision -eq 'block') 'Another user turn reused a previous completion receipt.'
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Another successful user turn created a visible continuation.'
     [System.IO.File]::WriteAllText((Join-Path $testRoot 'bad.txt'), "bad whitespace  `n", $utf8)
     & git -C $testRoot add -- bad.txt
     $event.stop_hook_active = $true
     $result = Invoke-Hook $event
     Assert-True ($result.decision -eq 'block' -and $result.reason.Contains('checks failed')) 'A failing automatic check was accepted.'
+    Assert-True ($result.reason.Length -lt 700 -and -not $result.reason.Contains('MANDATORY TASK RULES')) 'Failure message repeated full policy.'
+    # A fixed failure finishes silently and clears retries; a later failure
+    # in a new turn gets its own full bounded repair opportunity.
+    [System.IO.File]::WriteAllText((Join-Path $testRoot 'bad.txt'), "fixed whitespace`n", $utf8)
+    & git -C $testRoot add -- bad.txt
+    $result = Invoke-Hook $event
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Repaired whitespace still requested a second final.'
+    $event.turn_id = 'turn-3'; $event.stop_hook_active = $false
+    [System.IO.File]::WriteAllText((Join-Path $testRoot 'bad.txt'), "bad whitespace  `n", $utf8)
+    $result = Invoke-Hook $event
+    Assert-True ($result.decision -eq 'block') 'Unstaged whitespace failure was accepted.'
+    $event.stop_hook_active = $true
+    $null = Invoke-Hook $event
     $null = Invoke-Hook $event
     $result = Invoke-Hook $event
     Assert-True ($result.continue -eq $false -and $result.stopReason.Contains('unverified')) 'Repeated failure did not stop visibly and finitely.'
@@ -103,12 +115,12 @@ try {
     $result = Invoke-Hook $event
     Assert-True ($result.continue -eq $false) 'Missing mandatory loader was accepted.'
     $audit = Get-Content -LiteralPath (Join-Path $testRoot '.codex/.gi-hook-state/events.jsonl') | ForEach-Object { $_ | ConvertFrom-Json }
-    Assert-True (@($audit | Where-Object outcome -eq 'completion_review_required').Count -gt 0) 'Review audit is missing.'
+    Assert-True (@($audit | Where-Object outcome -eq 'completion_check_failed').Count -gt 0) 'Failure audit is missing.'
     Assert-True (@($audit | Where-Object outcome -eq 'completion_allowed').Count -gt 0) 'Successful automatic review audit is missing.'
     Assert-True (@($audit | Where-Object { $_.outcome -eq 'service_rules_forwarded' -and $_.delivery -eq 'added' }).Count -eq 4) 'Automatic service additions are not independently recorded.'
     Assert-True (@($audit | Where-Object { $_.outcome -eq 'service_rules_forwarded' -and $_.delivery -eq 'reused' }).Count -eq 4) 'Idempotent service forwarding is not recorded.'
     Assert-True (-not ((Get-Content -LiteralPath (Join-Path $testRoot '.codex/.gi-hook-state/events.jsonl') -Raw).Contains('Original task'))) 'Service audit saved private prompt text.'
-    'GI lifecycle hook checks passed: automatic service delivery, destination/text preservation, UTF-8, omitted Complete, stale receipts, failures, bounded retries, and privacy.'
+    'GI lifecycle hook checks passed: service delivery, pre-response rules, quiet successful Stop, changed work/rules, staged/unstaged failure, repair, bounded retries, and privacy.'
 } finally {
     $resolved = [System.IO.Path]::GetFullPath($testRoot)
     $allowed = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar

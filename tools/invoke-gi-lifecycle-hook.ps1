@@ -110,30 +110,31 @@ try {
         & git -C $root -c core.safecrlf=false diff --cached --check 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) { $checksPassed = $false }
     }
+    # A successful Stop must not create a synthetic user prompt and duplicate
+    # the already streamed final answer. Work rules require review before it.
+    # The audit records automated checks, not proof of semantic review.
     $fingerprint = Get-Digest ($context + "`n" + (Get-WorkFingerprint))
     $receipt = if (Test-Path -LiteralPath $receiptPath) { [System.IO.File]::ReadAllText($receiptPath) | ConvertFrom-Json } else { $null }
     $continuedProperty = $event.PSObject.Properties['stop_hook_active']
     $continued = $continuedProperty -and $continuedProperty.Value -eq $true
-    if ($continued -and $receipt -and $receipt.fingerprint -eq $fingerprint -and $checksPassed) {
-        Write-Audit -Outcome 'completion_allowed' -ChecksPassed $true -ReviewCount ([int]$receipt.review_count)
+    if ($checksPassed) {
+        if (Test-Path -LiteralPath $receiptPath) { Remove-Item -LiteralPath $receiptPath }
+        Write-Audit -Outcome 'completion_allowed' -ChecksPassed $true -ReviewCount 0
         '{}'
         exit 0
     }
-    $reviewCount = if ($continued -and $receipt) { [int]$receipt.review_count + 1 } else { 1 }
+    $reviewCount = if ($continued -and $receipt -and $receipt.turn -eq $turnId) { [int]$receipt.review_count + 1 } else { 1 }
     if ($reviewCount -gt 3) {
         Write-Audit -Outcome 'completion_stopped' -ChecksPassed $checksPassed -ReviewCount $reviewCount
-        @{ continue = $false; stopReason = 'GI automatic completion verification did not settle; task remains unverified.'; systemMessage = 'GI: completion verification stopped after repeated changes or failed checks. Do not treat this as verified completion.' } | ConvertTo-Json -Compress
+        @{ continue = $false; stopReason = 'GI automatic completion verification did not settle; task remains unverified.'; systemMessage = 'GI: completion verification stopped after repeated failed checks. Do not treat this as verified completion.' } | ConvertTo-Json -Compress
         exit 0
     }
     @{ fingerprint = $fingerprint; review_count = $reviewCount; turn = $turnId } | ConvertTo-Json -Compress |
         ForEach-Object { [System.IO.File]::WriteAllText($receiptPath, $_, $utf8) }
-    Write-Audit -Outcome 'completion_review_required' -ChecksPassed $checksPassed -ReviewCount $reviewCount
-    $checkMessage = if ($checksPassed) { 'Automatic whitespace checks passed.' } else { 'Automatic whitespace checks failed. Inspect git diff --check and git diff --cached --check; fix only authorized task changes or report the blocker.' }
-    # Work/compaction hooks already deliver the mandatory rules as context.
-    # Stop.reason becomes a visible user continuation in Codex: keep it short.
-    # Still load and fingerprint the full current Complete context above.
-    $reason = "[GI automatic final review] $checkMessage Review the whole task under the loaded GI rules (current source: patterns/AGENTS_RUNTIME/03-rule-precedence.md; reread if needed). Report gaps, preserve unrelated work, and return the reviewed task answer without repeating this reminder."
-    if ($reason.Length -gt [int]$budgets.section_max_chars) { throw 'Automatic review exceeds the existing section cap.' }
+    Write-Audit -Outcome 'completion_check_failed' -ChecksPassed $false -ReviewCount $reviewCount
+    # Only a real failure warrants the host's visible continuation protocol.
+    $reason = '[GI completion check failed] Automatic whitespace checks failed. Inspect git diff --check and git diff --cached --check; fix only authorized task changes or report the blocker. Preserve unrelated work. Return only a necessary correction; do not repeat an unchanged final answer.'
+    if ($reason.Length -gt [int]$budgets.section_max_chars) { throw 'Completion correction exceeds the existing section cap.' }
     @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress
 } catch {
     if ((Get-Variable -Name eventName -ErrorAction SilentlyContinue) -and $eventName -eq 'PreToolUse') {

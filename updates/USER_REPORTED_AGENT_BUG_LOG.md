@@ -313,3 +313,12 @@ or edit that project.
 - Status: implemented locally; source regressions passed; consuming installation verification in progress; publication not performed.
 
 - Verification complete: source release-order/routing/bootstrap/review regressions passed; repaired consumer aliases and Work/Complete load; both checkpoints record 2026.10.25.4 with zero pending against the local source. Unrelated consumer files verified unchanged. Status: resolved locally; publication not performed.
+
+## 2026-10-25 — Single final response and quiet successful completion
+
+- Symptom: raw HTML and long path inventories cluttered task results; routine successful Stop review inserted a visible service prompt and duplicated the final answer.
+- Rule gap: presentation lacked a single-final contract; Git finish required every remaining path in chat; lifecycle always blocked successful completion.
+- Evidence: user-provided screenshot and current lifecycle source. No private project names, paths, screenshot payloads or raw messages copied here.
+- Privacy review: reusable behavior only; no secrets or project data retained.
+- Resolution: internal review before one Markdown final, grouped file counts/directories/reasons, quiet passing Stop; real failures remain visible and bounded.
+- Status: fixed in source, migration 2026.10.25.7__single_final_response_and_quiet_completion. Protocol, routing, bootstrap, preference and OpenCode live-loop checks passed. Native Codex live fixture remains unverified pending normal project/hook trust; no trust bypass performed.

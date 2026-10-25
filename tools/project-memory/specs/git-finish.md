@@ -37,7 +37,9 @@ executor. The resolver supplies instructions; the agent performs Git operations.
    is needed. Never create an empty commit or request a second push-only command.
    No pending commit or push means the branch is current, not a failed command.
 6. Verify final status with individual untracked paths and upstream equality.
-   Report each remaining changed path with its exclusion reason or blocker;
+   Report remaining changes grouped by directory and exclusion reason with
+   counts; name individual paths for specific blockers or on request. Keep
+   the full individual-path inventory internally;
    eligible selected residue means incomplete work. Upstream equality alone does
    not establish completion or a clean worktree.
 

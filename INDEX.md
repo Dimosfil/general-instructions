@@ -81,14 +81,14 @@ Reusable instructions in this repository are grouped by job.
   preferences, canonical handoff, Git state, runbook hints, and memory search;
   update-check failures stop packet assembly.
 - `.codex/hooks.json`, `tools/invoke-gi-lifecycle-hook.ps1`: native automatic
-  mandatory context, service-message forwarding, and completion review;
+  mandatory context, service-message forwarding, and quiet completion checks;
   `docs/gi-lifecycle-hooks.md` owns
   activation, trust, evidence, and limits.
 - `tools/test-gi-lifecycle-hooks.ps1`: protocol and failure regression checks.
 - `.opencode/plugins/gi-lifecycle.js`: OpenCode 1.x adapter for the shared GI
   engine; `docs/gi-opencode-hooks.md` covers activation, compatibility and limits.
 - `tests/test_opencode_gi_hooks.mjs`, `tests/test_opencode_gi_live.mjs`: adapter
-  failure/receipt contracts and real OpenCode response-loop verification.
+  quiet-success/failure contracts and real OpenCode response-loop verification.
 - `tools/test-gi-lifecycle-hooks-live.ps1`: real Codex test deliberately omitting
   manual Complete and all model tool calls.
 - `tools/resolve-gi-command.ps1`: returns one selected GI command contract and
@@ -321,6 +321,10 @@ Reusable instructions in this repository are grouped by job.
   recurring user-reported agent-rule failures and their follow-up status.
 
 ## Migrations
+
+- [2026.10.25.7 migration](migrations/2026.10.25.7__single_final_response_and_quiet_completion.md):
+  one reviewed Markdown result, grouped file inventories and no successful
+  hook continuation in Codex or OpenCode.
 
 - [2026.10.25.6 migration](migrations/2026.10.25.6__sync_upstream_before_push.md):
   integrate upstream changes before push without imposing pull requests.

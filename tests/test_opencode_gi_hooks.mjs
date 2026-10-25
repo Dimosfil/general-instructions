@@ -76,27 +76,20 @@ test('OpenCode loads actual rules, restores compaction and forwards task argumen
   assert.equal(unrelated.args.prompt, 'keep');
 });
 
-test('OpenCode queues review before completion, invalidates receipts, isolates turns and stores no prompt', async (t) => {
+test('OpenCode finishes successful turns without synthetic messages and stores no prompt', async (t) => {
   const f = await fixture(t);
   await f.finish();
-  assert.equal(f.reviews.length, 1);
-  assert.equal(f.reviews[0].body.noReply, true);
-  assert.equal(f.reviews[0].body.parts[0].synthetic, true);
-  assert.equal(f.reviews[0].body.agent, 'build');
-  assert.deepEqual(f.reviews[0].body.model, f.model);
-  assert.ok(f.reviews[0].body.parts[0].text.includes('[GI automatic final review]'));
-  assert.ok(f.reviews[0].body.parts[0].text.length < 700);
-  assert.ok(!f.reviews[0].body.parts[0].text.includes('MANDATORY TASK RULES'));
+  assert.equal(f.reviews.length, 0);
   await f.finish();
-  assert.equal(f.reviews.length, 1);
+  assert.equal(f.reviews.length, 0);
   await writeFile(path.join(f.root, 'new-source.txt'), 'changed after review');
   await f.finish();
-  assert.equal(f.reviews.length, 2);
+  assert.equal(f.reviews.length, 0);
   await f.finish();
-  assert.equal(f.reviews.length, 2);
+  assert.equal(f.reviews.length, 0);
   await f.user();
   await f.finish();
-  assert.equal(f.reviews.length, 3);
+  assert.equal(f.reviews.length, 0);
   const entries = await f.audit();
   assert.ok(entries.some((entry) => entry.outcome === 'completion_allowed'));
   assert.ok(!JSON.stringify(entries).includes('private original task'));
@@ -107,6 +100,11 @@ test('OpenCode fails visibly and finitely on bad checks; missing rules deny task
   await writeFile(path.join(f.root, 'bad.txt'), 'bad whitespace  \n');
   execFileSync('git', ['-C', f.root, 'add', '--', 'bad.txt']);
   await f.finish();
+  assert.equal(f.reviews[0].body.noReply, true);
+  assert.equal(f.reviews[0].body.parts[0].synthetic, true);
+  assert.equal(f.reviews[0].body.agent, 'build');
+  assert.deepEqual(f.reviews[0].body.model, f.model);
+  assert.ok(f.reviews[0].body.parts[0].text.includes('[GI completion check failed]'));
   await f.finish();
   await f.finish();
   await assert.rejects(f.finish(), /unverified/);
@@ -114,6 +112,19 @@ test('OpenCode fails visibly and finitely on bad checks; missing rules deny task
   await rm(path.join(f.root, 'tools/get-gi-context.ps1'));
   await assert.rejects(f.hooks['tool.execute.before']({ sessionID: f.sessionID, tool: 'task' }, { args: { prompt: 'private' } }), /unverified/);
   await assert.rejects(f.hooks['experimental.chat.system.transform']({ sessionID: f.sessionID }, { system: [] }), /unverified/);
+});
+
+test('OpenCode completes silently after a real failure is repaired', async (t) => {
+  const f = await fixture(t);
+  await writeFile(path.join(f.root, 'bad.txt'), 'bad whitespace  \n');
+  execFileSync('git', ['-C', f.root, 'add', '--', 'bad.txt']);
+  await f.finish();
+  assert.equal(f.reviews.length, 1);
+  await writeFile(path.join(f.root, 'bad.txt'), 'fixed\n');
+  execFileSync('git', ['-C', f.root, 'add', '--', 'bad.txt']);
+  await f.finish();
+  assert.equal(f.reviews.length, 1);
+  assert.equal((await f.audit()).at(-1).outcome, 'completion_allowed');
 });
 
 test('OpenCode excludes compaction summaries and rejects unsupported structured output', async (t) => {

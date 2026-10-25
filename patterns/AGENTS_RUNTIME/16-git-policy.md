@@ -60,13 +60,14 @@ See `patterns/GIT_WORKFLOW.md` for workflows and commit languages.
   worktrees, or branches, and does not override safety exclusions or authorize
   force-push. `gi only push all` remains push-only.
 - Before staging, inventory the full selection with
-  `git status --short --untracked-files=all`, including existing staged changes.
+  `git status --short --untracked-files=all`, including staged changes.
   Account for every selected eligible change in the staged diff before commit;
-  do not commit excluded staged changes or silently reset the user's index.
-  After commit/push, report each remaining changed path with its exclusion
-  reason or blocker. An eligible selected remainder makes the finish incomplete;
-  matching upstream HEAD alone is not success. If an expected file is ignored,
-  explain its ignore rule with `git check-ignore` instead of force-adding it.
+  do not commit excluded staged changes or reset the user's index.
+  After commit/push, report remaining changes by directory/reason with counts;
+  name blocker/requested paths; keep the full inventory internally.
+  An eligible selected remainder makes the finish incomplete.
+  Upstream equality is insufficient. Explain expected ignored files with
+  `git check-ignore`; never force-add them.
 - A failed finish-time check does not by itself authorize product fixes, test
   rewrites, runtime-state deletion, dependency changes, service restarts, or
   broad cleanup. Correct only failures caused by the scoped work when the fix is

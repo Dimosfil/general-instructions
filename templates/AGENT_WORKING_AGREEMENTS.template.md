@@ -154,8 +154,10 @@
   `gi only push all` remains push-only.
 - Inventory with `git status --short --untracked-files=all` and reconcile the
   staged diff with the resolved selection before committing; do not commit
-  excluded staged changes or silently reset the user's index. Report each
-  remaining changed path with its exclusion reason or blocker after finish.
+  excluded staged changes or silently reset the user's index. Report remaining
+  changes grouped by directory and exclusion reason, with file counts; identify
+  individual paths for specific blockers or on request. Keep the full path
+  inventory internally.
   Eligible selected residue means incomplete work. Explain expected ignored
   files with `git check-ignore` instead of force-adding them.
 - Git finish does not authorize new implementation, test-expectation rewrites,
@@ -559,6 +561,11 @@ or:
 
 ## Verification
 
+- Complete required checks and the enabled final review internally before one
+  final response. Do not send a provisional final, expose successful review
+  reminders or repeat an unchanged result after routine review. Use Markdown
+  without raw HTML; summarize large file inventories by count, directory and
+  reason, retaining requested detail and specific blockers.
 - Reread edited files after changes.
 - Run the fastest relevant check first.
 - Record checks run and failures in the handoff summary.

@@ -11,3 +11,5 @@
 - Batch routine observations internally and summarize only the current
   conclusion, next action, and blockers. Keep command names and detailed logs
   for final summaries or failure diagnosis.
+- Keep progress distinct from the final result. Apply module 03's `Final Response`
+  contract: one reviewed Markdown answer, without routine review prompts.
