@@ -84,4 +84,3 @@
   conflict, identify both rather than silently choosing one. Mark a conclusion
   `✓` only when the inspected passage and context support it; an accurate quote
   alone does not prove an inference. Do not invent missing text or certainty.
-
