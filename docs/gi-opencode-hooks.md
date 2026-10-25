@@ -50,6 +50,10 @@ running loop evaluates its normal completion condition. The loop then continues
 with the review; no idle listener, recursive generation call or text rewrite is
 used. A manual Complete call does not satisfy the engine's receipt.
 
+The synthetic review is a compact reminder with check status, without another
+copy of the mandatory rules. The system transform supplies current rules on
+each model request; the engine still loads full Complete context for receipts.
+
 Only a subsequent assistant message with unchanged rules, HEAD, index and work
 can complete successfully. New user turns reset continuation, changed work
 requires a new review, and repeated changes/failures stop after the engine's

@@ -66,7 +66,9 @@ try {
     Assert-True ($result.hookSpecificOutput.additionalContext.Contains($rules)) 'Compaction did not restore mandatory rules.'
     $event.hook_event_name = 'Stop'; $event.stop_hook_active = $false
     $result = Invoke-Hook $event
-    Assert-True ($result.decision -eq 'block' -and $result.reason.Contains($rules)) 'Skipping Complete did not force automatic review.'
+    Assert-True ($result.decision -eq 'block' -and $result.reason.Contains('[GI automatic final review]')) 'Skipping Complete did not force automatic review.'
+    Assert-True ($result.reason.Length -lt 700 -and -not $result.reason.Contains('MANDATORY TASK RULES') -and -not $result.reason.Contains($rules)) 'Visible review repeated the full policy instead of a compact reminder.'
+    Assert-True ($result.reason.Contains('Report gaps') -and $result.reason.Contains('preserve unrelated work')) 'Compact review dropped whole-task gap or scope protection.'
     $event.stop_hook_active = $true
     $result = Invoke-Hook $event
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Unchanged reviewed result was not allowed.'
@@ -75,6 +77,12 @@ try {
     Assert-True ($result.decision -eq 'block') 'Changes after review reused a stale receipt.'
     $result = Invoke-Hook $event
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Stable second review did not finish.'
+    $rulesPath = Join-Path $testRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md'
+    [System.IO.File]::AppendAllText($rulesPath, "`n- Additional fixture rule.`n", $utf8)
+    $result = Invoke-Hook $event
+    Assert-True ($result.decision -eq 'block') 'Compact review failed to invalidate a receipt after policy changed.'
+    $result = Invoke-Hook $event
+    Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Stable policy review did not finish.'
     $event.turn_id = 'turn-2'; $event.stop_hook_active = $false
     $result = Invoke-Hook $event
     Assert-True ($result.decision -eq 'block') 'Another user turn reused a previous completion receipt.'

@@ -79,6 +79,15 @@ is tied to the rules and work fingerprint and only permits an unchanged automati
 continuation with passing checks. See `docs/gi-lifecycle-hooks.md` for trust,
 failure, privacy, and verification limits; copying files is not host activation.
 
+Visible-review mapping: Stop -> shared lifecycle engine -> short `reason` ->
+native continuation. Work/compaction remain the full-rule delivery owners;
+Complete still validates and fingerprints current rules. Do not embed that
+full context in the visible reason or use unsupported suppression to bypass
+review. Preserve automatic continuation, stale-receipt rejection, failed-check
+blocking and bounded retries. Protocol tests bound the reminder below 700
+characters and exercise policy changes as well as work changes. Native UI
+delivery must be reported separately from fixture verification.
+
 Desktop service mapping: outgoing create/send -> native sender PreToolUse ->
 builder Work/MandatoryOnly -> updatedInput.prompt -> actual delegated input ->
 recipient Stop. UserPromptSubmit does not cover these service inputs. Preserve

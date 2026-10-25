@@ -322,6 +322,9 @@ Reusable instructions in this repository are grouped by job.
 
 ## Migrations
 
+- [2026.10.25.3 migration](migrations/2026.10.25.3__compact_automatic_review_continuation.md):
+  compact visible final-review reminders while preserving automatic checks.
+
 - `migrations/`: accepted ordered instruction-kit migrations for consuming
   projects. External projects may read this folder only when checking or applying
   instruction updates.

@@ -85,6 +85,8 @@ test('OpenCode queues review before completion, invalidates receipts, isolates t
   assert.equal(f.reviews[0].body.agent, 'build');
   assert.deepEqual(f.reviews[0].body.model, f.model);
   assert.ok(f.reviews[0].body.parts[0].text.includes('[GI automatic final review]'));
+  assert.ok(f.reviews[0].body.parts[0].text.length < 700);
+  assert.ok(!f.reviews[0].body.parts[0].text.includes('MANDATORY TASK RULES'));
   await f.finish();
   assert.equal(f.reviews.length, 1);
   await writeFile(path.join(f.root, 'new-source.txt'), 'changed after review');

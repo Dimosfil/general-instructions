@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.10.25.2",
+  "instruction_kit_version": "2026.10.25.3",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "unity_mcp": {
@@ -116,7 +116,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.10.25.2__separate_migration_installation_from_host_activation",
+    "applied_through": "2026.10.25.3__compact_automatic_review_continuation",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

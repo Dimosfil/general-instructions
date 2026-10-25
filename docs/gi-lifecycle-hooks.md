@@ -20,6 +20,15 @@ Hooks deliver that live source instead of maintaining another copy of the rules.
   An automatic continuation with unchanged rules, HEAD, index, working changes,
   and nonignored untracked files can then finish. Changes require another review.
 
+The visible continuation contains only a compact review reminder and check
+status. Work and compaction hooks still deliver the full mandatory rules as
+developer context; Stop still loads and fingerprints the full Complete context.
+The reminder points to current module 03 if rules need rereading. Failed checks,
+missing context and retry limits remain enforced. Codex renders Stop `reason`
+as a user continuation; its documented `suppressOutput` is not implemented, so
+GI cannot promise to hide that short message entirely. See the official
+[common output fields and Stop protocol](https://learn.chatgpt.com/docs/hooks).
+
 State is local and ignored under `.codex/.gi-hook-state/`. It contains hashes,
 event/tool names, delivery action, counts, and check outcomes; no prompt, transcript, response, or
 source diff is saved. Missing rules or a failed loader stop visibly as unverified.

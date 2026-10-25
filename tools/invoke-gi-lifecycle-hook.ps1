@@ -129,7 +129,10 @@ try {
         ForEach-Object { [System.IO.File]::WriteAllText($receiptPath, $_, $utf8) }
     Write-Audit -Outcome 'completion_review_required' -ChecksPassed $checksPassed -ReviewCount $reviewCount
     $checkMessage = if ($checksPassed) { 'Automatic whitespace checks passed.' } else { 'Automatic whitespace checks failed. Inspect git diff --check and git diff --cached --check; fix only authorized task changes or report the blocker.' }
-    $reason = "[GI automatic final review]`n$context`n`n$checkMessage Review the actual result against the entire request now. No manual Complete call is needed. Report any unfinished or unverified requirement. Preserve unrelated work."
+    # Work/compaction hooks already deliver the mandatory rules as context.
+    # Stop.reason becomes a visible user continuation in Codex: keep it short.
+    # Still load and fingerprint the full current Complete context above.
+    $reason = "[GI automatic final review] $checkMessage Review the whole task under the loaded GI rules (current source: patterns/AGENTS_RUNTIME/03-rule-precedence.md; reread if needed). Report gaps, preserve unrelated work, and return the reviewed task answer without repeating this reminder."
     if ($reason.Length -gt [int]$budgets.section_max_chars) { throw 'Automatic review exceeds the existing section cap.' }
     @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress
 } catch {

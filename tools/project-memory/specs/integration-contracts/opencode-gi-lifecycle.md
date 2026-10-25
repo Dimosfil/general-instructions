@@ -24,6 +24,8 @@ Integration and acceptance evidence: `tests/test_opencode_gi_hooks.mjs` and
   protocol, then await persistence of a newer synthetic user message on block.
   `noReply` prevents a same-loop deadlock; the newer message prevents normal
   loop exit. Do not substitute post-idle restart or rewriting streamed text.
+- Keep synthetic review text compact; full mandatory rules belong in the system
+  transform. The shared engine still fingerprints full Complete context.
 - Review the next assistant message against the engine's current fingerprint.
   Rules/work changes invalidate receipts. Engine retry limits and fail-closed
   errors remain authoritative. Preserve permissions and unrelated changes.

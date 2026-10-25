@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.25
 
+- Keep automatic final review while replacing the repeated full policy in the
+  visible continuation with a compact reminder. Preserve full Work/compaction
+  context, Complete validation/fingerprints, failed-check blocking and retries.
+  Codex does not yet implement output suppression; a short continuation remains.
+  Migration: `2026.10.25.3__compact_automatic_review_continuation`.
+
 - Separate verified migration file installation from host activation. Apply the
   ordered batch including later adapters; Codex trust/CLI/Desktop checks and
   OpenCode plugin/loop checks establish runtime readiness separately. Recover
