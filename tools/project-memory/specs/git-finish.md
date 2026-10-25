@@ -53,22 +53,31 @@ executor. The resolver supplies instructions; the agent performs Git operations.
 | No new changes, outgoing commits | Inspect and push commits without creating an empty commit. |
 | No new changes or outgoing commits | Report current branch state. |
 | Only push, including an all modifier | Never stage or commit working-tree files. |
+| Push-only needs a merge commit | Stop: push-only permits fast-forward integration, not new commits. |
 | Excluded path or separately reserved work | Explain exclusion or concrete conflict; do not silently omit. |
 | Expected ignored file | Explain matching ignore rule; do not force-add. |
 | Eligible selected residue after commit | Finish remains incomplete even if upstream matches. |
 | Missing upstream, Git conflict, or failed push | Report the specific blocker; no force-push or unrelated repair. |
-| Divergent published main-branch history | Stop the push; preserve commits, repair with new commits/revert. |
+| Upstream has new commits | Fetch and pull/merge before push, preserving both histories; no PR required by GI. |
+| Divergent committed histories | Create a normal merge; stop on conflicts or obstructing local changes. |
 | Force-with-lease, mirror, forced refspec or API replacement of main history | Forbidden, including deletion/recreation; a lease is not an exception. |
 
 ## Published History Contract
 
 Scenario: a sync or repair would replace the remote main-branch history.
 Mechanism: Git finish is routed to runtime module 16; the agent fetches the
-actual destination, verifies fast-forward ancestry and performs only a normal
-push. Ownership: `16-git-policy.md` and the detailed Git workflow, mirrored in
+actual destination, integrates incoming commits with a fast-forward or normal
+merge, verifies ancestry and performs only a normal push. A push request
+authorizes this synchronization without imposing a pull request. Project-local
+PR requirements still apply. Ownership: `16-git-policy.md` and the Git workflow, mirrored in
 consumer working agreements. Invariant: published commits on `master`, `main`
-and the default branch remain ancestors of the new tip. Divergence, failed
-fetch or rejection blocks the push; authorized fixes append commits or reverts.
+and the default branch remain ancestors of the new tip, together with local
+commits. Conflicts, obstructing dirty files, failed fetch or uncertain target
+block integration/push. Never discard either history, auto-stash unrelated work
+or force a rejected push. New incoming commits may be safely integrated after
+fresh inspection; other rejection causes remain blockers. Explicit no-rebase
+pull or fetch/merge avoids config-selected history rewriting. Push-only retains
+its no-new-commits contract and cannot create a divergent-history merge commit.
 
 Verification: inspect delivered Git-finish context, run routing/bootstrap and
 release-order checks, and inspect migration delivery. These checks validate

@@ -101,8 +101,10 @@
 - Preserve published history on `master`, `main`, and the repository's default
   branch. Never force-push (including `--force-with-lease`), delete/recreate the
   branch, or bypass this rule through refspecs, mirror pushes, APIs or host
-  settings. Fetch and verify fast-forward ancestry before a normal push; stop
-  on divergence or rejection. Repair with new commits or `revert`. Ordinary
+  settings. Before push, fetch and pull/merge upstream changes if needed,
+  preserving both histories; no pull request is required by this rule. Stop on
+  conflicts or obstructing local changes; verify fast-forward ancestry and push
+  normally, never retry with force. Repair with new commits or `revert`. Ordinary
   sync/repair/push requests do not authorize rewriting. Follow
   `patterns/GIT_WORKFLOW.md#preserve-published-main-branch-history`.
 - Keep rebuildable builds, frontend bundles, installers, and intermediate

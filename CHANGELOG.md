@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.10.25
 
+- Fetch and pull/merge upstream changes before push when needed, preserving
+  both histories without requiring a pull request. Stop on conflicts instead
+  of overwriting either side; keep normal pushes and the force-push ban.
+  Migration: `2026.10.25.6__sync_upstream_before_push`.
+
 - Preserve published `master`, `main` and default-branch history. Prohibit force
   pushes including leases, ref/API bypasses and deletion/recreation; verify
   fast-forward ancestry and stop on divergence. Separate agent instructions

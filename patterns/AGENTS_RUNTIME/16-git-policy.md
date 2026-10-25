@@ -1,12 +1,13 @@
 ## Git Policy
 
 Default: agents edit/verify; users review/commit unless requesting agent commits.
-Follow `patterns/GIT_WORKFLOW.md` for Git workflows and commit-message languages.
+See `patterns/GIT_WORKFLOW.md` for workflows and commit languages.
 
 - Preserve published `master`/`main`/default-branch history: no force/`--force-with-lease`,
-  deletion/recreation or API bypasses. Fetch, verify fast-forward ancestry,
-  push normally; stop on divergence/rejection. Repair with new commits/revert.
-  Instructions do not enforce host protection.
+  deletion/recreation or API bypasses. Before push, fetch and merge upstream if
+  needed; preserve both sides. Verify fast-forward ancestry; push normally.
+  Stop on conflicts/rejection; never force. No PR required.
+  Rules do not enforce host protection.
 
 - `gi пуш` / `ги пуш` explicitly requests a scoped commit followed by a push;
   `gi только пуш` requests a push of existing commits only. A project rule that

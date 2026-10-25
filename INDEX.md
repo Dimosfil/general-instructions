@@ -322,6 +322,9 @@ Reusable instructions in this repository are grouped by job.
 
 ## Migrations
 
+- [2026.10.25.6 migration](migrations/2026.10.25.6__sync_upstream_before_push.md):
+  integrate upstream changes before push without imposing pull requests.
+
 - [2026.10.25.5 migration](migrations/2026.10.25.5__preserve_published_main_branch_history.md):
   preserve published main-branch history and distinguish server enforcement.
 

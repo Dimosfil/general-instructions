@@ -112,11 +112,22 @@ language preferences.
   default branch. This covers force flags (including leases), `+` refspecs,
   mirror pushes and API/UI updates. Do not replace published commits after
   amend/rebase/reset/filter. Ordinary finish/sync/repair requests grant no exception.
-- Fetch the actual destination; require
-  `git merge-base --is-ancestor <fetched-tip> <proposed-tip>` to succeed before
-  a normal push. Stop on failed fetch, divergence, uncertain destination or
-  rejection; never retry with force or disable protections. Repair through new
-  commits or `revert` within the authorized scope.
+- Treat a push request as authorization to fetch and integrate the current
+  branch's upstream before pushing; no pull request is required by this rule.
+  Preserve explicit project requirements for pull requests when present.
+- Fetch the actual destination. If upstream has new commits, pull/merge them:
+  fast-forward when possible, otherwise create a normal merge preserving both
+  histories. Use explicit `git pull --no-rebase` or fetch followed by merge so
+  local pull configuration cannot select rebase. For push-only requests, allow
+  only fast-forward integration; report a required merge commit as blocked by
+  that command's no-new-commits contract. Do not reset away either side, choose
+  wholesale ours/theirs, auto-stash unrelated work, or switch branches.
+  Stop on conflicts, obstructing local changes, failed fetch or uncertain target.
+- Require `git merge-base --is-ancestor <fetched-tip> <proposed-tip>` to succeed
+  before a normal push. A rejection never authorizes force or disabling
+  protections: inspect fresh remote state and repeat safe integration only if
+  the rejection was caused by incoming commits. Report other blockers.
+  Repair published mistakes through new commits or `revert` in the task scope.
 - Inspect effective host settings before claiming protection. Recommend blocking
   force pushes, deletion and administrator bypass. Changing host settings requires
   an explicit request for that repository; agent instructions do not enforce them.
