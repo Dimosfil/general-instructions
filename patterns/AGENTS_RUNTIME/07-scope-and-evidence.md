@@ -17,9 +17,14 @@
   broaden targets for updates, deletes, permissions or other mutations.
 - Treat requests to show database data as `raw`, `рау`, or raw table rows as
   requests to execute a read-only selection directly from the requested table
-  and show the returned rows as stored. Render `raw` / `рау` as a table by
-  default, with original column names as headers and one database row per table
-  row. Preserve the query result's column order (schema order for `SELECT *`)
+  and show the returned rows as stored. Render `raw` / `рау` by default as a
+  horizontal Markdown table directly in the response, with original column
+  names across the header and one database record per table row. Use Markdown
+  table syntax with a header separator row, outside code fences, so the viewer
+  renders a table rather than a code block. Do not substitute a JSON array,
+  object dump, list or attachment for that table unless explicitly requested;
+  even a single record or a tool/driver returning JSON keeps the table default.
+  Preserve the query result's column order (schema order for `SELECT *`)
   and returned row order. Do not transpose results into field/value rows or
   record/provider columns, group records into comparison cards, split the
   result into separate per-record tables, or omit columns to fit the viewport

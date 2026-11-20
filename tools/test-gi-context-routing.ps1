@@ -77,6 +77,8 @@ try {
     $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
     $budgets = Get-Content -LiteralPath $budgetPath -Raw | ConvertFrom-Json
     $mandatoryRules = [System.IO.File]::ReadAllText((Join-Path $repoRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md')).Replace("`r`n", "`n").TrimEnd()
+    Assert-Contains $mandatoryRules '## Database Raw Output' 'Raw output routing must remain in mandatory Work/Complete context, including startup and mandatory-only hooks.'
+    Assert-Contains $mandatoryRules 'patterns/AGENTS_RUNTIME/07-scope-and-evidence.md' 'Mandatory raw routing must load the full database contract.'
     $aliases = @{}
     foreach ($route in $manifest.routes) {
         if (-not $route.id -or -not $route.contract -or @($route.aliases).Count -eq 0) {

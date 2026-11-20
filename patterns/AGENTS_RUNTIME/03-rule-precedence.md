@@ -62,6 +62,12 @@
   final review off; reuse evidence without new forms or repeated checks. Git
   finalization checks its own result, without reopening verified product work.
 
+## Database Raw Output
+
+- For DB `raw` / `рау`, load `patterns/AGENTS_RUNTIME/07-scope-and-evidence.md`.
+  Default: horizontal Markdown table (columns across, records down); JSON only
+  on explicit request, never just because a tool returns JSON.
+
 ## Final Response
 
 - Complete required checks and the enabled final review internally before

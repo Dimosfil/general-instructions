@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.11.20
 
+- Deliver raw database output routing in mandatory Work/Complete context,
+  including startup and mandatory-only hooks. Require a rendered horizontal
+  Markdown table by default even when the database tool returns JSON; reserve
+  JSON output for an explicit user request. Migration:
+  `2026.11.20.6__mandatory_horizontal_raw_table_output`.
+
 - Search textual database names/identifiers by partial match for read-only
   requests unless exact matching or an explicit SQL predicate is requested.
   Respect project search contracts, disclose the filter and preserve all matched
