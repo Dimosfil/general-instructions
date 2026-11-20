@@ -4,6 +4,12 @@ Accepted changes for the shared instruction library.
 
 ## 2026.11.20
 
+- Search textual database names/identifiers by partial match for read-only
+  requests unless exact matching or an explicit SQL predicate is requested.
+  Respect project search contracts, disclose the filter and preserve all matched
+  variants; keep mutation targets unchanged. Migration:
+  `2026.11.20.5__partial_database_search_by_default`.
+
 - Preserve SQL result orientation for raw tables: original columns across the
   header and records down the rows, in query order. Keep wide tables complete;
   do not transpose, split or reshape them for compact presentation unless asked.

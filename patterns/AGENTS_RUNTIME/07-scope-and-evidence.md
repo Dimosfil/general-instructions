@@ -1,5 +1,20 @@
 ## Scope, Evidence, And Filesystem Boundaries
 
+- For read-only database searches, including raw requests, interpret a supplied
+  textual name or identifier as a partial-match search by default. Use the
+  project's documented search fields and matching rules; without a more specific
+  contract, use case-insensitive literal substring matching in the relevant
+  name/identifier fields (for example, parameterized PostgreSQL `ILIKE`). Escape
+  LIKE wildcard characters in literal input unless a pattern was explicitly
+  requested. Use exact equality only when the user explicitly requests it, such
+  as `ТОЧНО!`, `точное совпадение`, `exact`, or supplies an explicit SQL predicate;
+  preserve a user-supplied query's semantics. Do not infer exact intent merely
+  from quotes or an identifier-looking term. An empty equality lookup does not
+  establish absence for a partial-match request. Show the actual query/filter
+  and all matching rows within disclosed limits; do not silently select one
+  variant or provider, or claim a unique entity when several match. Preserve
+  other requested filters and raw values. This discovery default does not
+  broaden targets for updates, deletes, permissions or other mutations.
 - Treat requests to show database data as `raw`, `рау`, or raw table rows as
   requests to execute a read-only selection directly from the requested table
   and show the returned rows as stored. Render `raw` / `рау` as a table by

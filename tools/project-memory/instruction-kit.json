@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.11.20.4",
+  "instruction_kit_version": "2026.11.20.5",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "unity_mcp": {
@@ -113,9 +113,9 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.11.20.4__raw_sql_result_orientation",
+    "applied_through": "2026.11.20.5__partial_database_search_by_default",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   },
-  "last_update_check_at": "2026-11-20T17:05:41+03:00"
+  "last_update_check_at": "2026-11-20T17:17:41+03:00"
 }
