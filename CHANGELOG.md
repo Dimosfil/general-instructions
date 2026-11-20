@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.11.20
 
+- Preserve SQL result orientation for raw tables: original columns across the
+  header and records down the rows, in query order. Keep wide tables complete;
+  do not transpose, split or reshape them for compact presentation unless asked.
+  Migration: `2026.11.20.4__raw_sql_result_orientation`.
+
 - Display `raw` / `рау` database results as a table by default; use JSON only
   when explicitly requested, preserving the same rows, columns and values.
   Migration: `2026.11.20.3__raw_table_default_output`.

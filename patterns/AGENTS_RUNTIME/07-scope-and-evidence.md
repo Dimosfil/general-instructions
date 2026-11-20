@@ -4,7 +4,13 @@
   requests to execute a read-only selection directly from the requested table
   and show the returned rows as stored. Render `raw` / `рау` as a table by
   default, with original column names as headers and one database row per table
-  row. Render JSON only when explicitly requested, such as `raw JSON`,
+  row. Preserve the query result's column order (schema order for `SELECT *`)
+  and returned row order. Do not transpose results into field/value rows or
+  record/provider columns, group records into comparison cards, split the
+  result into separate per-record tables, or omit columns to fit the viewport
+  unless explicitly requested. Keep wide results as one complete table; allow
+  the viewer to scroll horizontally where supported. Render JSON only when
+  explicitly requested, such as `raw JSON`,
   `рау JSON` or `рау джисон`. Keep the same selected rows, columns and values
   in either format; table presentation does not authorize data transformation.
   Preserve original column names and
