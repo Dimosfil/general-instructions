@@ -1,6 +1,7 @@
 ## Content And Authoring
 
 - Keep instructions reusable across projects.
+- For DB `raw` / `рау`, follow `07-scope-and-evidence.md`.
 - Do not add secrets, credentials, private project data, or local machine paths
   unless the file is explicitly a local example.
 - If a rule applies only to one specific project, do not put it here.
@@ -83,7 +84,11 @@
   compatibility case, or test expectation would require violating this boundary,
   first implement the compliant config/resource/adapter path; ask only when the
   source of truth or temporary compatibility layer is genuinely undocumented.
-  Follow
+  Store entity-specific limits, defaults, combinations and mappings in the
+  authoritative contract/config consumed by algorithms.
+  For unavailable storage, version migration/import data and report pending
+  application/live checks. Preserve runtime ownership.
+  Review identifier-selected branches and duplicated policy under
   `patterns/CONFIGURATION_BOUNDARIES.md`.
 - Classify external variables as startup-critical or optional by their actual
   dependency. Give optional variables safe defaults, validate overrides, and

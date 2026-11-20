@@ -2,6 +2,24 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.11.20
+
+- Display `raw` / `рау` database results as a table by default; use JSON only
+  when explicitly requested, preserving the same rows, columns and values.
+  Migration: `2026.11.20.3__raw_table_default_output`.
+
+- Execute requests for `raw` / `рау` database rows as direct read-only table
+  selections, preserving stored columns and values. Disclose query, limits and
+  display conversions; do not substitute summaries or illustrative data for
+  executed results. Migration: `2026.11.20.2__raw_database_table_selection`.
+
+- Keep changeable entity-specific policy in authoritative contracts/configuration,
+  with reusable algorithms in code. Prepare versioned declarative migration/import
+  data when target storage is unavailable, preserve runtime ownership and report
+  unapplied changes. Review identifier-selected branches and policy duplication
+  alongside behavior checks. Migration:
+  `2026.11.20.1__authoritative_configurable_behavior`.
+
 ## 2026.10.25
 
 - Review internally before one final response, use Markdown without raw HTML,

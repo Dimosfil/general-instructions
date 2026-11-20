@@ -10,6 +10,7 @@
   "start_packet_max_chars": 34000,
   "route_packet_default_max_chars": 36000,
   "route_packet_overrides": {
-    "info": 46000
+    "info": 46000,
+    "refactor": 38000
   }
 }

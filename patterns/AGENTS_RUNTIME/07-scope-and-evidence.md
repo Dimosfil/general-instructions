@@ -1,5 +1,24 @@
 ## Scope, Evidence, And Filesystem Boundaries
 
+- Treat requests to show database data as `raw`, `рау`, or raw table rows as
+  requests to execute a read-only selection directly from the requested table
+  and show the returned rows as stored. Render `raw` / `рау` as a table by
+  default, with original column names as headers and one database row per table
+  row. Render JSON only when explicitly requested, such as `raw JSON`,
+  `рау JSON` or `рау джисон`. Keep the same selected rows, columns and values
+  in either format; table presentation does not authorize data transformation.
+  Preserve original column names and
+  values, including NULLs, empty strings, duplicates and stored precision;
+  do not replace the result with a summary, aggregation, deduplication, joins,
+  calculated fields, renamed columns or normalized/formatted values unless
+  explicitly requested. Apply only requested filters, column selections and
+  ordering. Show all columns when no column selection is requested. Identify
+  the source table and executed query; disclose any pagination, row limit,
+  truncation or unavoidable display conversion and do not present a partial
+  result as complete. Respect access and secret boundaries and disclose any
+  withheld fields. If database access is unavailable, report that blocker;
+  label example SQL or invented example rows as illustrative, never as an
+  executed selection or actual database data.
 - Treat screenshots, logs, pasted errors, or other bug evidence as requests for
   analysis first. Explain the likely issue and ask what action the user wants
   before editing files, unless the user explicitly says to fix it, such as

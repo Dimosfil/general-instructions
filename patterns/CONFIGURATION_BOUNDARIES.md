@@ -9,7 +9,26 @@ variables, service discovery, or deployment metadata.
 - Do not hard-code deploy, user, runtime, host-machine, service, credential,
   filesystem-layout, feature-flag, model-behavior, intent-interpretation,
   translation, query-normalization, prompt, ranking, or operational-policy
-  values in source code.
+  values in source code. Store changeable entity-specific behavior as validated
+  data in the project's
+  authoritative contract or configuration. This includes limits, defaults,
+  supported combinations, field mappings and compatibility selections. Keep
+  reusable validation and transformation algorithms in code, with explicit
+  inputs from that contract. Before adding a branch selected by a concrete
+  entity identifier, trace its owner and extend the existing contract when the
+  decision belongs to configurable policy.
+- When the authoritative database, configuration service or deployment target
+  is unavailable, prepare the change in a versioned declarative file or data
+  package for the project's existing migration/import mechanism. Validate it
+  offline where feasible and report application and live verification as
+  pending. Preserve the authoritative runtime source and its failure policy.
+  Introduce a runtime file source only through an explicitly agreed project
+  contract with defined precedence and ownership.
+- Keep each configurable rule under one authoritative owner. Moving literals
+  to a constants file while retaining independent entity-specific decisions
+  in callers does not establish this boundary. For a necessary executable
+  exception, document its technical constraint, owner, scope, verification and
+  removal condition in the project contract.
 - Do not turn one observed request, selected object, date range, filename,
   local folder, model, index partition, UI label, test case, or screenshot into
   a default configuration value or product policy. Treat concrete incidents as
@@ -74,6 +93,8 @@ variables, service discovery, or deployment metadata.
   intent-interpretation behavior, and model-specific compatibility rules in
   resource files, documented config, interpretation/translation modules, model
   adapter modules, provider-swappable LLM adapters, or curated data assets.
+  Keep changeable values in declarative resources consumed by these modules.
+  Resolve entity-specific policy from its authoritative contract/config.
   Application code may load, validate, compose, and apply them, but should not
   grow ad hoc per-query dictionaries inside request handlers or UI glue.
 - If a quick fix, legacy compatibility path, test expectation, or observed

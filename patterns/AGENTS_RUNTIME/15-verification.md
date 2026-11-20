@@ -18,6 +18,16 @@ result, invariants, and side effects under `patterns/ARCHITECTURE_AND_CODE_QUALI
 Reject undocumented bypasses and tests merely mirroring code. A restored final
 state does not prove intermediate effects safe; report live verification gaps.
 
+For changes to configurable behavior, inspect new identifier-selected branches,
+embedded limits/defaults/mappings and competing sources of policy. Verify that
+callers consume the authoritative contract and that changed contract data
+affects behavior through the normal entry point. Check representative valid,
+invalid and missing configuration using existing checks where sufficient.
+When target storage is unavailable, verify the prepared data package offline
+and report unapplied changes and live checks separately. Functional tests alone
+do not establish configuration ownership. Follow
+`patterns/CONFIGURATION_BOUNDARIES.md`.
+
 For documentation-only changes:
 
 ```powershell
