@@ -13,8 +13,7 @@ TODO: describe the product, users, and primary runtime surface.
 - Derive a bounded goal and observable success criteria from the request and
   project context. Ask only when missing information materially changes scope;
   continue independent authorized work while waiting.
-- This file alone is sufficient only for greetings and status-neutral replies.
-  Before concrete work, select the matching runtime modules.
+- Before concrete work, select the matching runtime modules.
 - For GI commands, pass the exact user command via `-CommandText` to the context
   helper. Use `COMMANDS.md` only for help or command-index requests.
 - On the first concrete task, check accepted updates. Equal versions without
@@ -42,7 +41,8 @@ TODO: describe the product, users, and primary runtime surface.
 
 ## Core Safety And Boundaries
 
-- Final: load `15-final-review.md`.
+- Windows Git must preserve focus and launch without windows. See `05-windows-command-policy.md`.
+- Final: `15-final-review.md`.
 - Before implementation, bug fixes, or refactoring, load modules 04, 06, and 15.
   Trace the affected scenario, identify its mechanism and contract owner, and
   correct the cause there. Justify any bypass. Follow the mechanism gate in

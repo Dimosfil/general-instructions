@@ -4,28 +4,28 @@
     "PreToolUse": [{ "matcher": "^(?:mcp__codex_app__|codex_app[./])?(?:create_thread|send_message_to_thread)$", "hooks": [{
       "type": "command",
       "command": "pwsh -NoProfile -NonInteractive -File \"$(git rev-parse --show-toplevel)/tools/invoke-gi-lifecycle-hook.ps1\"",
-      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"& (Join-Path (git rev-parse --show-toplevel) 'tools/invoke-gi-lifecycle-hook.ps1')\"",
+      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"while (!(Test-Path -LiteralPath '.git')) { if (!(Split-Path -Parent (Get-Location).Path)) { throw 'GI project root not found.' }; Set-Location .. }; & './tools/invoke-gi-lifecycle-hook.ps1'\"",
       "timeout": 30,
       "statusMessage": "Forwarding mandatory GI rules with the service message"
     }] }],
     "UserPromptSubmit": [{ "hooks": [{
       "type": "command",
       "command": "pwsh -NoProfile -NonInteractive -File \"$(git rev-parse --show-toplevel)/tools/invoke-gi-lifecycle-hook.ps1\"",
-      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"& (Join-Path (git rev-parse --show-toplevel) 'tools/invoke-gi-lifecycle-hook.ps1')\"",
+      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"while (!(Test-Path -LiteralPath '.git')) { if (!(Split-Path -Parent (Get-Location).Path)) { throw 'GI project root not found.' }; Set-Location .. }; & './tools/invoke-gi-lifecycle-hook.ps1'\"",
       "timeout": 30,
       "statusMessage": "Loading mandatory GI rules"
     }] }],
     "SessionStart": [{ "matcher": "^compact$", "hooks": [{
       "type": "command",
       "command": "pwsh -NoProfile -NonInteractive -File \"$(git rev-parse --show-toplevel)/tools/invoke-gi-lifecycle-hook.ps1\"",
-      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"& (Join-Path (git rev-parse --show-toplevel) 'tools/invoke-gi-lifecycle-hook.ps1')\"",
+      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"while (!(Test-Path -LiteralPath '.git')) { if (!(Split-Path -Parent (Get-Location).Path)) { throw 'GI project root not found.' }; Set-Location .. }; & './tools/invoke-gi-lifecycle-hook.ps1'\"",
       "timeout": 30,
       "statusMessage": "Restoring mandatory GI rules after compaction"
     }] }],
     "Stop": [{ "hooks": [{
       "type": "command",
       "command": "pwsh -NoProfile -NonInteractive -File \"$(git rev-parse --show-toplevel)/tools/invoke-gi-lifecycle-hook.ps1\"",
-      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"& (Join-Path (git rev-parse --show-toplevel) 'tools/invoke-gi-lifecycle-hook.ps1')\"",
+      "commandWindows": "pwsh -NoProfile -NonInteractive -Command \"while (!(Test-Path -LiteralPath '.git')) { if (!(Split-Path -Parent (Get-Location).Path)) { throw 'GI project root not found.' }; Set-Location .. }; & './tools/invoke-gi-lifecycle-hook.ps1'\"",
       "timeout": 30,
       "statusMessage": "Checking task completion automatically"
     }] }]

@@ -337,7 +337,8 @@ try {
             $budgetFile = Join-Path $target "config/gi-context-budgets.json"
             $budgetText = [System.IO.File]::ReadAllText($budgetFile)
             $tightBudgets = $budgetText | ConvertFrom-Json
-            $tightBudgets.start_packet_max_chars = 5000
+            $tightCap = $installedRules.Length + 300
+            $tightBudgets.start_packet_max_chars = $tightCap
             [System.IO.File]::WriteAllText(
                 $budgetFile,
                 (($tightBudgets | ConvertTo-Json -Depth 100) + [Environment]::NewLine),
@@ -351,7 +352,7 @@ try {
             }
             $tightContext = $tightContext.Replace("`r`n", "`n")
             if (-not $tightContext.Contains($installedRules)) { throw 'Final startup cap removed mandatory task rules.' }
-            if ($tightContext.Length -gt 5000) { throw "Final startup packet hard cap was not enforced." }
+            if ($tightContext.Length -gt $tightCap) { throw "Final startup packet hard cap was not enforced." }
             if (-not $tightContext.Contains("context packet truncated:") -or -not $tightContext.Contains("Startup restore complete.")) {
                 throw "Hard-capped startup packet omitted its truncation or completion marker."
             }

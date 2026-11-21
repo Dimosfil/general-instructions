@@ -9,9 +9,17 @@ $utf8 = [System.Text.UTF8Encoding]::new($false)
 $shell = (Get-Process -Id $PID).Path
 
 function Invoke-Hook {
-    param([hashtable]$Event, [string]$Raw)
+    param([hashtable]$Event, [string]$Raw, [switch]$FromNestedWindowsDirectory)
     $start = [System.Diagnostics.ProcessStartInfo]::new($shell)
-    foreach ($arg in @('-NoProfile', '-NonInteractive', '-File', (Join-Path $testRoot 'tools/invoke-gi-lifecycle-hook.ps1'))) { $start.ArgumentList.Add($arg) }
+    $launch = @('-File', (Join-Path $testRoot 'tools/invoke-gi-lifecycle-hook.ps1'))
+    if ($FromNestedWindowsDirectory) {
+        $hooks = Get-Content -LiteralPath (Join-Path $repoRoot '.codex/hooks.json') -Raw | ConvertFrom-Json
+        $definition = $hooks.hooks.UserPromptSubmit[0].hooks[0].commandWindows
+        if ($definition -notmatch '^pwsh -NoProfile -NonInteractive -Command "(.+)"$') { throw 'Unexpected Windows hook command.' }
+        $launch = @('-Command', $Matches[1])
+        $start.WorkingDirectory = Join-Path $testRoot 'patterns/AGENTS_RUNTIME'
+    }
+    foreach ($arg in @('-NoProfile', '-NonInteractive') + $launch) { $start.ArgumentList.Add($arg) }
     $start.UseShellExecute = $false
     $start.CreateNoWindow = $true
     $start.RedirectStandardInput = $true
@@ -61,6 +69,12 @@ try {
     Assert-True (@($result.PSObject.Properties).Count -eq 0) 'Service hook intercepted an unrelated tool.'
     $result = Invoke-Hook $event
     Assert-True ($result.hookSpecificOutput.additionalContext.Contains($rules)) 'UserPromptSubmit did not inject the actual mandatory rules.'
+    if ($IsWindows) {
+        $nestedEvent = $event.Clone()
+        $nestedEvent.cwd = Join-Path $testRoot 'patterns/AGENTS_RUNTIME'
+        $result = Invoke-Hook -Event $nestedEvent -FromNestedWindowsDirectory
+        Assert-True ($result.hookSpecificOutput.additionalContext.Contains('## Windows Git And Focus')) 'The Windows hook entrypoint did not load the mandatory rule from a nested directory.'
+    }
     Assert-True ($result.hookSpecificOutput.additionalContext.Contains('sending one final response') -and $result.hookSpecificOutput.additionalContext.Contains('without raw HTML tags')) 'Pre-response review/format rules are missing from actual hook context.'
     $event.hook_event_name = 'SessionStart'; $event.source = 'compact'
     $result = Invoke-Hook $event
@@ -106,6 +120,12 @@ try {
     $null = Invoke-Hook $event
     $result = Invoke-Hook $event
     Assert-True ($result.continue -eq $false -and $result.stopReason.Contains('unverified')) 'Repeated failure did not stop visibly and finitely.'
+    if ($IsWindows) {
+        & git -C $testRoot config filter.fixture.process 'gi-test-filter-must-not-run'
+        [System.IO.File]::WriteAllText((Join-Path $testRoot '.gitattributes'), "bad.txt filter=fixture`n", $utf8)
+        $result = Invoke-Hook $event
+        Assert-True ($result.continue -eq $false -and $result.systemMessage.Contains('external Git clean or process filter')) 'An external filter was allowed to run or the blocker was not reported.'
+    }
     $result = Invoke-Hook -Raw '{malformed private input'
     Assert-True ($result.continue -eq $false -and -not (($result | ConvertTo-Json).Contains('private input'))) 'Invalid input leaked data or looked successful.'
     Remove-Item -LiteralPath (Join-Path $testRoot 'tools/get-gi-context.ps1')

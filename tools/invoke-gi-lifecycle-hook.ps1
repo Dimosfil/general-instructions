@@ -15,23 +15,75 @@ function Get-Digest {
     finally { $sha.Dispose() }
 }
 
+function Invoke-HookGit {
+    param([string[]]$Arguments, [string]$InputText)
+    $gitPath = (Get-Command git -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
+    if ($IsWindows -and $gitPath -notmatch '[\\/](mingw64|mingw32|clangarm64)[\\/]bin[\\/]git\.exe$') {
+        $gitRoot = Split-Path -Parent (Split-Path -Parent $gitPath)
+        $gitPath = @('mingw64', 'mingw32', 'clangarm64') |
+            ForEach-Object { Join-Path $gitRoot "$_/bin/git.exe" } |
+            Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
+            Select-Object -First 1
+        if (-not $gitPath) { throw 'Windowless Git executable not found for automatic verification.' }
+    }
+    $start = [System.Diagnostics.ProcessStartInfo]::new($gitPath)
+    $start.UseShellExecute = $false
+    $start.CreateNoWindow = $true
+    $start.RedirectStandardInput = $true
+    $start.RedirectStandardOutput = $true
+    $start.RedirectStandardError = $true
+    $start.StandardOutputEncoding = $utf8
+    $start.StandardInputEncoding = $utf8
+    foreach ($argument in @('-C', $root, '--no-pager', '-c', 'core.safecrlf=false', '-c', 'core.fsmonitor=false') + $Arguments) {
+        $start.ArgumentList.Add($argument)
+    }
+    $process = [System.Diagnostics.Process]::Start($start)
+    try {
+        $output = $process.StandardOutput.ReadToEndAsync()
+        $errors = $process.StandardError.ReadToEndAsync()
+        if ($InputText) { $process.StandardInput.Write($InputText) }
+        $process.StandardInput.Close()
+        $process.WaitForExit()
+        $null = $errors.GetAwaiter().GetResult()
+        return @{ ExitCode = $process.ExitCode; Output = $output.GetAwaiter().GetResult() }
+    } finally { $process.Dispose() }
+}
+
+function Assert-WindowlessDiff {
+    $filters = Invoke-HookGit @('config', '--get-regexp', '^filter\..*\.(clean|process)$')
+    if ($filters.ExitCode -eq 1) { return }
+    if ($filters.ExitCode -ne 0) { throw 'Could not verify Git filter configuration.' }
+    $tracked = Invoke-HookGit @('ls-files', '-z')
+    if ($tracked.ExitCode -ne 0) { throw 'Could not verify Git attributes for tracked files.' }
+    if (-not $tracked.Output) { return }
+    $attributes = Invoke-HookGit -Arguments @('check-attr', '-z', '--stdin', 'filter') -InputText $tracked.Output
+    if ($attributes.ExitCode -ne 0) { throw 'Could not verify Git filter attributes.' }
+    $fields = $attributes.Output -split "`0"
+    for ($index = 2; $index -lt $fields.Count; $index += 3) {
+        $filter = [regex]::Escape($fields[$index])
+        if ($filters.Output -match "(?m)^filter\.$filter\.(clean|process) +\S") {
+            throw [System.NotSupportedException]::new('An external Git clean or process filter applies to tracked files and has no verified windowless launch path.')
+        }
+    }
+}
+
 function Invoke-GitRead {
     param([string[]]$Arguments)
-    $text = (& git -C $root -c core.safecrlf=false @Arguments 2>$null | Out-String).Replace("`r`n", "`n")
-    if ($LASTEXITCODE -ne 0) { throw 'Automatic Git verification failed; inspect the project locally.' }
-    return $text
+    $result = Invoke-HookGit $Arguments
+    if ($result.ExitCode -ne 0) { throw 'Automatic Git verification failed; inspect the project locally.' }
+    return $result.Output.Replace("`r`n", "`n")
 }
 
 function Get-WorkFingerprint {
-    $insideGit = & git -C $root rev-parse --is-inside-work-tree 2>$null
-    if ($LASTEXITCODE -ne 0) { return 'no-git' }
+    param([bool]$InsideGit)
+    if (-not $InsideGit) { return 'no-git' }
     # Hash changes without copying source, prompts, or tool output into the audit.
     $parts = [System.Collections.Generic.List[string]]::new()
     # HEAD may not exist yet in a freshly installed project.
-    $head = & git -C $root rev-parse --verify HEAD 2>$null
-    $parts.Add($(if ($LASTEXITCODE -eq 0) { [string]$head } else { 'unborn' }))
-    $parts.Add((Invoke-GitRead -Arguments @('diff', '--no-ext-diff', '--binary')))
-    $parts.Add((Invoke-GitRead -Arguments @('diff', '--cached', '--no-ext-diff', '--binary')))
+    $head = Invoke-HookGit @('rev-parse', '--verify', 'HEAD')
+    $parts.Add($(if ($head.ExitCode -eq 0) { $head.Output.TrimEnd() } else { 'unborn' }))
+    $parts.Add((Invoke-GitRead -Arguments @('diff', '--ignore-submodules=dirty', '--no-ext-diff', '--no-textconv', '--binary')))
+    $parts.Add((Invoke-GitRead -Arguments @('diff', '--cached', '--ignore-submodules=dirty', '--no-ext-diff', '--no-textconv', '--binary')))
     $untracked = Invoke-GitRead -Arguments @('ls-files', '--others', '--exclude-standard', '-z')
     foreach ($relative in ($untracked.TrimEnd("`n") -split "`0")) {
         if (-not $relative) { continue }
@@ -103,17 +155,20 @@ try {
     }
 
     $checksPassed = $true
-    $insideGit = & git -C $root rev-parse --is-inside-work-tree 2>$null
-    if ($LASTEXITCODE -eq 0) {
-        & git -C $root -c core.safecrlf=false diff --check 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { $checksPassed = $false }
-        & git -C $root -c core.safecrlf=false diff --cached --check 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { $checksPassed = $false }
+    $insideGit = $false
+    if (Test-Path -LiteralPath (Join-Path $root '.git')) {
+        $worktree = Invoke-HookGit @('rev-parse', '--is-inside-work-tree')
+        if ($worktree.ExitCode -ne 0 -or $worktree.Output.Trim() -ne 'true') { throw 'Automatic Git verification could not resolve the project worktree.' }
+        $insideGit = $true
+        if ($IsWindows) { Assert-WindowlessDiff }
+        $unstaged = Invoke-HookGit @('diff', '--ignore-submodules=dirty', '--no-ext-diff', '--no-textconv', '--check')
+        $staged = Invoke-HookGit @('diff', '--cached', '--ignore-submodules=dirty', '--no-ext-diff', '--no-textconv', '--check')
+        $checksPassed = $unstaged.ExitCode -eq 0 -and $staged.ExitCode -eq 0
     }
     # A successful Stop must not create a synthetic user prompt and duplicate
     # the already streamed final answer. Work rules require review before it.
     # The audit records automated checks, not proof of semantic review.
-    $fingerprint = Get-Digest ($context + "`n" + (Get-WorkFingerprint))
+    $fingerprint = Get-Digest ($context + "`n" + (Get-WorkFingerprint $insideGit))
     $receipt = if (Test-Path -LiteralPath $receiptPath) { [System.IO.File]::ReadAllText($receiptPath) | ConvertFrom-Json } else { $null }
     $continuedProperty = $event.PSObject.Properties['stop_hook_active']
     $continued = $continuedProperty -and $continuedProperty.Value -eq $true
@@ -143,6 +198,10 @@ try {
         exit 0
     }
     # Hook failures must be visible; never print a successful completion receipt.
-    @{ continue = $false; stopReason = 'GI mandatory lifecycle verification failed.'; systemMessage = 'GI hook failed: mandatory context or local verification is unavailable. Task completion remains unverified.' } | ConvertTo-Json -Compress
+    $message = 'GI hook failed: mandatory context or local verification is unavailable. Task completion remains unverified.'
+    if ($_.Exception -is [System.NotSupportedException] -and $eventName -eq 'Stop') {
+        $message = 'GI hook blocked Windows Git verification. ' + $_.Exception.Message
+    }
+    @{ continue = $false; stopReason = 'GI mandatory lifecycle verification failed.'; systemMessage = $message } | ConvertTo-Json -Compress
     exit 0
 }

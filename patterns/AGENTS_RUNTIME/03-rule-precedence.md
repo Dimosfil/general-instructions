@@ -20,6 +20,14 @@
   when it improves the user's stated goal.
 - Prefer token economy and optimization after the correct scope is clear.
 
+## Windows Git And Focus
+
+- On Windows, automated Git must never open a window or steal keyboard focus.
+  This includes read-only commands and indirect launches by tests, hooks,
+  scripts, and tools. Verify the actual launch path before running it. If it
+  cannot be kept windowless, stop that operation and report the blocker.
+  Follow `05-windows-command-policy.md` for the launch requirements.
+
 ## Authorization And Follow-Through
 
 - Treat requests to do, fix, review, or help with a task as instructions to

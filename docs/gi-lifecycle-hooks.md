@@ -18,6 +18,11 @@ Hooks deliver that live source instead of maintaining another copy of the rules.
   Passing checks return empty JSON, recording `completion_allowed` locally
   without a chat message or second response. Manual `-Phase Complete` does not
   replace these automatic checks. Only actual check failures request correction.
+- On Windows, the Codex entrypoint resolves the project root from its Git
+  metadata on disk. The shared Stop hook starts native Git without a console.
+  It disables external diff drivers, text conversion and filesystem monitors,
+  and reports verification as blocked if a tracked file uses an external Git
+  clean or process filter.
 
 Work, compaction and service context deliver module 03's requirement to review
 the actual result internally before one final response. The enabled module 15

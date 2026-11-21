@@ -6,8 +6,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 ## Loading Contract
 
 - For Unity work and automatic setup, load `20-unity-projects.md`.
-- Start here. This file alone is sufficient only for greetings and
-  status-neutral replies.
+- For greetings and status-neutral replies, this file is sufficient.
 - Select task modules before concrete work. For GI commands, pass the exact user
   command via `-CommandText` to the context helper. Use `COMMANDS.md` only for help.
 - For `gi init`, `init`, `инит`, a canonical URL, short repository name,
@@ -37,7 +36,8 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
 
 ## Core Safety
 
-- Final: load `15-final-review.md`.
+- Windows Git must preserve focus and launch without windows. See `05-windows-command-policy.md`.
+- Final: `15-final-review.md`.
 - Safety, secrets, destructive operations, and repository scope have highest
   priority. Verify the active root and target identity before writes. An exact
   external path and action require explicit authorization.
@@ -68,8 +68,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
   passports, and explicit public contracts. Agree on ownership and integration
   edges before independent agents implement both sides; verify assembled
   workflows. Follow `patterns/MODULAR_SERVICE_ENGINEERING.md`.
-- Keep shared guidance project-agnostic. Project-specific behavior belongs in
-  that project's local instructions, runbook, docs, or project memory.
+- Keep project-specific guidance in local instructions, docs, or project memory.
 
 ## Runtime Routing
 

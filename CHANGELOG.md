@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.11.21
+
+- Require windowless Git on Windows, including read-only commands and Git
+  launched by tests and hooks. Remove Git from the Windows Codex root lookup
+  and run shared lifecycle checks through the native console-free Git path.
+  Migration `2026.11.21.1__require_windowless_windows_git`.
+
 ## 2026.11.20
 
 - Deliver raw database output routing in mandatory Work/Complete context,

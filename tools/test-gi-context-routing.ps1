@@ -558,7 +558,7 @@ try {
     $fixtureBuilder = Join-Path $newlineRoot 'tools/get-gi-context.ps1'
     [System.IO.File]::WriteAllText($fixtureRulesPath, $mandatoryRules, $utf8)
     [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'tools/project-memory/verification-preferences.json'), '{"task_completion_review":{"enabled":false}}', $utf8)
-    $newlineBudgets.route_packet_default_max_chars = 5000
+    $newlineBudgets.route_packet_default_max_chars = $mandatoryRules.Length + 300
     [System.IO.File]::WriteAllText((Join-Path $newlineRoot 'config/gi-context-budgets.json'), ($newlineBudgets | ConvertTo-Json), $utf8)
     foreach ($phase in @('Work', 'Complete')) {
         $phasePacket = (& $fixtureBuilder -Phase $phase -SkipUpdateCheck | Out-String).Replace("`r`n", "`n")
