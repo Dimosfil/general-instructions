@@ -140,7 +140,8 @@ try {
         $mechanismFiles = @(
             "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
             "patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md",
-            "patterns/COHERENT_BATCH_VERIFICATION.md"
+            "patterns/COHERENT_BATCH_VERIFICATION.md",
+            "patterns/AGENTS_RUNTIME/15-verification.md"
         )
         foreach ($relativePath in $mechanismFiles) {
             if ($metadata.copied_files -notcontains $relativePath) {
@@ -150,7 +151,7 @@ try {
         $architectureText = [System.IO.File]::ReadAllText((Join-Path $target $mechanismFiles[0]))
         foreach ($needle in @('## System Mechanism And Responsibility Gate',
             'scenario -> mechanism -> contract owner -> change location ->',
-            'removal', 'side effects')) {
+            'owns the bypass', 'removal', 'side effects')) {
             if (-not $architectureText.Contains($needle)) {
                 throw "Bootstrap omitted mechanism-gate contract: $needle"
             }

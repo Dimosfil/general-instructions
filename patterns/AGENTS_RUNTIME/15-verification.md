@@ -17,27 +17,29 @@ Before a heavy run, verify the profile, scope, and likely resource use.
 Apply the mandatory authorization boundary. Use focused checks and report
 remaining gaps when a heavy run is outside the authorized scope.
 
-After relevant checks pass, broaden or repeat them only for a new change,
-failure, unresolved concern, or mandatory project gate, within the authorization
-above. Do not rerun unchanged checks merely to gain confidence. Report
-unavailable checks as specific verification gaps and continue independent
-authorized work.
+After relevant checks pass, repeat or broaden them only for a new change,
+failure, unresolved concern, or mandatory project gate. Respect the
+authorization boundary, report unavailable checks, and continue independent work.
 
 For behavior/architecture changes, check the pre-edit mechanism mapping, scenario
 result, invariants, and side effects under `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
 Reject undocumented bypasses and tests merely mirroring code. A restored final
 state does not prove intermediate effects safe; report live verification gaps.
 
-For changes to configurable behavior, inspect new identifier-selected branches,
-embedded limits/defaults/mappings and competing sources of policy. Verify that
-callers consume the authoritative contract and that changed contract data
-affects behavior through the normal entry point. Check representative valid,
-invalid and missing configuration using existing checks where sufficient.
-When target storage is unavailable, verify the prepared data package offline
-and report unapplied changes and live checks separately. For a moved rule,
-inspect the affected call path for old fallback branches and verify that
-missing or invalid data produces the documented outcome. A passing check
-with complete data does not exercise that path. Follow
+For an affected module boundary, inspect direct and indirect dependency and call paths.
+Verify through the normal entry point that success, failure, and fallback paths
+respect the contract and that any bypass stays within its documented scope.
+
+For consequential invariants, use controlled cases to show the check accepts a
+representative conforming case and detects a representative violation. Reuse
+existing evidence when sufficient and report verification gaps.
+
+For configurable behavior, inspect identifier-selected branches, embedded limits,
+defaults and mappings, and competing policies. Vary contract data to verify that
+the normal entry point uses the authoritative value. Check the documented outcomes
+for valid, missing and invalid data. Trace moved rules through old fallback paths.
+If target storage is unavailable, verify the prepared data package offline and
+report unapplied changes and pending live checks. Follow
 `patterns/CONFIGURATION_BOUNDARIES.md`.
 
 For documentation-only changes:

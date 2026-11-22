@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.11.22
 
+- Verify affected module boundaries through dependency and call paths.
+  Check consequential invariants with both conforming and violating cases
+  and explicitly assign ownership of unavoidable bypasses. Migration
+  `2026.11.22.3__verify_module_boundaries_and_invariants`.
+
 - Require one reconciled inventory for full-scope tasks and explicit request,
   documented project requirement, or agreement before heavy verification.
   Deliver both rules in mandatory context. Migration

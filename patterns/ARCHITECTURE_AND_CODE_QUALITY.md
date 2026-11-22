@@ -65,9 +65,10 @@ fixes, or refactoring; keep its depth proportional to the affected scenario.
   between the two operations. Distinguish this from contract-defined rollback
   or recovery, which must also preserve ownership and observable guarantees.
 - For an unavoidable bypass, record the concrete constraint, why correction at
-  the owner is unavailable, scope, side effects, verification, and the removal
-  condition or review trigger. Keep temporary behavior explicit in the relevant
-  local contract. Do not call an undocumented bypass the completed system fix.
+  the owner is unavailable, and who owns the bypass. Record its scope, side
+  effects, verification, and removal condition or review trigger. Keep temporary
+  behavior explicit in the relevant local contract. Do not call an undocumented
+  bypass the completed system fix.
 - Test expected behavior derived from the contract, including representative
   input types and participating components. Do not change expectations merely
   to match the new implementation or treat a final-state assertion as proof
