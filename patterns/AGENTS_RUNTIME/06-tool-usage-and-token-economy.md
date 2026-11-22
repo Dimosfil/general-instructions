@@ -144,12 +144,13 @@
 - Do not print large logs. Prefer tails and targeted error searches.
 - For verification, count or query HTML elements programmatically instead of
   printing the whole HTML document.
-- Do not produce broad artifacts, such as zip archives, or run full check
-  matrices unless the user explicitly asks for that scope.
+- Do not produce broad artifacts, such as zip archives, unless the user asks
+  for that scope. Follow the authorization boundary in `15-verification.md`
+  for heavy verification runs.
 - Split multi-step R&D into separate tasks when later steps do not need the
   full previous reasoning trace.
-- Broader scans, longer logs, or larger check suites are acceptable for incident
-  debugging, explicit user requests, release checks, or unclear failures after
-  targeted searches.
+- Broaden targeted reads or log excerpts when needed for incident debugging,
+  explicit requests, release checks, or unresolved failures. Check-suite scope
+  remains subject to the mandatory completion gate.
 - Final responses should summarize only the changes, checks, and current status;
   do not restate the full investigation context.

@@ -81,6 +81,9 @@ try {
     Assert-Contains $mandatoryRules 'patterns/AGENTS_RUNTIME/07-scope-and-evidence.md' 'Mandatory raw routing must load the full database contract.'
     Assert-Contains $mandatoryRules '## Code-Change Gate' 'Code-change checks must remain in mandatory Work, Complete and service context.'
     Assert-Contains $mandatoryRules 'behavior for missing or invalid data' 'Mandatory code-change checks must cover missing and invalid data.'
+    Assert-Contains $mandatoryRules 'inventory all agreed areas before edits' 'Mandatory completion must cover the whole agreed scope.'
+    Assert-Contains $mandatoryRules 'documented project requirement' 'Mandatory context must include authorization for heavy verification.'
+    Assert-Contains $mandatoryRules '`gi start` alone authorizes none of these.' 'Startup alone must not authorize a broad verification run.'
     $aliases = @{}
     foreach ($route in $manifest.routes) {
         if (-not $route.id -or -not $route.contract -or @($route.aliases).Count -eq 0) {

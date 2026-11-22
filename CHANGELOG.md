@@ -4,6 +4,11 @@ Accepted changes for the shared instruction library.
 
 ## 2026.11.22
 
+- Require one reconciled inventory for full-scope tasks and explicit request,
+  documented project requirement, or agreement before heavy verification.
+  Deliver both rules in mandatory context. Migration
+  `2026.11.22.2__require_scope_evidence_and_test_authorization`.
+
 - Put the code-change gate in mandatory Work and Complete context. Require
   agents to resolve policy at its authoritative owner, check affected fallback
   paths with missing or invalid contract data, and report unresolved violations.

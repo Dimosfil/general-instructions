@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.11.22.1",
+  "instruction_kit_version": "2026.11.22.2",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "TODO",
   "unity_mcp": {
@@ -116,7 +116,7 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.11.22.1__require_authoritative_code_change_gate",
+    "applied_through": "2026.11.22.2__require_scope_evidence_and_test_authorization",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   }

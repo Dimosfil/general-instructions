@@ -66,17 +66,18 @@
 
 ## Whole-Task Completion Gate
 
-- Before claiming completion, check the actual result against every mandatory
-  requirement in the full agreed scope; do not substitute a plan or successful
-  part, or silently reduce the requested outcome.
-- Match claims to current evidence. Verify working scenarios through their actual
-  components; isolated checks, builds, or mocks do not prove integrated behavior.
-- Distinguish implemented, executed, and verified work. Report unfinished or
-  unverified requirements, failed/unavailable checks, blockers, and impact
-  explicitly; never invent results or call required leftovers optional.
-- Continue feasible authorized work. This gate is mandatory even with optional
-  final review off; reuse evidence without new forms or repeated checks. Git
-  finalization checks its own result, without reopening verified product work.
+- For full-scope work, inventory all agreed areas before edits. Keep one list
+  of areas checked, findings, and blockers. Continue through it without a
+  reminder. Claim completion only after all areas are checked and each finding
+  is resolved or explicitly accepted.
+- Check actual results against every requirement. Verify through the actual
+  components. Distinguish implemented, executed, and verified work. Report
+  unresolved and unverified requirements, blockers, and impact.
+- Use the smallest sufficient checks. Heavy or full suites, whole-catalog audits,
+  and large test matrices need an explicit request, documented project requirement,
+  or prior agreement. `gi start` alone authorizes none of these.
+- This gate applies even with optional final review off. Reuse evidence.
+  Git finalization does not reopen verified product work.
 
 ## Database Raw Output
 

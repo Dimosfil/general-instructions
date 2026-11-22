@@ -2,16 +2,26 @@
 
 Apply the whole-task gate in `03-rule-precedence.md`.
 
+For full-scope work, reuse one inventory of affected areas and entry points.
+Record evidence, exclusions, findings, and blockers. For settings, include
+owners and runtime consumers. Keep unchecked or blocked areas open. Distinguish
+search coverage from verification of fixes.
+
 Choose checks by changed behavior, affected layers, risk, and the documented
 project contract. Complete required checks, including any explicitly requested
 full test or release workflow. Use the smallest sufficient set for other tasks.
 Do not add tests for reversible, low-impact edits when they only restate the
 implementation and protect no meaningful behavior.
 
+Before a heavy run, verify the profile, scope, and likely resource use.
+Apply the mandatory authorization boundary. Use focused checks and report
+remaining gaps when a heavy run is outside the authorized scope.
+
 After relevant checks pass, broaden or repeat them only for a new change,
-failure, unresolved concern, or mandatory project gate. Do not rerun unchanged
-checks merely to gain confidence. Report unavailable checks as specific
-verification gaps and continue independent authorized work.
+failure, unresolved concern, or mandatory project gate, within the authorization
+above. Do not rerun unchanged checks merely to gain confidence. Report
+unavailable checks as specific verification gaps and continue independent
+authorized work.
 
 For behavior/architecture changes, check the pre-edit mechanism mapping, scenario
 result, invariants, and side effects under `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`.
