@@ -56,6 +56,14 @@
 - Reuse existing agreement. Routine reversible work needs no approval or new
   paperwork; continue independent steps. Silence is not agreement.
 
+## Code-Change Gate
+
+- Fix the cause at the contract owner. Document bypasses and get approval
+  when they change an agreed contract.
+- Keep changeable policy in its authoritative contract. Use its documented
+  behavior for missing or invalid data. Before completion, check those cases
+  when relevant and reject silent hard-coded fallbacks.
+
 ## Whole-Task Completion Gate
 
 - Before claiming completion, check the actual result against every mandatory

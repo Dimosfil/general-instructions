@@ -2,6 +2,13 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.11.22
+
+- Put the code-change gate in mandatory Work and Complete context. Require
+  agents to resolve policy at its authoritative owner, check affected fallback
+  paths with missing or invalid contract data, and report unresolved violations.
+  Migration `2026.11.22.1__require_authoritative_code_change_gate`.
+
 ## 2026.11.21
 
 - Require windowless Git on Windows, including read-only commands and Git

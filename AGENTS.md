@@ -62,7 +62,7 @@ task-relevant modules under `patterns/AGENTS_RUNTIME/`.
   evidence references, never bulk artifacts or a replacement for source/tests.
 - Before implementation, bug fixes, or refactoring, load modules 04, 06, and 15.
   Trace the affected scenario, identify its mechanism and contract owner, and
-  correct the cause there. Justify any bypass. Follow the mechanism gate in
+  correct the cause there. Apply the mandatory code-change gate and follow
   `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`; align code, tests, docs, and memory.
 - For large modular systems, keep a project-local system map, focused module
   passports, and explicit public contracts. Agree on ownership and integration

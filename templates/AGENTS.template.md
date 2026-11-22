@@ -45,7 +45,7 @@ TODO: describe the product, users, and primary runtime surface.
 - Final: `15-final-review.md`.
 - Before implementation, bug fixes, or refactoring, load modules 04, 06, and 15.
   Trace the affected scenario, identify its mechanism and contract owner, and
-  correct the cause there. Justify any bypass. Follow the mechanism gate in
+  correct the cause there. Apply the mandatory code-change gate and follow
   `patterns/ARCHITECTURE_AND_CODE_QUALITY.md`; align code, tests, docs, and memory.
 - Verify the active project root and target identity before writes. Treat this
   root as the normal filesystem boundary; exact external paths and actions need

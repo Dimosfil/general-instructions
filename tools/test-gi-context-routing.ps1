@@ -79,6 +79,8 @@ try {
     $mandatoryRules = [System.IO.File]::ReadAllText((Join-Path $repoRoot 'patterns/AGENTS_RUNTIME/03-rule-precedence.md')).Replace("`r`n", "`n").TrimEnd()
     Assert-Contains $mandatoryRules '## Database Raw Output' 'Raw output routing must remain in mandatory Work/Complete context, including startup and mandatory-only hooks.'
     Assert-Contains $mandatoryRules 'patterns/AGENTS_RUNTIME/07-scope-and-evidence.md' 'Mandatory raw routing must load the full database contract.'
+    Assert-Contains $mandatoryRules '## Code-Change Gate' 'Code-change checks must remain in mandatory Work, Complete and service context.'
+    Assert-Contains $mandatoryRules 'behavior for missing or invalid data' 'Mandatory code-change checks must cover missing and invalid data.'
     $aliases = @{}
     foreach ($route in $manifest.routes) {
         if (-not $route.id -or -not $route.contract -or @($route.aliases).Count -eq 0) {

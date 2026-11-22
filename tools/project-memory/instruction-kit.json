@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.11.21.1",
+  "instruction_kit_version": "2026.11.22.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "unity_mcp": {
@@ -113,9 +113,9 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.11.21.1__require_windowless_windows_git",
+    "applied_through": "2026.11.22.1__require_authoritative_code_change_gate",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   },
-  "last_update_check_at": "2026-11-21T11:36:39+03:00"
+  "last_update_check_at": "2026-11-22T11:24:02+03:00"
 }

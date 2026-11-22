@@ -24,8 +24,10 @@ callers consume the authoritative contract and that changed contract data
 affects behavior through the normal entry point. Check representative valid,
 invalid and missing configuration using existing checks where sufficient.
 When target storage is unavailable, verify the prepared data package offline
-and report unapplied changes and live checks separately. Functional tests alone
-do not establish configuration ownership. Follow
+and report unapplied changes and live checks separately. For a moved rule,
+inspect the affected call path for old fallback branches and verify that
+missing or invalid data produces the documented outcome. A passing check
+with complete data does not exercise that path. Follow
 `patterns/CONFIGURATION_BOUNDARIES.md`.
 
 For documentation-only changes:

@@ -29,6 +29,13 @@ variables, service discovery, or deployment metadata.
   in callers does not establish this boundary. For a necessary executable
   exception, document its technical constraint, owner, scope, verification and
   removal condition in the project contract.
+- If required contract data is missing, invalid, or unavailable, follow the
+  contract's explicit failure or availability behavior. If that behavior is
+  undefined, resolve it with the contract owner before claiming the affected
+  path complete. Optional defaults must come from the authoritative contract.
+  Scope legacy compatibility to the inputs and paths named in that contract.
+  An empty value or a failed lookup alone must not send an authoritative path
+  through legacy policy.
 - Do not turn one observed request, selected object, date range, filename,
   local folder, model, index partition, UI label, test case, or screenshot into
   a default configuration value or product policy. Treat concrete incidents as
