@@ -129,6 +129,8 @@ try {
     }
 
     $routeCases = @(
+        @{ Command = "ги кастом имя из нескольких слов"; Route = "custom-integration"; ExpectedCommand = "ги кастом" },
+        @{ Command = "GI CUSTOM"; Route = "custom-integration"; ExpectedCommand = "gi custom" },
         @{ Command = "ги проверка"; Route = "task-verification" },
         @{ Command = "gi проверка выкл"; Route = "task-verification" },
         @{ Command = "gi verification on"; Route = "task-verification" },
@@ -174,7 +176,8 @@ try {
         if ($routeLine.Count -ne 1 -or $routeLine[0] -ne ("GI route: {0}" -f $case.Route)) {
             throw "Command '$($case.Command)' resolved incorrectly."
         }
-        Assert-Contains $output ("Requested command: {0}" -f $case.Command) "Resolver discarded command modifiers or selection."
+        $expectedCommand = if ($case.ContainsKey('ExpectedCommand')) { $case.ExpectedCommand } else { $case.Command }
+        Assert-Contains $output ("Requested command: {0}" -f $expectedCommand) "Unexpected command in the resolver header."
     }
 
     $testInfoRoute = @($manifest.routes | Where-Object { $_.id -eq "test" })[0]

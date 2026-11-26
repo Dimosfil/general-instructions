@@ -2,6 +2,12 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.11.26
+
+- Add `gi custom` and `ги кастом` to select a project-registered API
+  integration and prepare its runbook and credential references.
+  Migration `2026.11.26.1__add_project_api_integration_commands`.
+
 ## 2026.11.22
 
 - Verify affected module boundaries through dependency and call paths.

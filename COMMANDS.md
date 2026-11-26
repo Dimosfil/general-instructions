@@ -26,6 +26,7 @@ script path.
 | Command family | Purpose |
 | --- | --- |
 | `gi help`, `ги хелп`, `gi commands`, `ги команды` | Show this compact command index. |
+| `gi custom [name]`, `ги кастом [имя]` | List or select an API integration registered in this project for the current chat. |
 | `gi ошибка`, `ги ошибка`, `gi error` | Record evidence for a suspected reusable GI rule problem. |
 | `gi ошибка фикс`, `ги ошибка фикс`, `gi error fix` | Repair an accepted GI rule problem end to end. |
 | `gi init <source>`, `инит <source>` | Bootstrap GI instructions from the canonical repository or a local checkout. |

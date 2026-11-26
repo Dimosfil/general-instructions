@@ -11,6 +11,10 @@ project scope, privacy rules, and explicit user request.
 
 ## Entry Template
 
+For a chat-selectable API integration, add the four API fields below to the
+entry. Omit them for other dependencies. Fill them with plain text and store
+actual credentials in the project-approved secret source.
+
 ### Project Name
 
 - Purpose:
@@ -20,6 +24,10 @@ project scope, privacy rules, and explicit user request.
 - Service ID or runtime endpoints:
 - Owner or source of truth:
 - Data/API contract:
+- GI custom aliases:
+- API reference:
+- API runbook:
+- Credential source:
 - Setup, sync, build, test, or update commands:
 - Version, branch, or update cadence:
 - Privacy, secret, license, and access boundaries:

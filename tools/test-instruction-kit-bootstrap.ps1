@@ -40,12 +40,14 @@ $requiredFiles = @(
     "tools/project-memory/code_intelligence.py",
     "patterns/CODE_INTELLIGENCE_ADAPTERS.md",
     "patterns/GI_COMMAND_CONTRACTS.md",
+    "patterns/API_KEY_SECRET_SAFETY.md",
     "patterns/GIT_WORKFLOW.md",
     "patterns/ARCHITECTURE_AND_CODE_QUALITY.md",
     "patterns/SENIOR_AGENT_ENGINEERING_STANDARD.md",
     "patterns/COHERENT_BATCH_VERIFICATION.md",
     "patterns/MODULAR_SERVICE_ENGINEERING.md",
     "templates/SYSTEM_MAP.template.md",
+    "templates/CONNECTED_PROJECTS.template.md",
     "templates/MODULE_PASSPORT.template.md",
     "templates/MODULE_CONTRACT.template.md",
     "templates/PROJECT_TESTING.template.md",
@@ -67,11 +69,36 @@ $requiredFiles = @(
 
 try {
     [void](New-Item -ItemType Directory -Path $testRoot)
+    $registryPath = 'tools/project-memory/specs/integration-contracts/connected-projects.md'
+    $integrationRegistry = @'
+# Connected Projects
+
+### Sample API
+- GI custom aliases: Test API Name, duplicate
+- API reference: https://docs.example.invalid/api
+- API runbook: docs/sample.md
+- Credential source: env:GI_TEST_API_LOGIN, env:GI_TEST_API_PASSWORD
+- Private fixture metadata: do-not-print-fixture
+
+## Other API
+- GI custom aliases: duplicate
+- API reference: https://user:do-not-print-fixture@docs.example.invalid/api
+- API runbook: ../missing.md
+- Credential source: do-not-print-fixture
+
+### Unregistered library
+- Purpose: ordinary dependency
+'@
     for ($index = 0; $index -lt $forms.Count; $index++) {
         $target = Join-Path $testRoot ("case-" + $index)
         [void](New-Item -ItemType Directory -Path $target)
 
         if ($index -eq 2) {
+            $registry = Join-Path $target $registryPath
+            [void][System.IO.Directory]::CreateDirectory((Split-Path -Parent $registry))
+            [System.IO.File]::WriteAllText($registry, $integrationRegistry)
+            [void][System.IO.Directory]::CreateDirectory((Join-Path $target 'docs'))
+            [System.IO.File]::WriteAllText((Join-Path $target 'docs/sample.md'), 'Use the approved authenticated client for the requested endpoint.')
             [void][System.IO.Directory]::CreateDirectory((Join-Path $target '.opencode/plugins'))
             [System.IO.File]::WriteAllText((Join-Path $target '.opencode/plugins/project-owned.js'), 'export default async () => ({})')
             [void][System.IO.Directory]::CreateDirectory((Join-Path $target '.codex'))
@@ -85,6 +112,53 @@ try {
         }
 
         & $installer -Source $forms[$index] -SourceRoot $repoRoot -TargetPath $target | Out-Null
+        $customBuilder = Join-Path $target 'tools/get-gi-context.ps1'
+        if ($index -eq 2) {
+            if ([System.IO.File]::ReadAllText($registry) -cne $integrationRegistry) { throw 'Bootstrap changed the project integration registry.' }
+            $previousPassword = $env:GI_TEST_API_PASSWORD
+            $env:GI_TEST_API_PASSWORD = 'do-not-print-fixture'
+            try {
+                $customPacket = & {
+                    function Invoke-WebRequest { throw 'Activation attempted a network request.' }
+                    function Invoke-RestMethod { throw 'Activation attempted an API request.' }
+                    & $customBuilder -CommandText 'ГИ   КАСТОМ  Test  API Name' -SkipUpdateCheck
+                } | Out-String
+            } finally { $env:GI_TEST_API_PASSWORD = $previousPassword }
+            foreach ($line in @('Custom integration status: selected', 'Integration: Sample API',
+                'API runbook: docs/sample.md', 'API reference: https://docs.example.invalid/api',
+                'Credential source: env:GI_TEST_API_LOGIN, env:GI_TEST_API_PASSWORD')) {
+                if (-not $customPacket.Contains($line)) { throw "Missing custom integration context: $line" }
+            }
+            $cases = @(
+                @{ Command = 'gi custom'; Status = 'list' },
+                @{ Command = 'gi custom duplicate'; Status = 'ambiguous' },
+                @{ Command = 'gi custom test api'; Status = 'unknown' },
+                @{ Command = 'gi custom Unregistered library'; Status = 'unknown' },
+                @{ Command = 'gi custom other API'; Status = 'selected' }
+            )
+            foreach ($case in $cases) {
+                $packet = & $customBuilder -CommandText $case.Command -SkipUpdateCheck | Out-String
+                if (-not $packet.Contains("Custom integration status: $($case.Status)") -or
+                    $packet.Contains('do-not-print-fixture')) { throw "Unexpected custom context: $($case.Command)" }
+                if ($case.Status -in @('list', 'ambiguous') -and
+                    ($packet -notmatch '(?m)^- Sample API \(registry line' -or
+                     $packet -notmatch '(?m)^- Other API \(registry line' -or
+                     $packet -match '(?m)^Integration:')) { throw 'Expected names without an activated integration.' }
+                if ($case.Status -eq 'selected') {
+                    foreach ($key in @('API reference', 'API runbook', 'Credential source')) {
+                        if (-not $packet.Contains("${key}: invalid or unavailable in the current project")) {
+                            throw "Invalid reference was not reported: $key"
+                        }
+                    }
+                }
+            }
+            if ($customPacket.Contains('do-not-print-fixture')) { throw 'Activation exposed a credential value.' }
+        } else {
+            $customPacket = & $customBuilder -CommandText 'gi custom Test API Name' -SkipUpdateCheck | Out-String
+            if (-not $customPacket.Contains('Custom integration status: registry unavailable')) {
+                throw 'Custom integration resolved outside its registered project.'
+            }
+        }
         if ($index -eq 2 -and [System.IO.File]::ReadAllText((Join-Path $target '.opencode/plugins/project-owned.js')) -cne 'export default async () => ({})') {
             throw 'Bootstrap replaced a project-owned OpenCode plugin.'
         }

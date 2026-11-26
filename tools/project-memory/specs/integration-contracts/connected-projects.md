@@ -5,6 +5,11 @@ This register tracks external projects and sources that the shared
 Agents should read it before changing instruction-kit propagation, update flows,
 or cross-project integration guidance.
 
+The `gi custom` route selects only entries that opt in through the
+`GI custom aliases` field in the active project's registry. The route and
+its project-local documentation and access contract are defined in
+`patterns/API_KEY_SECRET_SAFETY.md`.
+
 ## Canonical GitHub Source Repository
 
 - Purpose: public source of truth for the shared reusable instruction library.

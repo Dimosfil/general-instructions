@@ -4,6 +4,42 @@ Use this pattern when a project creates, stores, configures, rotates, or calls
 external APIs with credentials such as API keys, tokens, webhook secrets,
 service-account keys, signing secrets, or provider-specific access credentials.
 
+## Project API Integration Commands
+
+- Use `gi custom [name]` or `ги кастом [имя]` to select an API integration
+  for the current chat and project. Pass the exact chat command to
+  `tools/get-gi-context.ps1 -CommandText`. Treat the whole suffix as the name
+  or alias and match it exactly after normalizing case and whitespace.
+- Register integrations in the current project's existing
+  `tools/project-memory/specs/integration-contracts/connected-projects.md`.
+  Use a level-two or level-three heading as the plain-text name and add the
+  four bullets shown in `templates/CONNECTED_PROJECTS.template.md`. The
+  `GI custom aliases` bullet opts an entry in and accepts comma-separated aliases
+  or an empty value for heading-only matching. Keep names and aliases unique.
+- Use one `API reference` for the API list or documentation. Provide an HTTPS
+  URL without user info or a query string, or a project-relative Markdown path.
+  Use one `API runbook` pointing to project-relative Markdown with endpoints,
+  request instructions, and the approved way to invoke the authenticated tool.
+  Keep both resources free of credential values.
+- Use one `Credential source` bullet with comma-separated non-secret references
+  such as `env:API_LOGIN`, `env:API_PASSWORD`, `connector:service-account`, or
+  `secret:integrations/service`. Use references for the sources the runbook
+  actually uses. Keep values in the approved store and give them directly to
+  the authenticated tool when executing the requested operation.
+- On `list`, show the registered names. On `registry unavailable`, report the
+  expected project-local path. On `unknown`, report that no profile matches.
+  On `ambiguous`, present the matching entries and ask which one to select
+  before activating any of them. Use the registry line to distinguish entries
+  with identical names. After an explicit choice, apply the same reference
+  checks to that entry. Preserve any prior selection until a new one succeeds.
+- On `selected`, open only the returned local documentation and runbook for
+  the chosen entry. Report the integration, documentation links, and explicit
+  setup gaps. Remember the selection for this chat in the active project.
+  Keep credential references as metadata and leave credential availability
+  unverified during activation. Make API requests only for a later explicit
+  operation in the same project, following the runbook and its authorization
+  boundaries.
+
 ## Rule
 
 - Keep API keys and tokens out of source code, committed config, generated

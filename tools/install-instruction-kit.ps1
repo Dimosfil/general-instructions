@@ -246,6 +246,7 @@ try {
         @{ Source = "templates/rag-system.template.json"; Target = "tools/project-memory/rag-system.json" },
         @{ Source = "tools/project-memory/code_intelligence.py"; Target = "tools/project-memory/code_intelligence.py" },
         @{ Source = "templates/TECHNOLOGY_STACK.template.md"; Target = "tools/project-memory/specs/technology-stack.md" },
+        @{ Source = "templates/CONNECTED_PROJECTS.template.md"; Target = "templates/CONNECTED_PROJECTS.template.md" },
         @{ Source = "templates/SYSTEM_MAP.template.md"; Target = "templates/SYSTEM_MAP.template.md" },
         @{ Source = "templates/MODULE_PASSPORT.template.md"; Target = "templates/MODULE_PASSPORT.template.md" },
         @{ Source = "templates/MODULE_CONTRACT.template.md"; Target = "templates/MODULE_CONTRACT.template.md" },

@@ -25,6 +25,12 @@
       ]
     },
     {
+      "id": "custom-integration",
+      "aliases": ["gi custom", "ги custom", "gi кастом", "ги кастом"],
+      "contract": "Resolve a registered API integration in the active project and prepare its documentation and credential references for the current chat.",
+      "context_files": ["patterns/API_KEY_SECRET_SAFETY.md"]
+    },
+    {
       "id": "error-fix",
       "aliases": [
         "gi ошибка фикс",
