@@ -132,7 +132,8 @@ try {
     $phase = if ($eventName -eq 'Stop') { 'Complete' } else { 'Work' }
     $context = (& (Join-Path $root 'tools/get-gi-context.ps1') -Phase $phase -MandatoryOnly:($eventName -eq 'PreToolUse') -SkipUpdateCheck | Out-String).Replace("`r`n", "`n").TrimEnd()
     $budgets = [System.IO.File]::ReadAllText((Join-Path $root 'config/gi-context-budgets.json')) | ConvertFrom-Json
-    if ($context.Length -gt [int]$budgets.section_max_chars) { throw 'Mandatory hook context exceeds the existing section cap.' }
+    $mandatoryHookMaxChars = [int]$budgets.mandatory_hook_max_chars
+    if ($context.Length -gt $mandatoryHookMaxChars) { throw 'Mandatory hook context exceeds its configured cap.' }
 
     if ($eventName -eq 'PreToolUse') {
         $inputObject = $event.tool_input
@@ -140,7 +141,7 @@ try {
         # Preserve the original task and every routing/authorization field.
         # Only an identical generated prefix is reused; never strip user text.
         $prefix = "[GI automatic service context]`n$context`n[End GI automatic service context]`n`n"
-        if ($prefix.Length -gt [int]$budgets.section_max_chars) { throw 'Service context exceeds the existing section cap.' }
+        if ($prefix.Length -gt $mandatoryHookMaxChars) { throw 'Mandatory service context exceeds its configured cap.' }
         $delivery = if ($inputObject.prompt.StartsWith($prefix, [StringComparison]::Ordinal)) { 'reused' } else { 'added' }
         if ($delivery -eq 'added') { $inputObject.prompt = $prefix + $inputObject.prompt }
         Write-Audit -Outcome 'service_rules_forwarded' -ChecksPassed $true -ReviewCount 0 -ServiceTool ([string]$event.tool_name) -Delivery $delivery

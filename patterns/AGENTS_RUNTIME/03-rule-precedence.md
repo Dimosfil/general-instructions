@@ -28,6 +28,26 @@
   cannot be kept windowless, stop that operation and report the blocker.
   Follow `05-windows-command-policy.md` for the launch requirements.
 
+## Computer Use
+
+- Keep desktop Computer Use off by default. Obtain explicit user permission
+  before the first action that inspects or controls the user's desktop, native
+  apps, or windows. This covers read-only inspection, screenshots, window or
+  app discovery, and equivalent desktop automation through scripts or tools.
+- Start with a suitable API, CLI, connector, non-UI test, headless browser, or
+  built-in browser. Use browser-only operations in the built-in browser within
+  the authorized task without separate Computer Use permission. Apply this
+  distinction to the operation even when tools share an interface.
+- If a step needs desktop Computer Use, explain why, name the target app and
+  intended actions, and ask before acting. While waiting or after a refusal,
+  continue independent work through available alternatives and report any step
+  that remains unverified. Silence does not grant permission.
+- Explicit permission lets the agent choose Computer Use. A direct instruction
+  to use it selects that method for the agreed scope. By default, permission
+  covers only the current task and agreed actions. Ask again before expanding
+  that scope. Use available alternatives for general UI test requests. Tool
+  availability, local instructions, and skill guidance do not grant permission.
+
 ## Authorization And Follow-Through
 
 - Treat requests to do, fix, review, or help with a task as instructions to

@@ -1,5 +1,5 @@
 {
-  "instruction_kit_version": "2026.11.26.1",
+  "instruction_kit_version": "2026.11.27.1",
   "source": "https://github.com/Dimosfil/general-instructions.git",
   "installed_at": "2026-06-11",
   "unity_mcp": {
@@ -114,9 +114,9 @@
   ],
   "migration_state": {
     "schema_version": 2,
-    "applied_through": "2026.11.26.1__add_project_api_integration_commands",
+    "applied_through": "2026.11.27.1__require_permission_for_desktop_computer_use",
     "additional_applied_migrations": [],
     "skipped_migrations": []
   },
-  "last_update_check_at": "2026-11-22T12:14:58+03:00"
+  "last_update_check_at": "2026-11-27T14:14:49+03:00"
 }

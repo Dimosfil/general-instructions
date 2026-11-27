@@ -12,6 +12,13 @@ required verification. / Выполнять понятные задачи без
   clarification, advance agreement for material complexity, preparation before
   approval, operation-scoped blockers, whole-task completion, and honest gap
   reporting, independent of optional final review.
+- `patterns/AGENTS_RUNTIME/03-rule-precedence.md` also owns desktop Computer Use
+  consent. Module 12 applies it to web verification. Migration
+  `2026.11.27.1__require_permission_for_desktop_computer_use` delivers both
+  modules to existing kits through the standard update path.
+- Mandatory hook context and the service prefix use the separate
+  `mandatory_hook_max_chars` budget. Keep the full policy in both deliveries
+  and retain the ordinary section cap for optional context and corrections.
 - `patterns/AGENTS_RUNTIME/07-startup.md`: derive a bounded task goal
   without requiring a separate confirmation.
 - `patterns/AGENTS_RUNTIME/15-verification.md`: sufficient checks, required gates,
@@ -43,6 +50,9 @@ choices is required. / Миграция добавляет обязательн�
 | Case / Случай | Expected behavior / Ожидаемое поведение |
 | --- | --- |
 | Clear bounded edit / Понятная правка | Derive success criteria and execute / Определить критерии и выполнить |
+| UI check without desktop permission / Проверка UI без разрешения на рабочий стол | Use API, CLI, tests, or browser-only operations / Использовать API, CLI, тесты или средства браузера |
+| Desktop use explicitly permitted / Работа с рабочим столом явно разрешена | Choose the method within the agreed scope / Выбрать способ в согласованных рамках |
+| Desktop use directly requested / Пользователь прямо попросил использовать Computer Use | Use the requested method for the agreed actions / Использовать запрошенный способ для согласованных действий |
 | Same approved action and target / Уже согласованное действие | Continue without repeated approval / Продолжить без повторного вопроса |
 | Authorized third-party service launch / Разрешённый запуск стороннего сервиса | Warn before launch; preserve authorization / Предупредить до запуска; использовать существующее разрешение |
 | Script or container command starts a dependency / Скрипт или команда контейнера запускает зависимость | Identify the service and warn before the command / Назвать сервис и предупредить до команды |

@@ -2,6 +2,12 @@
 
 Accepted changes for the shared instruction library.
 
+## 2026.11.27
+
+- Require explicit user permission before desktop Computer Use. Keep built-in
+  browser and headless checks available for authorized web tasks.
+  Migration `2026.11.27.1__require_permission_for_desktop_computer_use`.
+
 ## 2026.11.26
 
 - Add `gi custom` and `ги кастом` to select a project-registered API
